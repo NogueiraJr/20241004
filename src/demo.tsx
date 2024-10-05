@@ -3,6 +3,7 @@ import { Button, Drawer } from 'antd';
 import { MenuOutlined, LeftOutlined } from '@ant-design/icons';
 
 // Lazy load components
+const Inicial = lazy(() => import('./components/menu/Inicial'));
 const Administrador = lazy(() => import('./components/menu/Administrador'));
 const Suporte = lazy(() => import('./components/menu/Suporte'));
 const Proprietario = lazy(() => import('./components/menu/Proprietario'));
@@ -29,6 +30,9 @@ const App: React.FC = () => {
     console.log(`Clicked content item ${key}`);
     onClose();
     switch (key) {
+      case '/ini':
+        setSelectedComponent(<Inicial />);
+        break;
       case '/adm':
         setSelectedComponent(<Administrador />);
         break;
@@ -105,7 +109,9 @@ const App: React.FC = () => {
           left: '16px',
           zIndex: 1000,
           display: 'flex',
-          alignItems: 'center'
+          alignItems: 'center',
+          backgroundColor: '#000000', // Alterado para preto
+          borderColor: '#000000', // Alterado para preto
         }}
       >
         <span style={{ marginLeft: '8px' }}>Nome do App</span>
@@ -128,6 +134,8 @@ const App: React.FC = () => {
             top: '16px',
             left: '16px',
             zIndex: 1000,
+            backgroundColor: '#000000', // Alterado para preto
+            borderColor: '#000000', // Alterado para preto
           }}
         />
         <div style={{ padding: '16px', marginTop: '60px' }}>
