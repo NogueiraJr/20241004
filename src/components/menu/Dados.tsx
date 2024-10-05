@@ -3,10 +3,10 @@ import { EditOutlined, EllipsisOutlined, SettingOutlined, StarOutlined, LikeOutl
 import { Avatar, Card, Dropdown, Menu, Space } from 'antd';
 
 const IconText = ({ icon, text }: { icon: React.ComponentType<any>; text: string }) => (
-  <Space>
-    {React.createElement(icon, { style: { color: 'black' } })}
-    {text}
-  </Space>
+  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+    {React.createElement(icon, { style: { color: 'black', fontSize: '20px' } })}
+    <span style={{ color: 'black', fontSize: '12px' }}>{text}</span>
+  </div>
 );
 
 const actions = [
@@ -31,7 +31,7 @@ const actions = [
 const Dados: React.FC = () => {
   return (
     <div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px' }}>
-      <Card actions={actions} style={{ flex: '1 1 calc(33.333% - 16px)', minWidth: 400, borderColor: 'black' }}>
+      <Card actions={actions} style={{ flex: '1 1 calc(33.333% - 16px)', minWidth: 290, borderColor: 'black' }}>
         <Card.Meta
           avatar={<Avatar src="https://api.dicebear.com/7.x/miniavs/svg?seed=1" />}
           title="Clientes"
@@ -43,7 +43,7 @@ const Dados: React.FC = () => {
           }
         />
       </Card>
-      <Card actions={actions} style={{ flex: '1 1 calc(33.333% - 16px)', minWidth: 400, borderColor: 'black' }}>
+      <Card actions={actions} style={{ flex: '1 1 calc(33.333% - 16px)', minWidth: 290, borderColor: 'black' }}>
         <Card.Meta
           avatar={<Avatar src="https://api.dicebear.com/7.x/miniavs/svg?seed=2" />}
           title="Produtos"
