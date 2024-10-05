@@ -1,6 +1,6 @@
 import React from 'react';
 import { EditOutlined, EllipsisOutlined, SettingOutlined, StarOutlined, LikeOutlined, MessageOutlined } from '@ant-design/icons';
-import { Avatar, Card, Dropdown, Menu, Space } from 'antd';
+import { Avatar, Card, Dropdown, Menu } from 'antd';
 
 const IconText = ({ icon, text }: { icon: React.ComponentType<any>; text: string }) => (
   <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
@@ -18,8 +18,8 @@ const actions = [
   <Dropdown
     overlay={
       <Menu>
-        <Menu.Item key="1">opção1</Menu.Item>
-        <Menu.Item key="2">opção2</Menu.Item>
+        <Menu.Item key="1">Opção1</Menu.Item>
+        <Menu.Item key="2">Opção2</Menu.Item>
       </Menu>
     }
     trigger={['click']}
@@ -30,31 +30,35 @@ const actions = [
 
 const Dados: React.FC = () => {
   return (
-    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px' }}>
-      <Card actions={actions} style={{ flex: '1 1 calc(33.333% - 16px)', minWidth: 290, borderColor: 'black' }}>
-        <Card.Meta
-          avatar={<Avatar src="https://api.dicebear.com/7.x/miniavs/svg?seed=1" />}
-          title="Clientes"
-          description={
-            <>
-              <p>This is the description</p>
-              <p>This is the description</p>
-            </>
-          }
-        />
-      </Card>
-      <Card actions={actions} style={{ flex: '1 1 calc(33.333% - 16px)', minWidth: 290, borderColor: 'black' }}>
-        <Card.Meta
-          avatar={<Avatar src="https://api.dicebear.com/7.x/miniavs/svg?seed=2" />}
-          title="Produtos"
-          description={
-            <>
-              <p>This is the description</p>
-              <p>This is the description</p>
-            </>
-          }
-        />
-      </Card>
+    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '25px' }}>
+      {['Clientes', 'Fornecedores', 'Parceiros', 'Produtos'].map((title, index) => (
+        <Card
+          key={title}
+          actions={actions}
+          style={{
+            flex: '1 1 calc(33.333% - 25px)',
+            minWidth: 290,
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
+            borderColor: 'black',
+            borderWidth: '2px',
+            height: '100%',
+          }}
+        >
+          <Card.Meta
+            avatar={<Avatar src={`https://api.dicebear.com/7.x/miniavs/svg?seed=${index + 1}`} />}
+            title={title}
+            description={
+              <>
+                <p>This is the description</p>
+                <p>This is the description</p>
+                <p>This is the description</p>
+              </>
+            }
+          />
+        </Card>
+      ))}
     </div>
   );
 };

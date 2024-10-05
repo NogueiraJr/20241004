@@ -170,7 +170,7 @@ const App: React.FC = () => {
         </div>
       </Drawer>
 
-      <div style={{ marginTop: '100px', padding: '20px' }}>
+      <div style={{ marginTop: '40px', padding: '2px' }}>
         <Suspense fallback={<div>Carregando...</div>}>
           {selectedComponent}
         </Suspense>
