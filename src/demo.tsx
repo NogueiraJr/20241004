@@ -16,7 +16,6 @@ interface MenuItem {
   subItems?: MenuItem[];
 }
 
-// Mapeia o caminho da rota para o título correspondente
 const pathMap: { [key: string]: string[] } = {
   '/1': ['Início'],
   '/2': ['Operacional'],
@@ -39,7 +38,6 @@ const items: MenuItem[] = [
   { key: '5', label: 'Utilidades', component: <div>Utilidades Component</div> },
 ];
 
-// Função para gerar os itens e subitens do menu
 const generateMenuItems = (menuItems: MenuItem[]) => {
   return menuItems.map(item => {
     if (item.subItems) {
@@ -62,13 +60,12 @@ const generateMenuItems = (menuItems: MenuItem[]) => {
   });
 };
 
-// Componente Breadcrumbs para exibir o caminho
 const Breadcrumbs: React.FC = () => {
   const location = useLocation();
   const paths = pathMap[location.pathname] || [];
 
   return (
-    <Breadcrumb style={{ margin: '16px 0' }}>
+    <Breadcrumb style={{ margin: '8px 0' }}>
       {paths.map((path, index) => (
         <Breadcrumb.Item key={index}>{path}</Breadcrumb.Item>
       ))}
@@ -84,8 +81,8 @@ const App: React.FC = () => {
   return (
     <Router>
       <Layout style={{ minHeight: '100vh' }}>
-        <Header style={{ display: 'flex', alignItems: 'center' }}>
-          <div style={{ color: '#fff', marginRight: '20px' }}>OCST App Web 1.0</div> {/* Nome do App */}
+        <Header style={{ display: 'flex', alignItems: 'center', padding: '0 8px' }}>
+          <div style={{ color: '#fff', marginRight: '20px' }}>OCST App Web 1.0</div>
           <Menu
             theme="dark"
             mode="horizontal"
@@ -95,13 +92,13 @@ const App: React.FC = () => {
             {generateMenuItems(items)}
           </Menu>
         </Header>
-        <Content style={{ padding: '0 48px', flex: 1 }}>
-          <Breadcrumbs /> {/* Adicionando Breadcrumbs aqui */}
+        <Content style={{ padding: '0px', margin: '0px', flex: 1 }}>
+          <Breadcrumbs />
           <div
             style={{
               background: colorBgContainer,
-              minHeight: 'calc(100vh - 64px - 64px)', // Ajusta a altura para ocupar o restante
-              padding: 24,
+              minHeight: 'calc(100vh - 64px - 64px)', // Removei padding extra
+              padding: 2, // Reduzi para 12 para mais espaço
               borderRadius: borderRadiusLG,
             }}
           >
@@ -112,11 +109,11 @@ const App: React.FC = () => {
               <Route path="/3" element={<Dados />} />
               <Route path="/4" element={<div>Relatórios Component</div>} />
               <Route path="/5" element={<div>Utilidades Component</div>} />
-              <Route path="/" element={<Home />} /> {/* Rota padrão */}
+              <Route path="/" element={<Home />} />
             </Routes>
           </div>
         </Content>
-        <Footer style={{ textAlign: 'center' }}>
+        <Footer style={{ textAlign: 'center', padding: '8px 0' }}> {/* Menor padding no footer */}
           Ant Design ©{new Date().getFullYear()} Created by Ant UED
         </Footer>
       </Layout>
