@@ -1,6 +1,6 @@
 import React from 'react';
 import { EditOutlined, EllipsisOutlined, SettingOutlined, StarOutlined, LikeOutlined, MessageOutlined } from '@ant-design/icons';
-import { Avatar, Card, Dropdown, Menu } from 'antd';
+import { Avatar, Card, Dropdown, Menu, Space } from 'antd';
 
 const IconText = ({ icon, text }: { icon: React.ComponentType<any>; text: string }) => (
   <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
@@ -31,34 +31,58 @@ const actions = [
 const Dados: React.FC = () => {
   return (
     <div style={{ display: 'flex', flexWrap: 'wrap', gap: '25px' }}>
-      {['Clientes', 'Fornecedores', 'Parceiros', 'Produtos'].map((title, index) => (
-        <Card
-          key={title}
-          actions={actions}
-          style={{
-            flex: '1 1 calc(33.333% - 25px)',
-            minWidth: 290,
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'space-between',
-            borderColor: 'black',
-            borderWidth: '2px',
-            height: '100%',
-          }}
-        >
-          <Card.Meta
-            avatar={<Avatar src={`https://api.dicebear.com/7.x/miniavs/svg?seed=${index + 1}`} />}
-            title={title}
-            description={
-              <>
-                <p>This is the description</p>
-                <p>This is the description</p>
-                <p>This is the description</p>
-              </>
-            }
-          />
-        </Card>
-      ))}
+      <Card actions={actions} style={{ flex: '1 1 calc(33.333% - 25px)', minWidth: 290, borderColor: 'black', borderWidth: '2px' }}>
+        <Card.Meta
+          avatar={<Avatar src="https://api.dicebear.com/7.x/miniavs/svg?seed=1" />}
+          title="Clientes"
+          description={
+            <>
+              <p>Seus Clientes no Sistema</p>
+              <p>This is the description niobyboy y v vib biyv v ybuibiy vy vu vilubu b v v yvyuyiiluub utv lbureo gego vneubeprq beçuvb uerqg qeru</p>
+              <p>This is the description</p>
+              <p>This is the description</p>
+              <p>This is the description</p>
+            </>
+          }
+        />
+      </Card>
+      <Card actions={actions} style={{ flex: '1 1 calc(33.333% - 25px)', minWidth: 290, borderColor: 'black', borderWidth: '2px' }}>
+        <Card.Meta
+          avatar={<Avatar src="https://api.dicebear.com/7.x/miniavs/svg?seed=2" />}
+          title="Fornecedores"
+          description={
+            <>
+              <p>This is the description</p>
+              <p>This is the description</p>
+              <p>This is the description</p>
+            </>
+          }
+        />
+      </Card>
+      <Card actions={actions} style={{ flex: '1 1 calc(33.333% - 25px)', minWidth: 290, borderColor: 'black', borderWidth: '2px' }}>
+        <Card.Meta
+          avatar={<Avatar src="https://api.dicebear.com/7.x/miniavs/svg?seed=2" />}
+          title="Parceiros"
+          description={
+            <>
+              <p>This is the description</p>
+              <p>This is the description</p>
+            </>
+          }
+        />
+      </Card>
+      <Card actions={actions} style={{ flex: '1 1 calc(33.333% - 25px)', minWidth: 290, borderColor: 'black', borderWidth: '2px' }}>
+        <Card.Meta
+          avatar={<Avatar src="https://api.dicebear.com/7.x/miniavs/svg?seed=2" />}
+          title="Produtos"
+          description={
+            <>
+              <p>This is the description</p>
+              <p>This is the description</p>
+            </>
+          }
+        />
+      </Card>
     </div>
   );
 };
