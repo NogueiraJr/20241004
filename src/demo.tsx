@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { AppstoreOutlined, ToolOutlined, QuestionCircleOutlined, UserOutlined } from '@ant-design/icons';
+import { AppstoreOutlined, ToolOutlined, QuestionCircleOutlined, UserOutlined, DatabaseOutlined, FileOutlined, SettingOutlined, HomeOutlined, LogoutOutlined } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import { Menu } from 'antd';
 import Inicial from './components/menu/Inicial';
@@ -21,16 +21,16 @@ const items: MenuItem[] = [
     label: 'OCST App',
     icon: <AppstoreOutlined />,
     children: [
-      { key: '/ini', label: 'Inicial' },
-      { key: '/adm', label: 'Administrador' },
-      { key: '/spt', label: 'Suporte' },
-      { key: '/own', label: 'Proprietário' },
-      { key: '/opr', label: 'Operacional' },
-      { key: '/dds', label: 'Dados' },
-      { key: '/rlt', label: 'Relatórios' },
-      { key: '/utl', label: 'Utilidades' },
-      { key: '/ajd', label: 'Ajuda' },
-      { key: '/out', label: 'Sair' },
+      { key: '/ini', label: 'Inicial', icon: <HomeOutlined /> },
+      { key: '/adm', label: 'Administrador', icon: <SettingOutlined /> },
+      { key: '/spt', label: 'Suporte', icon: <ToolOutlined /> },
+      { key: '/own', label: 'Proprietário', icon: <UserOutlined /> },
+      { key: '/opr', label: 'Operacional', icon: <AppstoreOutlined /> },
+      { key: '/dds', label: 'Dados', icon: <DatabaseOutlined /> },
+      { key: '/rlt', label: 'Relatórios', icon: <FileOutlined /> },
+      { key: '/utl', label: 'Utilidades', icon: <ToolOutlined /> },
+      { key: '/ajd', label: 'Ajuda', icon: <QuestionCircleOutlined /> },
+      { key: '/out', label: 'Sair', icon: <LogoutOutlined /> },
     ],
   },
 ];
@@ -64,16 +64,16 @@ const App: React.FC = () => {
       </div>
       {/* Espaçamento para o conteúdo renderizado, para não ficar atrás do menu */}
       <div style={{ marginTop: '38px', flexGrow: 1 }}> {/* Ajuste a altura de acordo com a altura do menu */}
-        {selectedKey === '/ini' && <Inicial />} { }
-        {selectedKey === '/adm' && <Administrador />} { }
-        {selectedKey === '/spt' && <Suporte />} { }
-        {selectedKey === '/own' && <Proprietario />} { }
-        {selectedKey === '/opr' && <Operacional />} { }
-        {selectedKey === '/dds' && <Dados />} { }
-        {selectedKey === '/rlt' && <Relatorios />} { }
-        {selectedKey === '/utl' && <Utilidades />} { }
-        {selectedKey === '/ajd' && <Ajuda />} { }
-        {selectedKey === '/out' && <Sair />} { }
+        {selectedKey === '/ini' && <Inicial />}
+        {selectedKey === '/adm' && <Administrador />}
+        {selectedKey === '/spt' && <Suporte />}
+        {selectedKey === '/own' && <Proprietario />}
+        {selectedKey === '/opr' && <Operacional />}
+        {selectedKey === '/dds' && <Dados />}
+        {selectedKey === '/rlt' && <Relatorios />}
+        {selectedKey === '/utl' && <Utilidades />}
+        {selectedKey === '/ajd' && <Ajuda />}
+        {selectedKey === '/out' && <Sair />}
       </div>
     </div>
   );
