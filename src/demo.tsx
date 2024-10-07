@@ -2,7 +2,16 @@ import React, { useState } from 'react';
 import { AppstoreOutlined, ToolOutlined, QuestionCircleOutlined, UserOutlined } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import { Menu } from 'antd';
-import Dados from './components/menu/Dados'; // Importando o componente Dados
+import Inicial from './components/menu/Inicial';
+import Administrador from './components/menu/Administrador';
+import Suporte from './components/menu/Suporte';
+import Proprietario from './components/menu/Proprietario';
+import Operacional from './components/menu/Operacional';
+import Dados from './components/menu/Dados';
+import Relatorios from './components/menu/Relatorios';
+import Utilidades from './components/menu/Utilidades';
+import Ajuda from './components/menu/Ajuda';
+import Sair from './components/menu/Sair';
 
 type MenuItem = Required<MenuProps>['items'][number];
 
@@ -13,7 +22,6 @@ const items: MenuItem[] = [
     icon: <AppstoreOutlined />,
     children: [
       { key: '/ini', label: 'Inicial' },
-      { type: 'divider' }, // Adiciona a linha separadora aqui
       { key: '/adm', label: 'Administrador' },
       { key: '/spt', label: 'Suporte' },
       { key: '/own', label: 'Proprietário' },
@@ -56,7 +64,16 @@ const App: React.FC = () => {
       </div>
       {/* Espaçamento para o conteúdo renderizado, para não ficar atrás do menu */}
       <div style={{ marginTop: '38px', flexGrow: 1 }}> {/* Ajuste a altura de acordo com a altura do menu */}
-        {selectedKey === '/dds' && <Dados />} {/* Renderiza o componente Dados se 'Option 10' for selecionada */}
+        {selectedKey === '/ini' && <Inicial />} { }
+        {selectedKey === '/adm' && <Administrador />} { }
+        {selectedKey === '/spt' && <Suporte />} { }
+        {selectedKey === '/own' && <Proprietario />} { }
+        {selectedKey === '/opr' && <Operacional />} { }
+        {selectedKey === '/dds' && <Dados />} { }
+        {selectedKey === '/rlt' && <Relatorios />} { }
+        {selectedKey === '/utl' && <Utilidades />} { }
+        {selectedKey === '/ajd' && <Ajuda />} { }
+        {selectedKey === '/out' && <Sair />} { }
       </div>
     </div>
   );

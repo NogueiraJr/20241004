@@ -1,6 +1,17 @@
 import React from 'react';
-import { EditOutlined, EllipsisOutlined, SettingOutlined, StarOutlined, LikeOutlined, MessageOutlined } from '@ant-design/icons';
-import { Avatar, Card, Dropdown, Menu, Space } from 'antd';
+import { 
+  EditOutlined, 
+  EllipsisOutlined, 
+  SettingOutlined, 
+  StarOutlined, 
+  LikeOutlined, 
+  MessageOutlined, 
+  UserOutlined,   // Ícone para Clientes
+  ShoppingCartOutlined, // Ícone para Fornecedores
+  TeamOutlined, // Ícone para Parceiros
+  AppstoreAddOutlined // Ícone para Produtos
+} from '@ant-design/icons';
+import { Avatar, Card, Dropdown, Menu } from 'antd';
 
 const IconText = ({ icon, text }: { icon: React.ComponentType<any>; text: string }) => (
   <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
@@ -31,9 +42,20 @@ const actions = [
 const Dados: React.FC = () => {
   return (
     <div style={{ display: 'flex', flexWrap: 'wrap', gap: '25px' }}>
-      <Card actions={actions} style={{ flex: '1 1 calc(33.333% - 25px)', minWidth: 290, borderColor: 'black', borderWidth: '2px' }}>
+      <Card 
+        actions={actions} 
+        style={{ 
+          flex: '1 1 calc(33.333% - 25px)', 
+          minWidth: 290, 
+          borderColor: 'black', 
+          borderWidth: '2px', 
+          display: 'flex', 
+          flexDirection: 'column', 
+          justifyContent: 'space-between' 
+        }}
+      >
         <Card.Meta
-          avatar={<Avatar src="https://api.dicebear.com/7.x/miniavs/svg?seed=1" />}
+          avatar={<Avatar icon={<UserOutlined style={{ color: 'black' }} />} />} // Ícone para Clientes
           title="Clientes"
           description={
             <>
@@ -46,9 +68,20 @@ const Dados: React.FC = () => {
           }
         />
       </Card>
-      <Card actions={actions} style={{ flex: '1 1 calc(33.333% - 25px)', minWidth: 290, borderColor: 'black', borderWidth: '2px' }}>
+      <Card 
+        actions={actions} 
+        style={{ 
+          flex: '1 1 calc(33.333% - 25px)', 
+          minWidth: 290, 
+          borderColor: 'black', 
+          borderWidth: '2px', 
+          display: 'flex', 
+          flexDirection: 'column', 
+          justifyContent: 'space-between' 
+        }}
+      >
         <Card.Meta
-          avatar={<Avatar src="https://api.dicebear.com/7.x/miniavs/svg?seed=2" />}
+          avatar={<Avatar icon={<ShoppingCartOutlined style={{ color: 'black' }} />} />} // Ícone para Fornecedores
           title="Fornecedores"
           description={
             <>
@@ -59,9 +92,20 @@ const Dados: React.FC = () => {
           }
         />
       </Card>
-      <Card actions={actions} style={{ flex: '1 1 calc(33.333% - 25px)', minWidth: 290, borderColor: 'black', borderWidth: '2px' }}>
+      <Card 
+        actions={actions} 
+        style={{ 
+          flex: '1 1 calc(33.333% - 25px)', 
+          minWidth: 290, 
+          borderColor: 'black', 
+          borderWidth: '2px', 
+          display: 'flex', 
+          flexDirection: 'column', 
+          justifyContent: 'space-between' 
+        }}
+      >
         <Card.Meta
-          avatar={<Avatar src="https://api.dicebear.com/7.x/miniavs/svg?seed=2" />}
+          avatar={<Avatar icon={<TeamOutlined style={{ color: 'black' }} />} />} // Ícone para Parceiros
           title="Parceiros"
           description={
             <>
@@ -71,9 +115,20 @@ const Dados: React.FC = () => {
           }
         />
       </Card>
-      <Card actions={actions} style={{ flex: '1 1 calc(33.333% - 25px)', minWidth: 290, borderColor: 'black', borderWidth: '2px' }}>
+      <Card 
+        actions={actions} 
+        style={{ 
+          flex: '1 1 calc(33.333% - 25px)', 
+          minWidth: 290, 
+          borderColor: 'black', 
+          borderWidth: '2px', 
+          display: 'flex', 
+          flexDirection: 'column', 
+          justifyContent: 'space-between' 
+        }}
+      >
         <Card.Meta
-          avatar={<Avatar src="https://api.dicebear.com/7.x/miniavs/svg?seed=2" />}
+          avatar={<Avatar icon={<AppstoreAddOutlined style={{ color: 'black' }} />} />} // Ícone para Produtos
           title="Produtos"
           description={
             <>
