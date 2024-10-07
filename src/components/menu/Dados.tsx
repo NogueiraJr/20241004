@@ -13,21 +13,21 @@ import {
 } from '@ant-design/icons';
 import { Avatar, Card, Dropdown, Menu, Tooltip } from 'antd';
 
-const IconText = ({ icon, text, tooltip }: { icon: React.ComponentType<any>; text: string; tooltip: string }) => (
+const IconText = ({ icon, text, tooltip, color }: { icon: React.ComponentType<any>; text: string; tooltip: string, color?: string }) => (
   <Tooltip title={tooltip}>
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-      {React.createElement(icon, { style: { color: 'black', fontSize: '20px' } })}
-      <span style={{ color: 'black', fontSize: '12px' }}>{text}</span>
+      {React.createElement(icon, { style: { color: color || 'black', fontSize: '20px' } })}
+      <span style={{ color: color || 'black', fontSize: '12px' }}>{text}</span>
     </div>
   </Tooltip>
 );
 
 const actions = [
-  <IconText icon={PlusSquareOutlined} text="NOVO" tooltip="Adicionar Novo Item" key="icon-new" />,
-  <IconText icon={UnorderedListOutlined} text="175" tooltip="Lista com Todos os Itens" key="icon-all-itens" />,
-  <IconText icon={CheckCircleOutlined} text="123" tooltip="Itens Ativos" key="icon-actived-itens" />,
-  <IconText icon={CloseCircleOutlined} text="52" tooltip="Itens Inativos" key="icon-desatived-itens" />,
-  <IconText icon={DeleteOutlined} text="15" tooltip="Itens Apagados" key="icon-deleted-itens" />,
+  <IconText icon={PlusSquareOutlined} text="NOVO" tooltip="Adicionar Novo" key="icon-new" color="#FF4C00" />,
+  <IconText icon={UnorderedListOutlined} text="175" tooltip="Lista com Todos" key="icon-all-itens" color="blue" />,
+  <IconText icon={CheckCircleOutlined} text="123" tooltip="Apenas os Ativos" key="icon-actived-itens" color="green" />,
+  <IconText icon={CloseCircleOutlined} text="52" tooltip="Apenas os Inativos" key="icon-desatived-itens" color="gray" />,
+  <IconText icon={DeleteOutlined} text="15" tooltip="Apenas os Apagados" key="icon-deleted-itens" color="red" />,
   <Dropdown
     overlay={
       <Menu>
@@ -46,11 +46,11 @@ const actions = [
 
 const Dados: React.FC = () => {
   return (
-    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '25px' }}>
+    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
       <Card 
         actions={actions} 
         style={{ 
-          flex: '1 1 calc(33.333% - 25px)', 
+          flex: '1 1 calc(33.333% - 5px)', 
           minWidth: 290, 
           borderColor: 'black', 
           borderWidth: '2px', 
@@ -76,7 +76,7 @@ const Dados: React.FC = () => {
       <Card 
         actions={actions} 
         style={{ 
-          flex: '1 1 calc(33.333% - 25px)', 
+          flex: '1 1 calc(33.333% - 5px)', 
           minWidth: 290, 
           borderColor: 'black', 
           borderWidth: '2px', 
@@ -102,7 +102,7 @@ const Dados: React.FC = () => {
       <Card 
         actions={actions} 
         style={{ 
-          flex: '1 1 calc(33.333% - 25px)', 
+          flex: '1 1 calc(33.333% - 5px)', 
           minWidth: 290, 
           borderColor: 'black', 
           borderWidth: '2px', 
@@ -128,7 +128,7 @@ const Dados: React.FC = () => {
       <Card 
         actions={actions} 
         style={{ 
-          flex: '1 1 calc(33.333% - 25px)', 
+          flex: '1 1 calc(33.333% - 5px)', 
           minWidth: 290, 
           borderColor: 'black', 
           borderWidth: '2px', 

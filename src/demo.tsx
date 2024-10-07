@@ -17,7 +17,7 @@ type MenuItem = Required<MenuProps>['items'][number];
 
 const items: MenuItem[] = [
   {
-    key: 'sub2',
+    key: '/ini',
     label: 'OCST App',
     icon: <AppstoreOutlined />,
     children: [
