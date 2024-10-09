@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { AppstoreOutlined, ToolOutlined, QuestionCircleOutlined, UserOutlined, DatabaseOutlined, FileOutlined, SettingOutlined, HomeOutlined, LogoutOutlined } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import { Menu } from 'antd';
+import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom'; // Importa BrowserRouter, Routes e Route
+
 import Inicial from './components/menu/Inicial';
 import Administrador from './components/menu/Administrador';
 import Suporte from './components/menu/Suporte';
@@ -12,6 +14,7 @@ import Relatorios from './components/menu/Relatorios';
 import Utilidades from './components/menu/Utilidades';
 import Ajuda from './components/menu/Ajuda';
 import Sair from './components/menu/Sair';
+import Cliente from './components/menuModule/Cliente';
 
 type MenuItem = Required<MenuProps>['items'][number];
 
@@ -36,25 +39,22 @@ const items: MenuItem[] = [
 ];
 
 const App: React.FC = () => {
-  const [collapsed, setCollapsed] = useState(true); // Começa colapsado
-  const [selectedKey, setSelectedKey] = useState<string | null>(null); // Estado para gerenciar a opção selecionada
+  const navigate = useNavigate(); // Hook para navegação programática
 
   const handleMenuClick = (key: string) => {
-    setSelectedKey(key); // Atualiza a chave selecionada
-    setCollapsed(true); // Colapsa o menu
+    console.log('Toki1: ' + key);
+    navigate(key); // Usa o navigate para alterar a rota
   };
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column' }}>
       {/* Menu fixo no topo */}
       <Menu
-        defaultOpenKeys={collapsed ? [] : ['sub2']}
-        mode="horizontal" // Alterado para modo horizontal
+        mode="horizontal"
         theme="dark"
-        inlineCollapsed={collapsed}
         items={items}
-        onClick={({ key }) => handleMenuClick(key)} // Chama handleMenuClick ao clicar em um item
-        style={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 1000 }} // Adiciona estilos para fixar o menu
+        onClick={({ key }) => handleMenuClick(key)}
+        style={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 1000 }}
       />
       {/* Container para os ícones à direita */}
       <div style={{ position: 'fixed', right: '20px', top: '10px', display: 'flex', gap: '10px', zIndex: 1000 }}>
@@ -62,21 +62,31 @@ const App: React.FC = () => {
         <QuestionCircleOutlined title="Ajuda" style={{ color: 'white', fontSize: '20px', cursor: 'pointer' }} />
         <UserOutlined title="Usuário" style={{ color: 'white', fontSize: '20px', cursor: 'pointer' }} />
       </div>
-      {/* Espaçamento para o conteúdo renderizado, para não ficar atrás do menu */}
-      <div style={{ marginTop: '38px', flexGrow: 1 }}> {/* Ajuste a altura de acordo com a altura do menu */}
-        {selectedKey === '/ini' && <Inicial />}
-        {selectedKey === '/adm' && <Administrador />}
-        {selectedKey === '/spt' && <Suporte />}
-        {selectedKey === '/own' && <Proprietario />}
-        {selectedKey === '/opr' && <Operacional />}
-        {selectedKey === '/dds' && <Dados />}
-        {selectedKey === '/rlt' && <Relatorios />}
-        {selectedKey === '/utl' && <Utilidades />}
-        {selectedKey === '/ajd' && <Ajuda />}
-        {selectedKey === '/out' && <Sair />}
+      {/* Espaçamento para o conteúdo renderizado */}
+      <div style={{ marginTop: '38px', flexGrow: 1 }}>
+        <Routes>
+          <Route path="/ini" element={<Inicial />} />
+          <Route path="/adm" element={<Administrador />} />
+          <Route path="/spt" element={<Suporte />} />
+          <Route path="/own" element={<Proprietario />} />
+          <Route path="/opr" element={<Operacional />} />
+          <Route path="/dds" element={<Dados />} />
+          <Route path="/rlt" element={<Relatorios />} />
+          <Route path="/utl" element={<Utilidades />} />
+          <Route path="/ajd" element={<Ajuda />} />
+          <Route path="/out" element={<Sair />} />
+
+          <Route path="/cliente" element={<Cliente />} />
+          </Routes>
       </div>
     </div>
   );
 };
 
-export default App;
+const WrappedApp = () => (
+  <Router>
+    <App />
+  </Router>
+);
+
+export default WrappedApp;
