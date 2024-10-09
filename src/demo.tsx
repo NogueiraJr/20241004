@@ -42,7 +42,6 @@ const App: React.FC = () => {
   const navigate = useNavigate(); // Hook para navegação programática
 
   const handleMenuClick = (key: string) => {
-    console.log('Toki1: ' + key);
     navigate(key); // Usa o navigate para alterar a rota
   };
 
