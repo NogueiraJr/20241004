@@ -26,17 +26,42 @@ const IconText = ({ icon, text, tooltip, color, onClick }: { icon: React.Compone
 const Dados: React.FC = () => {
   const navigate = useNavigate();
 
-  // Função para navegar para a página de clientes ao clicar no "NOVO"
-  const handleNovoCliente = () => {
+  const handleListaTodosClientes = () => {
     navigate('/cliente');
   };
 
+  const handleListaTodosProdutos = () => {
+    navigate('/produto');
+  };
+
   const actionsClientes = [
-    <IconText icon={PlusSquareOutlined} text="NOVO" tooltip="Adicionar Novo" key="icon-new" color="#FF4C00" onClick={handleNovoCliente} />,
-    <IconText icon={UnorderedListOutlined} text="175" tooltip="Lista com Todos" key="icon-all-itens" color="blue" />,
-    <IconText icon={CheckCircleOutlined} text="123" tooltip="Apenas os Ativos" key="icon-actived-itens" color="green" />,
-    <IconText icon={CloseCircleOutlined} text="52" tooltip="Apenas os Inativos" key="icon-desatived-itens" color="gray" />,
+    <IconText icon={PlusSquareOutlined} text="NOVO" tooltip="Adicionar Novo" key="icon-new" color="#FF4C00" />,
+    <IconText icon={UnorderedListOutlined} text="4" tooltip="Lista com Todos" key="icon-all-itens" color="blue" onClick={handleListaTodosClientes}/>,
+    <IconText icon={CheckCircleOutlined} text="4" tooltip="Apenas os Ativos" key="icon-actived-itens" color="green" />,
+    <IconText icon={CloseCircleOutlined} text="0" tooltip="Apenas os Inativos" key="icon-desatived-itens" color="gray" />,
     <IconText icon={DeleteOutlined} text="15" tooltip="Apenas os Apagados" key="icon-deleted-itens" color="red" />,
+    <Dropdown
+      overlay={
+        <Menu>
+          <Menu.Item key="1">casamento</Menu.Item>
+          <Menu.Item key="2">batizado</Menu.Item>
+          <Menu.Item key="3">festa</Menu.Item>
+        </Menu>
+      }
+      trigger={['click']}
+    >
+      <Tooltip title="Etiquetas">
+        <EllipsisOutlined key="ellipsis" style={{ color: 'black' }} />
+      </Tooltip>
+    </Dropdown>,
+  ];
+
+  const actionsProdutos = [
+    <IconText icon={PlusSquareOutlined} text="NOVO" tooltip="Adicionar Novo" key="icon-new" color="#FF4C00" />,
+    <IconText icon={UnorderedListOutlined} text="4" tooltip="Lista com Todos" key="icon-all-itens" color="blue" onClick={handleListaTodosProdutos}/>,
+    <IconText icon={CheckCircleOutlined} text="4" tooltip="Apenas os Ativos" key="icon-actived-itens" color="green" />,
+    <IconText icon={CloseCircleOutlined} text="0" tooltip="Apenas os Inativos" key="icon-desatived-itens" color="gray" />,
+    <IconText icon={DeleteOutlined} text="54" tooltip="Apenas os Apagados" key="icon-deleted-itens" color="red" />,
     <Dropdown
       overlay={
         <Menu>
@@ -156,7 +181,7 @@ const Dados: React.FC = () => {
         />
       </Card>
       <Card 
-        actions={actions} 
+        actions={actionsProdutos} 
         style={{ 
           flex: '1 1 calc(33.333% - 5px)', 
           minWidth: 290, 

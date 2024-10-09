@@ -15,6 +15,7 @@ import Utilidades from './components/menu/Utilidades';
 import Ajuda from './components/menu/Ajuda';
 import Sair from './components/menu/Sair';
 import Cliente from './components/menuModule/Cliente';
+import Produto from './components/menuModule/Produto';
 
 type MenuItem = Required<MenuProps>['items'][number];
 
@@ -76,6 +77,7 @@ const App: React.FC = () => {
           <Route path="/out" element={<Sair />} />
 
           <Route path="/cliente" element={<Cliente />} />
+          <Route path="/produto" element={<Produto />} />
           </Routes>
       </div>
     </div>
