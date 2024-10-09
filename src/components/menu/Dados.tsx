@@ -29,7 +29,6 @@ const Dados: React.FC = () => {
   // Função para navegar para a página de clientes ao clicar no "NOVO"
   const handleNovoCliente = () => {
     navigate('/cliente');
-    console.log('Toki1');
   };
 
   const actionsClientes = [
