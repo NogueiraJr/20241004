@@ -65,15 +65,15 @@ const App: React.FC = () => {
       key: '/ini',
       label: (
         <span>
-          OCST App {pageTitle && <span style={{ marginLeft: '8px' }}>{pageTitle}</span>}
+          OCST App {pageTitle && <span style={{ marginLeft: '2px' }}> - {pageTitle}</span>}
         </span>
       ),
       icon: <AppstoreOutlined />,
       children: [
         { key: '/ini', label: 'Inicial', icon: <HomeOutlined /> },
-        { key: '/adm', label: 'Administrador', icon: <SettingOutlined /> },
-        { key: '/spt', label: 'Suporte', icon: <ToolOutlined /> },
-        { key: '/own', label: 'Proprietário', icon: <UserOutlined /> },
+        // { key: '/adm', label: 'Administrador', icon: <SettingOutlined /> },
+        // { key: '/spt', label: 'Suporte', icon: <ToolOutlined /> },
+        // { key: '/own', label: 'Proprietário', icon: <UserOutlined /> },
         { key: '/opr', label: 'Operacional', icon: <AppstoreOutlined /> },
         { key: '/dds', label: 'Dados', icon: <DatabaseOutlined /> },
         { key: '/rlt', label: 'Relatórios', icon: <FileOutlined /> },
