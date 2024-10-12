@@ -33,6 +33,10 @@ const Operacional: React.FC = () => {
     navigate('/reserva');
   };
 
+  const handleReservaNovo = () => {
+    navigate('/reserva-novo');
+  };
+
   const handleListaTodasRetiradas = () => {
     navigate('/retirada');
   };
@@ -42,7 +46,7 @@ const Operacional: React.FC = () => {
   };
 
   const actionsReserva = [
-    <IconText icon={PlusSquareOutlined} text="NOVO" tooltip="Nova Reserva" key="icon-new" color="black" />,
+    <IconText icon={PlusSquareOutlined} text="NOVO" tooltip="Nova Reserva" key="icon-new" color="black" onClick={handleReservaNovo}/>,
     <IconText icon={UnorderedListOutlined} text="0" tooltip="Todas as Reservas" key="icon-all-itens" color="blue" onClick={handleListaTodasReservas}/>,
     <IconText icon={CheckCircleOutlined} text="0" tooltip="Apenas Reservas Ativas" key="icon-actived-itens" color="green" />,
     <IconText icon={CloseCircleOutlined} text="0" tooltip="Apenas Reservas Inativas" key="icon-desatived-itens" color="gray" />,
