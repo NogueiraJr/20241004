@@ -154,9 +154,11 @@ const Operacional: React.FC = () => {
             <>
               <Text strong style={{fontSize: '15px'}}>As Reservas da sua Empresa</Text>
               <Link onClick={() => { console.log('Texto clicado!'); }}>
-                <div>12 reservas realizadas nesta semana</div>
+                <div>12 reservas feitas nesta semana</div>
               </Link>
-              <div>04 reservas realizadas nos últimos 3 dias</div>
+              <Link onClick={() => { console.log('Texto clicado!'); }}>
+                <div>04 reservas feitas nos últimos 3 dias</div>
+              </Link>
             </>
           }
         />
@@ -182,7 +184,19 @@ const Operacional: React.FC = () => {
           title="Retiradas"
           description={
             <>
-              <p>As Retiradas da sua Empresa</p>
+              <Text strong style={{fontSize: '15px'}}>As Retiradas da sua Empresa</Text>
+              <Link onClick={() => { console.log('Texto clicado!'); }}>
+                <div>08 retiradas previstas para hoje</div>
+              </Link>
+              <Link onClick={() => { console.log('Texto clicado!'); }}>
+                <div>03 retiradas previstas para amanhã</div>
+              </Link>
+              <Link onClick={() => { console.log('Texto clicado!'); }}>
+                <div>02 retiradas adiadas</div>
+              </Link>
+              <Link onClick={() => { console.log('Texto clicado!'); }}>
+                <div>02 retiradas atrasadas</div>
+              </Link>
             </>
           }
         />
@@ -208,7 +222,19 @@ const Operacional: React.FC = () => {
           title="Devoluções"
           description={
             <>
-              <p>As Devoluções da sua Empresa</p>
+              <Text strong style={{fontSize: '15px'}}>As Devoluções da sua Empresa</Text>
+              <Link onClick={() => { console.log('Texto clicado!'); }}>
+                <div>06 devoluções previstas para hoje</div>
+              </Link>
+              <Link onClick={() => { console.log('Texto clicado!'); }}>
+                <div>04 devoluções previstas para amanhã</div>
+              </Link>
+              <Link onClick={() => { console.log('Texto clicado!'); }}>
+                <div>03 devoluções adiadas</div>
+              </Link>
+              <Link onClick={() => { console.log('Texto clicado!'); }}>
+                <div>07 devoluções atrasadas</div>
+              </Link>
             </>
           }
         />
