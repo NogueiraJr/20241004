@@ -13,13 +13,13 @@ import Relatorios from './components/menu/Relatorios';
 import Utilidades from './components/menu/Utilidades';
 import Ajuda from './components/menu/Ajuda';
 import Sair from './components/menu/Sair';
-import Cliente from './components/menuModule/Cliente';
-import Produto from './components/menuModule/Produto';
-import Reserva from './components/menuModule/Reserva';
-import Retirada from './components/menuModule/Retirada';
-import Devolucao from './components/menuModule/Devolucao';
-import Fornecedor from './components/menuModule/Fornecedor';
-import Parceiro from './components/menuModule/Parceiro';
+import Cliente from './components/menuModule/Dados/Cliente';
+import Produto from './components/menuModule/Dados/Produto';
+import Reserva from './components/menuModule/Operacional/Reserva';
+import Retirada from './components/menuModule/Operacional/Retirada';
+import Devolucao from './components/menuModule/Operacional/Devolucao';
+import Fornecedor from './components/menuModule/Dados/Fornecedor';
+import Parceiro from './components/menuModule/Dados/Parceiro';
 
 type MenuItem = Required<MenuProps>['items'][number];
 
