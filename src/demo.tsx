@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { AppstoreOutlined, ToolOutlined, QuestionCircleOutlined, UserOutlined, DatabaseOutlined, FileOutlined, SettingOutlined, HomeOutlined, LogoutOutlined } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import { Menu } from 'antd';
-import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom'; // Importa BrowserRouter, Routes e Route
-
+import { BrowserRouter as Router, Routes, Route, useNavigate, useLocation } from 'react-router-dom'; // Importa useLocation
 import Inicial from './components/menu/Inicial';
 import Administrador from './components/menu/Administrador';
 import Suporte from './components/menu/Suporte';
@@ -19,32 +18,71 @@ import Produto from './components/menuModule/Produto';
 
 type MenuItem = Required<MenuProps>['items'][number];
 
-const items: MenuItem[] = [
-  {
-    key: '/ini',
-    label: 'OCST App',
-    icon: <AppstoreOutlined />,
-    children: [
-      { key: '/ini', label: 'Inicial', icon: <HomeOutlined /> },
-      { key: '/adm', label: 'Administrador', icon: <SettingOutlined /> },
-      { key: '/spt', label: 'Suporte', icon: <ToolOutlined /> },
-      { key: '/own', label: 'Proprietário', icon: <UserOutlined /> },
-      { key: '/opr', label: 'Operacional', icon: <AppstoreOutlined /> },
-      { key: '/dds', label: 'Dados', icon: <DatabaseOutlined /> },
-      { key: '/rlt', label: 'Relatórios', icon: <FileOutlined /> },
-      { key: '/utl', label: 'Utilidades', icon: <ToolOutlined /> },
-      { key: '/ajd', label: 'Ajuda', icon: <QuestionCircleOutlined /> },
-      { key: '/out', label: 'Sair', icon: <LogoutOutlined /> },
-    ],
-  },
-];
-
 const App: React.FC = () => {
   const navigate = useNavigate(); // Hook para navegação programática
+  const location = useLocation(); // Hook para obter a localização atual
 
   const handleMenuClick = (key: string) => {
     navigate(key); // Usa o navigate para alterar a rota
   };
+
+  // Mapeia o caminho atual para o nome da tela
+  const getPageTitle = (path: string) => {
+    switch (path) {
+      case '/ini':
+        return 'Inicial';
+      case '/adm':
+        return 'Administrador';
+      case '/spt':
+        return 'Suporte';
+      case '/own':
+        return 'Proprietário';
+      case '/opr':
+        return 'Operacional';
+      case '/dds':
+        return 'Dados';
+      case '/rlt':
+        return 'Relatórios';
+      case '/utl':
+        return 'Utilidades';
+      case '/ajd':
+        return 'Ajuda';
+      case '/out':
+        return 'Sair';
+      case '/cliente':
+        return 'Clientes';
+      case '/produto':
+        return 'Produtos';
+      default:
+        return '';
+    }
+  };
+
+  const pageTitle = getPageTitle(location.pathname);
+
+  const items: MenuItem[] = [
+    {
+      key: '/ini',
+      label: (
+        <span>
+          OCST App {pageTitle && <span style={{ marginLeft: '8px' }}>{pageTitle}</span>}
+        </span>
+      ),
+      icon: <AppstoreOutlined />,
+      children: [
+        { key: '/ini', label: 'Inicial', icon: <HomeOutlined /> },
+        { key: '/adm', label: 'Administrador', icon: <SettingOutlined /> },
+        { key: '/spt', label: 'Suporte', icon: <ToolOutlined /> },
+        { key: '/own', label: 'Proprietário', icon: <UserOutlined /> },
+        { key: '/opr', label: 'Operacional', icon: <AppstoreOutlined /> },
+        { key: '/dds', label: 'Dados', icon: <DatabaseOutlined /> },
+        { key: '/rlt', label: 'Relatórios', icon: <FileOutlined /> },
+        { key: '/utl', label: 'Utilidades', icon: <ToolOutlined /> },
+        { key: '/ajd', label: 'Ajuda', icon: <QuestionCircleOutlined /> },
+        { key: '/out', label: 'Sair', icon: <LogoutOutlined /> },
+      ],
+    },
+  ];
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column' }}>
@@ -78,7 +116,7 @@ const App: React.FC = () => {
 
           <Route path="/cliente" element={<Cliente />} />
           <Route path="/produto" element={<Produto />} />
-          </Routes>
+        </Routes>
       </div>
     </div>
   );
