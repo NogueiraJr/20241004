@@ -25,13 +25,12 @@ const columns: TableProps<ClientType>['columns'] = [
     title: 'Nome',
     dataIndex: 'name',
     key: 'name',
-    // Define a largura da coluna 'Nome' como desejado
     width: '100%', // ajuste conforme necessário
   },
   {
     title: 'Ações',
     key: 'action',
-    width: '100px', // Largura fixa para a coluna de ações
+    width: '100px',
     render: (_, record) => (
       <Space size="middle">
         <IconText icon={EditOutlined} text="EDITAR" tooltip="Editar o Item" key="icon-edit" color="black" />
@@ -53,7 +52,7 @@ const data: ClientType[] = [
   {
     key: 'cm1wfe41k0003p8791famqx25',
     name: 'Daniel Santos',
-    active: true,
+    active: false,
     createAt: '2024-10-05T20:26:02.744Z',
     tags: ['casamento', 'festa'],
   },
@@ -67,17 +66,17 @@ const data: ClientType[] = [
   {
     key: 'cm1wfe41r0005p8796jfwz3dg',
     name: 'Felipe Almeida',
-    active: true,
+    active: false,
     createAt: '2024-10-05T20:26:02.752Z',
     tags: ['batizado', 'festa'],
   },
 ];
 
-// Componente com exibição da data expandida
 const Cliente: React.FC = () => (
   <Table<ClientType>
     columns={columns}
     dataSource={data}
+    pagination={{ position: ['topRight'] }}
     expandedRowRender={(record) => {
       const formattedDate = new Date(record.createAt).toLocaleString('pt-BR', {
         day: '2-digit',
@@ -100,9 +99,12 @@ const Cliente: React.FC = () => (
 
       return (
         <div style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', color: 'gray' }}>
-          <span>Criado em {formattedDate} | {record.active ? 'ATIVO' : 'INATIVO'} </span>
+          <span style={{ marginRight: '8px' }}>Criado em {formattedDate}</span> | 
+          <Tooltip title={'Situação do item'}>
+            <span style={{ cursor: 'pointer', marginLeft: '8px', color: record.active ? 'green' : 'red' }}> {record.active ? 'ATIVO' : 'INATIVO'} </span>
+          </Tooltip>
           {tagsDisplay && tagsDisplay.length > 0 && (
-            <span style={{ marginLeft: '8px' }}>
+            <span style={{ cursor: 'pointer', marginLeft: '8px' }}>
               | {tagsDisplay}
             </span>
           )}
