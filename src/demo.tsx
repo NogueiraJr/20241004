@@ -15,6 +15,11 @@ import Ajuda from './components/menu/Ajuda';
 import Sair from './components/menu/Sair';
 import Cliente from './components/menuModule/Cliente';
 import Produto from './components/menuModule/Produto';
+import Reserva from './components/menuModule/Reserva';
+import Retirada from './components/menuModule/Retirada';
+import Devolucao from './components/menuModule/Devolucao';
+import Fornecedor from './components/menuModule/Fornecedor';
+import Parceiro from './components/menuModule/Parceiro';
 
 type MenuItem = Required<MenuProps>['items'][number];
 
@@ -49,10 +54,23 @@ const App: React.FC = () => {
         return 'Ajuda';
       case '/out':
         return 'Sair';
+
       case '/cliente':
         return 'Clientes';
       case '/produto':
         return 'Produtos';
+      case '/fornecedor':
+        return 'Fornecedores';
+      case '/parceiro':
+        return 'Parceiros';
+  
+      case '/reserva':
+        return 'Reserva';
+      case '/retirada':
+        return 'Retirada';
+      case '/devolucao':
+        return 'Devolução';
+        
       default:
         return '';
     }
@@ -116,6 +134,12 @@ const App: React.FC = () => {
 
           <Route path="/cliente" element={<Cliente />} />
           <Route path="/produto" element={<Produto />} />
+          <Route path="/fornecedor" element={<Fornecedor />} />
+          <Route path="/parceiro" element={<Parceiro />} />
+          
+          <Route path="/reserva" element={<Reserva />} />
+          <Route path="/retirada" element={<Retirada />} />
+          <Route path="/devolucao" element={<Devolucao />} />
         </Routes>
       </div>
     </div>

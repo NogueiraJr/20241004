@@ -76,7 +76,7 @@ const Cliente: React.FC = () => (
   <Table<ClientType>
     columns={columns}
     dataSource={data}
-    pagination={{ position: ['topRight'] }}
+    pagination={{ position: ['topLeft'] }}
     expandedRowRender={(record) => {
       const formattedDate = new Date(record.createAt).toLocaleString('pt-BR', {
         day: '2-digit',

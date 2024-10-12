@@ -34,6 +34,14 @@ const Dados: React.FC = () => {
     navigate('/produto');
   };
 
+  const handleListaTodosFornecedores = () => {
+    navigate('/fornecedor');
+  };
+
+  const handleListaTodosParceiros = () => {
+    navigate('/parceiro');
+  };
+
   const actionsClientes = [
     <IconText icon={PlusSquareOutlined} text="NOVO" tooltip="Adicionar Novo" key="icon-new" color="black" />,
     <IconText icon={UnorderedListOutlined} text="4" tooltip="Lista com Todos" key="icon-all-itens" color="blue" onClick={handleListaTodosClientes}/>,
@@ -61,6 +69,50 @@ const Dados: React.FC = () => {
     <IconText icon={UnorderedListOutlined} text="11" tooltip="Lista com Todos" key="icon-all-itens" color="blue" onClick={handleListaTodosProdutos}/>,
     <IconText icon={CheckCircleOutlined} text="7" tooltip="Apenas os Ativos" key="icon-actived-itens" color="green" />,
     <IconText icon={CloseCircleOutlined} text="4" tooltip="Apenas os Inativos" key="icon-desatived-itens" color="gray" />,
+    <IconText icon={DeleteOutlined} text="0" tooltip="Apenas os Apagados" key="icon-deleted-itens" color="red" />,
+    <Dropdown
+      overlay={
+        <Menu>
+          <Menu.Item key="1">casamento</Menu.Item>
+          <Menu.Item key="2">batizado</Menu.Item>
+          <Menu.Item key="3">festa</Menu.Item>
+        </Menu>
+      }
+      trigger={['click']}
+    >
+      <Tooltip title="Etiquetas">
+        <EllipsisOutlined key="ellipsis" style={{ color: 'black' }} />
+      </Tooltip>
+    </Dropdown>,
+  ];
+
+  const actionsFornecedores = [
+    <IconText icon={PlusSquareOutlined} text="NOVO" tooltip="Adicionar Novo" key="icon-new" color="black" />,
+    <IconText icon={UnorderedListOutlined} text="0" tooltip="Lista com Todos" key="icon-all-itens" color="blue" onClick={handleListaTodosFornecedores}/>,
+    <IconText icon={CheckCircleOutlined} text="0" tooltip="Apenas os Ativos" key="icon-actived-itens" color="green" />,
+    <IconText icon={CloseCircleOutlined} text="0" tooltip="Apenas os Inativos" key="icon-desatived-itens" color="gray" />,
+    <IconText icon={DeleteOutlined} text="0" tooltip="Apenas os Apagados" key="icon-deleted-itens" color="red" />,
+    <Dropdown
+      overlay={
+        <Menu>
+          <Menu.Item key="1">casamento</Menu.Item>
+          <Menu.Item key="2">batizado</Menu.Item>
+          <Menu.Item key="3">festa</Menu.Item>
+        </Menu>
+      }
+      trigger={['click']}
+    >
+      <Tooltip title="Etiquetas">
+        <EllipsisOutlined key="ellipsis" style={{ color: 'black' }} />
+      </Tooltip>
+    </Dropdown>,
+  ];
+
+  const actionsParceiros = [
+    <IconText icon={PlusSquareOutlined} text="NOVO" tooltip="Adicionar Novo" key="icon-new" color="black" />,
+    <IconText icon={UnorderedListOutlined} text="0" tooltip="Lista com Todos" key="icon-all-itens" color="blue" onClick={handleListaTodosParceiros}/>,
+    <IconText icon={CheckCircleOutlined} text="0" tooltip="Apenas os Ativos" key="icon-actived-itens" color="green" />,
+    <IconText icon={CloseCircleOutlined} text="0" tooltip="Apenas os Inativos" key="icon-desatived-itens" color="gray" />,
     <IconText icon={DeleteOutlined} text="0" tooltip="Apenas os Apagados" key="icon-deleted-itens" color="red" />,
     <Dropdown
       overlay={
@@ -155,7 +207,7 @@ const Dados: React.FC = () => {
         />
       </Card>
       <Card 
-        actions={actions} 
+        actions={actionsFornecedores} 
         style={{ 
           flex: '1 1 calc(33.333% - 5px)', 
           minWidth: 290, 
@@ -168,11 +220,11 @@ const Dados: React.FC = () => {
       >
         <Card.Meta
           avatar={
-            <Tooltip title="Fornecedores (em breve)">
+            <Tooltip title="Fornecedores">
               <Avatar icon={<ShoppingCartOutlined style={{ color: 'black' }} />} />
             </Tooltip>
           }
-          title="Fornecedores (em breve)"
+          title="Fornecedores"
           description={
             <>
               <p>Os Fornecedores da sua Empresa</p>
@@ -181,7 +233,7 @@ const Dados: React.FC = () => {
         />
       </Card>
       <Card 
-        actions={actions} 
+        actions={actionsParceiros} 
         style={{ 
           flex: '1 1 calc(33.333% - 5px)', 
           minWidth: 290, 
@@ -194,11 +246,11 @@ const Dados: React.FC = () => {
       >
         <Card.Meta
           avatar={
-            <Tooltip title="Parceiros (em breve)">
+            <Tooltip title="Parceiros">
               <Avatar icon={<TeamOutlined style={{ color: 'black' }} />} />
             </Tooltip>
           }
-          title="Parceiros (em breve)"
+          title="Parceiros"
           description={
             <>
               <p>Os Parceiros da sua Empresa</p>
