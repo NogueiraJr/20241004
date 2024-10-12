@@ -129,6 +129,32 @@ const Dados: React.FC = () => {
         />
       </Card>
       <Card 
+        actions={actionsProdutos} 
+        style={{ 
+          flex: '1 1 calc(33.333% - 5px)', 
+          minWidth: 290, 
+          borderColor: 'black', 
+          borderWidth: '2px', 
+          display: 'flex', 
+          flexDirection: 'column', 
+          justifyContent: 'space-between' 
+        }}
+      >
+        <Card.Meta
+          avatar={
+            <Tooltip title="Produtos">
+              <Avatar icon={<AppstoreAddOutlined style={{ color: 'black' }} />} />
+            </Tooltip>
+          }
+          title="Produtos"
+          description={
+            <>
+              <p>Os Produtos da sua Empresa</p>
+            </>
+          }
+        />
+      </Card>
+      <Card 
         actions={actions} 
         style={{ 
           flex: '1 1 calc(33.333% - 5px)', 
@@ -176,32 +202,6 @@ const Dados: React.FC = () => {
           description={
             <>
               <p>Os Parceiros da sua Empresa</p>
-            </>
-          }
-        />
-      </Card>
-      <Card 
-        actions={actionsProdutos} 
-        style={{ 
-          flex: '1 1 calc(33.333% - 5px)', 
-          minWidth: 290, 
-          borderColor: 'black', 
-          borderWidth: '2px', 
-          display: 'flex', 
-          flexDirection: 'column', 
-          justifyContent: 'space-between' 
-        }}
-      >
-        <Card.Meta
-          avatar={
-            <Tooltip title="Produtos">
-              <Avatar icon={<AppstoreAddOutlined style={{ color: 'black' }} />} />
-            </Tooltip>
-          }
-          title="Produtos"
-          description={
-            <>
-              <p>Os Produtos da sua Empresa</p>
             </>
           }
         />
