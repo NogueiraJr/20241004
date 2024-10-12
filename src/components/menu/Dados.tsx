@@ -35,11 +35,11 @@ const Dados: React.FC = () => {
   };
 
   const actionsClientes = [
-    <IconText icon={PlusSquareOutlined} text="NOVO" tooltip="Adicionar Novo" key="icon-new" color="#FF4C00" />,
+    <IconText icon={PlusSquareOutlined} text="NOVO" tooltip="Adicionar Novo" key="icon-new" color="black" />,
     <IconText icon={UnorderedListOutlined} text="4" tooltip="Lista com Todos" key="icon-all-itens" color="blue" onClick={handleListaTodosClientes}/>,
-    <IconText icon={CheckCircleOutlined} text="4" tooltip="Apenas os Ativos" key="icon-actived-itens" color="green" />,
-    <IconText icon={CloseCircleOutlined} text="0" tooltip="Apenas os Inativos" key="icon-desatived-itens" color="gray" />,
-    <IconText icon={DeleteOutlined} text="15" tooltip="Apenas os Apagados" key="icon-deleted-itens" color="red" />,
+    <IconText icon={CheckCircleOutlined} text="2" tooltip="Apenas os Ativos" key="icon-actived-itens" color="green" />,
+    <IconText icon={CloseCircleOutlined} text="2" tooltip="Apenas os Inativos" key="icon-desatived-itens" color="gray" />,
+    <IconText icon={DeleteOutlined} text="0" tooltip="Apenas os Apagados" key="icon-deleted-itens" color="red" />,
     <Dropdown
       overlay={
         <Menu>
@@ -57,11 +57,11 @@ const Dados: React.FC = () => {
   ];
 
   const actionsProdutos = [
-    <IconText icon={PlusSquareOutlined} text="NOVO" tooltip="Adicionar Novo" key="icon-new" color="#FF4C00" />,
-    <IconText icon={UnorderedListOutlined} text="4" tooltip="Lista com Todos" key="icon-all-itens" color="blue" onClick={handleListaTodosProdutos}/>,
-    <IconText icon={CheckCircleOutlined} text="4" tooltip="Apenas os Ativos" key="icon-actived-itens" color="green" />,
-    <IconText icon={CloseCircleOutlined} text="0" tooltip="Apenas os Inativos" key="icon-desatived-itens" color="gray" />,
-    <IconText icon={DeleteOutlined} text="54" tooltip="Apenas os Apagados" key="icon-deleted-itens" color="red" />,
+    <IconText icon={PlusSquareOutlined} text="NOVO" tooltip="Adicionar Novo" key="icon-new" color="black" />,
+    <IconText icon={UnorderedListOutlined} text="11" tooltip="Lista com Todos" key="icon-all-itens" color="blue" onClick={handleListaTodosProdutos}/>,
+    <IconText icon={CheckCircleOutlined} text="7" tooltip="Apenas os Ativos" key="icon-actived-itens" color="green" />,
+    <IconText icon={CloseCircleOutlined} text="4" tooltip="Apenas os Inativos" key="icon-desatived-itens" color="gray" />,
+    <IconText icon={DeleteOutlined} text="0" tooltip="Apenas os Apagados" key="icon-deleted-itens" color="red" />,
     <Dropdown
       overlay={
         <Menu>
@@ -80,10 +80,10 @@ const Dados: React.FC = () => {
 
   const actions = [
     <IconText icon={PlusSquareOutlined} text="NOVO" tooltip="Adicionar Novo" key="icon-new" color="#FF4C00" />,
-    <IconText icon={UnorderedListOutlined} text="175" tooltip="Lista com Todos" key="icon-all-itens" color="blue" />,
-    <IconText icon={CheckCircleOutlined} text="123" tooltip="Apenas os Ativos" key="icon-actived-itens" color="green" />,
-    <IconText icon={CloseCircleOutlined} text="52" tooltip="Apenas os Inativos" key="icon-desatived-itens" color="gray" />,
-    <IconText icon={DeleteOutlined} text="15" tooltip="Apenas os Apagados" key="icon-deleted-itens" color="red" />,
+    <IconText icon={UnorderedListOutlined} text="0" tooltip="Lista com Todos" key="icon-all-itens" color="blue" />,
+    <IconText icon={CheckCircleOutlined} text="0" tooltip="Apenas os Ativos" key="icon-actived-itens" color="green" />,
+    <IconText icon={CloseCircleOutlined} text="0" tooltip="Apenas os Inativos" key="icon-desatived-itens" color="gray" />,
+    <IconText icon={DeleteOutlined} text="0" tooltip="Apenas os Apagados" key="icon-deleted-itens" color="red" />,
     <Dropdown
       overlay={
         <Menu>
@@ -168,11 +168,11 @@ const Dados: React.FC = () => {
       >
         <Card.Meta
           avatar={
-            <Tooltip title="Fornecedores">
+            <Tooltip title="Fornecedores (em breve)">
               <Avatar icon={<ShoppingCartOutlined style={{ color: 'black' }} />} />
             </Tooltip>
           }
-          title="Fornecedores"
+          title="Fornecedores (em breve)"
           description={
             <>
               <p>Os Fornecedores da sua Empresa</p>
@@ -194,11 +194,11 @@ const Dados: React.FC = () => {
       >
         <Card.Meta
           avatar={
-            <Tooltip title="Parceiros">
+            <Tooltip title="Parceiros (em breve)">
               <Avatar icon={<TeamOutlined style={{ color: 'black' }} />} />
             </Tooltip>
           }
-          title="Parceiros"
+          title="Parceiros (em breve)"
           description={
             <>
               <p>Os Parceiros da sua Empresa</p>
