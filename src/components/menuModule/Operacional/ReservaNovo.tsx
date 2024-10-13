@@ -39,7 +39,7 @@ const produtos = [
     "productTypeId": "product",
     "quantity": 3,
     "price": 35.90,
-    "tags": null,
+    "tags": ["casamento", "festa"],
     "active": true,
     "createAt": "2024-10-12 18:40:23.611",
     "updatedAt": "2024-10-12 18:40:23.611",
@@ -216,20 +216,33 @@ const produtos = [
 
 
 const ReservaNovo: React.FC = () => {
-  const [selectedProducts, setSelectedProducts] = useState<string[]>([]);
-  const [totalPrice, setTotalPrice] = useState<number>(0);
+  const [selectedProducts, setSelectedProducts] = useState([]);
+  const [quantities, setQuantities] = useState({});
 
-  const handleProductChange = (selectedIds: string[]) => {
-    setSelectedProducts(selectedIds);
-    const selectedProductDetails = produtos.filter(p => selectedIds.includes(p.id));
-    const sum = selectedProductDetails.reduce((acc, p) => acc + p.price, 0);
-    setTotalPrice(sum);
+  const handleProductChange = (value) => {
+    setSelectedProducts(value);
+    const newQuantities = {};
+    value.forEach((id) => {
+      if (!quantities[id]) {
+        newQuantities[id] = 1; // Default quantity is 1
+      }
+    });
+    setQuantities((prev) => ({ ...prev, ...newQuantities }));
   };
 
-  const handleTotalPriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = parseFloat(e.target.value);
-    setTotalPrice(isNaN(value) ? 0 : value);
+  const handleQuantityChange = (id, value) => {
+    setQuantities((prev) => ({
+      ...prev,
+      [id]: value,
+    }));
   };
+
+  // Calcular o total baseado nos produtos selecionados e suas quantidades
+  const totalPrice = selectedProducts.reduce((total, productId) => {
+    const product = produtos.find(p => p.id === productId);
+    return total + (product?.price || 0) * (quantities[productId] || 1);
+  }, 0);
+
   return (
     <>
       <Form
@@ -256,30 +269,42 @@ const ReservaNovo: React.FC = () => {
 
 
         <Form.Item
-          label={<span style={{ whiteSpace: 'nowrap' }}>{`${selectedProducts.length} selecionado(s)`}</span>}
-        >
-          <Input
-            value={totalPrice.toFixed(2)}
-            onChange={handleTotalPriceChange}
-            prefix="R$"
-          />
-        </Form.Item>
-        <Form.Item label="Produtos">
-          <Select
-            mode="multiple"
-            showSearch
-            placeholder="Selecione os produtos"
-            filterOption={(input, option) => {
-              const searchValue = input.toLowerCase();
-              const product = produtos.find(p => p.id === option.value);
-              return product &&
-                (product.name.toLowerCase().includes(searchValue) ||
-                  product.description.toLowerCase().includes(searchValue));
-            }}
-            options={produtos.map(p => ({
-              value: p.id,
-              label: (
-                <>
+        label={<span style={{ whiteSpace: 'nowrap' }}>{`${selectedProducts.length} selecionado(s)`}</span>}
+      >
+        <Input
+          value={totalPrice.toFixed(2)}
+          prefix="R$"
+          disabled // Desabilitando a edição do campo total
+        />
+      </Form.Item>
+      <Form.Item label="Produtos">
+        <Select
+          mode="multiple"
+          showSearch
+          placeholder="Selecione os produtos"
+          filterOption={(input, option) => {
+            const searchValue = input.toLowerCase();
+            const product = produtos.find(p => p.id === option.value);
+            return product &&
+              (product.name.toLowerCase().includes(searchValue) ||
+                product.description.toLowerCase().includes(searchValue));
+          }}
+          options={produtos.map(p => ({
+            value: p.id,
+            label: (
+              <div style={{ display: 'flex', alignItems: 'left', flexDirection: 'column' }}>
+                {selectedProducts.includes(p.id) && (
+                  <Input
+                    type="number"
+                    min={1}
+                    value={quantities[p.id] || 1}
+                    onChange={(e) => handleQuantityChange(p.id, parseInt(e.target.value, 10) || 1)}
+                    style={{ width: 60, marginBottom: 5 }} // Margem abaixo do campo numérico
+                    onMouseDown={(e) => e.stopPropagation()} // Impede a propagação do evento de clique
+                    onClick={(e) => e.stopPropagation()} // Impede a propagação do evento de clique
+                  />
+                )}
+                <div style={{ flexGrow: 1 }}>
                   <Text strong>
                     {p.productTypeId === 'product' ? 'Produto' : 'Serviço'} R$ {p.price.toFixed(2)} {p.name}
                   </Text>
@@ -288,18 +313,20 @@ const ReservaNovo: React.FC = () => {
                     {p.description}
                   </Text>
                   <br />
-                  <Text style={{ fontSize: 12, color: p.quantity <= 0 ? 'red' : 'inherit' }}>Disponível: {p.quantity}</Text>
+                  <Text style={{ fontSize: 12, color: p.quantity <= 0 ? 'red' : 'inherit' }}>
+                    Disponível: {p.quantity}
+                  </Text>
                   <br />
                   <Text style={{ fontSize: 12, color: '#1890ff' }}>
                     {(p.tags || []).join(', ')}
                   </Text>
-                </>
-              ),
-            }))}
-            
-            onChange={handleProductChange}
-          />
-        </Form.Item>
+                </div>
+              </div>
+            ),
+          }))}
+          onChange={handleProductChange}
+        />
+      </Form.Item>
 
 
 
