@@ -202,7 +202,17 @@ const produtos = [
   }
 ];
 
+
 const ReservaNovo: React.FC = () => {
+  const [selectedProducts, setSelectedProducts] = useState<string[]>([]);
+  
+  const handleProductChange = (selectedIds: string[]) => {
+    setSelectedProducts(selectedIds);
+  };
+  
+  const selectedProductDetails = produtos.filter(p => selectedProducts.includes(p.id));
+  const totalQuantity = selectedProductDetails.length;
+  const totalPrice = selectedProductDetails.reduce((sum, p) => sum + p.price, 0);
   return (
     <>
       <Form
@@ -228,40 +238,44 @@ const ReservaNovo: React.FC = () => {
 
 
 
-        <Form.Item label="Produtos">
-          <Select
-            mode="multiple"
-            showSearch
-            placeholder="Selecione os produtos"
-            filterOption={(input, option) => {
-              const searchValue = input.toLowerCase();
-              const product = produtos.find(p => p.id === option.value);
-              return product &&
-                (product.name.toLowerCase().includes(searchValue) ||
-                product.description.toLowerCase().includes(searchValue));
-            }}
-            options={produtos.map(p => ({
-              value: p.id,
-              label: (
-                <>
-                  <Text strong>
-                    {p.productTypeId === 'product' ? 'Produto' : 'Serviço'} R$ {p.price.toFixed(2)} {p.name}
-                  </Text>
-                  <br />
-                  <Text type="secondary" style={{ fontSize: 12, whiteSpace: 'normal' }}>
-                    {p.description}
-                  </Text>
-                  <br />
-                  <Text style={{ fontSize: 12 }}>R$ {p.price.toFixed(2)}</Text>
-                  <br />
-                  <Text style={{ fontSize: 12, color: '#1890ff' }}>
-                    {(p.tags || []).join(', ')}
-                  </Text>
-                </>
-              ),
-            }))}
-          />
-        </Form.Item>
+        <div style={{ marginBottom: '8px' }}>
+        <Text strong>{totalQuantity} Produtos - Total: R$ {totalPrice.toFixed(2)}</Text>
+      </div>
+      <Form.Item label="Produtos">
+        <Select
+          mode="multiple"
+          showSearch
+          placeholder="Selecione os produtos"
+          filterOption={(input, option) => {
+            const searchValue = input.toLowerCase();
+            const product = produtos.find(p => p.id === option.value);
+            return product &&
+              (product.name.toLowerCase().includes(searchValue) ||
+               product.description.toLowerCase().includes(searchValue));
+          }}
+          options={produtos.map(p => ({
+            value: p.id,
+            label: (
+              <>
+                <Text strong>
+                  {p.productTypeId === 'product' ? 'Produto' : 'Serviço'} R$ {p.price.toFixed(2)} {p.name}
+                </Text>
+                <br />
+                <Text type="secondary" style={{ fontSize: 12, whiteSpace: 'normal' }}>
+                  {p.description}
+                </Text>
+                <br />
+                <Text style={{ fontSize: 12 }}>R$ {p.price.toFixed(2)}</Text>
+                <br />
+                <Text style={{ fontSize: 12, color: '#1890ff' }}>
+                  {(p.tags || []).join(', ')}
+                </Text>
+              </>
+            ),
+          }))}
+          onChange={handleProductChange}
+        />
+      </Form.Item>
 
 
 
