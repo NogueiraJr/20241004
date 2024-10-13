@@ -205,18 +205,23 @@ const produtos = [
 
 const ReservaNovo: React.FC = () => {
   const [selectedProducts, setSelectedProducts] = useState<string[]>([]);
-  
+  const [totalPrice, setTotalPrice] = useState<number>(0);
+
   const handleProductChange = (selectedIds: string[]) => {
     setSelectedProducts(selectedIds);
+    const selectedProductDetails = produtos.filter(p => selectedIds.includes(p.id));
+    const sum = selectedProductDetails.reduce((acc, p) => acc + p.price, 0);
+    setTotalPrice(sum);
   };
-  
-  const selectedProductDetails = produtos.filter(p => selectedProducts.includes(p.id));
-  const totalQuantity = selectedProductDetails.length;
-  const totalPrice = selectedProductDetails.reduce((sum, p) => sum + p.price, 0);
+
+  const handleTotalPriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = parseFloat(e.target.value);
+    setTotalPrice(isNaN(value) ? 0 : value);
+  };
   return (
     <>
       <Form
-        labelCol={{ span: 4 }}
+        labelCol={{ span: 5 }}
         wrapperCol={{ span: 14 }}
         layout="vertical"
         style={{ maxWidth: 600 }}
@@ -238,44 +243,50 @@ const ReservaNovo: React.FC = () => {
 
 
 
-        <div style={{ marginBottom: '8px' }}>
-        <Text strong>{totalQuantity} Produtos - Total: R$ {totalPrice.toFixed(2)}</Text>
-      </div>
-      <Form.Item label="Produtos">
-        <Select
-          mode="multiple"
-          showSearch
-          placeholder="Selecione os produtos"
-          filterOption={(input, option) => {
-            const searchValue = input.toLowerCase();
-            const product = produtos.find(p => p.id === option.value);
-            return product &&
-              (product.name.toLowerCase().includes(searchValue) ||
-               product.description.toLowerCase().includes(searchValue));
-          }}
-          options={produtos.map(p => ({
-            value: p.id,
-            label: (
-              <>
-                <Text strong>
-                  {p.productTypeId === 'product' ? 'Produto' : 'Serviço'} R$ {p.price.toFixed(2)} {p.name}
-                </Text>
-                <br />
-                <Text type="secondary" style={{ fontSize: 12, whiteSpace: 'normal' }}>
-                  {p.description}
-                </Text>
-                <br />
-                <Text style={{ fontSize: 12 }}>R$ {p.price.toFixed(2)}</Text>
-                <br />
-                <Text style={{ fontSize: 12, color: '#1890ff' }}>
-                  {(p.tags || []).join(', ')}
-                </Text>
-              </>
-            ),
-          }))}
-          onChange={handleProductChange}
-        />
-      </Form.Item>
+        <Form.Item
+          label={<span style={{ whiteSpace: 'nowrap' }}>{`${selectedProducts.length} selecionado(s)`}</span>}
+        >
+          <Input
+            value={totalPrice.toFixed(2)}
+            onChange={handleTotalPriceChange}
+            prefix="R$"
+          />
+        </Form.Item>
+        <Form.Item label="Produtos">
+          <Select
+            mode="multiple"
+            showSearch
+            placeholder="Selecione os produtos"
+            filterOption={(input, option) => {
+              const searchValue = input.toLowerCase();
+              const product = produtos.find(p => p.id === option.value);
+              return product &&
+                (product.name.toLowerCase().includes(searchValue) ||
+                  product.description.toLowerCase().includes(searchValue));
+            }}
+            options={produtos.map(p => ({
+              value: p.id,
+              label: (
+                <>
+                  <Text strong>
+                    {p.productTypeId === 'product' ? 'Produto' : 'Serviço'} R$ {p.price.toFixed(2)} {p.name}
+                  </Text>
+                  <br />
+                  <Text type="secondary" style={{ fontSize: 12, whiteSpace: 'normal' }}>
+                    {p.description}
+                  </Text>
+                  <br />
+                  <Text style={{ fontSize: 12 }}>R$ {p.price.toFixed(2)}</Text>
+                  <br />
+                  <Text style={{ fontSize: 12, color: '#1890ff' }}>
+                    {(p.tags || []).join(', ')}
+                  </Text>
+                </>
+              ),
+            }))}
+            onChange={handleProductChange}
+          />
+        </Form.Item>
 
 
 
