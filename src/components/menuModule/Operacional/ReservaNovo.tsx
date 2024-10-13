@@ -37,7 +37,8 @@ const produtos = [
     "name": "Vestido de Festa",
     "description": "Vestidos elegantes e sofisticados adequados para eventos formais, como casamentos, bailes de formatura e festas de gala.",
     "productTypeId": "product",
-    "price": 0E-30,
+    "quantity": 3,
+    "price": 35.90,
     "tags": null,
     "active": true,
     "createAt": "2024-10-12 18:40:23.611",
@@ -51,7 +52,8 @@ const produtos = [
     "name": "Terno",
     "description": "Conjunto de calça e paletó elegante para homens, adequado para eventos formais, reuniões de negócios e ocasiões especiais.",
     "productTypeId": "product",
-    "price": 0E-30,
+    "quantity": 4,
+    "price": 25.29,
     "tags": null,
     "active": true,
     "createAt": "2024-10-12 18:40:23.618",
@@ -65,7 +67,8 @@ const produtos = [
     "name": "Vestido de Noiva",
     "description": "Vestidos de noiva em uma variedade de estilos, cortes e designs para o dia mais especial na vida de uma mulher.",
     "productTypeId": "product",
-    "price": 0E-30,
+    "quantity": 0,
+    "price": 68.30,
     "tags": null,
     "active": true,
     "createAt": "2024-10-12 18:40:23.622",
@@ -79,7 +82,8 @@ const produtos = [
     "name": "Leva e Traz",
     "description": "Levar e Trazer os Produtos para o Clinte.",
     "productTypeId": "service",
-    "price": 250.00,
+    "quantity": 8,
+    "price": 250.30,
     "tags": ["casamento", "festa"],
     "active": true,
     "createAt": "2024-10-12 18:40:23.622",
@@ -93,7 +97,8 @@ const produtos = [
     "name": "Smoking",
     "description": "Traje formal para homens, geralmente usado em eventos de gala, casamentos formais e ocasiões de luxo à noite.",
     "productTypeId": "product",
-    "price": 0E-30,
+    "quantity": 9,
+    "price": 15.78,
     "tags": null,
     "active": true,
     "createAt": "2024-10-12 18:40:23.626",
@@ -107,7 +112,8 @@ const produtos = [
     "name": "Vestido de Cocktail",
     "description": "Vestidos semi-formais mais curtos, ideais para eventos semi-formais, coquetéis, festas de aniversário e eventos corporativos descontraídos.",
     "productTypeId": "product",
-    "price": 0E-30,
+    "quantity": 0,
+    "price": 58.67,
     "tags": null,
     "active": true,
     "createAt": "2024-10-12 18:40:23.629",
@@ -121,7 +127,8 @@ const produtos = [
     "name": "Vestido de Dama de Honra",
     "description": "Vestidos elegantes e coordenados para as damas de honra em casamentos, disponíveis em uma variedade de cores e estilos.",
     "productTypeId": "product",
-    "price": 0E-30,
+    "quantity": 3,
+    "price": 27.23,
     "tags": null,
     "active": true,
     "createAt": "2024-10-12 18:40:23.632",
@@ -135,7 +142,8 @@ const produtos = [
     "name": "Traje Infantil",
     "description": "Conjuntos de roupas formais para crianças, incluindo ternos para meninos e vestidos elegantes para meninas, para ocasiões especiais.",
     "productTypeId": "product",
-    "price": 0E-30,
+    "quantity": 0,
+    "price": 44.56,
     "tags": null,
     "active": true,
     "createAt": "2024-10-12 18:40:23.634",
@@ -149,7 +157,8 @@ const produtos = [
     "name": "Acessórios de Noiva",
     "description": "Acessórios como véus, tiaras, luvas e joias para complementar o vestido de noiva e completar o visual da noiva.",
     "productTypeId": "product",
-    "price": 0E-30,
+    "quantity": 12,
+    "price": 30.30,
     "tags": null,
     "active": true,
     "createAt": "2024-10-12 18:40:23.637",
@@ -163,7 +172,8 @@ const produtos = [
     "name": "Roupa de Convidados",
     "description": "Opções de trajes formais e semi-formais para convidados de casamentos, festas de gala, eventos corporativos e outras ocasiões especiais.",
     "productTypeId": "product",
-    "price": 0E-30,
+    "quantity": 6,
+    "price": 80.60,
     "tags": null,
     "active": true,
     "createAt": "2024-10-12 18:40:23.641",
@@ -177,7 +187,8 @@ const produtos = [
     "name": "Vestido de Madrinha",
     "description": "Vestidos elegantes e coordenados para as madrinhas em casamentos, disponíveis em uma variedade de estilos e cores.",
     "productTypeId": "product",
-    "price": 0E-30,
+    "quantity": 4,
+    "price": 60.59,
     "tags": null,
     "active": true,
     "createAt": "2024-10-12 18:40:23.644",
@@ -191,7 +202,8 @@ const produtos = [
     "name": "Smoking Infantil",
     "description": "Versões em miniatura de smokings para meninos, perfeitos para eventos formais, casamentos e festas.",
     "productTypeId": "product",
-    "price": 0E-30,
+    "quantity": 5,
+    "price": 45.50,
     "tags": null,
     "active": true,
     "createAt": "2024-10-12 18:40:23.646",
@@ -276,7 +288,7 @@ const ReservaNovo: React.FC = () => {
                     {p.description}
                   </Text>
                   <br />
-                  <Text style={{ fontSize: 12 }}>R$ {p.price.toFixed(2)}</Text>
+                  <Text style={{ fontSize: 12, color: p.quantity <= 0 ? 'red' : 'inherit' }}>Disponível: {p.quantity}</Text>
                   <br />
                   <Text style={{ fontSize: 12, color: '#1890ff' }}>
                     {(p.tags || []).join(', ')}
@@ -284,6 +296,7 @@ const ReservaNovo: React.FC = () => {
                 </>
               ),
             }))}
+            
             onChange={handleProductChange}
           />
         </Form.Item>
