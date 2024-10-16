@@ -1,18 +1,18 @@
-import React from 'react';
-import { 
-  EllipsisOutlined, 
-  PlusSquareOutlined, 
-  UnorderedListOutlined, 
-  CheckCircleOutlined, 
-  CloseCircleOutlined, 
-  DeleteOutlined, 
+import React, { useState } from 'react';
+import {
+  EllipsisOutlined,
+  PlusSquareOutlined,
+  UnorderedListOutlined,
+  CheckCircleOutlined,
+  CloseCircleOutlined,
+  DeleteOutlined,
   CalendarOutlined,
-  DownloadOutlined,
   RollbackOutlined,
-  UploadOutlined
+  UploadOutlined,
 } from '@ant-design/icons';
-import { Avatar, Card, Dropdown, Menu, Tooltip, Typography } from 'antd';
+import { Avatar, Card, Dropdown, Menu, Tooltip, Typography, Drawer, Button } from 'antd';
 import { useNavigate } from 'react-router-dom';
+import ReservaNovo from '../menuModule/Operacional/ReservaNovo'; // Importando o componente ReservaNovo
 
 const { Text } = Typography;
 const { Link } = Typography;
@@ -28,22 +28,35 @@ const IconText = ({ icon, text, tooltip, color, onClick }: { icon: React.Compone
 
 const Operacional: React.FC = () => {
   const navigate = useNavigate();
+  const [isDrawerVisible, setIsDrawerVisible] = useState(false);
+
+  const showDrawer = () => {
+    setIsDrawerVisible(true);
+  };
+
+  const closeDrawer = () => {
+    setIsDrawerVisible(false);
+  };
 
   const handleListaTodasReservas = () => {
     navigate('/reserva');
   };
 
+  const handleReservaNovo = () => {
+    showDrawer(); // Abrir o Drawer quando "Novo" for clicado
+  };
+
   const handleListaTodasRetiradas = () => {
     navigate('/retirada');
   };
-  
+
   const handleListaTodasDevolucoes = () => {
     navigate('/devolucao');
   };
 
   const actionsReserva = [
-    <IconText icon={PlusSquareOutlined} text="NOVO" tooltip="Nova Reserva" key="icon-new" color="black" />,
-    <IconText icon={UnorderedListOutlined} text="0" tooltip="Todas as Reservas" key="icon-all-itens" color="blue" onClick={handleListaTodasReservas}/>,
+    <IconText icon={PlusSquareOutlined} text="NOVO" tooltip="Nova Reserva" key="icon-new" color="black" onClick={handleReservaNovo} />,
+    <IconText icon={UnorderedListOutlined} text="0" tooltip="Todas as Reservas" key="icon-all-itens" color="blue" onClick={handleListaTodasReservas} />,
     <IconText icon={CheckCircleOutlined} text="0" tooltip="Apenas Reservas Ativas" key="icon-actived-itens" color="green" />,
     <IconText icon={CloseCircleOutlined} text="0" tooltip="Apenas Reservas Inativas" key="icon-desatived-itens" color="gray" />,
     <IconText icon={DeleteOutlined} text="0" tooltip="Apenas Reservas Apagadas" key="icon-deleted-itens" color="red" />,
@@ -131,16 +144,16 @@ const Operacional: React.FC = () => {
 
   return (
     <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
-      <Card 
-        actions={actionsReserva} 
-        style={{ 
-          flex: '1 1 calc(33.333% - 5px)', 
-          minWidth: 290, 
-          borderColor: 'black', 
-          borderWidth: '2px', 
-          display: 'flex', 
-          flexDirection: 'column', 
-          justifyContent: 'space-between' 
+      <Card
+        actions={actionsReserva}
+        style={{
+          flex: '1 1 calc(33.333% - 5px)',
+          minWidth: 290,
+          borderColor: 'black',
+          borderWidth: '2px',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'space-between',
         }}
       >
         <Card.Meta
@@ -152,7 +165,7 @@ const Operacional: React.FC = () => {
           title="Reservas"
           description={
             <>
-              <Text strong style={{fontSize: '15px'}}>As Reservas da sua Empresa</Text>
+              <Text strong style={{ fontSize: '15px' }}>As Reservas da sua Empresa</Text>
               <Link onClick={() => { console.log('Texto clicado!'); }}>
                 <div>12 reservas feitas nesta semana</div>
               </Link>
@@ -163,6 +176,7 @@ const Operacional: React.FC = () => {
           }
         />
       </Card>
+
       <Card 
         actions={actionsRetirada} 
         style={{ 
@@ -239,6 +253,17 @@ const Operacional: React.FC = () => {
           }
         />
       </Card>
+
+      {/* Drawer para abrir o componente ReservaNovo */}
+      <Drawer
+        title="Nova Reserva"
+        placement="right"
+        onClose={closeDrawer}
+        open={isDrawerVisible}
+        width={500}
+      >
+        <ReservaNovo />
+      </Drawer>
     </div>
   );
 };
