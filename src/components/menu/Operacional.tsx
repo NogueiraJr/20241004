@@ -55,7 +55,7 @@ const Operacional: React.FC = () => {
   };
 
   const actionsReserva = [
-    <IconText icon={PlusSquareOutlined} text="NOVO" tooltip="Nova Reserva" key="icon-new" color="black" onClick={handleReservaNovo} />,
+    <IconText icon={PlusSquareOutlined} text="RESERVAR" tooltip="Nova Reserva" key="icon-new" color="black" onClick={handleReservaNovo} />,
     <IconText icon={UnorderedListOutlined} text="0" tooltip="Todas as Reservas" key="icon-all-itens" color="blue" onClick={handleListaTodasReservas} />,
     <IconText icon={CheckCircleOutlined} text="0" tooltip="Apenas Reservas Ativas" key="icon-actived-itens" color="green" />,
     <IconText icon={CloseCircleOutlined} text="0" tooltip="Apenas Reservas Inativas" key="icon-desatived-itens" color="gray" />,
@@ -77,7 +77,7 @@ const Operacional: React.FC = () => {
   ];
 
   const actionsRetirada = [
-    <IconText icon={PlusSquareOutlined} text="NOVO" tooltip="Nova Retirada" key="icon-new" color="black" />,
+    <IconText icon={PlusSquareOutlined} text="RETIRAR" tooltip="Nova Retirada" key="icon-new" color="black" />,
     <IconText icon={UnorderedListOutlined} text="0" tooltip="Todas as Retiradas" key="icon-all-itens" color="blue" onClick={handleListaTodasRetiradas}/>,
     <IconText icon={CheckCircleOutlined} text="0" tooltip="Apenas Retiradas Ativas" key="icon-actived-itens" color="green" />,
     <IconText icon={CloseCircleOutlined} text="0" tooltip="Apenas Retiradas Inativas" key="icon-desatived-itens" color="gray" />,
@@ -99,7 +99,7 @@ const Operacional: React.FC = () => {
   ];
 
   const actionsDevolucao = [
-    <IconText icon={PlusSquareOutlined} text="NOVO" tooltip="Nova Devolução" key="icon-new" color="black" />,
+    <IconText icon={PlusSquareOutlined} text="DEVOLVER" tooltip="Nova Devolução" key="icon-new" color="black" />,
     <IconText icon={UnorderedListOutlined} text="0" tooltip="Todas as Devoluções" key="icon-all-itens" color="blue" onClick={handleListaTodasDevolucoes}/>,
     <IconText icon={CheckCircleOutlined} text="0" tooltip="Apenas Devoluções Ativas" key="icon-actived-itens" color="green" />,
     <IconText icon={CloseCircleOutlined} text="0" tooltip="Apenas Devoluções Inativas" key="icon-desatived-itens" color="gray" />,
@@ -148,7 +148,7 @@ const Operacional: React.FC = () => {
         actions={actionsReserva}
         style={{
           flex: '1 1 calc(33.333% - 5px)',
-          minWidth: 290,
+          minWidth: 350,
           borderColor: 'black',
           borderWidth: '2px',
           display: 'flex',
@@ -181,7 +181,7 @@ const Operacional: React.FC = () => {
         actions={actionsRetirada} 
         style={{ 
           flex: '1 1 calc(33.333% - 5px)', 
-          minWidth: 290, 
+          minWidth: 350, 
           borderColor: 'black', 
           borderWidth: '2px', 
           display: 'flex', 
@@ -219,7 +219,7 @@ const Operacional: React.FC = () => {
         actions={actionsDevolucao} 
         style={{ 
           flex: '1 1 calc(33.333% - 5px)', 
-          minWidth: 290, 
+          minWidth: 350, 
           borderColor: 'black', 
           borderWidth: '2px', 
           display: 'flex', 

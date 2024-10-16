@@ -158,7 +158,7 @@ const Dados: React.FC = () => {
         actions={actionsClientes} 
         style={{ 
           flex: '1 1 calc(33.333% - 5px)', 
-          minWidth: 290, 
+          minWidth: 350, 
           borderColor: 'black', 
           borderWidth: '2px', 
           display: 'flex', 
@@ -184,7 +184,7 @@ const Dados: React.FC = () => {
         actions={actionsProdutos} 
         style={{ 
           flex: '1 1 calc(33.333% - 5px)', 
-          minWidth: 290, 
+          minWidth: 350, 
           borderColor: 'black', 
           borderWidth: '2px', 
           display: 'flex', 
@@ -210,7 +210,7 @@ const Dados: React.FC = () => {
         actions={actionsFornecedores} 
         style={{ 
           flex: '1 1 calc(33.333% - 5px)', 
-          minWidth: 290, 
+          minWidth: 350, 
           borderColor: 'black', 
           borderWidth: '2px', 
           display: 'flex', 
@@ -236,7 +236,7 @@ const Dados: React.FC = () => {
         actions={actionsParceiros} 
         style={{ 
           flex: '1 1 calc(33.333% - 5px)', 
-          minWidth: 290, 
+          minWidth: 350, 
           borderColor: 'black', 
           borderWidth: '2px', 
           display: 'flex', 
