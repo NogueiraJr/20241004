@@ -247,7 +247,7 @@ const ReservaNovo: React.FC = () => {
     <>
       <Form
         labelCol={{ span: 5 }}
-        wrapperCol={{ span: 14 }}
+        wrapperCol={{ span: 25 }}
         layout="vertical"
         style={{ maxWidth: 600 }}
       >
@@ -269,7 +269,7 @@ const ReservaNovo: React.FC = () => {
 
 
         <Form.Item
-        label={<span style={{ whiteSpace: 'nowrap' }}>{`${selectedProducts.length} selecionado(s)`}</span>}
+        label={<span style={{ whiteSpace: 'nowrap' }}>{`${selectedProducts.length} selecionados`}</span>}
       >
         <Input
           value={totalPrice.toFixed(2)}
