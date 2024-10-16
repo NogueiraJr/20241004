@@ -24,12 +24,279 @@ const { Text } = Typography;
 const { RangePicker } = DatePicker;
 const { TextArea } = Input;
 
-const normFile = (e: any) => {
-  if (Array.isArray(e)) {
-    return e;
-  }
-  return e?.fileList;
-};
+// Lista de clientes
+const clientes = [
+	{
+		"id" : "cm1wfe41d0001p8795aihoxtu",
+		"name" : "Bruno Costa",
+		"tags" : null,
+		"active" : true,
+		"createAt" : "2024-10-05T20:26:02.738Z",
+		"updatedAt" : "2024-10-05T20:26:02.738Z",
+		"deletedAt" : null
+	},
+	{
+		"id" : "cm1wfe41k0003p8791famqx25",
+		"name" : "Daniel Santos",
+		"tags" : null,
+		"active" : true,
+		"createAt" : "2024-10-05T20:26:02.744Z",
+		"updatedAt" : "2024-10-05T20:26:02.744Z",
+		"deletedAt" : null
+	},
+	{
+		"id" : "cm1wfe41o0004p879vczh6fkt",
+		"name" : "Elisa Pereira",
+		"tags" : null,
+		"active" : true,
+		"createAt" : "2024-10-05T20:26:02.748Z",
+		"updatedAt" : "2024-10-05T20:26:02.748Z",
+		"deletedAt" : null
+	},
+	{
+		"id" : "cm1wfe41r0005p8796jfwz3dg",
+		"name" : "Felipe Almeida",
+		"tags" : null,
+		"active" : true,
+		"createAt" : "2024-10-05T20:26:02.752Z",
+		"updatedAt" : "2024-10-05T20:26:02.752Z",
+		"deletedAt" : null
+	},
+	{
+		"id" : "cm1wfe41x0007p879q05ei1zx",
+		"name" : "Henrique Ferreira",
+		"tags" : null,
+		"active" : true,
+		"createAt" : "2024-10-05T20:26:02.758Z",
+		"updatedAt" : "2024-10-05T20:26:02.758Z",
+		"deletedAt" : null
+	},
+	{
+		"id" : "cm1wfe4210008p879pf9v6vkt",
+		"name" : "Isabela Martins",
+		"tags" : null,
+		"active" : true,
+		"createAt" : "2024-10-05T20:26:02.761Z",
+		"updatedAt" : "2024-10-05T20:26:02.761Z",
+		"deletedAt" : null
+	},
+	{
+		"id" : "cm1wfe427000ap879ehjfxm3u",
+		"name" : "Karen Lima",
+		"tags" : null,
+		"active" : true,
+		"createAt" : "2024-10-05T20:26:02.767Z",
+		"updatedAt" : "2024-10-05T20:26:02.767Z",
+		"deletedAt" : null
+	},
+	{
+		"id" : "cm1wfe42a000bp879rqhszcd1",
+		"name" : "Lucas Fernandes",
+		"tags" : null,
+		"active" : true,
+		"createAt" : "2024-10-05T20:26:02.771Z",
+		"updatedAt" : "2024-10-05T20:26:02.771Z",
+		"deletedAt" : null
+	},
+	{
+		"id" : "cm1wfe42d000cp879mgxr62gu",
+		"name" : "Mariana Rocha",
+		"tags" : null,
+		"active" : true,
+		"createAt" : "2024-10-05T20:26:02.773Z",
+		"updatedAt" : "2024-10-05T20:26:02.773Z",
+		"deletedAt" : null
+	},
+	{
+		"id" : "cm1wfe42j000ep879lg5sk3i8",
+		"name" : "Olivia Mendes",
+		"tags" : null,
+		"active" : true,
+		"createAt" : "2024-10-05T20:26:02.779Z",
+		"updatedAt" : "2024-10-05T20:26:02.779Z",
+		"deletedAt" : null
+	},
+	{
+		"id" : "cm1wfe42m000fp8799jb40eo2",
+		"name" : "Pedro Azevedo",
+		"tags" : null,
+		"active" : true,
+		"createAt" : "2024-10-05T20:26:02.782Z",
+		"updatedAt" : "2024-10-05T20:26:02.782Z",
+		"deletedAt" : null
+	},
+	{
+		"id" : "cm1wfe42o000gp87980rmxs5p",
+		"name" : "Quezia Monteiro",
+		"tags" : null,
+		"active" : true,
+		"createAt" : "2024-10-05T20:26:02.785Z",
+		"updatedAt" : "2024-10-05T20:26:02.785Z",
+		"deletedAt" : null
+	},
+	{
+		"id" : "cm1wfe42t000ip879yub5cefk",
+		"name" : "Sofia Nogueira",
+		"tags" : null,
+		"active" : true,
+		"createAt" : "2024-10-05T20:26:02.790Z",
+		"updatedAt" : "2024-10-05T20:26:02.790Z",
+		"deletedAt" : null
+	},
+	{
+		"id" : "cm1wfe42w000jp879adkk3pik",
+		"name" : "Thiago Barros",
+		"tags" : null,
+		"active" : true,
+		"createAt" : "2024-10-05T20:26:02.792Z",
+		"updatedAt" : "2024-10-05T20:26:02.792Z",
+		"deletedAt" : null
+	},
+	{
+		"id" : "cm1wfe42y000kp879zkpu2bfr",
+		"name" : "Ursula Machado",
+		"tags" : null,
+		"active" : true,
+		"createAt" : "2024-10-05T20:26:02.795Z",
+		"updatedAt" : "2024-10-05T20:26:02.795Z",
+		"deletedAt" : null
+	},
+	{
+		"id" : "cm1wfe433000mp879d6vnjger",
+		"name" : "Yasmin Castro",
+		"tags" : null,
+		"active" : true,
+		"createAt" : "2024-10-05T20:26:02.800Z",
+		"updatedAt" : "2024-10-05T20:26:02.800Z",
+		"deletedAt" : null
+	},
+	{
+		"id" : "cm1wfe436000np879vesuh6le",
+		"name" : "William Teixeira",
+		"tags" : null,
+		"active" : true,
+		"createAt" : "2024-10-05T20:26:02.803Z",
+		"updatedAt" : "2024-10-05T20:26:02.803Z",
+		"deletedAt" : null
+	},
+	{
+		"id" : "cm1wfe43c000pp87916k4ehg3",
+		"name" : "Igor Duarte",
+		"tags" : null,
+		"active" : true,
+		"createAt" : "2024-10-05T20:26:02.808Z",
+		"updatedAt" : "2024-10-05T20:26:02.808Z",
+		"deletedAt" : null
+	},
+	{
+		"id" : "cm1wfe43f000qp879yk2zygye",
+		"name" : "Renata Almeida",
+		"tags" : null,
+		"active" : true,
+		"createAt" : "2024-10-05T20:26:02.811Z",
+		"updatedAt" : "2024-10-05T20:26:02.811Z",
+		"deletedAt" : null
+	},
+	{
+		"id" : "cm1wfe43k000sp879zcwoiz6c",
+		"name" : "Vanessa Lopes",
+		"tags" : null,
+		"active" : true,
+		"createAt" : "2024-10-05T20:26:02.817Z",
+		"updatedAt" : "2024-10-05T20:26:02.817Z",
+		"deletedAt" : null
+	},
+	{
+		"id" : "cm1wfe43n000tp879rurxfn2f",
+		"name" : "Leonardo Gomes",
+		"tags" : null,
+		"active" : true,
+		"createAt" : "2024-10-05T20:26:02.820Z",
+		"updatedAt" : "2024-10-05T20:26:02.820Z",
+		"deletedAt" : null
+	},
+	{
+		"id" : "cm1wfe4180000p879rrl22tk3",
+		"name" : "Ana Silva",
+		"tags" : null,
+		"active" : true,
+		"createAt" : "2024-10-05T20:26:02.733Z",
+		"updatedAt" : "2024-10-05T20:26:02.733Z",
+		"deletedAt" : null
+	},
+	{
+		"id" : "cm1wfe41h0002p8798zojl9gm",
+		"name" : "Carla Oliveira",
+		"tags" : null,
+		"active" : false,
+		"createAt" : "2024-10-05T20:26:02.741Z",
+		"updatedAt" : "2024-10-05T20:26:02.741Z",
+		"deletedAt" : "2024-10-05T20:26:02.764Z"
+	},
+	{
+		"id" : "cm1wfe41v0006p879301bah1q",
+		"name" : "Gabriela Rodrigues",
+		"tags" : null,
+		"active" : false,
+		"createAt" : "2024-10-05T20:26:02.755Z",
+		"updatedAt" : "2024-10-05T20:26:02.755Z",
+		"deletedAt" : "2024-10-05T20:26:02.764Z"
+	},
+	{
+		"id" : "cm1wfe4240009p879yzndrdpj",
+		"name" : "João Souza",
+		"tags" : null,
+		"active" : false,
+		"createAt" : "2024-10-05T20:26:02.764Z",
+		"updatedAt" : "2024-10-05T20:26:02.764Z",
+		"deletedAt" : "2024-10-05T20:26:02.764Z"
+	},
+	{
+		"id" : "cm1wfe42g000dp879lxpfd7sr",
+		"name" : "Nelson Carvalho",
+		"tags" : null,
+		"active" : false,
+		"createAt" : "2024-10-05T20:26:02.777Z",
+		"updatedAt" : "2024-10-05T20:26:02.777Z",
+		"deletedAt" : null
+	},
+	{
+		"id" : "cm1wfe42q000hp879p8yirblm",
+		"name" : "Rafael Ribeiro",
+		"tags" : null,
+		"active" : false,
+		"createAt" : "2024-10-05T20:26:02.787Z",
+		"updatedAt" : "2024-10-05T20:26:02.787Z",
+		"deletedAt" : null
+	},
+	{
+		"id" : "cm1wfe431000lp879hq1v19um",
+		"name" : "Victor Dias",
+		"tags" : null,
+		"active" : false,
+		"createAt" : "2024-10-05T20:26:02.797Z",
+		"updatedAt" : "2024-10-05T20:26:02.797Z",
+		"deletedAt" : null
+	},
+	{
+		"id" : "cm1wfe439000op879geavfsp8",
+		"name" : "Camila Moreira",
+		"tags" : null,
+		"active" : false,
+		"createAt" : "2024-10-05T20:26:02.805Z",
+		"updatedAt" : "2024-10-05T20:26:02.805Z",
+		"deletedAt" : null
+	},
+	{
+		"id" : "cm1wfe43i000rp8799x4pelrp",
+		"name" : "Otávio Pires",
+		"tags" : null,
+		"active" : false,
+		"createAt" : "2024-10-05T20:26:02.814Z",
+		"updatedAt" : "2024-10-05T20:26:02.814Z",
+		"deletedAt" : null
+	},
+];
 
 const produtos = [
   {
@@ -214,10 +481,10 @@ const produtos = [
   }
 ];
 
-
 const ReservaNovo: React.FC = () => {
   const [selectedProducts, setSelectedProducts] = useState([]);
   const [quantities, setQuantities] = useState({});
+  const [selectedClient, setSelectedClient] = useState(null); // Estado para o cliente selecionado
 
   const handleProductChange = (value) => {
     setSelectedProducts(value);
@@ -251,6 +518,23 @@ const ReservaNovo: React.FC = () => {
         layout="vertical"
         style={{ maxWidth: 600 }}
       >
+        {/* Campo de seleção de cliente */}
+        <Form.Item label="Cliente">
+          <Select
+            showSearch
+            placeholder="Selecione um cliente"
+            optionFilterProp="children"
+            onChange={(value) => setSelectedClient(value)}
+            filterOption={(input, option) =>
+              option?.label.toLowerCase().indexOf(input.toLowerCase()) >= 0
+            }
+                        options={clientes.map(c => ({
+              value: c.id,
+              label: c.name,
+            }))}
+          />
+        </Form.Item>
+
         <Form.Item label="Descrição">
           <Input />
         </Form.Item>
@@ -265,130 +549,67 @@ const ReservaNovo: React.FC = () => {
           </Select>
         </Form.Item>
 
-
-
-
         <Form.Item
-        label={<span style={{ whiteSpace: 'nowrap' }}>{`${selectedProducts.length} selecionados`}</span>}
-      >
-        <Input
-          value={totalPrice.toFixed(2)}
-          prefix="R$"
-          disabled // Desabilitando a edição do campo total
-        />
-      </Form.Item>
-      <Form.Item label="Produtos">
-        <Select
-          mode="multiple"
-          showSearch
-          placeholder="Selecione os produtos"
-          filterOption={(input, option) => {
-            const searchValue = input.toLowerCase();
-            const product = produtos.find(p => p.id === option.value);
-            return product &&
-              (product.name.toLowerCase().includes(searchValue) ||
-                product.description.toLowerCase().includes(searchValue));
-          }}
-          options={produtos.map(p => ({
-            value: p.id,
-            label: (
-              <div style={{ display: 'flex', alignItems: 'left', flexDirection: 'column' }}>
-                {selectedProducts.includes(p.id) && (
-                  <Input
-                    type="number"
-                    min={1}
-                    value={quantities[p.id] || 1}
-                    onChange={(e) => handleQuantityChange(p.id, parseInt(e.target.value, 10) || 1)}
-                    style={{ width: 60, marginBottom: 5 }} // Margem abaixo do campo numérico
-                    onMouseDown={(e) => e.stopPropagation()} // Impede a propagação do evento de clique
-                    onClick={(e) => e.stopPropagation()} // Impede a propagação do evento de clique
-                  />
-                )}
-                <div style={{ flexGrow: 1 }}>
-                  <Text strong>
-                    {p.productTypeId === 'product' ? 'Produto' : 'Serviço'} R$ {p.price.toFixed(2)} {p.name}
-                  </Text>
-                  <br />
-                  <Text type="secondary" style={{ fontSize: 12, whiteSpace: 'normal' }}>
-                    {p.description}
-                  </Text>
-                  <br />
-                  <Text style={{ fontSize: 12, color: p.quantity <= 0 ? 'red' : 'inherit' }}>
-                    Disponível: {p.quantity}
-                  </Text>
-                  <br />
-                  <Text style={{ fontSize: 12, color: '#1890ff' }}>
-                    {(p.tags || []).join(', ')}
-                  </Text>
+          label={<span style={{ whiteSpace: 'nowrap' }}>{`${selectedProducts.length} selecionados`}</span>}
+        >
+          <Input
+            value={totalPrice.toFixed(2)}
+            prefix="R$"
+            disabled // Desabilitando a edição do campo total
+          />
+        </Form.Item>
+        <Form.Item label="Produtos">
+          <Select
+            mode="multiple"
+            showSearch
+            placeholder="Selecione os produtos"
+            filterOption={(input, option) => {
+              const searchValue = input.toLowerCase();
+              const product = produtos.find(p => p.id === option.value);
+              return product &&
+                (product.name.toLowerCase().includes(searchValue) ||
+                  product.description.toLowerCase().includes(searchValue));
+            }}
+            options={produtos.map(p => ({
+              value: p.id,
+              label: (
+                <div style={{ display: 'flex', alignItems: 'left', flexDirection: 'column' }}>
+                  {selectedProducts.includes(p.id) && (
+                    <Input
+                      type="number"
+                      min={1}
+                      value={quantities[p.id] || 1}
+                      onChange={(e) => handleQuantityChange(p.id, parseInt(e.target.value, 10) || 1)}
+                      style={{ width: 60, marginBottom: 5 }} // Margem abaixo do campo numérico
+                      onMouseDown={(e) => e.stopPropagation()} // Impede a propagação do evento de clique
+                      onClick={(e) => e.stopPropagation()} // Impede a propagação do evento de clique
+                    />
+                  )}
+                  <div style={{ flexGrow: 1 }}>
+                    <Text strong>
+                      {p.productTypeId === 'product' ? 'Produto' : 'Serviço'} R$ {p.price.toFixed(2)} {p.name}
+                    </Text>
+                    <br />
+                    <Text type="secondary" style={{ fontSize: 12, whiteSpace: 'normal' }}>
+                      {p.description}
+                    </Text>
+                    <br />
+                    <Text style={{ fontSize: 12, color: p.quantity <= 0 ? 'red' : 'inherit' }}>
+                      Disponível: {p.quantity}
+                    </Text>
+                    <br />
+                    <Text style={{ fontSize: 12, color: '#1890ff' }}>
+                      {(p.tags || []).join(', ')}
+                    </Text>
+                  </div>
                 </div>
-              </div>
-            ),
-          }))}
-          onChange={handleProductChange}
-        />
-      </Form.Item>
-
-
-
-
-        <Form.Item label="TreeSelect">
-          <TreeSelect
-            treeData={[
-              { title: 'Light', value: 'light', children: [{ title: 'Bamboo', value: 'bamboo' }] },
-            ]}
+              ),
+            }))}
+            onChange={handleProductChange}
           />
         </Form.Item>
-        <Form.Item label="Cascader">
-          <Cascader
-            options={[
-              {
-                value: 'zhejiang',
-                label: 'Zhejiang',
-                children: [
-                  {
-                    value: 'hangzhou',
-                    label: 'Hangzhou',
-                  },
-                ],
-              },
-            ]}
-          />
-        </Form.Item>
-        <Form.Item label="DatePicker">
-          <DatePicker />
-        </Form.Item>
-        <Form.Item label="RangePicker">
-          <RangePicker />
-        </Form.Item>
-        <Form.Item label="InputNumber">
-          <InputNumber />
-        </Form.Item>
-        <Form.Item label="TextArea">
-          <TextArea rows={4} />
-        </Form.Item>
-        <Form.Item label="Switch" valuePropName="checked">
-          <Switch />
-        </Form.Item>
-        <Form.Item label="Upload" valuePropName="fileList" getValueFromEvent={normFile}>
-          <Upload action="/upload.do" listType="picture-card">
-            <button style={{ border: 0, background: 'none' }} type="button">
-              <PlusOutlined />
-              <div style={{ marginTop: 8 }}>Upload</div>
-            </button>
-          </Upload>
-        </Form.Item>
-        <Form.Item label="Button">
-          <Button>Button</Button>
-        </Form.Item>
-        <Form.Item label="Slider">
-          <Slider />
-        </Form.Item>
-        <Form.Item label="ColorPicker">
-          <ColorPicker />
-        </Form.Item>
-        <Form.Item label="Rate">
-          <Rate />
-        </Form.Item>
+
+        {/* Restante do formulário */}
       </Form>
     </>
   );
