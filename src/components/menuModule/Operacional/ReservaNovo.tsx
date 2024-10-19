@@ -59,7 +59,7 @@ const ReservaNovo: React.FC = () => {
         labelCol={{ span: 5 }}
         wrapperCol={{ span: 25 }}
         layout="vertical"
-        style={{ maxWidth: 600 }}
+        style={{ maxWidth: 300 }}
       >
         <Form.Item label="Cliente">
           <Select
