@@ -1,8 +1,12 @@
 .custom-label {
-    font-size: 18px;
+    font-size: 25px;
     font-weight: lighter;
   }
 
 .custom-combo {
-    font-size: 18px;
+    font-size: 20px;
+}
+
+.custom-field-decimal {
+    font-size: 20px;
 }
