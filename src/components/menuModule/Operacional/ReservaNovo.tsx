@@ -5,6 +5,8 @@ import { produtos } from '../../fields/produtos-json';
 import { clientes } from '../../fields/clientes-json';
 import { DownOutlined, MinusOutlined, PlusOutlined, UpOutlined } from '@ant-design/icons';
 
+import '../../../index.css'
+
 const { Text } = Typography;
 
 const ReservaNovo: React.FC = () => {
@@ -56,12 +58,14 @@ const ReservaNovo: React.FC = () => {
   return (
     <>
       <Form
-        labelCol={{ span: 5 }}
+        labelCol={{ span: 25 }}
         wrapperCol={{ span: 25 }}
         layout="vertical"
-        style={{ maxWidth: 300 }}
+        style={{ maxWidth: 600 }}
       >
-        <Form.Item label="Cliente">
+        <Form.Item
+          label={<span className="custom-label">Cliente</span>}
+        >
           <Select
             showSearch
             placeholder="Selecione um cliente"
@@ -76,21 +80,7 @@ const ReservaNovo: React.FC = () => {
           />
         </Form.Item>
 
-        <Form.Item label="Descrição">
-          <Input />
-        </Form.Item>
-        <Form.Item label="Anotações">
-          <Input />
-        </Form.Item>
-        <Form.Item label="Etiquetas">
-          <Select mode="multiple">
-            <Select.Option value="casamento">casamento</Select.Option>
-            <Select.Option value="batizado">batizado</Select.Option>
-            <Select.Option value="festa">festa</Select.Option>
-          </Select>
-        </Form.Item>
-
-        <Form.Item label={<span style={{ whiteSpace: 'nowrap' }}>{`${selectedProducts.length} selecionados`}</span>}>
+        <Form.Item label={<span className="custom-label" style={{ whiteSpace: 'nowrap' }}>{`${selectedProducts.length} produtos selecionados`}</span>}>
           <NumericFormat
             value={editableTotalPrice}
             prefix="R$ "
@@ -107,7 +97,7 @@ const ReservaNovo: React.FC = () => {
           />
         </Form.Item>
 
-        <Form.Item label="Produtos">
+        <Form.Item label={<span className="custom-label" style={{ whiteSpace: 'nowrap' }}>Informe os Produtos</span>}>
           <Select
             mode="multiple"
             showSearch
@@ -128,8 +118,8 @@ const ReservaNovo: React.FC = () => {
                     marginRight: 2
                   }}>
                     <div style={{ flexGrow: 1 }}>
-                      <Text strong>
-                        {p.productTypeId === 'product' ? 'Produto' : 'Serviço'} R$ {p.price.toFixed(2).replace('.', ',')} {p.name}
+                      <Text strong style={{ fontSize: 15 }}>
+                        {p.name}
                       </Text>
                       <br />
                       <div style={{ display: 'flex', alignItems: 'center', marginTop: 5 }}>
@@ -181,7 +171,11 @@ const ReservaNovo: React.FC = () => {
                       </div>
                       {showDetails && (
                         <>
-                          <Text type="secondary" style={{ fontSize: 12, whiteSpace: 'normal', marginTop: 0 }}>
+                          <Text strong>
+                            {p.productTypeId === 'product' ? 'Produto, ' : 'Serviço, '}
+                            R$ {p.price.toFixed(2).replace('.', ',')} -
+                          </Text>
+                          <Text type="secondary" style={{ fontSize: 12, whiteSpace: 'normal', marginLeft: 5 }}>
                             {p.description}
                           </Text>
                           <br />
@@ -205,6 +199,21 @@ const ReservaNovo: React.FC = () => {
             }
           />
         </Form.Item>
+
+        <Form.Item label={<span className="custom-label" style={{ whiteSpace: 'nowrap' }}>Descrição</span>}>
+          <Input />
+        </Form.Item>
+        <Form.Item label={<span className="custom-label" style={{ whiteSpace: 'nowrap' }}>Anotações</span>}>
+          <Input />
+        </Form.Item>
+        <Form.Item label={<span className="custom-label" style={{ whiteSpace: 'nowrap' }}>Etiquetas </span>}>
+          <Select mode="multiple">
+            <Select.Option value="casamento">casamento</Select.Option>
+            <Select.Option value="batizado">batizado</Select.Option>
+            <Select.Option value="festa">festa</Select.Option>
+          </Select>
+        </Form.Item>
+
       </Form>
     </>
   );
