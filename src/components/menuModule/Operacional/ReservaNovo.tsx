@@ -4,23 +4,34 @@ import { NumericFormat } from 'react-number-format';
 import { produtos } from '../../fields/produtos-json';
 import { clientes } from '../../fields/clientes-json';
 import { DownOutlined, MinusOutlined, PlusOutlined, UpOutlined } from '@ant-design/icons';
-
 import '../../../index.css'
-
-import ptBR from 'antd/es/locale/pt_BR';
 import dayjs from 'dayjs';
 import 'dayjs/locale/pt-br';
+import ptBR from 'antd/es/locale/pt_BR';
 
 dayjs.locale('pt-br'); // Configura o dayjs para Português do Brasil
 
 const { Text } = Typography;
 
 const ReservaNovo: React.FC = () => {
+  const [form] = Form.useForm();
   const [selectedProducts, setSelectedProducts] = useState([]);
   const [quantities, setQuantities] = useState({});
   const [selectedClient, setSelectedClient] = useState(null);
   const [editableTotalPrice, setEditableTotalPrice] = useState('0,00');
   const [filterValue, setFilterValue] = useState(''); // Novo estado para armazenar o valor do filtro
+
+  useEffect(() => {
+    const provaDate = dayjs().add(4, 'day').hour(12).minute(0);
+    const retiradaDate = provaDate.add(5, 'day');
+    const devolucaoDate = retiradaDate.add(6, 'day');
+    
+    form.setFieldsValue({
+      dataProva: provaDate,
+      dataRetirada: retiradaDate,
+      dateDevolucao: devolucaoDate,
+    });
+  }, [form]);
 
   const handleProductChange = (value) => {
     setSelectedProducts(value);
@@ -65,6 +76,7 @@ const ReservaNovo: React.FC = () => {
     <>
       <ConfigProvider locale={ptBR}>
         <Form
+          form={form}
           labelCol={{ span: 25 }}
           wrapperCol={{ span: 25 }}
           layout="vertical"
@@ -74,9 +86,6 @@ const ReservaNovo: React.FC = () => {
             label={<span style={{ whiteSpace: 'nowrap' }} className="custom-label">Cliente</span>}
           >
             <Select
-              // dropdownStyle={{fontSize: 30}}
-              // style={{fontSize: 30}}
-              // popupClassName="custom-combo" // Para estilizar o dropdown
               showSearch
               placeholder="Selecione um cliente"
               onChange={(value) => setSelectedClient(value)}
@@ -101,7 +110,7 @@ const ReservaNovo: React.FC = () => {
               thousandSeparator="."
               allowNegative={false}
               onValueChange={(values) => {
-                const { formattedValue, value } = values;
+                const { formattedValue } = values;
                 setEditableTotalPrice(formattedValue);
               }}
               className='custom-field-decimal'
@@ -122,99 +131,34 @@ const ReservaNovo: React.FC = () => {
             <Select
               mode="multiple"
               showSearch
-              placeholder="Selecionr um ou mais itens"
-              options={produtos.map(p => {
-                const [showDetails, setShowDetails] = useState(false);
-
-                return {
-                  value: p.id,
-                  name: p.name,
-                  label: (
-                    <div style={{
-                      display: 'flex',
-                      alignItems: 'left',
-                      flexDirection: 'column',
-                      borderLeft: '1px solid black',
-                      paddingLeft: 10,
-                      marginRight: 2,
-                      fontSize: 16
-                    }}>
-                      <div style={{ flexGrow: 1 }}>
-                        <Text strong style={{ fontSize: 16 }}>
-                          {p.name}
-                        </Text>
-                        <br />
-                        <div style={{ display: 'flex', alignItems: 'center', marginTop: 5 }}>
-                          <span style={{ marginRight: 10 }}>
-                            Disponível: {(p.quantity).toString().padStart(3, '0')}
-                          </span>
-                          <Button
-                            type="primary"
-                            size="small"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              const newQuantity = (quantities[p.id] || 1) - 1;
-                              if (newQuantity >= 1) {
-                                handleQuantityChange(p.id, newQuantity);
-                              }
-                            }}
-                            disabled={(quantities[p.id] || 1) <= 1}
-                          >
-                            <MinusOutlined />
-                          </Button>
-                          <span style={{ margin: '0 10px' }}>
-                            {(quantities[p.id] || 1).toString().padStart(3, '0')}
-                          </span>
-                          <Button
-                            type="primary"
-                            size="small"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              const newQuantity = (quantities[p.id] || 1) + 1;
-                              if (newQuantity <= p.quantity) {
-                                handleQuantityChange(p.id, newQuantity);
-                              }
-                            }}
-                            disabled={(quantities[p.id] || 1) >= p.quantity}
-                          >
-                            <PlusOutlined />
-                          </Button>
-                          <Button
-                            type="primary"
-                            size="small"
-                            style={{ marginLeft: 10 }}
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              setShowDetails(!showDetails);
-                            }}
-                          >
-                            {showDetails ? <UpOutlined /> : <DownOutlined />}
-                          </Button>
-                        </div>
-                        {showDetails && (
-                          <>
-                            <Text strong>
-                              {p.productTypeId === 'product' ? 'Produto, ' : 'Serviço, '}
-                              R$ {p.price.toFixed(2).replace('.', ',')} -
-                            </Text>
-                            <Text type="secondary" style={{ fontSize: 12, whiteSpace: 'normal', marginLeft: 5 }}>
-                              {p.description}
-                            </Text>
-                            <br />
-                            <div style={{ marginTop: 5 }}>
-                              {(p.tags || []).map((tag, index) => (
-                                <Tag key={index} color="blue" style={{ margin: '2px' }}>
-                                  {tag}
-                                </Tag>
-                              ))}
-                            </div>
-                          </>
-                        )}
-                      </div>
+              placeholder="Selecionar um ou mais itens"
+              options={produtos.map(p => ({
+                value: p.id,
+                name: p.name,
+                label: (
+                  <div style={{
+                    display: 'flex',
+                    alignItems: 'left',
+                    flexDirection: 'column',
+                    borderLeft: '1px solid black',
+                    paddingLeft: 10,
+                    marginRight: 2,
+                    fontSize: 16
+                  }}>
+                    <Text strong style={{ fontSize: 16 }}>{p.name}</Text>
+                    <div style={{ display: 'flex', alignItems: 'center', marginTop: 5 }}>
+                      <span style={{ marginRight: 10 }}>Disponível: {p.quantity.toString().padStart(3, '0')}</span>
+                      <Button type="primary" size="small" onClick={(e) => { e.stopPropagation(); handleQuantityChange(p.id, (quantities[p.id] || 1) - 1); }} disabled={(quantities[p.id] || 1) <= 1}>
+                        <MinusOutlined />
+                      </Button>
+                      <span style={{ margin: '0 10px' }}>{(quantities[p.id] || 1).toString().padStart(3, '0')}</span>
+                      <Button type="primary" size="small" onClick={(e) => { e.stopPropagation(); handleQuantityChange(p.id, (quantities[p.id] || 1) + 1); }} disabled={(quantities[p.id] || 1) >= p.quantity}>
+                        <PlusOutlined />
+                      </Button>
                     </div>
-                  ),
-                };
-              })}
+                  </div>
+                ),
+              }))}
               onChange={handleProductChange}
               filterOption={(input, option) =>
                 option?.name.toLowerCase().includes(input.toLowerCase())
@@ -260,19 +204,16 @@ const ReservaNovo: React.FC = () => {
           </Form.Item>
 
           <Form.Item label={<span className="custom-label" style={{ whiteSpace: 'nowrap' }}>Anotações</span>}>
-            <Input />
+            <Input.TextArea rows={4} />
           </Form.Item>
 
           <Form.Item>
-            <Button type="primary" htmlType="submit">
-              GRAVAR
-            </Button>
+            <Button type="primary">Salvar</Button>
           </Form.Item>
-
         </Form>
       </ConfigProvider>
     </>
   );
 };
 
-export default () => <ReservaNovo />;
+export default ReservaNovo;
