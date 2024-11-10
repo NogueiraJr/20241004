@@ -109,6 +109,14 @@ const ReservaNovo: React.FC = () => {
             />
           </Form.Item>
 
+          <Form.Item label={<span className="custom-label" style={{ whiteSpace: 'nowrap' }}>Etiquetas </span>}>
+            <Select placeholder="Informe as etiquetas" mode="multiple">
+              <Select.Option value="casamento">casamento</Select.Option>
+              <Select.Option value="batizado">batizado</Select.Option>
+              <Select.Option value="festa">festa</Select.Option>
+            </Select>
+          </Form.Item>
+
           <Form.Item
             label={<span className="custom-label" style={{ whiteSpace: 'nowrap' }}>Informe os Itens</span>}>
             <Select
@@ -249,14 +257,6 @@ const ReservaNovo: React.FC = () => {
               showTime={{ format: 'HH:mm' }}
               style={{ width: '100%' }}
             />
-          </Form.Item>
-
-          <Form.Item label={<span className="custom-label" style={{ whiteSpace: 'nowrap' }}>Etiquetas </span>}>
-            <Select placeholder="Informe as etiquetas" mode="multiple">
-              <Select.Option value="casamento">casamento</Select.Option>
-              <Select.Option value="batizado">batizado</Select.Option>
-              <Select.Option value="festa">festa</Select.Option>
-            </Select>
           </Form.Item>
 
           <Form.Item label={<span className="custom-label" style={{ whiteSpace: 'nowrap' }}>Anotações</span>}>
