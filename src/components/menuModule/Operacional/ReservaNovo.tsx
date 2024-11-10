@@ -96,6 +96,7 @@ const ReservaNovo: React.FC = () => {
           rules={[{ required: true, message: 'Por favor, selecione um cliente!' }]} // Campo obrigatório
         >
           <Select
+            className="custom-field"
             showSearch
             placeholder="Selecione um cliente"
             onChange={(value) => setSelectedClient(value)}
@@ -128,7 +129,7 @@ const ReservaNovo: React.FC = () => {
         </Form.Item>
 
         <Form.Item label={<span className="custom-label" style={{ whiteSpace: 'nowrap' }}>Etiquetas </span>}>
-          <Select placeholder="Informe as etiquetas" mode="multiple">
+          <Select className="custom-field" placeholder="Informe as etiquetas" mode="multiple">
             <Select.Option value="casamento">casamento</Select.Option>
             <Select.Option value="batizado">batizado</Select.Option>
             <Select.Option value="festa">festa</Select.Option>
@@ -240,13 +241,14 @@ const ReservaNovo: React.FC = () => {
         </Form.Item>
 
         <Form.Item label={<span className="custom-label" style={{ whiteSpace: 'nowrap' }}>Descrição</span>} name="descricao">
-          <Input />
+          <Input className="custom-field"/>
         </Form.Item>
 
         <Form.Item label={<span className="custom-label" style={{ whiteSpace: 'nowrap' }}>Provar em</span>} name="dataProva"
           rules={[{ required: true, message: 'Por favor, informe uma data!' }]}
         >
           <DatePicker
+            className="custom-date-picker"
             placeholder="Informe a data da Prova"
             format="DD MMMM YYYY, HH:mm"
             showTime={{ format: 'HH:mm' }}
@@ -258,6 +260,7 @@ const ReservaNovo: React.FC = () => {
           rules={[{ required: true, message: 'Por favor, informe uma data!' }]}
         >
           <DatePicker
+            className="custom-date-picker"
             placeholder="Informe a data da Retirada"
             format="DD MMMM YYYY, HH:mm"
             showTime={{ format: 'HH:mm' }}
@@ -269,6 +272,7 @@ const ReservaNovo: React.FC = () => {
           rules={[{ required: true, message: 'Por favor, informe uma data!' }]}
         >
           <DatePicker
+            className="custom-date-picker"
             placeholder="Informe a data da Devolução"
             format="DD MMMM YYYY, HH:mm"
             showTime={{ format: 'HH:mm' }}
@@ -277,7 +281,7 @@ const ReservaNovo: React.FC = () => {
         </Form.Item>
 
         <Form.Item label={<span className="custom-label" style={{ whiteSpace: 'nowrap' }}>Anotações</span>}>
-          <Input.TextArea rows={4} />
+          <Input.TextArea className="custom-textarea" rows={4} />
         </Form.Item>
 
         <Form.Item>

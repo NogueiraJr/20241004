@@ -3,10 +3,36 @@
     font-weight: lighter;
   }
 
-.custom-combo {
+.custom-field-decimal {
     font-size: 20px;
 }
 
-.custom-field-decimal {
+/* Ajuste o tamanho da fonte para os campos de formulário */
+.custom-field {
+    font-size: 20px; /* Define o mesmo tamanho de fonte dos labels */
+}
+
+.custom-textarea {
     font-size: 20px;
+}
+
+.custom-date-picker {
+    font-size: 20px;
+}
+
+/* Aplica o tamanho da fonte nos campos DatePicker e Select */
+.custom-date-picker .ant-picker-input > input,
+.custom-field .ant-select-selection-item,
+.custom-field .ant-select-selection-placeholder {
+    font-size: 20px !important; /* Força o tamanho da fonte */
+}
+
+/* Estiliza o DatePicker especificamente */
+.custom-date-picker .ant-picker {
+    font-size: 20px !important;
+}
+
+/* Estilo para as opções do Select no modo múltiplo */
+.custom-field .ant-select-item-option-content {
+    font-size: 20px !important; /* Define o tamanho da fonte dos itens do Select */
 }
