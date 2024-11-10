@@ -4,7 +4,7 @@ import { NumericFormat } from 'react-number-format';
 import { produtos } from '../../fields/produtos-json';
 import { clientes } from '../../fields/clientes-json';
 import { DownOutlined, MinusOutlined, PlusOutlined, UpOutlined } from '@ant-design/icons';
-import '../../../index.css'
+import '../../../index.css';
 import dayjs from 'dayjs';
 import 'dayjs/locale/pt-br';
 import ptBR from 'antd/es/locale/pt_BR';
@@ -32,6 +32,16 @@ const ReservaNovo: React.FC = () => {
       dateDevolucao: devolucaoDate,
     });
   }, [form]);
+
+  useEffect(() => {
+    // Atualiza o campo "Descrição" quando o cliente é alterado
+    if (selectedClient) {
+      const clientName = clientes.find(c => c.id === selectedClient)?.name || '';
+      form.setFieldsValue({
+        descricao: `Reserva para ${clientName}`,
+      });
+    }
+  }, [selectedClient, form]); // Depende de selectedClient
 
   const handleProductChange = (value) => {
     setSelectedProducts(value);
@@ -73,68 +83,67 @@ const ReservaNovo: React.FC = () => {
   }, [selectedProducts, quantities]);
 
   return (
-    <>
-      <ConfigProvider locale={ptBR}>
-        <Form
-          form={form}
-          labelCol={{ span: 25 }}
-          wrapperCol={{ span: 25 }}
-          layout="vertical"
-          style={{ maxWidth: 600 }}
+    <ConfigProvider locale={ptBR}>
+      <Form
+        form={form}
+        labelCol={{ span: 25 }}
+        wrapperCol={{ span: 25 }}
+        layout="vertical"
+        style={{ maxWidth: 600 }}
+      >
+        <Form.Item label={<span style={{ whiteSpace: 'nowrap' }} className="custom-label">Cliente</span>}
+          name='cliente'
+          rules={[{ required: true, message: 'Por favor, selecione um cliente!' }]} // Campo obrigatório
         >
-          <Form.Item
-            label={<span style={{ whiteSpace: 'nowrap' }} className="custom-label">Cliente</span>}
-            name="cliente"
-            rules={[{ required: true, message: 'Por favor, selecione um cliente!' }]}  // Adicionando a regra de obrigatoriedade
-          >
-            <Select
-              showSearch
-              placeholder="Selecione um cliente"
-              onChange={(value) => setSelectedClient(value)}
-              options={clientes.map(c => ({
-                value: c.id,
-                label: c.name,
-              }))}
-              filterOption={(input, option) =>
-                option?.label.toLowerCase().includes(input.toLowerCase())
-              }
-            />
-          </Form.Item>
+          <Select
+            showSearch
+            placeholder="Selecione um cliente"
+            onChange={(value) => setSelectedClient(value)}
+            options={clientes.map(c => ({
+              value: c.id,
+              label: c.name,
+            }))}
+            filterOption={(input, option) =>
+              option?.label.toLowerCase().includes(input.toLowerCase())
+            }
+          />
+        </Form.Item>
 
-          <Form.Item
-            label={<span className="custom-label" style={{ whiteSpace: 'nowrap' }}>{`${selectedProducts.length} itens selecionados`}</span>}>
-            <NumericFormat
-              value={editableTotalPrice}
-              prefix="R$ "
-              decimalSeparator=","
-              decimalScale={2}
-              fixedDecimalScale={true}
-              thousandSeparator="."
-              allowNegative={false}
-              onValueChange={(values) => {
-                const { formattedValue } = values;
-                setEditableTotalPrice(formattedValue);
-              }}
-              className='custom-field-decimal'
-              style={{ width: '96%', padding: '8px', borderRadius: '4px', border: '1px solid #d9d9d9', backgroundColor: '#fff' }}
-            />
-          </Form.Item>
+        <Form.Item label={<span className="custom-label" style={{ whiteSpace: 'nowrap' }}>{`${selectedProducts.length} itens selecionados`}</span>}>
+          <NumericFormat
+            value={editableTotalPrice}
+            prefix="R$ "
+            decimalSeparator=","
+            decimalScale={2}
+            fixedDecimalScale={true}
+            thousandSeparator="."
+            allowNegative={false}
+            onValueChange={(values) => {
+              const { formattedValue } = values;
+              setEditableTotalPrice(formattedValue);
+            }}
+            className='custom-field-decimal'
+            style={{ width: '96%', padding: '8px', borderRadius: '4px', border: '1px solid #d9d9d9', backgroundColor: '#fff' }}
+          />
+        </Form.Item>
 
-          <Form.Item label={<span className="custom-label" style={{ whiteSpace: 'nowrap' }}>Etiquetas </span>}>
-            <Select placeholder="Informe as etiquetas" mode="multiple">
-              <Select.Option value="casamento">casamento</Select.Option>
-              <Select.Option value="batizado">batizado</Select.Option>
-              <Select.Option value="festa">festa</Select.Option>
-            </Select>
-          </Form.Item>
+        <Form.Item label={<span className="custom-label" style={{ whiteSpace: 'nowrap' }}>Etiquetas </span>}>
+          <Select placeholder="Informe as etiquetas" mode="multiple">
+            <Select.Option value="casamento">casamento</Select.Option>
+            <Select.Option value="batizado">batizado</Select.Option>
+            <Select.Option value="festa">festa</Select.Option>
+          </Select>
+        </Form.Item>
 
-          <Form.Item
-            label={<span className="custom-label" style={{ whiteSpace: 'nowrap' }}>Informe os Itens</span>}>
-            <Select
-              mode="multiple"
-              showSearch
-              placeholder="Selecionar um ou mais itens"
-              options={produtos.map(p => ({
+        <Form.Item label={<span className="custom-label" style={{ whiteSpace: 'nowrap' }}>Informe os Itens</span>}>
+          <Select
+            mode="multiple"
+            showSearch
+            placeholder="Selecionr um ou mais itens"
+            options={produtos.map(p => {
+              const [showDetails, setShowDetails] = useState(false);
+
+              return {
                 value: p.id,
                 name: p.name,
                 label: (
@@ -147,87 +156,148 @@ const ReservaNovo: React.FC = () => {
                     marginRight: 2,
                     fontSize: 16
                   }}>
-                    <Text strong style={{ fontSize: 16 }}>{p.name}</Text>
-                    <div style={{ display: 'flex', alignItems: 'center', marginTop: 5 }}>
-                      <span style={{ marginRight: 10 }}>Disponível: {p.quantity.toString().padStart(3, '0')}</span>
-                      <Button type="primary" size="small" onClick={(e) => { e.stopPropagation(); handleQuantityChange(p.id, (quantities[p.id] || 1) - 1); }} disabled={(quantities[p.id] || 1) <= 1}>
-                        <MinusOutlined />
-                      </Button>
-                      <span style={{ margin: '0 10px' }}>{(quantities[p.id] || 1).toString().padStart(3, '0')}</span>
-                      <Button type="primary" size="small" onClick={(e) => { e.stopPropagation(); handleQuantityChange(p.id, (quantities[p.id] || 1) + 1); }} disabled={(quantities[p.id] || 1) >= p.quantity}>
-                        <PlusOutlined />
-                      </Button>
+                    <div style={{ flexGrow: 1 }}>
+                      <Text strong style={{ fontSize: 16 }}>
+                        {p.name}
+                      </Text>
+                      <br />
+                      <div style={{ display: 'flex', alignItems: 'center', marginTop: 5 }}>
+                        <span style={{ marginRight: 10 }}>
+                          Disponível: {(p.quantity).toString().padStart(3, '0')}
+                        </span>
+                        <Button
+                          type="primary"
+                          size="small"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            const newQuantity = (quantities[p.id] || 1) - 1;
+                            if (newQuantity >= 1) {
+                              handleQuantityChange(p.id, newQuantity);
+                            }
+                          }}
+                          disabled={(quantities[p.id] || 1) <= 1}
+                        >
+                          <MinusOutlined />
+                        </Button>
+                        <span style={{ margin: '0 10px' }}>
+                          {(quantities[p.id] || 1).toString().padStart(3, '0')}
+                        </span>
+                        <Button
+                          type="primary"
+                          size="small"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            const newQuantity = (quantities[p.id] || 1) + 1;
+                            if (newQuantity <= p.quantity) {
+                              handleQuantityChange(p.id, newQuantity);
+                            }
+                          }}
+                          disabled={(quantities[p.id] || 1) >= p.quantity}
+                        >
+                          <PlusOutlined />
+                        </Button>
+                        <Button
+                          type="primary"
+                          size="small"
+                          style={{ marginLeft: 10 }}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setShowDetails(!showDetails);
+                          }}
+                        >
+                          {showDetails ? <UpOutlined /> : <DownOutlined />}
+                        </Button>
+                      </div>
+                      {showDetails && (
+                        <>
+                          <Text strong>
+                            {p.productTypeId === 'product' ? 'Produto, ' : 'Serviço, '}
+                            R$ {p.price.toFixed(2).replace('.', ',')} -
+                          </Text>
+                          <Text type="secondary" style={{ fontSize: 12, whiteSpace: 'normal', marginLeft: 5 }}>
+                            {p.description}
+                          </Text>
+                          <br />
+                          <div style={{ marginTop: 5 }}>
+                            {(p.tags || []).map((tag, index) => (
+                              <Tag key={index} color="blue" style={{ margin: '2px' }}>
+                                {tag}
+                              </Tag>
+                            ))}
+                          </div>
+                        </>
+                      )}
                     </div>
                   </div>
                 ),
-              }))}
-              onChange={handleProductChange}
-              filterOption={(input, option) =>
-                option?.name.toLowerCase().includes(input.toLowerCase())
+              };
+            })}
+            onChange={handleProductChange}
+            filterOption={(input, option) =>
+              option?.name.toLowerCase().includes(input.toLowerCase())
+            }
+          />
+        </Form.Item>
+
+        <Form.Item label={<span className="custom-label" style={{ whiteSpace: 'nowrap' }}>Descrição</span>} name="descricao">
+          <Input />
+        </Form.Item>
+
+        <Form.Item label={<span className="custom-label" style={{ whiteSpace: 'nowrap' }}>Provar em</span>} name="dataProva"
+          rules={[{ required: true, message: 'Por favor, informe uma data!' }]}
+        >
+          <DatePicker
+            placeholder="Informe a data da Prova"
+            format="DD MMMM YYYY, HH:mm"
+            showTime={{ format: 'HH:mm' }}
+            style={{ width: '100%' }}
+          />
+        </Form.Item>
+
+        <Form.Item label={<span className="custom-label" style={{ whiteSpace: 'nowrap' }}>Retirar em</span>} name="dataRetirada"
+          rules={[{ required: true, message: 'Por favor, informe uma data!' }]}
+        >
+          <DatePicker
+            placeholder="Informe a data da Retirada"
+            format="DD MMMM YYYY, HH:mm"
+            showTime={{ format: 'HH:mm' }}
+            style={{ width: '100%' }}
+          />
+        </Form.Item>
+
+        <Form.Item label={<span className="custom-label" style={{ whiteSpace: 'nowrap' }}>Devolver em</span>} name="dateDevolucao"
+          rules={[{ required: true, message: 'Por favor, informe uma data!' }]}
+        >
+          <DatePicker
+            placeholder="Informe a data da Devolução"
+            format="DD MMMM YYYY, HH:mm"
+            showTime={{ format: 'HH:mm' }}
+            style={{ width: '100%' }}
+          />
+        </Form.Item>
+
+        <Form.Item label={<span className="custom-label" style={{ whiteSpace: 'nowrap' }}>Anotações</span>}>
+          <Input.TextArea rows={4} />
+        </Form.Item>
+
+        <Form.Item>
+          <Button
+            type="primary"
+            onClick={async () => {
+              try {
+                // Validando todos os campos antes de salvar
+                await form.validateFields();
+                // Lógica de salvar aqui, caso a validação passe
+              } catch (error) {
+                console.log("Erro na validação");
               }
-            />
-          </Form.Item>
-
-          <Form.Item label={<span className="custom-label" style={{ whiteSpace: 'nowrap' }}>Descrição</span>}>
-            <Input />
-          </Form.Item>
-
-          <Form.Item label={<span className="custom-label" style={{ whiteSpace: 'nowrap' }}>Provar em</span>} name="dataProva"
-            rules={[{ required: true, message: 'Por favor, informe uma data!' }]}
+            }}
           >
-            <DatePicker
-              placeholder="Informe a data da Prova"
-              format="DD MMMM YYYY, HH:mm"
-              showTime={{ format: 'HH:mm' }}
-              style={{ width: '100%' }}
-            />
-          </Form.Item>
-
-          <Form.Item label={<span className="custom-label" style={{ whiteSpace: 'nowrap' }}>Retirar em</span>} name="dataRetirada"
-            rules={[{ required: true, message: 'Por favor, informe uma data!' }]}
-          >
-            <DatePicker
-              placeholder="Informe a data da Retirada"
-              format="DD MMMM YYYY, HH:mm"
-              showTime={{ format: 'HH:mm' }}
-              style={{ width: '100%' }}
-            />
-          </Form.Item>
-
-          <Form.Item label={<span className="custom-label" style={{ whiteSpace: 'nowrap' }}>Devolver em</span>} name="dateDevolucao"
-            rules={[{ required: true, message: 'Por favor, informe uma data!' }]}
-          >
-            <DatePicker
-              placeholder="Informe a data da Devolução"
-              format="DD MMMM YYYY, HH:mm"
-              showTime={{ format: 'HH:mm' }}
-              style={{ width: '100%' }}
-            />
-          </Form.Item>
-
-          <Form.Item label={<span className="custom-label" style={{ whiteSpace: 'nowrap' }}>Anotações</span>}>
-            <Input.TextArea rows={4} />
-          </Form.Item>
-
-          <Form.Item>
-            <Button
-              type="primary"
-              onClick={async () => {
-                try {
-                  // Validando todos os campos antes de salvar
-                  await form.validateFields();
-                  // Lógica de salvar aqui, caso a validação passe
-                } catch (error) {
-                  console.log("Erro na validação");
-                }
-              }}
-            >
-              Salvar
-            </Button>
-          </Form.Item>
-        </Form>
-      </ConfigProvider>
-    </>
+            Salvar
+          </Button>
+        </Form.Item>
+      </Form>
+    </ConfigProvider>
   );
 };
 
