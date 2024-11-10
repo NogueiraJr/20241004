@@ -25,7 +25,7 @@ const ReservaNovo: React.FC = () => {
     const provaDate = dayjs().add(4, 'day').hour(12).minute(0);
     const retiradaDate = provaDate.add(5, 'day');
     const devolucaoDate = retiradaDate.add(6, 'day');
-    
+
     form.setFieldsValue({
       dataProva: provaDate,
       dataRetirada: retiradaDate,
@@ -84,6 +84,8 @@ const ReservaNovo: React.FC = () => {
         >
           <Form.Item
             label={<span style={{ whiteSpace: 'nowrap' }} className="custom-label">Cliente</span>}
+            name="cliente"
+            rules={[{ required: true, message: 'Por favor, selecione um cliente!' }]}  // Adicionando a regra de obrigatoriedade
           >
             <Select
               showSearch
@@ -208,7 +210,20 @@ const ReservaNovo: React.FC = () => {
           </Form.Item>
 
           <Form.Item>
-            <Button type="primary">Salvar</Button>
+            <Button
+              type="primary"
+              onClick={async () => {
+                try {
+                  // Validando todos os campos antes de salvar
+                  await form.validateFields();
+                  // Lógica de salvar aqui, caso a validação passe
+                } catch (error) {
+                  console.log("Erro na validação");
+                }
+              }}
+            >
+              Salvar
+            </Button>
           </Form.Item>
         </Form>
       </ConfigProvider>
