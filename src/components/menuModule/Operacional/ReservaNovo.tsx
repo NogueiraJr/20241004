@@ -8,6 +8,7 @@ import '../../../index.css';
 import dayjs from 'dayjs';
 import 'dayjs/locale/pt-br';
 import ptBR from 'antd/es/locale/pt_BR';
+import { Tooltip } from 'antd';
 
 dayjs.locale('pt-br'); // Configura o dayjs para Português do Brasil
 
@@ -110,6 +111,28 @@ const ReservaNovo: React.FC = () => {
           />
         </Form.Item>
 
+        <Form.Item>
+          <Tooltip title="Caso o Cliente ainda não exista cadastrado">
+
+            <Button
+              className="custom-button"
+              type="primary"
+              onClick={async () => { }}
+            >
+              Novo Cliente
+            </Button>
+          </Tooltip>
+
+        </Form.Item>
+
+        <Form.Item label={<span className="custom-label" style={{ whiteSpace: 'nowrap' }}>Etiquetas </span>}>
+          <Select className="custom-field" placeholder="Informe as etiquetas" mode="multiple">
+            <Select.Option value="casamento">casamento</Select.Option>
+            <Select.Option value="batizado">batizado</Select.Option>
+            <Select.Option value="festa">festa</Select.Option>
+          </Select>
+        </Form.Item>
+
         <Form.Item label={<span className="custom-label" style={{ whiteSpace: 'nowrap' }}>{`${selectedProducts.length} itens selecionados`}</span>}>
           <NumericFormat
             value={editableTotalPrice}
@@ -128,19 +151,11 @@ const ReservaNovo: React.FC = () => {
           />
         </Form.Item>
 
-        <Form.Item label={<span className="custom-label" style={{ whiteSpace: 'nowrap' }}>Etiquetas </span>}>
-          <Select className="custom-field" placeholder="Informe as etiquetas" mode="multiple">
-            <Select.Option value="casamento">casamento</Select.Option>
-            <Select.Option value="batizado">batizado</Select.Option>
-            <Select.Option value="festa">festa</Select.Option>
-          </Select>
-        </Form.Item>
-
         <Form.Item label={<span className="custom-label" style={{ whiteSpace: 'nowrap' }}>Informe os Itens</span>}>
           <Select
             mode="multiple"
             showSearch
-            placeholder="Selecionr um ou mais itens"
+            placeholder="Selecionar um ou mais itens"
             options={produtos.map(p => {
               const [showDetails, setShowDetails] = useState(false);
 
@@ -240,8 +255,22 @@ const ReservaNovo: React.FC = () => {
           />
         </Form.Item>
 
+        <Form.Item>
+          <Tooltip title="Caso o Produto ainda não exista cadastrado">
+
+            <Button
+              className="custom-button"
+              type="primary"
+              onClick={async () => { }}
+            >
+              Novo Produto
+            </Button>
+          </Tooltip>
+
+        </Form.Item>
+
         <Form.Item label={<span className="custom-label" style={{ whiteSpace: 'nowrap' }}>Descrição</span>} name="descricao">
-          <Input className="custom-field"/>
+          <Input className="custom-field" />
         </Form.Item>
 
         <Form.Item label={<span className="custom-label" style={{ whiteSpace: 'nowrap' }}>Provar em</span>} name="dataProva"
@@ -285,20 +314,23 @@ const ReservaNovo: React.FC = () => {
         </Form.Item>
 
         <Form.Item>
-          <Button
-            type="primary"
-            onClick={async () => {
-              try {
-                // Validando todos os campos antes de salvar
-                await form.validateFields();
-                // Lógica de salvar aqui, caso a validação passe
-              } catch (error) {
-                console.log("Erro na validação");
-              }
-            }}
-          >
-            Salvar
-          </Button>
+          <Tooltip title="Caso o Cliente ainda não exista cadastrado">
+            <Button
+              className="custom-button"
+              type="primary"
+              onClick={async () => {
+                try {
+                  // Validando todos os campos antes de salvar
+                  await form.validateFields();
+                  // Lógica de salvar aqui, caso a validação passe
+                } catch (error) {
+                  console.log("Erro na validação");
+                }
+              }}
+            >
+              Criar a Reserva
+            </Button>
+          </Tooltip>
         </Form.Item>
       </Form>
     </ConfigProvider>
