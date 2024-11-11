@@ -9,6 +9,7 @@ import {
   CalendarOutlined,
   RollbackOutlined,
   UploadOutlined,
+  SkinOutlined,
 } from '@ant-design/icons';
 import { Avatar, Card, Dropdown, Menu, Tooltip, Typography, Drawer, Button } from 'antd';
 import { useNavigate } from 'react-router-dom';
@@ -42,6 +43,10 @@ const Operacional: React.FC = () => {
     navigate('/reserva');
   };
 
+  const handleListaTodasProvas = () => {
+    navigate('/prova');
+  };
+
   const handleReservaNovo = () => {
     showDrawer(); // Abrir o Drawer quando "Novo" for clicado
   };
@@ -60,6 +65,28 @@ const Operacional: React.FC = () => {
     <IconText icon={CheckCircleOutlined} text="0" tooltip="Apenas Reservas Ativas" key="icon-actived-itens" color="green" />,
     <IconText icon={CloseCircleOutlined} text="0" tooltip="Apenas Reservas Inativas" key="icon-desatived-itens" color="gray" />,
     <IconText icon={DeleteOutlined} text="0" tooltip="Apenas Reservas Apagadas" key="icon-deleted-itens" color="red" />,
+    <Dropdown
+      overlay={
+        <Menu>
+          <Menu.Item key="1">casamento</Menu.Item>
+          <Menu.Item key="2">batizado</Menu.Item>
+          <Menu.Item key="3">festa</Menu.Item>
+        </Menu>
+      }
+      trigger={['click']}
+    >
+      <Tooltip title="Etiquetas">
+        <EllipsisOutlined key="ellipsis" style={{ color: 'black' }} />
+      </Tooltip>
+    </Dropdown>,
+  ];
+
+  const actionsProva = [
+    <IconText icon={PlusSquareOutlined} text="NOVO" tooltip="Nova Prova" key="icon-new" color="black" />,
+    <IconText icon={UnorderedListOutlined} text="0" tooltip="Todas as Provas" key="icon-all-itens" color="blue" onClick={handleListaTodasProvas}/>,
+    <IconText icon={CheckCircleOutlined} text="0" tooltip="Apenas Provas Ativas" key="icon-actived-itens" color="green" />,
+    <IconText icon={CloseCircleOutlined} text="0" tooltip="Apenas Provas Inativas" key="icon-desatived-itens" color="gray" />,
+    <IconText icon={DeleteOutlined} text="0" tooltip="Apenas Provas Apagadas" key="icon-deleted-itens" color="red" />,
     <Dropdown
       overlay={
         <Menu>
@@ -171,6 +198,39 @@ const Operacional: React.FC = () => {
               </Link>
               <Link onClick={() => { console.log('Texto clicado!'); }}>
                 <div>04 reservas feitas nos últimos 3 dias</div>
+              </Link>
+            </>
+          }
+        />
+      </Card>
+
+      <Card
+        actions={actionsProva}
+        style={{
+          flex: '1 1 calc(33.333% - 5px)',
+          minWidth: 350,
+          borderColor: 'black',
+          borderWidth: '2px',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'space-between',
+        }}
+      >
+        <Card.Meta
+          avatar={
+            <Tooltip title="Provas">
+              <Avatar icon={<SkinOutlined style={{ color: 'black' }} />} />
+            </Tooltip>
+          }
+          title="Provas"
+          description={
+            <>
+              <Text strong style={{ fontSize: '15px' }}>As Provas da sua Empresa</Text>
+              <Link onClick={() => { console.log('Texto clicado!'); }}>
+                <div>02 provas feitas nesta semana</div>
+              </Link>
+              <Link onClick={() => { console.log('Texto clicado!'); }}>
+                <div>04 provas feitas nos últimos 3 dias</div>
               </Link>
             </>
           }

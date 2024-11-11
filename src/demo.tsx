@@ -21,6 +21,7 @@ import Devolucao from './components/menuModule/Operacional/Devolucao';
 import Fornecedor from './components/menuModule/Dados/Fornecedor';
 import Parceiro from './components/menuModule/Dados/Parceiro';
 import ReservaNovo from './components/menuModule/Operacional/ReservaNovo';
+import Prova from './components/menuModule/Operacional/Prova';
 
 type MenuItem = Required<MenuProps>['items'][number];
 
@@ -64,16 +65,18 @@ const App: React.FC = () => {
         return 'Fornecedores';
       case '/parceiro':
         return 'Parceiros';
-  
+
       case '/reserva':
         return 'Reserva';
       case '/reserva-novo':
         return 'Nova Reserva';
+      case '/prova':
+        return 'Prova';
       case '/retirada':
-      return 'Retirada';
+        return 'Retirada';
       case '/devolucao':
         return 'Devolução';
-        
+
       default:
         return '';
     }
@@ -139,9 +142,10 @@ const App: React.FC = () => {
           <Route path="/produto" element={<Produto />} />
           <Route path="/fornecedor" element={<Fornecedor />} />
           <Route path="/parceiro" element={<Parceiro />} />
-          
+
           <Route path="/reserva" element={<Reserva />} />
           <Route path="/reserva-novo" element={<ReservaNovo />} />
+          <Route path="/prova" element={<Prova />} />
           <Route path="/retirada" element={<Retirada />} />
           <Route path="/devolucao" element={<Devolucao />} />
         </Routes>
