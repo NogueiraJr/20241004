@@ -22,6 +22,7 @@ import Fornecedor from './components/menuModule/Dados/Fornecedor';
 import Parceiro from './components/menuModule/Dados/Parceiro';
 import ReservaNovo from './components/menuModule/Operacional/ReservaNovo';
 import Prova from './components/menuModule/Operacional/Prova';
+import { ParameterProvider } from './context/ParameterContext';
 
 type MenuItem = Required<MenuProps>['items'][number];
 
@@ -127,6 +128,7 @@ const App: React.FC = () => {
       {/* Espaçamento para o conteúdo renderizado */}
       <div style={{ marginTop: '38px', flexGrow: 1 }}>
         <Routes>
+          <Route path="/" element={<Inicial />} />
           <Route path="/ini" element={<Inicial />} />
           <Route path="/adm" element={<Administrador />} />
           <Route path="/spt" element={<Suporte />} />
@@ -156,7 +158,9 @@ const App: React.FC = () => {
 
 const WrappedApp = () => (
   <Router>
-    <App />
+    <ParameterProvider>
+      <App />
+    </ParameterProvider>
   </Router>
 );
 

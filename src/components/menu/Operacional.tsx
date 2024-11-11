@@ -14,6 +14,7 @@ import {
 import { Avatar, Card, Dropdown, Menu, Tooltip, Typography, Drawer, Button } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import ReservaNovo from '../menuModule/Operacional/ReservaNovo'; // Importando o componente ReservaNovo
+import { useParameter } from '../../context/ParameterContext';
 
 const { Text } = Typography;
 const { Link } = Typography;
@@ -27,7 +28,11 @@ const IconText = ({ icon, text, tooltip, color, onClick }: { icon: React.Compone
   </Tooltip>
 );
 
+
 const Operacional: React.FC = () => {
+  const { system } = useParameter();
+  console.log('system: ' + system);
+  
   const navigate = useNavigate();
   const [isDrawerVisible, setIsDrawerVisible] = useState(false);
 
