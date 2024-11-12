@@ -3,8 +3,8 @@ import { Space, Table, Tag, Tooltip, Input, Select } from 'antd';
 import type { TableProps } from 'antd';
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import { useParameter } from '../../../context/ParameterContext';
-import { clientesLocacaoRoupa } from '../../fields/clientesLocacaoRoupa-json';
-import { clientesOficinaCarros } from '../../fields/clientesOficinaCarros-json';
+import { clientesLocacaoRoupa } from '../../fields/Dados/sysLocacaoRoupa/clientesLocacaoRoupa-json';
+import { clientesOficinaCarros } from '../../fields/Dados/sysOficinaCarros/clientesOficinaCarros-json';
 
 interface ClientType {
   id: string;

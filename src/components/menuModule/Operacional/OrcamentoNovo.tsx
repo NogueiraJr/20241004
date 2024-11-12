@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Button, ConfigProvider, DatePicker, Form, Input, Select, Tag, Typography } from 'antd';
 import { NumericFormat } from 'react-number-format';
-import { clientesOficinaCarros } from '../../fields/clientesOficinaCarros-json';
+import { clientesOficinaCarros } from '../../fields/Dados/sysOficinaCarros/clientesOficinaCarros-json';
 import { DownOutlined, MinusOutlined, PlusOutlined, UpOutlined } from '@ant-design/icons';
 import '../../../index.css';
 import dayjs from 'dayjs';
 import 'dayjs/locale/pt-br';
 import ptBR from 'antd/es/locale/pt_BR';
 import { Tooltip } from 'antd';
-import { produtosOficinaCarros } from '../../fields/produtosOficinaCarros-json';
+import { produtosOficinaCarros } from '../../fields/Dados/sysOficinaCarros/produtosOficinaCarros-json';
 
 dayjs.locale('pt-br'); // Configura o dayjs para Português do Brasil
 

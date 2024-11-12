@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { Space, Table, Tag, Tooltip, Input, Select } from 'antd';
 import type { TableProps } from 'antd';
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
-import { produtosLocacaoRoupa } from '../../fields/produtosLocacaoRoupa-json';
+import { produtosLocacaoRoupa } from '../../fields/Dados/sysLocacaoRoupa/produtosLocacaoRoupa-json';
 import { useParameter } from '../../../context/ParameterContext';
-import { produtosOficinaCarros } from '../../fields/produtosOficinaCarros-json';
+import { produtosOficinaCarros } from '../../fields/Dados/sysOficinaCarros/produtosOficinaCarros-json';
 
 export interface ProductType {
   id: string;

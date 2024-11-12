@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Button, ConfigProvider, DatePicker, Form, Input, Select, Tag, Typography } from 'antd';
 import { NumericFormat } from 'react-number-format';
-import { produtosLocacaoRoupa } from '../../fields/produtosLocacaoRoupa-json';
-import { clientesLocacaoRoupa } from '../../fields/clientesLocacaoRoupa-json';
+import { produtosLocacaoRoupa } from '../../fields/Dados/sysLocacaoRoupa/produtosLocacaoRoupa-json';
+import { clientesLocacaoRoupa } from '../../fields/Dados/sysLocacaoRoupa/clientesLocacaoRoupa-json';
 import { DownOutlined, MinusOutlined, PlusOutlined, UpOutlined } from '@ant-design/icons';
 import '../../../index.css';
 import dayjs from 'dayjs';
