@@ -92,6 +92,8 @@ const Cliente: React.FC = () => {
           />
         </div>
       ),
+      sorter: (a, b) => a.name.localeCompare(b.name),
+      sortDirections: ['ascend', 'descend'], 
     },
     {
       title: 'Ações',
@@ -150,10 +152,10 @@ const Cliente: React.FC = () => {
 
           const tagsDisplay = record.tags && record.tags.length > 0
             ? record.tags.map((tag) => (
-                <Tag color={tag.length > 5 ? 'geekblue' : 'green'} key={tag}>
-                  {tag.toUpperCase()}
-                </Tag>
-              ))
+              <Tag color={tag.length > 5 ? 'geekblue' : 'green'} key={tag}>
+                {tag.toUpperCase()}
+              </Tag>
+            ))
             : null;
 
           return (
@@ -175,6 +177,11 @@ const Cliente: React.FC = () => {
         expandedRowKeys={expandedRowKeys}
         onExpand={handleExpand}
         rowKey="id"
+        locale={{
+          triggerDesc: 'Clique para ordenar decrescente',
+          triggerAsc: 'Clique para ordenar crescente',
+          cancelSort: 'Clique para cancelar a ordenação',
+        }}
       />
     </>
   );
