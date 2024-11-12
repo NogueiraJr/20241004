@@ -44,7 +44,7 @@ const Dados: React.FC = () => {
 
   const actionsClientes = [
     <IconText icon={PlusSquareOutlined} text="NOVO" tooltip="Adicionar Novo" key="icon-new" color="black" />,
-    <IconText icon={UnorderedListOutlined} text="4" tooltip="Lista com Todos" key="icon-all-itens" color="blue" onClick={handleListaTodosClientes}/>,
+    <IconText icon={UnorderedListOutlined} text="30" tooltip="Lista com Todos" key="icon-all-itens" color="blue" onClick={handleListaTodosClientes}/>,
     <IconText icon={CheckCircleOutlined} text="2" tooltip="Apenas os Ativos" key="icon-actived-itens" color="green" />,
     <IconText icon={CloseCircleOutlined} text="2" tooltip="Apenas os Inativos" key="icon-desatived-itens" color="gray" />,
     <IconText icon={DeleteOutlined} text="0" tooltip="Apenas os Apagados" key="icon-deleted-itens" color="red" />,
@@ -66,7 +66,7 @@ const Dados: React.FC = () => {
 
   const actionsProdutos = [
     <IconText icon={PlusSquareOutlined} text="NOVO" tooltip="Adicionar Novo" key="icon-new" color="black" />,
-    <IconText icon={UnorderedListOutlined} text="11" tooltip="Lista com Todos" key="icon-all-itens" color="blue" onClick={handleListaTodosProdutos}/>,
+    <IconText icon={UnorderedListOutlined} text="12" tooltip="Lista com Todos" key="icon-all-itens" color="blue" onClick={handleListaTodosProdutos}/>,
     <IconText icon={CheckCircleOutlined} text="7" tooltip="Apenas os Ativos" key="icon-actived-itens" color="green" />,
     <IconText icon={CloseCircleOutlined} text="4" tooltip="Apenas os Inativos" key="icon-desatived-itens" color="gray" />,
     <IconText icon={DeleteOutlined} text="0" tooltip="Apenas os Apagados" key="icon-deleted-itens" color="red" />,

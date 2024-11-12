@@ -1,20 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { Button, ConfigProvider, DatePicker, Form, Input, Select, Tag, Typography } from 'antd';
 import { NumericFormat } from 'react-number-format';
-import { produtosLocacaoRoupa } from '../../fields/produtosLocacaoRoupa-json';
-import { clientesLocacaoRoupa } from '../../fields/clientesLocacaoRoupa-json';
+import { clientesOficinaCarros } from '../../fields/clientesOficinaCarros-json';
 import { DownOutlined, MinusOutlined, PlusOutlined, UpOutlined } from '@ant-design/icons';
 import '../../../index.css';
 import dayjs from 'dayjs';
 import 'dayjs/locale/pt-br';
 import ptBR from 'antd/es/locale/pt_BR';
 import { Tooltip } from 'antd';
+import { produtosOficinaCarros } from '../../fields/produtosOficinaCarros-json';
 
 dayjs.locale('pt-br'); // Configura o dayjs para Português do Brasil
 
 const { Text } = Typography;
 
-const ReservaNovo: React.FC = () => {
+const OrcamentoNovo: React.FC = () => {
   const [form] = Form.useForm();
   const [selectedProducts, setSelectedProducts] = useState([]);
   const [quantities, setQuantities] = useState({});
@@ -23,23 +23,23 @@ const ReservaNovo: React.FC = () => {
   const [filterValue, setFilterValue] = useState(''); // Novo estado para armazenar o valor do filtro
 
   useEffect(() => {
-    const provaDate = dayjs().add(4, 'day').hour(12).minute(0);
-    const retiradaDate = provaDate.add(5, 'day');
+    const execucaoDate = dayjs().add(4, 'day').hour(12).minute(0);
+    const retiradaDate = execucaoDate.add(5, 'day');
     const devolucaoDate = retiradaDate.add(6, 'day');
 
     form.setFieldsValue({
-      dataProva: provaDate,
-      dataRetirada: retiradaDate,
-      dateDevolucao: devolucaoDate,
+      dataExecucao: execucaoDate,
+      // dataRetirada: retiradaDate,
+      // dateDevolucao: devolucaoDate,
     });
   }, [form]);
 
   useEffect(() => {
     // Atualiza o campo "Descrição" quando o cliente é alterado
     if (selectedClient) {
-      const clientName = clientesLocacaoRoupa.find(c => c.id === selectedClient)?.name || '';
+      const clientName = clientesOficinaCarros.find(c => c.id === selectedClient)?.name || '';
       form.setFieldsValue({
-        descricao: `Reserva para ${clientName}`,
+        descricao: `Orçamento para ${clientName}`,
       });
     }
   }, [selectedClient, form]); // Depende de selectedClient
@@ -73,7 +73,7 @@ const ReservaNovo: React.FC = () => {
 
   const calculateTotalPrice = (products, quantities) => {
     return products.reduce((total, productId) => {
-      const product = produtosLocacaoRoupa.find(p => p.id === productId);
+      const product = produtosOficinaCarros.find(p => p.id === productId);
       return total + (product?.price || 0) * (quantities[productId] || 1);
     }, 0);
   };
@@ -101,7 +101,7 @@ const ReservaNovo: React.FC = () => {
             showSearch
             placeholder="Selecione um cliente"
             onChange={(value) => setSelectedClient(value)}
-            options={clientesLocacaoRoupa.map(c => ({
+            options={clientesOficinaCarros.map(c => ({
               value: c.id,
               label: c.name,
             }))}
@@ -127,9 +127,9 @@ const ReservaNovo: React.FC = () => {
 
         <Form.Item label={<span className="custom-label" style={{ whiteSpace: 'nowrap' }}>Etiquetas </span>}>
           <Select className="custom-field" placeholder="Informe as etiquetas" mode="multiple">
-            <Select.Option value="casamento">casamento</Select.Option>
-            <Select.Option value="batizado">batizado</Select.Option>
-            <Select.Option value="festa">festa</Select.Option>
+            <Select.Option value="manutenção">manutenção</Select.Option>
+            <Select.Option value="preventiva">preventiva</Select.Option>
+            <Select.Option value="reparo">reparo</Select.Option>
           </Select>
         </Form.Item>
 
@@ -156,7 +156,7 @@ const ReservaNovo: React.FC = () => {
             mode="multiple"
             showSearch
             placeholder="Selecionar um ou mais itens"
-            options={produtosLocacaoRoupa.map(p => {
+            options={produtosOficinaCarros.map(p => {
               const [showDetails, setShowDetails] = useState(false);
 
               return {
@@ -273,19 +273,19 @@ const ReservaNovo: React.FC = () => {
           <Input className="custom-field" />
         </Form.Item>
 
-        <Form.Item label={<span className="custom-label" style={{ whiteSpace: 'nowrap' }}>Provar em</span>} name="dataProva"
+        <Form.Item label={<span className="custom-label" style={{ whiteSpace: 'nowrap' }}>Executar em</span>} name="dataExecucao"
           rules={[{ required: true, message: 'Por favor, informe uma data!' }]}
         >
           <DatePicker
             className="custom-date-picker"
-            placeholder="Informe a data da Prova"
+            placeholder="Informe a data da Execução"
             format="DD MMMM YYYY, HH:mm"
             showTime={{ format: 'HH:mm' }}
             style={{ width: '100%' }}
           />
         </Form.Item>
 
-        <Form.Item label={<span className="custom-label" style={{ whiteSpace: 'nowrap' }}>Retirar em</span>} name="dataRetirada"
+        {/* <Form.Item label={<span className="custom-label" style={{ whiteSpace: 'nowrap' }}>Retirar em</span>} name="dataRetirada"
           rules={[{ required: true, message: 'Por favor, informe uma data!' }]}
         >
           <DatePicker
@@ -295,9 +295,9 @@ const ReservaNovo: React.FC = () => {
             showTime={{ format: 'HH:mm' }}
             style={{ width: '100%' }}
           />
-        </Form.Item>
+        </Form.Item> */}
 
-        <Form.Item label={<span className="custom-label" style={{ whiteSpace: 'nowrap' }}>Devolver em</span>} name="dateDevolucao"
+        {/* <Form.Item label={<span className="custom-label" style={{ whiteSpace: 'nowrap' }}>Devolver em</span>} name="dateDevolucao"
           rules={[{ required: true, message: 'Por favor, informe uma data!' }]}
         >
           <DatePicker
@@ -307,14 +307,14 @@ const ReservaNovo: React.FC = () => {
             showTime={{ format: 'HH:mm' }}
             style={{ width: '100%' }}
           />
-        </Form.Item>
+        </Form.Item> */}
 
         <Form.Item label={<span className="custom-label" style={{ whiteSpace: 'nowrap' }}>Anotações</span>}>
           <Input.TextArea className="custom-textarea" rows={4} />
         </Form.Item>
 
         <Form.Item>
-          <Tooltip title="Cria a Reserva para o Cliente">
+          <Tooltip title="Cria o Orçamento para o Cliente">
             <Button
               className="custom-button"
               type="primary"
@@ -328,7 +328,7 @@ const ReservaNovo: React.FC = () => {
                 }
               }}
             >
-              Criar a Reserva
+              Criar o Orçamento
             </Button>
           </Tooltip>
         </Form.Item>
@@ -337,4 +337,4 @@ const ReservaNovo: React.FC = () => {
   );
 };
 
-export default ReservaNovo;
+export default OrcamentoNovo;

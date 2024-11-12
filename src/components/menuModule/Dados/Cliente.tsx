@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Space, Table, Tag, Tooltip } from 'antd';
 import type { TableProps } from 'antd';
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
+import { useParameter } from '../../../context/ParameterContext';
+import { clientesLocacaoRoupa } from '../../fields/clientesLocacaoRoupa-json';
+import { clientesOficinaCarros } from '../../fields/clientesOficinaCarros-json';
 
 interface ClientType {
-  key: string;
+  id: string;
   name: string;
   active: boolean;
   createAt: string;
@@ -40,54 +43,53 @@ const columns: TableProps<ClientType>['columns'] = [
   },
 ];
 
-// Dados de exemplo
-const data: ClientType[] = [
-  {
-    key: 'cm1wfe41d0001p8795aihoxtu',
-    name: 'Bruno Costa',
-    active: true,
-    createAt: '2024-10-05T20:26:02.738Z',
-    tags: null,
-  },
-  {
-    key: 'cm1wfe41k0003p8791famqx25',
-    name: 'Daniel Santos',
-    active: false,
-    createAt: '2024-10-05T20:26:02.744Z',
-    tags: ['casamento', 'festa'],
-  },
-  {
-    key: 'cm1wfe41o0004p879vczh6fkt',
-    name: 'Elisa Pereira',
-    active: true,
-    createAt: '2024-10-05T20:26:02.748Z',
-    tags: null,
-  },
-  {
-    key: 'cm1wfe41r0005p8796jfwz3dg',
-    name: 'Felipe Almeida',
-    active: false,
-    createAt: '2024-10-05T20:26:02.752Z',
-    tags: ['batizado', 'festa'],
-  },
-];
+const Cliente: React.FC = () => {
+  let clientes = [];
+  const { system } = useParameter();
 
-const Cliente: React.FC = () => (
-  <Table<ClientType>
-    columns={columns}
-    dataSource={data}
-    pagination={{ position: ['topLeft'] }}
-    expandedRowRender={(record) => {
-      const formattedDate = new Date(record.createAt).toLocaleString('pt-BR', {
-        day: '2-digit',
-        month: '2-digit',
-        year: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit',
-      });
+  const [expandedRowKeys, setExpandedRowKeys] = useState<string[]>([]);
 
-      const tagsDisplay = record.tags && record.tags.length > 0 
-        ? record.tags.map((tag) => {
+  const handleExpand = (expanded: boolean, record: ClientType) => {
+    setExpandedRowKeys((prevExpandedRowKeys) => {
+      if (expanded) {
+        // Adiciona a chave do item expandido à lista
+        return [...prevExpandedRowKeys, record.id];
+      } else {
+        // Remove a chave do item contraído da lista
+        return prevExpandedRowKeys.filter((key) => key !== record.id);
+      }
+    });
+  };
+
+  switch (system) {
+    case 'sysLocacaoRoupa':
+      clientes = clientesLocacaoRoupa;	
+      break;
+  
+    case 'sysOficinaCarros':
+      clientes = clientesOficinaCarros;	
+      break;
+      
+    default:
+      break;
+    }
+  
+  return (
+    <Table<ClientType>
+      columns={columns}
+      dataSource={clientes}
+      pagination={{ position: ['topLeft'] }}
+      expandedRowRender={(record) => {
+        const formattedDate = new Date(record.createAt).toLocaleString('pt-BR', {
+          day: '2-digit',
+          month: '2-digit',
+          year: 'numeric',
+          hour: '2-digit',
+          minute: '2-digit',
+        });
+
+        const tagsDisplay = record.tags && record.tags.length > 0
+          ? record.tags.map((tag) => {
             let color = tag.length > 5 ? 'geekblue' : 'green';
             return (
               <Tag color={color} key={tag}>
@@ -95,23 +97,27 @@ const Cliente: React.FC = () => (
               </Tag>
             );
           })
-        : null;
+          : null;
 
-      return (
-        <div style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', color: 'gray' }}>
-          <span style={{ marginRight: '8px' }}>Criado em {formattedDate}</span> | 
-          <Tooltip title={'Situação do item'}>
-            <span style={{ cursor: 'pointer', marginLeft: '8px', color: record.active ? 'green' : 'red' }}> {record.active ? 'ATIVO' : 'INATIVO'} </span>
-          </Tooltip>
-          {tagsDisplay && tagsDisplay.length > 0 && (
-            <span style={{ cursor: 'pointer', marginLeft: '8px' }}>
-              | {tagsDisplay}
-            </span>
-          )}
-        </div>
-      );
-    }}
-  />
-);
+        return (
+          <div style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', color: 'gray' }}>
+            <span style={{ marginRight: '8px' }}>Criado em {formattedDate}</span> |
+            <Tooltip title={'Situação do item'}>
+              <span style={{ cursor: 'pointer', marginLeft: '8px', color: record.active ? 'green' : 'red' }}> {record.active ? 'ATIVO' : 'INATIVO'} </span>
+            </Tooltip>
+            {tagsDisplay && tagsDisplay.length > 0 && (
+              <span style={{ cursor: 'pointer', marginLeft: '8px' }}>
+                | {tagsDisplay}
+              </span>
+            )}
+          </div>
+        );
+      }}
+      expandedRowKeys={expandedRowKeys}
+      onExpand={handleExpand}
+      rowKey="id"
+    />
+  )
+};
 
 export default Cliente;

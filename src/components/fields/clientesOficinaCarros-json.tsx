@@ -1,5 +1,5 @@
 // Lista de clientes
-export const clientes = [
+export const clientesOficinaCarros = [
   {
     "id": "cm1wfe41d0001p8795aihoxtu",
     "name": "Bruno Costa",
@@ -12,7 +12,7 @@ export const clientes = [
   {
     "id": "cm1wfe41k0003p8791famqx25",
     "name": "Daniel Santos",
-    "tags": null,
+    "tags": ['preventiva'],
     "active": true,
     "createAt": "2024-10-05T20:26:02.744Z",
     "updatedAt": "2024-10-05T20:26:02.744Z",
@@ -66,7 +66,7 @@ export const clientes = [
   {
     "id": "cm1wfe42a000bp879rqhszcd1",
     "name": "Lucas Fernandes",
-    "tags": null,
+    "tags": ['reparo'],
     "active": true,
     "createAt": "2024-10-05T20:26:02.771Z",
     "updatedAt": "2024-10-05T20:26:02.771Z",
@@ -120,7 +120,7 @@ export const clientes = [
   {
     "id": "cm1wfe42w000jp879adkk3pik",
     "name": "Thiago Barros",
-    "tags": null,
+    "tags": ['preventiva'],
     "active": true,
     "createAt": "2024-10-05T20:26:02.792Z",
     "updatedAt": "2024-10-05T20:26:02.792Z",
@@ -156,7 +156,7 @@ export const clientes = [
   {
     "id": "cm1wfe43c000pp87916k4ehg3",
     "name": "Igor Duarte",
-    "tags": null,
+    "tags": ['reparo', 'manutenção'],
     "active": true,
     "createAt": "2024-10-05T20:26:02.808Z",
     "updatedAt": "2024-10-05T20:26:02.808Z",
