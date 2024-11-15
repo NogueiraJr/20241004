@@ -129,7 +129,7 @@ const App: React.FC = () => {
         <UserOutlined title="Usuário" style={{ color: 'white', fontSize: '20px', cursor: 'pointer' }} />
       </div>
       {/* Espaçamento para o conteúdo renderizado */}
-      <div style={{ marginTop: '38px', flexGrow: 1 }}>
+      <div style={{ marginTop: '30px', marginRight: '-25px', marginLeft: '-25px', flexGrow: 1 }}>
         <Routes>
           <Route path="/" element={<Inicial />} />
           <Route path="/ini" element={<Inicial />} />
