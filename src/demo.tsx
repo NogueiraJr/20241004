@@ -20,7 +20,6 @@ import Retirada from './components/menuModule/Operacional/Retirada';
 import Devolucao from './components/menuModule/Operacional/Devolucao';
 import Fornecedor from './components/menuModule/Dados/Fornecedor';
 import Parceiro from './components/menuModule/Dados/Parceiro';
-import ReservaNovo from './components/menuModule/Operacional/ReservaNovo';
 import Prova from './components/menuModule/Operacional/Prova';
 import { ParameterProvider } from './context/ParameterContext';
 
@@ -149,7 +148,6 @@ const App: React.FC = () => {
           <Route path="/parceiro" element={<Parceiro />} />
 
           <Route path="/reserva" element={<Reserva />} />
-          <Route path="/reserva-novo" element={<ReservaNovo />} />
           <Route path="/prova" element={<Prova />} />
           <Route path="/retirada" element={<Retirada />} />
           <Route path="/devolucao" element={<Devolucao />} />
