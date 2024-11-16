@@ -117,7 +117,7 @@ const InformeItens: React.FC<{
       </Form.Item>
       <Form.Item>
         <Tooltip title="Caso o Produto ainda não exista cadastrado">
-          <Button type="primary">Novo Produto</Button>
+          <Button className="custom-button" type="primary">Novo Produto</Button>
         </Tooltip>
       </Form.Item>
     </>
