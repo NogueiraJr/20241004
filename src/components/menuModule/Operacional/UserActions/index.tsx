@@ -24,7 +24,14 @@ const IconText = ({ icon, text, tooltip, color, onClick }: { icon: React.Compone
   </Tooltip>
 );
 
-const Actions: React.FC = () => {
+interface ActionsProps {
+  action: string;
+}
+
+const Actions: React.FC<ActionsProps> = ({ action }) => {
+
+  console.log(action);
+
   const { system } = useParameter();
   const [expandedRowKeys, setExpandedRowKeys] = useState<string[]>([]);
   const [searchText, setSearchText] = useState('');

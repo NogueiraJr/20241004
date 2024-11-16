@@ -147,10 +147,10 @@ const App: React.FC = () => {
           <Route path="/fornecedor" element={<Fornecedor />} />
           <Route path="/parceiro" element={<Parceiro />} />
 
-          <Route path="/reserva" element={<Actions />} />
-          <Route path="/prova" element={<Prova />} />
-          <Route path="/retirada" element={<Retirada />} />
-          <Route path="/devolucao" element={<Devolucao />} />
+          <Route path="/reserva" element={<Actions action="reservar" />} />
+          <Route path="/prova" element={<Actions action="provar" />} />
+          <Route path="/retirada" element={<Actions action="retirar" />} />
+          <Route path="/devolucao" element={<Actions action="devolver" />} />
           
         </Routes>
       </div>
