@@ -21,7 +21,7 @@ import { useNavigate } from 'react-router-dom';
 import ReservaNovo from '../menuModule/Operacional/ReservaNovo'; // Importando o componente ReservaNovo
 import { useParameter } from '../../context/ParameterContext';
 import OrcamentoNovo from '../menuModule/Operacional/OrcamentoNovo';
-import OperationNew from '../menuModule/Operacional/OperationNew';
+import Operation from '../menuModule/Operacional/UserOperations';
 
 const { Text } = Typography;
 const { Link } = Typography;
@@ -374,7 +374,7 @@ const Operacional: React.FC = () => {
             width={500}
           >
             {/* <ReservaNovo /> */}
-            <OperationNew />
+            <Operation />
           </Drawer>
         </>
       )}
@@ -455,7 +455,7 @@ const Operacional: React.FC = () => {
             width={500}
           >
             {/* <OrcamentoNovo /> */}
-            <OperationNew />
+            <Operation />
           </Drawer>
 
         </>

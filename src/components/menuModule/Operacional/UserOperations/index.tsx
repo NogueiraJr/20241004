@@ -21,7 +21,7 @@ import { clientesLocacaoRoupa } from '../../../fields/Dados/sysLocacaoRoupa/clie
 import { produtosOficinaCarros } from '../../../fields/Dados/sysOficinaCarros/produtosOficinaCarros-json';
 import { clientesOficinaCarros } from '../../../fields/Dados/sysOficinaCarros/clientesOficinaCarros-json';
 
-const OperationNew: React.FC = () => {
+const Operation: React.FC = () => {
   const { system } = useParameter();
   const [form] = Form.useForm();
   const [total, setTotal] = useState('0,00');
@@ -116,4 +116,4 @@ const OperationNew: React.FC = () => {
   );
 };
 
-export default OperationNew;
+export default Operation;
