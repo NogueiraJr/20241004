@@ -19,6 +19,8 @@ import { produtosLocacaoRoupa } from '../../../fields/Dados/sysLocacaoRoupa/prod
 import { clientesLocacaoRoupa } from '../../../fields/Dados/sysLocacaoRoupa/clientesLocacaoRoupa-json';
 import { produtosOficinaCarros } from '../../../fields/Dados/sysOficinaCarros/produtosOficinaCarros-json';
 import { clientesOficinaCarros } from '../../../fields/Dados/sysOficinaCarros/clientesOficinaCarros-json';
+import { userTagsLocacaoRoupa } from '../../../fields/Dados/sysLocacaoRoupa/userTagsLocacaoRoupa-json';
+import { userTagsOficinaCarros } from '../../../fields/Dados/sysOficinaCarros/userTagsOficinaCarros-json';
 
 const Operation: React.FC = () => {
   const { system } = useParameter();
@@ -29,15 +31,18 @@ const Operation: React.FC = () => {
 
   let produtos = [];
   let clientes = [];
+  let etiquetas = [];
 
   switch (system) {
     case 'sysLocacaoRoupa':
       produtos = produtosLocacaoRoupa;
       clientes = clientesLocacaoRoupa;
+      etiquetas = userTagsLocacaoRoupa;
       break;
     case 'sysOficinaCarros':
       produtos = produtosOficinaCarros;
       clientes = clientesOficinaCarros;
+      etiquetas = userTagsOficinaCarros;
       break;
     default:
       break;
@@ -85,7 +90,7 @@ const Operation: React.FC = () => {
     <ConfigProvider locale={ptBR}>
       <Form layout="vertical" form={form}>
         <Cliente handleClienteChange={handleClienteChange} clientes={clientes} />
-        <Etiquetas />
+        <Etiquetas etiquetas={etiquetas} /> {/* Passando as etiquetas para o componente */}
         <ItensSelecionados total={total} setTotal={setTotal} />
         <InformeItens
           produtos={produtos}
