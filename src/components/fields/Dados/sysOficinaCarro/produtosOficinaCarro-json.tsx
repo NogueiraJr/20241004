@@ -1,4 +1,4 @@
-export const produtosOficinaCarros = [
+export const produtosOficinaCarro = [
   {
     "id": "cm26i4oqj00012no5y0lymugl",
     "name": "Troca de óleo",
@@ -12,7 +12,7 @@ export const produtosOficinaCarros = [
     "updatedAt": "2024-10-12 18:40:23.611",
     "deletedAt": null,
     "userId": "idProprietario02",
-    "systemId": "sysOficinaCarros"
+    "systemId": "sysOficinaCarro"
   },
   {
     "id": "cm26i4oqq00032no5gotu98se",
@@ -27,7 +27,7 @@ export const produtosOficinaCarros = [
     "updatedAt": "2024-10-12 18:40:23.618",
     "deletedAt": null,
     "userId": "idProprietario02",
-    "systemId": "sysOficinaCarros"
+    "systemId": "sysOficinaCarro"
   },
   {
     "id": "cm26i4oqu00052no5w1yea8cs",
@@ -42,7 +42,7 @@ export const produtosOficinaCarros = [
     "updatedAt": "2024-10-12 18:40:23.622",
     "deletedAt": null,
     "userId": "idProprietario02",
-    "systemId": "sysOficinaCarros"
+    "systemId": "sysOficinaCarro"
   },
   {
     "id": "cm26i7oqu00053no5w1yea8cs",
@@ -57,7 +57,7 @@ export const produtosOficinaCarros = [
     "updatedAt": "2024-10-12 18:40:23.622",
     "deletedAt": null,
     "userId": "idProprietario02",
-    "systemId": "sysOficinaCarros"
+    "systemId": "sysOficinaCarro"
   },
   {
     "id": "cm26i4oqx00072no5qy72f2xs",
@@ -72,7 +72,7 @@ export const produtosOficinaCarros = [
     "updatedAt": "2024-10-12 18:40:23.626",
     "deletedAt": null,
     "userId": "idProprietario02",
-    "systemId": "sysOficinaCarros"
+    "systemId": "sysOficinaCarro"
   },
   {
     "id": "cm26i4or000092no5k7m4jhbn",
@@ -87,7 +87,7 @@ export const produtosOficinaCarros = [
     "updatedAt": "2024-10-12 18:40:23.629",
     "deletedAt": null,
     "userId": "idProprietario02",
-    "systemId": "sysOficinaCarros"
+    "systemId": "sysOficinaCarro"
   },
   {
     "id": "cm26i4or3000b2no55vcu8vwn",
@@ -102,7 +102,7 @@ export const produtosOficinaCarros = [
     "updatedAt": "2024-10-12 18:40:23.632",
     "deletedAt": null,
     "userId": "idProprietario02",
-    "systemId": "sysOficinaCarros"
+    "systemId": "sysOficinaCarro"
   },
   {
     "id": "cm26i4or6000d2no57m5h8iqc",
@@ -117,7 +117,7 @@ export const produtosOficinaCarros = [
     "updatedAt": "2024-10-12 18:40:23.634",
     "deletedAt": null,
     "userId": "idProprietario02",
-    "systemId": "sysOficinaCarros"
+    "systemId": "sysOficinaCarro"
   },
   {
     "id": "cm26i4or9000f2no563zsa517",
@@ -132,7 +132,7 @@ export const produtosOficinaCarros = [
     "updatedAt": "2024-10-12 18:40:23.637",
     "deletedAt": null,
     "userId": "idProprietario02",
-    "systemId": "sysOficinaCarros"
+    "systemId": "sysOficinaCarro"
   },
   {
     "id": "cm26i4orc000h2no5307ceiho",
@@ -147,7 +147,7 @@ export const produtosOficinaCarros = [
     "updatedAt": "2024-10-12 18:40:23.641",
     "deletedAt": null,
     "userId": "idProprietario02",
-    "systemId": "sysOficinaCarros"
+    "systemId": "sysOficinaCarro"
   },
   {
     "id": "cm26i4orf000j2no5izi5uvzl",
@@ -162,7 +162,7 @@ export const produtosOficinaCarros = [
     "updatedAt": "2024-10-12 18:40:23.644",
     "deletedAt": null,
     "userId": "idProprietario02",
-    "systemId": "sysOficinaCarros"
+    "systemId": "sysOficinaCarro"
   },
   {
     "id": "cm26i4ori000l2no5iftbcb8i",
@@ -177,6 +177,6 @@ export const produtosOficinaCarros = [
     "updatedAt": "2024-10-12 18:40:23.646",
     "deletedAt": null,
     "userId": "idProprietario02",
-    "systemId": "sysOficinaCarros"
+    "systemId": "sysOficinaCarro"
   }
 ];

@@ -3,7 +3,7 @@ import { Space, Table, Tag, Tooltip, Input, Select } from 'antd';
 import type { TableProps } from 'antd';
 import { CarryOutOutlined, CloseCircleOutlined, DeleteOutlined, EditOutlined, ShoppingOutlined } from '@ant-design/icons';
 import { useParameter } from '../../../../context/ParameterContext';
-import { userOperationsLocacaoRoupa } from '../../../fields/Operacional/sysLocacaoRoupa/userOperations-LocacaoRoupa-json';
+import { userOperations } from '../../../fields/Operacional/userOperations-json';
 
 interface OperationType {
   id: string;
@@ -29,10 +29,12 @@ interface ActionsProps {
 }
 
 const Actions: React.FC<ActionsProps> = ({ action }) => {
+  
+  const { system } = useParameter();
 
+  console.log(system);
   console.log(action);
 
-  const { system } = useParameter();
   const [expandedRowKeys, setExpandedRowKeys] = useState<string[]>([]);
   const [searchText, setSearchText] = useState('');
   const [statusFilter, setStatusFilter] = useState<string>('all');
@@ -40,19 +42,19 @@ const Actions: React.FC<ActionsProps> = ({ action }) => {
   const [filteredData, setFilteredData] = useState<OperationType[]>([]);
 
   const operations = useMemo(() => {
-    return system === 'sysLocacaoRoupa' 
-      ? userOperationsLocacaoRoupa.map((locacao) => ({
-          id: locacao.id,
-          description: locacao.description,
-          active: locacao.active,
-          notes: locacao.notes,
-          priceActions: locacao.priceActions,
-          priceCharged: locacao.priceCharged,
-          tags: locacao.tags ? locacao.tags.split('|') : [],
-        }))
-      : [];
-  }, [system]);
-
+    return userOperations
+          .filter((operation) => operation.systemId === system)
+          .map((operation) => ({
+            id: operation.id,
+            description: operation.description,
+            active: operation.active,
+            notes: operation.notes,
+            priceActions: operation.priceActions,
+            priceCharged: operation.priceCharged,
+            tags: operation.tags ? operation.tags.split('|') : [],
+          }));
+  }, [system, userOperations]);
+  
   useEffect(() => {
     const filtered = operations.filter((locacao) => {
       const matchesDescription = locacao.description.toLowerCase().includes(searchText.toLowerCase());

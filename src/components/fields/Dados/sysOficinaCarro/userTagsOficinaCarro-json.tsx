@@ -1,4 +1,4 @@
-export const userTagsOficinaCarros = [
+export const userTagsOficinaCarro = [
 	{
 		"id" : "cm3j7till0009115oionfczs4",
 		"tag" : "passante",
