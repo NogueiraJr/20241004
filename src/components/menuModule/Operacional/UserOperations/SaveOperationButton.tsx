@@ -1,14 +1,14 @@
-// CriarReserva.tsx
+// SaveOperation.tsx
 import React from 'react';
 import { Form, Button, Tooltip } from 'antd';
 
-interface CriarReservaProps {
+interface SaveOperationProps {
   form: any;
 }
 
-const CriarReserva: React.FC<CriarReservaProps> = ({ form }) => (
+const SaveOperation: React.FC<SaveOperationProps> = ({ form }) => (
   <Form.Item>
-    <Tooltip title="Cria a Reserva para o Cliente">
+    <Tooltip title="Grava os dados">
       <Button
         className="custom-button"
         type="primary"
@@ -22,10 +22,10 @@ const CriarReserva: React.FC<CriarReservaProps> = ({ form }) => (
           }
         }}
       >
-        Criar a Reserva
+        Gravar
       </Button>
     </Tooltip>
   </Form.Item>
 );
 
-export default CriarReserva;
+export default SaveOperation;

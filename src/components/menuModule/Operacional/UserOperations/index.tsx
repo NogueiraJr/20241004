@@ -13,8 +13,7 @@ import DataRetirada from './DataRetirada';
 import DataDevolucao from './DataDevolucao';
 import DataExecucao from './DataExecucao';
 import Anotacoes from './Anotacoes';
-import CriarReservaButton from './CriarReservaButton';
-import CriarOrcamentoButton from './CriarOrcamentoButton';
+import SaveOperationButton from './SaveOperationButton';
 
 import { produtosLocacaoRoupa } from '../../../fields/Dados/sysLocacaoRoupa/produtosLocacaoRoupa-json';
 import { clientesLocacaoRoupa } from '../../../fields/Dados/sysLocacaoRoupa/clientesLocacaoRoupa-json';
@@ -101,16 +100,15 @@ const Operation: React.FC = () => {
             <DataRetirada />
             <DataDevolucao />
             <Anotacoes />
-            <CriarReservaButton form={form} />
           </>
         )}
         {system === 'sysOficinaCarros' && (
           <>
             <DataExecucao />
             <Anotacoes />
-            <CriarOrcamentoButton />
           </>
         )}
+        <SaveOperationButton form={form} />
       </Form>
     </ConfigProvider>
   );
