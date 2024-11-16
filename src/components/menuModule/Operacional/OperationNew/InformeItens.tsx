@@ -6,11 +6,11 @@ const { Text } = Typography;
 
 const InformeItens: React.FC<{
   produtos: any[];
-  handleProductChange: (value: any) => void;
+  handleProductChange: (value: string[]) => void;
   handleQuantityChange: (id: string, newQuantity: number) => void;
   quantities: Record<string, number>;
 }> = ({ produtos, handleProductChange, handleQuantityChange, quantities }) => {
-  const [showDetails, setShowDetails] = useState<boolean>(false);
+  const [expandedItemId, setExpandedItemId] = useState<string | null>(null);
 
   return (
     <>
@@ -19,7 +19,7 @@ const InformeItens: React.FC<{
           mode="multiple"
           showSearch
           placeholder="Selecionar um ou mais itens"
-          options={produtos.map(p => ({
+          options={produtos.map((p) => ({
             value: p.id,
             name: p.name,
             label: (
@@ -41,7 +41,7 @@ const InformeItens: React.FC<{
                   <br />
                   <div style={{ display: 'flex', alignItems: 'center', marginTop: 5 }}>
                     <span style={{ marginRight: 10 }}>
-                      Disponível: {(p.quantity).toString().padStart(3, '0')}
+                      Disponível: {p.quantity.toString().padStart(3, '0')}
                     </span>
                     <Button
                       type="primary"
@@ -80,13 +80,13 @@ const InformeItens: React.FC<{
                       style={{ marginLeft: 10 }}
                       onClick={(e) => {
                         e.stopPropagation();
-                        setShowDetails(!showDetails);
+                        setExpandedItemId(expandedItemId === p.id ? null : p.id); // Toggle the expanded item
                       }}
                     >
-                      {showDetails ? <UpOutlined /> : <DownOutlined />}
+                      {expandedItemId === p.id ? <UpOutlined /> : <DownOutlined />}
                     </Button>
                   </div>
-                  {showDetails && (
+                  {expandedItemId === p.id && (
                     <>
                       <Text strong>
                         {p.productTypeId === 'product' ? 'Produto, ' : 'Serviço, '}
