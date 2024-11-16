@@ -14,7 +14,7 @@ const InformeItens: React.FC<{
 
   return (
     <>
-      <Form.Item label={<span className="custom-label" style={{ whiteSpace: 'nowrap' }}>Informe os Itens</span>}>
+      <Form.Item name="itens" label={<span className="custom-label" style={{ whiteSpace: 'nowrap' }}>Informe os Itens</span>} rules={[{ required: true, message: 'Por favor, informe ao menos um item!' }]}>
         <Select
           mode="multiple"
           showSearch

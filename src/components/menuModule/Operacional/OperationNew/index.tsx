@@ -101,7 +101,7 @@ const OperationNew: React.FC = () => {
             <DataRetirada />
             <DataDevolucao />
             <Anotacoes />
-            <CriarReservaButton />
+            <CriarReservaButton form={form} />
           </>
         )}
         {system === 'sysOficinaCarros' && (
