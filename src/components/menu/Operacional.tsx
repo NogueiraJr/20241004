@@ -18,9 +18,8 @@ import {
 } from '@ant-design/icons';
 import { Avatar, Card, Dropdown, Menu, Tooltip, Typography, Drawer, Button } from 'antd';
 import { useNavigate } from 'react-router-dom';
-import ReservaNovo from '../menuModule/Operacional/ReservaNovo'; // Importando o componente ReservaNovo
 import { useParameter } from '../../context/ParameterContext';
-import OrcamentoNovo from '../menuModule/Operacional/OrcamentoNovo';
+import Operation from '../menuModule/Operacional/UserOperations';
 
 const { Text } = Typography;
 const { Link } = Typography;
@@ -372,7 +371,8 @@ const Operacional: React.FC = () => {
             open={isDrawerVisible}
             width={500}
           >
-            <ReservaNovo />
+            {/* <ReservaNovo /> */}
+            <Operation />
           </Drawer>
         </>
       )}
@@ -452,7 +452,8 @@ const Operacional: React.FC = () => {
             open={isDrawerVisible}
             width={500}
           >
-            <OrcamentoNovo />
+            {/* <OrcamentoNovo /> */}
+            <Operation />
           </Drawer>
 
         </>
