@@ -2,10 +2,10 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { Space, Table, Tag, Tooltip, Input, Select } from 'antd';
 import type { TableProps } from 'antd';
 import { CarryOutOutlined, CloseCircleOutlined, DeleteOutlined, EditOutlined, ShoppingOutlined } from '@ant-design/icons';
-import { useParameter } from '../../../context/ParameterContext';
-import { locacoesLocacaoRoupa } from '../../fields/Operacional/sysLocacaoRoupa/locacoesLocacaoRoupa-json';
+import { useParameter } from '../../../../context/ParameterContext';
+import { userOperationsLocacaoRoupa } from '../../../fields/Operacional/sysLocacaoRoupa/userOperations-LocacaoRoupa-json';
 
-interface ReservaType {
+interface OperationType {
   id: string;
   description: string;
   active: boolean;
@@ -24,17 +24,17 @@ const IconText = ({ icon, text, tooltip, color, onClick }: { icon: React.Compone
   </Tooltip>
 );
 
-const Reserva: React.FC = () => {
+const Actions: React.FC = () => {
   const { system } = useParameter();
   const [expandedRowKeys, setExpandedRowKeys] = useState<string[]>([]);
   const [searchText, setSearchText] = useState('');
   const [statusFilter, setStatusFilter] = useState<string>('all');
   const [tagFilter, setTagFilter] = useState<string>('all');
-  const [filteredData, setFilteredData] = useState<ReservaType[]>([]);
+  const [filteredData, setFilteredData] = useState<OperationType[]>([]);
 
-  const locacoes = useMemo(() => {
+  const operations = useMemo(() => {
     return system === 'sysLocacaoRoupa' 
-      ? locacoesLocacaoRoupa.map((locacao) => ({
+      ? userOperationsLocacaoRoupa.map((locacao) => ({
           id: locacao.id,
           description: locacao.description,
           active: locacao.active,
@@ -47,22 +47,22 @@ const Reserva: React.FC = () => {
   }, [system]);
 
   useEffect(() => {
-    const filtered = locacoes.filter((locacao) => {
+    const filtered = operations.filter((locacao) => {
       const matchesDescription = locacao.description.toLowerCase().includes(searchText.toLowerCase());
       const matchesStatus = statusFilter === 'all' || locacao.active === (statusFilter === 'active');
       const matchesTag = tagFilter === 'all' || (locacao.tags && locacao.tags.includes(tagFilter));
       return matchesDescription && matchesStatus && matchesTag;
     });
     setFilteredData(filtered);
-  }, [searchText, statusFilter, tagFilter, locacoes]);
+  }, [searchText, statusFilter, tagFilter, operations]);
 
-  const handleExpand = (expanded: boolean, record: ReservaType) => {
+  const handleExpand = (expanded: boolean, record: OperationType) => {
     setExpandedRowKeys((prevExpandedRowKeys) => 
       expanded ? [...prevExpandedRowKeys, record.id] : prevExpandedRowKeys.filter((key) => key !== record.id)
     );
   };
 
-  const columns: TableProps<ReservaType>['columns'] = [
+  const columns: TableProps<OperationType>['columns'] = [
     {
       title: 'Descrição',
       dataIndex: 'description',
@@ -87,7 +87,7 @@ const Reserva: React.FC = () => {
       width: '100px',
       render: (_, record) => (
         <Space size="middle">
-          <IconText icon={EditOutlined} text="Editar" tooltip="Editar os dados" color="black" />
+          <IconText icon={EditOutlined} text="Editar" tooltip="Editar estas informações" color="black" />
           {/* <IconText icon={CarryOutOutlined} text="Retirar" tooltip="Retirar os produtos" color="black" /> */}
         </Space>
       ),
@@ -115,7 +115,7 @@ const Reserva: React.FC = () => {
           defaultValue="all"
         >
           <Select.Option value="all">Todos</Select.Option>
-          {Array.from(new Set(locacoes.flatMap(locacao => locacao.tags || []))).map(tag => (
+          {Array.from(new Set(operations.flatMap(locacao => locacao.tags || []))).map(tag => (
             <Select.Option key={tag} value={tag}>
               {tag.toUpperCase()}
             </Select.Option>
@@ -123,7 +123,7 @@ const Reserva: React.FC = () => {
         </Select>
       </div>
 
-      <Table<ReservaType>
+      <Table<OperationType>
   columns={columns}
   dataSource={filteredData}
   pagination={{ position: ['topLeft'] }}
@@ -153,9 +153,9 @@ const Reserva: React.FC = () => {
   
       {/* Botões adicionais alinhados à direita */}
       <div style={{ display: 'flex', gap: '16px', marginLeft: 'auto', marginTop: '8px' }}>
-        <IconText icon={ShoppingOutlined} text="Produtos" tooltip="Visualizar produtos" color="blue" />
-        <IconText icon={CarryOutOutlined} text="Retirar" tooltip="Retirar produtos reservados" color="orange" />
-        <IconText icon={CloseCircleOutlined} text="Cancelar" tooltip="Cancelar reserva" color="red" />
+        {/* <IconText icon={ShoppingOutlined} text="Produtos" tooltip="Visualizar produtos" color="blue" /> */}
+        <IconText icon={CarryOutOutlined} text="Reservas" tooltip="Exibir as Reservas" color="orange" />
+        <IconText icon={CloseCircleOutlined} text="Cancelar" tooltip="Cancelar as Reservas" color="red" />
       </div>
     </div>
   )}
@@ -174,4 +174,4 @@ const Reserva: React.FC = () => {
   );
 };
 
-export default Reserva;
+export default Actions;

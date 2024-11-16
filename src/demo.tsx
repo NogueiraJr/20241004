@@ -15,7 +15,7 @@ import Ajuda from './components/menu/Ajuda';
 import Sair from './components/menu/Sair';
 import Cliente from './components/menuModule/Dados/Cliente';
 import Produto from './components/menuModule/Dados/Produto';
-import Reserva from './components/menuModule/Operacional/Reserva';
+import Actions from './components/menuModule/Operacional/UserActions';
 import Retirada from './components/menuModule/Operacional/Retirada';
 import Devolucao from './components/menuModule/Operacional/Devolucao';
 import Fornecedor from './components/menuModule/Dados/Fornecedor';
@@ -147,7 +147,7 @@ const App: React.FC = () => {
           <Route path="/fornecedor" element={<Fornecedor />} />
           <Route path="/parceiro" element={<Parceiro />} />
 
-          <Route path="/reserva" element={<Reserva />} />
+          <Route path="/reserva" element={<Actions />} />
           <Route path="/prova" element={<Prova />} />
           <Route path="/retirada" element={<Retirada />} />
           <Route path="/devolucao" element={<Devolucao />} />
