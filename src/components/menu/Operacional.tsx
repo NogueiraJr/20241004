@@ -19,7 +19,7 @@ import {
 import { Avatar, Card, Dropdown, Menu, Tooltip, Typography, Drawer, Button } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { useParameter } from '../../context/ParameterContext';
-import Operation from '../menuModule/Operacional/UserOperations';
+import Operation from '../menuModule/Operacional/UserOperationsCrud';
 
 const { Text } = Typography;
 const { Link } = Typography;

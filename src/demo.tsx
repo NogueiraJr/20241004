@@ -15,7 +15,7 @@ import Ajuda from './components/menu/Ajuda';
 import Sair from './components/menu/Sair';
 import Cliente from './components/menuModule/Dados/Cliente';
 import Produto from './components/menuModule/Dados/Produto';
-import Actions from './components/menuModule/Operacional/UserActions';
+import Actions from './components/menuModule/Operacional/UserOperationsList';
 import Fornecedor from './components/menuModule/Dados/Fornecedor';
 import Parceiro from './components/menuModule/Dados/Parceiro';
 import { ParameterProvider } from './context/ParameterContext';

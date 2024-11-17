@@ -29,7 +29,7 @@ interface ActionsProps {
 }
 
 const Actions: React.FC<ActionsProps> = ({ action }) => {
-  
+
   const { system } = useParameter();
 
   console.log(system);
@@ -57,7 +57,7 @@ const Actions: React.FC<ActionsProps> = ({ action }) => {
         return null;
     }
   };
-        
+
   const [expandedRowKeys, setExpandedRowKeys] = useState<string[]>([]);
   const [searchText, setSearchText] = useState('');
   const [statusFilter, setStatusFilter] = useState<string>('all');
@@ -66,18 +66,18 @@ const Actions: React.FC<ActionsProps> = ({ action }) => {
 
   const operations = useMemo(() => {
     return userOperations
-          .filter((operation) => operation.systemId === system)
-          .map((operation) => ({
-            id: operation.id,
-            description: operation.description,
-            active: operation.active,
-            notes: operation.notes,
-            priceActions: operation.priceActions,
-            priceCharged: operation.priceCharged,
-            tags: operation.tags ? operation.tags.split('|') : [],
-          }));
+      .filter((operation) => operation.systemId === system)
+      .map((operation) => ({
+        id: operation.id,
+        description: operation.description,
+        active: operation.active,
+        notes: operation.notes,
+        priceActions: operation.priceActions,
+        priceCharged: operation.priceCharged,
+        tags: operation.tags ? operation.tags.split('|') : [],
+      }));
   }, [system, userOperations]);
-  
+
   useEffect(() => {
     const filtered = operations.filter((locacao) => {
       const matchesDescription = locacao.description.toLowerCase().includes(searchText.toLowerCase());
@@ -89,7 +89,7 @@ const Actions: React.FC<ActionsProps> = ({ action }) => {
   }, [searchText, statusFilter, tagFilter, operations]);
 
   const handleExpand = (expanded: boolean, record: OperationType) => {
-    setExpandedRowKeys((prevExpandedRowKeys) => 
+    setExpandedRowKeys((prevExpandedRowKeys) =>
       expanded ? [...prevExpandedRowKeys, record.id] : prevExpandedRowKeys.filter((key) => key !== record.id)
     );
   };
@@ -125,7 +125,7 @@ const Actions: React.FC<ActionsProps> = ({ action }) => {
       ),
     },
   ];
-  
+
   return (
     <>
       <div style={{ marginBottom: 16 }}>
@@ -156,60 +156,60 @@ const Actions: React.FC<ActionsProps> = ({ action }) => {
       </div>
 
       <Table<OperationType>
-  columns={columns}
-  dataSource={filteredData}
-  pagination={{ position: ['topLeft'] }}
-  expandedRowRender={(record) => (
-    <div style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', color: 'gray' }}>
-      <Tooltip title="Situação do item">
-        <span style={{ cursor: 'pointer', marginLeft: '0px', marginRight: '8px', color: record.active ? 'green' : 'red' }}>
-          {record.active ? 'ATIVO' : 'INATIVO'}
-        </span>
-      </Tooltip>
-      {record.tags && record.tags.length > 0 && (
-        <span style={{ cursor: 'pointer' }}>
-          {record.tags.map((tag) => (
-            <Tag color={tag.length > 5 ? 'geekblue' : 'green'} key={tag}>
-              {tag.toUpperCase()}
-            </Tag>
-          ))}
-        </span>
-      )}
-      <span style={{ marginRight: '8px' }}>{record.notes}</span>
-      <span style={{ marginRight: '8px', fontWeight: "bold" }}>
-        Custo: {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(Number(record.priceActions))}
-      </span> |
-      <span style={{ marginLeft: '8px', fontWeight: "bold" }}>
-        Cobrado: {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(Number(record.priceCharged))}
-      </span>
-  
-      {/* Botões adicionais alinhados à direita */}
-      <div style={{ display: 'flex', gap: '16px', marginLeft: 'auto', marginTop: '8px' }}>
-  {action && ['sysLocacaoRoupa', 'sysOficinaCarro'].includes(system) && (() => {
-    const actionDetails = getActionDetails(action);
-    return actionDetails ? (
-      <IconText
-        icon={actionDetails.icon}
-        text={actionDetails.text}
-        tooltip={actionDetails.tooltip}
-        color={actionDetails.color}
+        columns={columns}
+        dataSource={filteredData}
+        pagination={{ position: ['topLeft'] }}
+        expandedRowRender={(record) => (
+          <div style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', color: 'gray' }}>
+            <Tooltip title="Situação do item">
+              <span style={{ cursor: 'pointer', marginLeft: '0px', marginRight: '8px', color: record.active ? 'green' : 'red' }}>
+                {record.active ? 'ATIVO' : 'INATIVO'}
+              </span>
+            </Tooltip>
+            {record.tags && record.tags.length > 0 && (
+              <span style={{ cursor: 'pointer' }}>
+                {record.tags.map((tag) => (
+                  <Tag color={tag.length > 5 ? 'geekblue' : 'green'} key={tag}>
+                    {tag.toUpperCase()}
+                  </Tag>
+                ))}
+              </span>
+            )}
+            <span style={{ marginRight: '8px' }}>{record.notes}</span>
+            <span style={{ marginRight: '8px', fontWeight: "bold" }}>
+              Custo: {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(Number(record.priceActions))}
+            </span> |
+            <span style={{ marginLeft: '8px', fontWeight: "bold" }}>
+              Cobrado: {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(Number(record.priceCharged))}
+            </span>
+
+            {/* Botões adicionais alinhados à direita */}
+            <div style={{ display: 'flex', gap: '16px', marginLeft: 'auto', marginTop: '8px' }}>
+              {action && ['sysLocacaoRoupa', 'sysOficinaCarro'].includes(system) && (() => {
+                const actionDetails = getActionDetails(action);
+                return actionDetails ? (
+                  <IconText
+                    icon={actionDetails.icon}
+                    text={actionDetails.text}
+                    tooltip={actionDetails.tooltip}
+                    color={actionDetails.color}
+                  />
+                ) : null;
+              })()}
+              <IconText icon={CloseCircleOutlined} text="Cancelar" tooltip="Cancelar as Reservas" color="red" />
+            </div>
+          </div>
+        )}
+
+        expandedRowKeys={expandedRowKeys}
+        onExpand={handleExpand}
+        rowKey="id"
+        locale={{
+          triggerDesc: 'Clique para ordenar decrescente',
+          triggerAsc: 'Clique para ordenar crescente',
+          cancelSort: 'Clique para cancelar a ordenação',
+        }}
       />
-    ) : null;
-  })()}
-  <IconText icon={CloseCircleOutlined} text="Cancelar" tooltip="Cancelar as Reservas" color="red" />
-</div>
-    </div>
-  )}
-  
-  expandedRowKeys={expandedRowKeys}
-  onExpand={handleExpand}
-  rowKey="id"
-  locale={{
-    triggerDesc: 'Clique para ordenar decrescente',
-    triggerAsc: 'Clique para ordenar crescente',
-    cancelSort: 'Clique para cancelar a ordenação',
-  }}
-/>
 
     </>
   );
