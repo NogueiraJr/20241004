@@ -4,7 +4,7 @@ import type { TableProps } from 'antd';
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import { produtosLocacaoRoupa } from '../../fields/Dados/sysLocacaoRoupa/produtosLocacaoRoupa-json';
 import { useParameter } from '../../../context/ParameterContext';
-import { produtosOficinaCarros } from '../../fields/Dados/sysOficinaCarros/produtosOficinaCarros-json';
+import { produtosOficinaCarro } from '../../fields/Dados/sysOficinaCarro/produtosOficinaCarro-json';
 
 export interface ProductType {
   id: string;
@@ -63,8 +63,8 @@ const Produto: React.FC = () => {
     case 'sysLocacaoRoupa':
       produtos = produtosLocacaoRoupa;
       break;
-    case 'sysOficinaCarros':
-      produtos = produtosOficinaCarros;
+    case 'sysOficinaCarro':
+      produtos = produtosOficinaCarro;
       break;
     default:
       break;

@@ -4,7 +4,7 @@ import type { TableProps } from 'antd';
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import { useParameter } from '../../../context/ParameterContext';
 import { clientesLocacaoRoupa } from '../../fields/Dados/sysLocacaoRoupa/clientesLocacaoRoupa-json';
-import { clientesOficinaCarros } from '../../fields/Dados/sysOficinaCarros/clientesOficinaCarros-json';
+import { clientesOficinaCarro } from '../../fields/Dados/sysOficinaCarro/clientesOficinaCarro-json';
 
 interface ClientType {
   id: string;
@@ -56,8 +56,8 @@ const Cliente: React.FC = () => {
     case 'sysLocacaoRoupa':
       clientes = clientesLocacaoRoupa;
       break;
-    case 'sysOficinaCarros':
-      clientes = clientesOficinaCarros;
+    case 'sysOficinaCarro':
+      clientes = clientesOficinaCarro;
       break;
     default:
       break;

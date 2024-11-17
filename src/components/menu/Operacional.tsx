@@ -72,6 +72,14 @@ const Operacional: React.FC = () => {
     navigate('/devolucao');
   };
 
+  const handleListaTodosOrcamentos = () => {
+    navigate('/orcamento');
+  };
+
+  const handleListaTodosServicos = () => {
+    navigate('/execucao');
+  };
+
   const actions = [
     <IconText icon={PlusSquareOutlined} text="NOVO" tooltip="Adicionar Novo" key="icon-new" color="#FF4C00" />,
     <IconText icon={UnorderedListOutlined} text="0" tooltip="Lista com Todos" key="icon-all-itens" color="blue" />,
@@ -186,7 +194,7 @@ const Operacional: React.FC = () => {
   //Oficina de Carros
   const actionsOrcamento = [
     <IconText icon={PlusSquareOutlined} text="NOVO" tooltip="Novo Orçamento" key="icon-new" color="black" onClick={handleOrcamentoNovo} />,
-    <IconText icon={UnorderedListOutlined} text="0" tooltip="Todos os Orçamentos" key="icon-all-itens" color="blue" />,
+    <IconText icon={UnorderedListOutlined} text="0" tooltip="Todos os Orçamentos" key="icon-all-itens" color="blue" onClick={handleListaTodosOrcamentos}/>,
     <IconText icon={CheckCircleOutlined} text="0" tooltip="Apenas Orçamentos Ativos" key="icon-actived-itens" color="green" />,
     <IconText icon={CloseCircleOutlined} text="0" tooltip="Apenas Orçamentos Inativos" key="icon-desatived-itens" color="gray" />,
     <IconText icon={DeleteOutlined} text="0" tooltip="Apenas Orçamentos Apagados" key="icon-deleted-itens" color="red" />,
@@ -208,7 +216,7 @@ const Operacional: React.FC = () => {
 
   const actionsServico = [
     <IconText icon={PlusSquareOutlined} text="NOVO" tooltip="Novo Serviço" key="icon-new" color="black" />,
-    <IconText icon={UnorderedListOutlined} text="0" tooltip="Todos as Serviços" key="icon-all-itens" color="blue" />,
+    <IconText icon={UnorderedListOutlined} text="0" tooltip="Todos as Serviços" key="icon-all-itens" color="blue" onClick={handleListaTodosServicos}/>,
     <IconText icon={CheckCircleOutlined} text="0" tooltip="Apenas Serviços Ativos" key="icon-actived-itens" color="green" />,
     <IconText icon={CloseCircleOutlined} text="0" tooltip="Apenas Serviços Inativos" key="icon-desatived-itens" color="gray" />,
     <IconText icon={DeleteOutlined} text="0" tooltip="Apenas Serviços Apagados" key="icon-deleted-itens" color="red" />,
@@ -377,7 +385,7 @@ const Operacional: React.FC = () => {
         </>
       )}
 
-      {system === 'sysOficinaCarros' && (
+      {system === 'sysOficinaCarro' && (
         <>
           <Card
             actions={actionsOrcamento}

@@ -1,5 +1,4 @@
-// Lista de clientes
-export const clientesOficinaCarros = [
+export const clientesOficinaCarro = [
   {
     "id": "cm1wfe41d0001p8795aihoxtu",
     "name": "Bruno Costa",

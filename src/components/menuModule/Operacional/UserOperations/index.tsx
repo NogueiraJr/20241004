@@ -17,10 +17,10 @@ import SaveOperationButton from './SaveOperationButton';
 
 import { produtosLocacaoRoupa } from '../../../fields/Dados/sysLocacaoRoupa/produtosLocacaoRoupa-json';
 import { clientesLocacaoRoupa } from '../../../fields/Dados/sysLocacaoRoupa/clientesLocacaoRoupa-json';
-import { produtosOficinaCarros } from '../../../fields/Dados/sysOficinaCarros/produtosOficinaCarros-json';
-import { clientesOficinaCarros } from '../../../fields/Dados/sysOficinaCarros/clientesOficinaCarros-json';
+import { produtosOficinaCarro } from '../../../fields/Dados/sysOficinaCarro/produtosOficinaCarro-json';
+import { clientesOficinaCarro } from '../../../fields/Dados/sysOficinaCarro/clientesOficinaCarro-json';
 import { userTagsLocacaoRoupa } from '../../../fields/Dados/sysLocacaoRoupa/userTagsLocacaoRoupa-json';
-import { userTagsOficinaCarros } from '../../../fields/Dados/sysOficinaCarros/userTagsOficinaCarros-json';
+import { userTagsOficinaCarro } from '../../../fields/Dados/sysOficinaCarro/userTagsOficinaCarro-json';
 
 const Operation: React.FC = () => {
   const { system } = useParameter();
@@ -39,10 +39,10 @@ const Operation: React.FC = () => {
       clientes = clientesLocacaoRoupa;
       etiquetas = userTagsLocacaoRoupa;
       break;
-    case 'sysOficinaCarros':
-      produtos = produtosOficinaCarros;
-      clientes = clientesOficinaCarros;
-      etiquetas = userTagsOficinaCarros;
+    case 'sysOficinaCarro':
+      produtos = produtosOficinaCarro;
+      clientes = clientesOficinaCarro;
+      etiquetas = userTagsOficinaCarro;
       break;
     default:
       break;
@@ -107,7 +107,7 @@ const Operation: React.FC = () => {
             <Anotacoes />
           </>
         )}
-        {system === 'sysOficinaCarros' && (
+        {system === 'sysOficinaCarro' && (
           <>
             <DataExecucao />
             <Anotacoes />

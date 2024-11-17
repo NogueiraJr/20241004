@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { Space, Table, Tag, Tooltip, Input, Select } from 'antd';
 import type { TableProps } from 'antd';
-import { CarryOutOutlined, CloseCircleOutlined, DeleteOutlined, EditOutlined, ShoppingOutlined } from '@ant-design/icons';
-import { useParameter } from '../../../context/ParameterContext';
-import { locacoesLocacaoRoupa } from '../../fields/Operacional/sysLocacaoRoupa/locacoesLocacaoRoupa-json';
+import { CalculatorOutlined, CalendarOutlined, CarOutlined, CarryOutOutlined, CheckCircleOutlined, CloseCircleOutlined, DeleteOutlined, DeliveredProcedureOutlined, EditOutlined, FileAddOutlined, FileDoneOutlined, ImportOutlined, InboxOutlined, ProfileOutlined, RollbackOutlined, ShoppingCartOutlined, ShoppingOutlined, SkinOutlined, SolutionOutlined, TagOutlined, ToolOutlined, UndoOutlined, UploadOutlined, UserSwitchOutlined } from '@ant-design/icons';
+import { useParameter } from '../../../../context/ParameterContext';
+import { userOperations } from '../../../fields/Operacional/userOperations-json';
 
-interface ReservaType {
+interface OperationType {
   id: string;
   description: string;
   active: boolean;
@@ -24,45 +24,77 @@ const IconText = ({ icon, text, tooltip, color, onClick }: { icon: React.Compone
   </Tooltip>
 );
 
-const Reserva: React.FC = () => {
+interface ActionsProps {
+  action: string;
+}
+
+const Actions: React.FC<ActionsProps> = ({ action }) => {
+  
   const { system } = useParameter();
+
+  console.log(system);
+  console.log(action);
+
+  const getActionDetails = (action: string) => {
+    switch (action) {
+      case 'reservar':
+        return { icon: CalendarOutlined, text: 'Reservas', tooltip: 'Exibe as Reservas para Provar', color: 'blue' };
+      case 'provar':
+        return { icon: SkinOutlined, text: 'Provas', tooltip: 'Exibe as reservas provadas para retirar', color: 'green' };
+      case 'retirar':
+        return { icon: UploadOutlined, text: 'Retiradas', tooltip: 'Exibe as reservas retiradas para devolver', color: 'orange' };
+      case 'devolver':
+        return { icon: RollbackOutlined, text: 'Devolvidas', tooltip: 'Exibe as reservas devolvidas para manutenção', color: 'red' };
+      case 'levar':
+        return { icon: DeliveredProcedureOutlined, text: 'Levar', tooltip: 'Exibe as reservas à enviar ao Cliente', color: 'purple' };
+      case 'buscar':
+        return { icon: ImportOutlined, text: 'Buscar', tooltip: 'Exibe as reservas para buscar no Cliente', color: 'gold' };
+      case 'orcar':
+        return { icon: CalculatorOutlined, text: 'Orçamentos', tooltip: 'Exibe orçamentos realizados para serem executados', color: 'blue' };
+      case 'executar':
+        return { icon: FileDoneOutlined, text: 'Execuções', tooltip: 'Exibe serviços sendo executados', color: 'green' };
+      default:
+        return null;
+    }
+  };
+        
   const [expandedRowKeys, setExpandedRowKeys] = useState<string[]>([]);
   const [searchText, setSearchText] = useState('');
   const [statusFilter, setStatusFilter] = useState<string>('all');
   const [tagFilter, setTagFilter] = useState<string>('all');
-  const [filteredData, setFilteredData] = useState<ReservaType[]>([]);
+  const [filteredData, setFilteredData] = useState<OperationType[]>([]);
 
-  const locacoes = useMemo(() => {
-    return system === 'sysLocacaoRoupa' 
-      ? locacoesLocacaoRoupa.map((locacao) => ({
-          id: locacao.id,
-          description: locacao.description,
-          active: locacao.active,
-          notes: locacao.notes,
-          priceActions: locacao.priceActions,
-          priceCharged: locacao.priceCharged,
-          tags: locacao.tags ? locacao.tags.split('|') : [],
-        }))
-      : [];
-  }, [system]);
-
+  const operations = useMemo(() => {
+    return userOperations
+          .filter((operation) => operation.systemId === system)
+          .map((operation) => ({
+            id: operation.id,
+            description: operation.description,
+            active: operation.active,
+            notes: operation.notes,
+            priceActions: operation.priceActions,
+            priceCharged: operation.priceCharged,
+            tags: operation.tags ? operation.tags.split('|') : [],
+          }));
+  }, [system, userOperations]);
+  
   useEffect(() => {
-    const filtered = locacoes.filter((locacao) => {
+    const filtered = operations.filter((locacao) => {
       const matchesDescription = locacao.description.toLowerCase().includes(searchText.toLowerCase());
       const matchesStatus = statusFilter === 'all' || locacao.active === (statusFilter === 'active');
       const matchesTag = tagFilter === 'all' || (locacao.tags && locacao.tags.includes(tagFilter));
       return matchesDescription && matchesStatus && matchesTag;
     });
     setFilteredData(filtered);
-  }, [searchText, statusFilter, tagFilter, locacoes]);
+  }, [searchText, statusFilter, tagFilter, operations]);
 
-  const handleExpand = (expanded: boolean, record: ReservaType) => {
+  const handleExpand = (expanded: boolean, record: OperationType) => {
     setExpandedRowKeys((prevExpandedRowKeys) => 
       expanded ? [...prevExpandedRowKeys, record.id] : prevExpandedRowKeys.filter((key) => key !== record.id)
     );
   };
 
-  const columns: TableProps<ReservaType>['columns'] = [
+  const columns: TableProps<OperationType>['columns'] = [
     {
       title: 'Descrição',
       dataIndex: 'description',
@@ -87,7 +119,7 @@ const Reserva: React.FC = () => {
       width: '100px',
       render: (_, record) => (
         <Space size="middle">
-          <IconText icon={EditOutlined} text="Editar" tooltip="Editar os dados" color="black" />
+          <IconText icon={EditOutlined} text="Editar" tooltip="Editar estas informações" color="black" />
           {/* <IconText icon={CarryOutOutlined} text="Retirar" tooltip="Retirar os produtos" color="black" /> */}
         </Space>
       ),
@@ -115,7 +147,7 @@ const Reserva: React.FC = () => {
           defaultValue="all"
         >
           <Select.Option value="all">Todos</Select.Option>
-          {Array.from(new Set(locacoes.flatMap(locacao => locacao.tags || []))).map(tag => (
+          {Array.from(new Set(operations.flatMap(locacao => locacao.tags || []))).map(tag => (
             <Select.Option key={tag} value={tag}>
               {tag.toUpperCase()}
             </Select.Option>
@@ -123,7 +155,7 @@ const Reserva: React.FC = () => {
         </Select>
       </div>
 
-      <Table<ReservaType>
+      <Table<OperationType>
   columns={columns}
   dataSource={filteredData}
   pagination={{ position: ['topLeft'] }}
@@ -153,10 +185,19 @@ const Reserva: React.FC = () => {
   
       {/* Botões adicionais alinhados à direita */}
       <div style={{ display: 'flex', gap: '16px', marginLeft: 'auto', marginTop: '8px' }}>
-        <IconText icon={ShoppingOutlined} text="Produtos" tooltip="Visualizar produtos" color="blue" />
-        <IconText icon={CarryOutOutlined} text="Retirar" tooltip="Retirar produtos reservados" color="orange" />
-        <IconText icon={CloseCircleOutlined} text="Cancelar" tooltip="Cancelar reserva" color="red" />
-      </div>
+  {action && ['sysLocacaoRoupa', 'sysOficinaCarro'].includes(system) && (() => {
+    const actionDetails = getActionDetails(action);
+    return actionDetails ? (
+      <IconText
+        icon={actionDetails.icon}
+        text={actionDetails.text}
+        tooltip={actionDetails.tooltip}
+        color={actionDetails.color}
+      />
+    ) : null;
+  })()}
+  <IconText icon={CloseCircleOutlined} text="Cancelar" tooltip="Cancelar as Reservas" color="red" />
+</div>
     </div>
   )}
   
@@ -174,4 +215,4 @@ const Reserva: React.FC = () => {
   );
 };
 
-export default Reserva;
+export default Actions;

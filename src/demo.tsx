@@ -15,12 +15,9 @@ import Ajuda from './components/menu/Ajuda';
 import Sair from './components/menu/Sair';
 import Cliente from './components/menuModule/Dados/Cliente';
 import Produto from './components/menuModule/Dados/Produto';
-import Reserva from './components/menuModule/Operacional/Reserva';
-import Retirada from './components/menuModule/Operacional/Retirada';
-import Devolucao from './components/menuModule/Operacional/Devolucao';
+import Actions from './components/menuModule/Operacional/UserActions';
 import Fornecedor from './components/menuModule/Dados/Fornecedor';
 import Parceiro from './components/menuModule/Dados/Parceiro';
-import Prova from './components/menuModule/Operacional/Prova';
 import { ParameterProvider } from './context/ParameterContext';
 
 type MenuItem = Required<MenuProps>['items'][number];
@@ -77,11 +74,13 @@ const App: React.FC = () => {
       case '/devolucao':
         return 'Devolução';
 
-      case '/locacao':
-        return 'Locação';
-
-      default:
-        return '';
+        case '/orcamento':
+          return 'Orçamento';
+        case '/execucao':
+          return 'Execução';
+  
+        default:
+          return '';
     }
   };
 
@@ -147,10 +146,13 @@ const App: React.FC = () => {
           <Route path="/fornecedor" element={<Fornecedor />} />
           <Route path="/parceiro" element={<Parceiro />} />
 
-          <Route path="/reserva" element={<Reserva />} />
-          <Route path="/prova" element={<Prova />} />
-          <Route path="/retirada" element={<Retirada />} />
-          <Route path="/devolucao" element={<Devolucao />} />
+          <Route path="/reserva" element={<Actions action="reservar" />} />
+          <Route path="/prova" element={<Actions action="provar" />} />
+          <Route path="/retirada" element={<Actions action="retirar" />} />
+          <Route path="/devolucao" element={<Actions action="devolver" />} />
+          
+          <Route path="/orcamento" element={<Actions action="orcar" />} />
+          <Route path="/execucao" element={<Actions action="executar" />} />
           
         </Routes>
       </div>
