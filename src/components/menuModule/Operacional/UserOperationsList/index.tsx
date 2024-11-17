@@ -196,7 +196,7 @@ const Actions: React.FC<ActionsProps> = ({ action }) => {
                   />
                 ) : null;
               })()}
-              <IconText icon={CloseCircleOutlined} text="Cancelar" tooltip="Cancelar as Reservas" color="red" />
+              {/* <IconText icon={CloseCircleOutlined} text="Cancelar" tooltip="Cancelar as Reservas" color="red" /> */}
             </div>
           </div>
         )}
