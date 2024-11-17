@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { Space, Table, Tag, Tooltip, Input, Select } from 'antd';
 import type { TableProps } from 'antd';
-import { CarryOutOutlined, CloseCircleOutlined, DeleteOutlined, EditOutlined, ShoppingOutlined } from '@ant-design/icons';
+import { CalculatorOutlined, CalendarOutlined, CarOutlined, CarryOutOutlined, CheckCircleOutlined, CloseCircleOutlined, DeleteOutlined, DeliveredProcedureOutlined, EditOutlined, FileAddOutlined, FileDoneOutlined, ImportOutlined, InboxOutlined, ProfileOutlined, RollbackOutlined, ShoppingCartOutlined, ShoppingOutlined, SkinOutlined, SolutionOutlined, TagOutlined, ToolOutlined, UndoOutlined, UploadOutlined, UserSwitchOutlined } from '@ant-design/icons';
 import { useParameter } from '../../../../context/ParameterContext';
 import { userOperations } from '../../../fields/Operacional/userOperations-json';
 
@@ -35,6 +35,29 @@ const Actions: React.FC<ActionsProps> = ({ action }) => {
   console.log(system);
   console.log(action);
 
+  const getActionDetails = (action: string) => {
+    switch (action) {
+      case 'reservar':
+        return { icon: CalendarOutlined, text: 'Reservas', tooltip: 'Exibe as Reservas para Provar', color: 'blue' };
+      case 'provar':
+        return { icon: SkinOutlined, text: 'Provas', tooltip: 'Exibe as reservas provadas para retirar', color: 'green' };
+      case 'retirar':
+        return { icon: UploadOutlined, text: 'Retiradas', tooltip: 'Exibe as reservas retiradas para devolver', color: 'orange' };
+      case 'devolver':
+        return { icon: RollbackOutlined, text: 'Devolvidas', tooltip: 'Exibe as reservas devolvidas para manutenção', color: 'red' };
+      case 'levar':
+        return { icon: DeliveredProcedureOutlined, text: 'Levar', tooltip: 'Exibe as reservas à enviar ao Cliente', color: 'purple' };
+      case 'buscar':
+        return { icon: ImportOutlined, text: 'Buscar', tooltip: 'Exibe as reservas para buscar no Cliente', color: 'gold' };
+      case 'orcar':
+        return { icon: CalculatorOutlined, text: 'Orçamentos', tooltip: 'Exibe orçamentos realizados para serem executados', color: 'blue' };
+      case 'executar':
+        return { icon: FileDoneOutlined, text: 'Execuções', tooltip: 'Exibe serviços sendo executados', color: 'green' };
+      default:
+        return null;
+    }
+  };
+        
   const [expandedRowKeys, setExpandedRowKeys] = useState<string[]>([]);
   const [searchText, setSearchText] = useState('');
   const [statusFilter, setStatusFilter] = useState<string>('all');
@@ -162,10 +185,19 @@ const Actions: React.FC<ActionsProps> = ({ action }) => {
   
       {/* Botões adicionais alinhados à direita */}
       <div style={{ display: 'flex', gap: '16px', marginLeft: 'auto', marginTop: '8px' }}>
-        {/* <IconText icon={ShoppingOutlined} text="Produtos" tooltip="Visualizar produtos" color="blue" /> */}
-        <IconText icon={CarryOutOutlined} text="Reservas" tooltip="Exibir as Reservas" color="orange" />
-        <IconText icon={CloseCircleOutlined} text="Cancelar" tooltip="Cancelar as Reservas" color="red" />
-      </div>
+  {action && ['sysLocacaoRoupa', 'sysOficinaCarro'].includes(system) && (() => {
+    const actionDetails = getActionDetails(action);
+    return actionDetails ? (
+      <IconText
+        icon={actionDetails.icon}
+        text={actionDetails.text}
+        tooltip={actionDetails.tooltip}
+        color={actionDetails.color}
+      />
+    ) : null;
+  })()}
+  <IconText icon={CloseCircleOutlined} text="Cancelar" tooltip="Cancelar as Reservas" color="red" />
+</div>
     </div>
   )}
   

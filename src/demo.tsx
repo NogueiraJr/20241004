@@ -16,11 +16,8 @@ import Sair from './components/menu/Sair';
 import Cliente from './components/menuModule/Dados/Cliente';
 import Produto from './components/menuModule/Dados/Produto';
 import Actions from './components/menuModule/Operacional/UserActions';
-import Retirada from './components/menuModule/Operacional/Retirada';
-import Devolucao from './components/menuModule/Operacional/Devolucao';
 import Fornecedor from './components/menuModule/Dados/Fornecedor';
 import Parceiro from './components/menuModule/Dados/Parceiro';
-import Prova from './components/menuModule/Operacional/Prova';
 import { ParameterProvider } from './context/ParameterContext';
 
 type MenuItem = Required<MenuProps>['items'][number];
