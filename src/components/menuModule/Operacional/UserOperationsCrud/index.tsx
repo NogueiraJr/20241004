@@ -81,12 +81,24 @@ const Operation: React.FC<OperationProps> = ({ action }) => {
   }, [selectedItems, quantities, produtos]);
 
   const handleClienteChange = (value: string) => {
+    const defaultValue = 'Atendimento de';
     const clienteSelecionado = clientes.find((c) => c.id === value);
     if (clienteSelecionado) {
+      const descricaoPrefixMap = {
+        sysLocacaoRoupa: {
+          reserva: `Reserva para ${clienteSelecionado.name}`,
+          default: `${defaultValue} ${clienteSelecionado.name}`
+        },
+        sysOficinaCarro: {
+          diagnostico: `Diagnóstico para ${clienteSelecionado.name}`,
+          orcamento: `Orçamento para ${clienteSelecionado.name}`,
+          default: `${defaultValue} ${clienteSelecionado.name}`
+        }
+      };
+
       const descricaoPrefix =
-        system === 'sysLocacaoRoupa'
-          ? action === 'reserva' ? `Reserva para ${clienteSelecionado.name}` : ''
-          : action === 'diagnostico' ? `Diagnóstico para ${clienteSelecionado.name}` : `Orçamento para ${clienteSelecionado.name}`;
+        descricaoPrefixMap[system]?.[action] || descricaoPrefixMap[system]?.default || 'Cliente ';
+
       form.setFieldsValue({ descricao: descricaoPrefix });
     }
   };
@@ -98,7 +110,7 @@ const Operation: React.FC<OperationProps> = ({ action }) => {
         <Descricao />
         {system === 'sysLocacaoRoupa' && action === 'reserva' && (
           <>
-            <Etiquetas etiquetas={etiquetas} /> 
+            <Etiquetas etiquetas={etiquetas} />
             <ItensSelecionados total={total} setTotal={setTotal} />
             <InformeItens
               produtos={produtos}
@@ -118,7 +130,7 @@ const Operation: React.FC<OperationProps> = ({ action }) => {
         )}
         {system === 'sysOficinaCarro' && action === 'orcamento' && (
           <>
-            <Etiquetas etiquetas={etiquetas} /> 
+            <Etiquetas etiquetas={etiquetas} />
             <ItensSelecionados total={total} setTotal={setTotal} />
             <InformeItens
               produtos={produtos}
