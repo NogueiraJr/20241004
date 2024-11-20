@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { Space, Table, Tag, Tooltip, Input, Select } from 'antd';
 import type { TableProps } from 'antd';
-import { CalculatorOutlined, CalendarOutlined, CarOutlined, CarryOutOutlined, CheckCircleOutlined, CloseCircleOutlined, DeleteOutlined, DeliveredProcedureOutlined, EditOutlined, FileAddOutlined, FileDoneOutlined, ImportOutlined, InboxOutlined, ProfileOutlined, RollbackOutlined, ShoppingCartOutlined, ShoppingOutlined, SkinOutlined, SolutionOutlined, TagOutlined, ToolOutlined, UndoOutlined, UploadOutlined, UserSwitchOutlined } from '@ant-design/icons';
+import { CalculatorOutlined, CalendarOutlined, CarOutlined, CarryOutOutlined, CheckCircleOutlined, CloseCircleOutlined, DeleteOutlined, DeliveredProcedureOutlined, EditOutlined, ExportOutlined, FileAddOutlined, FileDoneOutlined, ImportOutlined, InboxOutlined, LoginOutlined, LogoutOutlined, ProfileOutlined, RollbackOutlined, SearchOutlined, ShoppingCartOutlined, ShoppingOutlined, SkinOutlined, SolutionOutlined, TagOutlined, ToolOutlined, UndoOutlined, UploadOutlined, UserSwitchOutlined } from '@ant-design/icons';
 import { useParameter } from '../../../../context/ParameterContext';
 import { userOperations } from '../../../fields/Operacional/userOperations-json';
 
@@ -35,29 +35,36 @@ const Actions: React.FC<ActionsProps> = ({ action }) => {
   console.log(system);
   console.log(action);
 
-  const getActionDetails = (action: string) => {
-    switch (action) {
-      case 'reservar':
-        return { icon: CalendarOutlined, text: 'Reservas', tooltip: 'Exibe as Reservas para Provar', color: 'blue' };
-      case 'provar':
-        return { icon: SkinOutlined, text: 'Provas', tooltip: 'Exibe as reservas provadas para retirar', color: 'green' };
-      case 'retirar':
-        return { icon: UploadOutlined, text: 'Retiradas', tooltip: 'Exibe as reservas retiradas para devolver', color: 'orange' };
-      case 'devolver':
-        return { icon: RollbackOutlined, text: 'Devolvidas', tooltip: 'Exibe as reservas devolvidas para manutenção', color: 'red' };
-      case 'levar':
-        return { icon: DeliveredProcedureOutlined, text: 'Levar', tooltip: 'Exibe as reservas à enviar ao Cliente', color: 'purple' };
-      case 'buscar':
-        return { icon: ImportOutlined, text: 'Buscar', tooltip: 'Exibe as reservas para buscar no Cliente', color: 'gold' };
-      case 'orcar':
-        return { icon: CalculatorOutlined, text: 'Orçamentos', tooltip: 'Exibe orçamentos realizados para serem executados', color: 'blue' };
-      case 'executar':
-        return { icon: FileDoneOutlined, text: 'Execuções', tooltip: 'Exibe serviços sendo executados', color: 'green' };
-      default:
-        return null;
-    }
+  const getActionDetails = (actions: string[], system: string) => {
+    const defaultActionMap: Record<string, { icon: React.ComponentType<any>; text: string; tooltip: string; color: string }> = {
+      reservar: { icon: CalendarOutlined, text: 'Reservas', tooltip: 'Exibe as Reservas', color: 'blue' },
+      provar: { icon: SkinOutlined, text: 'Provas', tooltip: 'Exibe as Provas', color: 'green' },
+      retirar: { icon: UploadOutlined, text: 'Retiradas', tooltip: 'Exibe as Retiradas', color: 'orange' },
+      devolver: { icon: RollbackOutlined, text: 'Devoluções', tooltip: 'Exibe as Devoluções', color: 'red' },
+      levar: { icon: ExportOutlined, text: 'Levar', tooltip: 'Levar no Cliente', color: 'purple' },
+      buscar: { icon: ImportOutlined, text: 'Buscar', tooltip: 'Buscar no Cliente', color: 'blue' },
+      orcar: { icon: CalculatorOutlined, text: 'Orçamento', tooltip: 'Orçamento realizado', color: 'blue' },
+      executar: { icon: FileDoneOutlined, text: 'Serviço', tooltip: 'Execução do Serviço', color: 'green' },
+      checkin: { icon: LoginOutlined, text: 'Check-in', tooltip: 'Verificação de Entrada', color: 'blue' },
+      checkout: { icon: LogoutOutlined, text: 'Check-out', tooltip: 'Verificação de Saída', color: 'green' },
+      diagnostico: { icon: SearchOutlined, text: 'Diagnóstico', tooltip: 'Análise e avaliação', color: 'green' },
+    };
+  
+    const systemOverrides: Record<string, Partial<typeof defaultActionMap>> = {
+      sysOficinaCarro: {
+        executar: { icon: CarOutlined, text: 'Serviços', tooltip: 'Execução de Serviços Automotivos', color: 'green' },
+      },
+      sysLocacaoRoupa: {
+        checkin: { icon: LoginOutlined, text: 'Check-in', tooltip: 'Verificação de Retorno', color: 'blue' },
+        checkout: { icon: CheckCircleOutlined, text: 'Entrega', tooltip: 'Verificação de Entrega', color: 'purple' },
+      },
+    };
+  
+    const actionMap = { ...defaultActionMap, ...systemOverrides[system] };
+  
+    return actions.map(action => actionMap[action]).filter(Boolean); // Filtra ações inválidas
   };
-
+  
   const [expandedRowKeys, setExpandedRowKeys] = useState<string[]>([]);
   const [searchText, setSearchText] = useState('');
   const [statusFilter, setStatusFilter] = useState<string>('all');
@@ -185,18 +192,19 @@ const Actions: React.FC<ActionsProps> = ({ action }) => {
 
             {/* Botões adicionais alinhados à direita */}
             <div style={{ display: 'flex', gap: '16px', marginLeft: 'auto', marginTop: '8px' }}>
-              {action && ['sysLocacaoRoupa', 'sysOficinaCarro'].includes(system) && (() => {
-                const actionDetails = getActionDetails(action);
-                return actionDetails ? (
+              {action && (() => {
+                const actions = action.split('|'); // Supondo que as ações estejam separadas por '|'
+                const actionDetails = getActionDetails(actions, system);
+                return actionDetails.map((details, index) => (
                   <IconText
-                    icon={actionDetails.icon}
-                    text={actionDetails.text}
-                    tooltip={actionDetails.tooltip}
-                    color={actionDetails.color}
+                    key={index}
+                    icon={details.icon}
+                    text={details.text}
+                    tooltip={details.tooltip}
+                    color={details.color}
                   />
-                ) : null;
+                ));
               })()}
-              {/* <IconText icon={CloseCircleOutlined} text="Cancelar" tooltip="Cancelar as Reservas" color="red" /> */}
             </div>
           </div>
         )}
