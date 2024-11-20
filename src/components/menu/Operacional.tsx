@@ -14,7 +14,8 @@ import {
   CalculatorOutlined,
   ToolOutlined,
   SettingOutlined,
-  FileDoneOutlined, // Novo ícone para Manutenção de Oficina
+  FileDoneOutlined,
+  FileAddOutlined, // Novo ícone para Manutenção de Oficina
 } from '@ant-design/icons';
 import { Avatar, Card, Dropdown, Menu, Tooltip, Typography, Drawer, Button } from 'antd';
 import { useNavigate } from 'react-router-dom';
@@ -60,6 +61,10 @@ const Operacional: React.FC = () => {
     showDrawer(); 
   };
 
+  const handleDiagnosticoNovo = () => {
+    showDrawer(); 
+  };
+
   const handleOrcamentoNovo = () => {
     showDrawer(); 
   };
@@ -74,6 +79,10 @@ const Operacional: React.FC = () => {
 
   const handleListaTodosOrcamentos = () => {
     navigate('/orcamento');
+  };
+
+  const handleListaTodosDiagnosticos = () => {
+    navigate('/diagnostico');
   };
 
   const handleListaTodosServicos = () => {
@@ -192,6 +201,28 @@ const Operacional: React.FC = () => {
   ];
 
   //Oficina de Carros
+  const actionsDiagnostico = [
+    <IconText icon={FileAddOutlined} text="NOVO" tooltip="Novo Diagnóstico" key="icon-new" color="black" onClick={handleDiagnosticoNovo} />,
+    <IconText icon={UnorderedListOutlined} text="0" tooltip="Todos os Diagnósticos" key="icon-all-itens" color="blue" onClick={handleListaTodosDiagnosticos}/>,
+    <IconText icon={CheckCircleOutlined} text="0" tooltip="Apenas Diagnósticos Ativos" key="icon-actived-itens" color="green" />,
+    <IconText icon={CloseCircleOutlined} text="0" tooltip="Apenas Diagnósticos Inativos" key="icon-desatived-itens" color="gray" />,
+    <IconText icon={DeleteOutlined} text="0" tooltip="Apenas Diagnósticos Apagados" key="icon-deleted-itens" color="red" />,
+    <Dropdown
+      overlay={
+        <Menu>
+          <Menu.Item key="1">revisão</Menu.Item>
+          <Menu.Item key="2">troca de óleo</Menu.Item>
+          <Menu.Item key="3">alinhamento</Menu.Item>
+        </Menu>
+      }
+      trigger={['click']}
+    >
+      <Tooltip title="Etiquetas">
+        <EllipsisOutlined key="ellipsis" style={{ color: 'black' }} />
+      </Tooltip>
+    </Dropdown>,
+  ];
+
   const actionsOrcamento = [
     <IconText icon={PlusSquareOutlined} text="NOVO" tooltip="Novo Orçamento" key="icon-new" color="black" onClick={handleOrcamentoNovo} />,
     <IconText icon={UnorderedListOutlined} text="0" tooltip="Todos os Orçamentos" key="icon-all-itens" color="blue" onClick={handleListaTodosOrcamentos}/>,
@@ -387,6 +418,39 @@ const Operacional: React.FC = () => {
 
       {system === 'sysOficinaCarro' && (
         <>
+          <Card
+            actions={actionsDiagnostico}
+            style={{
+              flex: '1 1 calc(33.333% - 5px)',
+              minWidth: 350,
+              borderColor: 'black',
+              borderWidth: '2px',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'space-between',
+            }}
+          >
+            <Card.Meta
+              avatar={
+                <Tooltip title="Diagnósticos">
+                  <Avatar icon={<FileAddOutlined style={{ color: 'black' }} />} />
+                </Tooltip>
+              }
+              title="Diagnósticos"
+              description={
+                <>
+                  <Text strong style={{ fontSize: '15px' }}>Os Diagnósticos da sua Oficina</Text>
+                  <Link onClick={() => { console.log('Texto clicado!'); }}>
+                    <div>06 diagnósticos criados nesta semana</div>
+                  </Link>
+                  <Link onClick={() => { console.log('Texto clicado!'); }}>
+                    <div>02 diagnósticos criados nos últimos 3 dias</div>
+                  </Link>
+                </>
+              }
+            />
+          </Card>
+
           <Card
             actions={actionsOrcamento}
             style={{

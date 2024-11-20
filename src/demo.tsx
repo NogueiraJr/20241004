@@ -151,6 +151,7 @@ const App: React.FC = () => {
           <Route path="/retirada" element={<Actions action="checkout|retirar|levar" />} />
           <Route path="/devolucao" element={<Actions action="devolver|buscar|checkin" />} />
           
+          <Route path="/diagnostico" element={<Actions action="diagnostico" />} />
           <Route path="/orcamento" element={<Actions action="diagnostico|orcar" />} />
           <Route path="/execucao" element={<Actions action="buscar|checkin|executar|checkout|levar" />} />
           
