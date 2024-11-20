@@ -15,7 +15,8 @@ import {
   ToolOutlined,
   SettingOutlined,
   FileDoneOutlined,
-  FileAddOutlined, // Novo ícone para Manutenção de Oficina
+  FileAddOutlined,
+  SearchOutlined, // Novo ícone para Manutenção de Oficina
 } from '@ant-design/icons';
 import { Avatar, Card, Dropdown, Menu, Tooltip, Typography, Drawer, Button } from 'antd';
 import { useNavigate } from 'react-router-dom';
@@ -438,7 +439,7 @@ const Operacional: React.FC = () => {
             <Card.Meta
               avatar={
                 <Tooltip title="Diagnósticos">
-                  <Avatar icon={<FileAddOutlined style={{ color: 'black' }} />} />
+                  <Avatar icon={<SearchOutlined style={{ color: 'black' }} />} />
                 </Tooltip>
               }
               title="Diagnósticos"
@@ -503,14 +504,14 @@ const Operacional: React.FC = () => {
           >
             <Card.Meta
               avatar={
-                <Tooltip title="Manutenção">
+                <Tooltip title="Execução">
                   <Avatar icon={<FileDoneOutlined style={{ color: 'black' }} />} />
                 </Tooltip>
               }
-              title="Manutenção"
+              title="Execução"
               description={
                 <>
-                  <Text strong style={{ fontSize: '15px' }}>As Manutenções da sua Oficina</Text>
+                  <Text strong style={{ fontSize: '15px' }}>As Execuções da sua Oficina</Text>
                   <Link onClick={() => { console.log('Texto clicado!'); }}>
                     <div>09 serviços realizados nesta semana</div>
                   </Link>

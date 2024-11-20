@@ -55,8 +55,8 @@ const Actions: React.FC<ActionsProps> = ({ action }) => {
         executar: { icon: CarOutlined, text: 'Serviços', tooltip: 'Execução de Serviços Automotivos', color: 'green' },
       },
       sysLocacaoRoupa: {
-        checkin: { icon: LoginOutlined, text: 'Check-in', tooltip: 'Verificação de Retorno', color: 'blue' },
-        checkout: { icon: CheckCircleOutlined, text: 'Entrega', tooltip: 'Verificação de Entrega', color: 'purple' },
+        checkin: { icon: LoginOutlined, text: 'Check-in', tooltip: 'Verificação de Retorno do Cliente', color: 'blue' },
+        checkout: { icon: LogoutOutlined, text: 'Check-out', tooltip: 'Verificação de Entrega para o Cliente', color: 'purple' },
       },
     };
   
