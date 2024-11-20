@@ -15,7 +15,7 @@ import Ajuda from './components/menu/Ajuda';
 import Sair from './components/menu/Sair';
 import Cliente from './components/menuModule/Dados/Cliente';
 import Produto from './components/menuModule/Dados/Produto';
-import Actions from './components/menuModule/Operacional/UserActions';
+import Actions from './components/menuModule/Operacional/UserOperationsList';
 import Fornecedor from './components/menuModule/Dados/Fornecedor';
 import Parceiro from './components/menuModule/Dados/Parceiro';
 import { ParameterProvider } from './context/ParameterContext';
@@ -148,11 +148,12 @@ const App: React.FC = () => {
 
           <Route path="/reserva" element={<Actions action="reservar" />} />
           <Route path="/prova" element={<Actions action="provar" />} />
-          <Route path="/retirada" element={<Actions action="retirar" />} />
-          <Route path="/devolucao" element={<Actions action="devolver" />} />
+          <Route path="/retirada" element={<Actions action="checkout|retirar|levar" />} />
+          <Route path="/devolucao" element={<Actions action="devolver|buscar|checkin" />} />
           
-          <Route path="/orcamento" element={<Actions action="orcar" />} />
-          <Route path="/execucao" element={<Actions action="executar" />} />
+          <Route path="/diagnostico" element={<Actions action="diagnostico" />} />
+          <Route path="/orcamento" element={<Actions action="diagnostico|orcar" />} />
+          <Route path="/execucao" element={<Actions action="buscar|checkin|executar|checkout|levar" />} />
           
         </Routes>
       </div>
