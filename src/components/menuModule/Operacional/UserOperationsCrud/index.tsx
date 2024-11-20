@@ -22,7 +22,12 @@ import { clientesOficinaCarro } from '../../../fields/Dados/sysOficinaCarro/clie
 import { userTagsLocacaoRoupa } from '../../../fields/Dados/sysLocacaoRoupa/userTagsLocacaoRoupa-json';
 import { userTagsOficinaCarro } from '../../../fields/Dados/sysOficinaCarro/userTagsOficinaCarro-json';
 
-const Operation: React.FC = () => {
+interface OperationProps {
+  action: string; // Tipo do parâmetro (modifique conforme necessário)
+}
+
+const Operation: React.FC<OperationProps> = ({ action }) => {
+  // console.log('action: ' + action);
   const { system } = useParameter();
   const [form] = Form.useForm();
   const [total, setTotal] = useState('0,00');
@@ -80,8 +85,8 @@ const Operation: React.FC = () => {
     if (clienteSelecionado) {
       const descricaoPrefix =
         system === 'sysLocacaoRoupa'
-          ? `Reserva para ${clienteSelecionado.name}`
-          : `Orçamento para ${clienteSelecionado.name}`;
+          ? action === 'reserva' ? `Reserva para ${clienteSelecionado.name}` : ''
+          : action === 'diagnostico' ? `Diagnóstico para ${clienteSelecionado.name}` : `Orçamento para ${clienteSelecionado.name}`;
       form.setFieldsValue({ descricao: descricaoPrefix });
     }
   };
@@ -90,29 +95,41 @@ const Operation: React.FC = () => {
     <ConfigProvider locale={ptBR}>
       <Form layout="vertical" form={form}>
         <Cliente handleClienteChange={handleClienteChange} clientes={clientes} />
-        <Etiquetas etiquetas={etiquetas} /> {/* Passando as etiquetas para o componente */}
-        <ItensSelecionados total={total} setTotal={setTotal} />
-        <InformeItens
-          produtos={produtos}
-          handleProductChange={handleProductChange}
-          handleQuantityChange={handleQuantityChange}
-          quantities={quantities}
-        />
         <Descricao />
+        {system === 'sysLocacaoRoupa' && action === 'reserva' && (
+          <>
+            <Etiquetas etiquetas={etiquetas} /> 
+            <ItensSelecionados total={total} setTotal={setTotal} />
+            <InformeItens
+              produtos={produtos}
+              handleProductChange={handleProductChange}
+              handleQuantityChange={handleQuantityChange}
+              quantities={quantities}
+            />
+          </>
+        )}
+
         {system === 'sysLocacaoRoupa' && (
           <>
             <DataProva />
             <DataRetirada />
             <DataDevolucao />
-            <Anotacoes />
           </>
         )}
-        {system === 'sysOficinaCarro' && (
+        {system === 'sysOficinaCarro' && action === 'orcamento' && (
           <>
+            <Etiquetas etiquetas={etiquetas} /> 
+            <ItensSelecionados total={total} setTotal={setTotal} />
+            <InformeItens
+              produtos={produtos}
+              handleProductChange={handleProductChange}
+              handleQuantityChange={handleQuantityChange}
+              quantities={quantities}
+            />
             <DataExecucao />
-            <Anotacoes />
           </>
         )}
+        <Anotacoes />
         <SaveOperationButton form={form} />
       </Form>
     </ConfigProvider>

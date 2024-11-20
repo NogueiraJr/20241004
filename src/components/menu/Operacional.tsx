@@ -34,14 +34,18 @@ const IconText = ({ icon, text, tooltip, color, onClick }: { icon: React.Compone
   </Tooltip>
 );
 
+let drawerAction = '';
+let drawerTitle = '';
+
 const Operacional: React.FC = () => {
   const { system } = useParameter();
-  console.log('system: ' + system);
 
   const navigate = useNavigate();
   const [isDrawerVisible, setIsDrawerVisible] = useState(false);
 
-  const showDrawer = () => {
+  const showDrawer = (action: string, title: string) => {
+    drawerAction = action;
+    drawerTitle = title;
     setIsDrawerVisible(true);
   };
 
@@ -49,24 +53,26 @@ const Operacional: React.FC = () => {
     setIsDrawerVisible(false);
   };
 
+  // Formulário
+  const handleReservaNovo = () => {
+    showDrawer('reserva', 'Nova Reserva');
+  };
+
+  const handleDiagnosticoNovo = () => {
+    showDrawer('diagnostico', 'Novo Diagnóstico');
+  };
+
+  const handleOrcamentoNovo = () => {
+    showDrawer('orcamento', 'Novo Orçamento');
+  };
+
+  // Tabelas
   const handleListaTodasReservas = () => {
     navigate('/reserva');
   };
 
   const handleListaTodasProvas = () => {
     navigate('/prova');
-  };
-
-  const handleReservaNovo = () => {
-    showDrawer(); 
-  };
-
-  const handleDiagnosticoNovo = () => {
-    showDrawer(); 
-  };
-
-  const handleOrcamentoNovo = () => {
-    showDrawer(); 
   };
 
   const handleListaTodasRetiradas = () => {
@@ -136,7 +142,7 @@ const Operacional: React.FC = () => {
 
   const actionsProva = [
     <IconText icon={PlusSquareOutlined} text="NOVO" tooltip="Nova Prova" key="icon-new" color="black" />,
-    <IconText icon={UnorderedListOutlined} text="0" tooltip="Todas as Provas" key="icon-all-itens" color="blue" onClick={handleListaTodasProvas}/>,
+    <IconText icon={UnorderedListOutlined} text="0" tooltip="Todas as Provas" key="icon-all-itens" color="blue" onClick={handleListaTodasProvas} />,
     <IconText icon={CheckCircleOutlined} text="0" tooltip="Apenas Provas Ativas" key="icon-actived-itens" color="green" />,
     <IconText icon={CloseCircleOutlined} text="0" tooltip="Apenas Provas Inativas" key="icon-desatived-itens" color="gray" />,
     <IconText icon={DeleteOutlined} text="0" tooltip="Apenas Provas Apagadas" key="icon-deleted-itens" color="red" />,
@@ -158,7 +164,7 @@ const Operacional: React.FC = () => {
 
   const actionsRetirada = [
     <IconText icon={PlusSquareOutlined} text="NOVO" tooltip="Nova Retirada" key="icon-new" color="black" />,
-    <IconText icon={UnorderedListOutlined} text="0" tooltip="Todas as Retiradas" key="icon-all-itens" color="blue" onClick={handleListaTodasRetiradas}/>,
+    <IconText icon={UnorderedListOutlined} text="0" tooltip="Todas as Retiradas" key="icon-all-itens" color="blue" onClick={handleListaTodasRetiradas} />,
     <IconText icon={CheckCircleOutlined} text="0" tooltip="Apenas Retiradas Ativas" key="icon-actived-itens" color="green" />,
     <IconText icon={CloseCircleOutlined} text="0" tooltip="Apenas Retiradas Inativas" key="icon-desatived-itens" color="gray" />,
     <IconText icon={DeleteOutlined} text="0" tooltip="Apenas Retiradas Apagadas" key="icon-deleted-itens" color="red" />,
@@ -180,7 +186,7 @@ const Operacional: React.FC = () => {
 
   const actionsDevolucao = [
     <IconText icon={PlusSquareOutlined} text="NOVO" tooltip="Nova Devolução" key="icon-new" color="black" />,
-    <IconText icon={UnorderedListOutlined} text="0" tooltip="Todas as Devoluções" key="icon-all-itens" color="blue" onClick={handleListaTodasDevolucoes}/>,
+    <IconText icon={UnorderedListOutlined} text="0" tooltip="Todas as Devoluções" key="icon-all-itens" color="blue" onClick={handleListaTodasDevolucoes} />,
     <IconText icon={CheckCircleOutlined} text="0" tooltip="Apenas Devoluções Ativas" key="icon-actived-itens" color="green" />,
     <IconText icon={CloseCircleOutlined} text="0" tooltip="Apenas Devoluções Inativas" key="icon-desatived-itens" color="gray" />,
     <IconText icon={DeleteOutlined} text="0" tooltip="Apenas Devoluções Apagadas" key="icon-deleted-itens" color="red" />,
@@ -203,7 +209,7 @@ const Operacional: React.FC = () => {
   //Oficina de Carros
   const actionsDiagnostico = [
     <IconText icon={FileAddOutlined} text="NOVO" tooltip="Novo Diagnóstico" key="icon-new" color="black" onClick={handleDiagnosticoNovo} />,
-    <IconText icon={UnorderedListOutlined} text="0" tooltip="Todos os Diagnósticos" key="icon-all-itens" color="blue" onClick={handleListaTodosDiagnosticos}/>,
+    <IconText icon={UnorderedListOutlined} text="0" tooltip="Todos os Diagnósticos" key="icon-all-itens" color="blue" onClick={handleListaTodosDiagnosticos} />,
     <IconText icon={CheckCircleOutlined} text="0" tooltip="Apenas Diagnósticos Ativos" key="icon-actived-itens" color="green" />,
     <IconText icon={CloseCircleOutlined} text="0" tooltip="Apenas Diagnósticos Inativos" key="icon-desatived-itens" color="gray" />,
     <IconText icon={DeleteOutlined} text="0" tooltip="Apenas Diagnósticos Apagados" key="icon-deleted-itens" color="red" />,
@@ -225,7 +231,7 @@ const Operacional: React.FC = () => {
 
   const actionsOrcamento = [
     <IconText icon={PlusSquareOutlined} text="NOVO" tooltip="Novo Orçamento" key="icon-new" color="black" onClick={handleOrcamentoNovo} />,
-    <IconText icon={UnorderedListOutlined} text="0" tooltip="Todos os Orçamentos" key="icon-all-itens" color="blue" onClick={handleListaTodosOrcamentos}/>,
+    <IconText icon={UnorderedListOutlined} text="0" tooltip="Todos os Orçamentos" key="icon-all-itens" color="blue" onClick={handleListaTodosOrcamentos} />,
     <IconText icon={CheckCircleOutlined} text="0" tooltip="Apenas Orçamentos Ativos" key="icon-actived-itens" color="green" />,
     <IconText icon={CloseCircleOutlined} text="0" tooltip="Apenas Orçamentos Inativos" key="icon-desatived-itens" color="gray" />,
     <IconText icon={DeleteOutlined} text="0" tooltip="Apenas Orçamentos Apagados" key="icon-deleted-itens" color="red" />,
@@ -247,7 +253,7 @@ const Operacional: React.FC = () => {
 
   const actionsServico = [
     <IconText icon={PlusSquareOutlined} text="NOVO" tooltip="Novo Serviço" key="icon-new" color="black" />,
-    <IconText icon={UnorderedListOutlined} text="0" tooltip="Todos as Serviços" key="icon-all-itens" color="blue" onClick={handleListaTodosServicos}/>,
+    <IconText icon={UnorderedListOutlined} text="0" tooltip="Todos as Serviços" key="icon-all-itens" color="blue" onClick={handleListaTodosServicos} />,
     <IconText icon={CheckCircleOutlined} text="0" tooltip="Apenas Serviços Ativos" key="icon-actived-itens" color="green" />,
     <IconText icon={CloseCircleOutlined} text="0" tooltip="Apenas Serviços Inativos" key="icon-desatived-itens" color="gray" />,
     <IconText icon={DeleteOutlined} text="0" tooltip="Apenas Serviços Apagados" key="icon-deleted-itens" color="red" />,
@@ -404,14 +410,13 @@ const Operacional: React.FC = () => {
           </Card>
 
           <Drawer
-            title="Nova Reserva"
+            title={drawerTitle}
             placement="right"
             onClose={closeDrawer}
             open={isDrawerVisible}
             width={500}
           >
-            {/* <ReservaNovo /> */}
-            <Operation />
+            <Operation action = {drawerAction}/>
           </Drawer>
         </>
       )}
@@ -518,14 +523,13 @@ const Operacional: React.FC = () => {
           </Card>
 
           <Drawer
-            title="Novo Orçamento"
+            title={drawerTitle}
             placement="right"
             onClose={closeDrawer}
             open={isDrawerVisible}
             width={500}
           >
-            {/* <OrcamentoNovo /> */}
-            <Operation />
+            <Operation action = {drawerAction}/>
           </Drawer>
 
         </>
