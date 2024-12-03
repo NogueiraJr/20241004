@@ -37,7 +37,7 @@ const MultiSelectList: React.FC<MultiSelectListProps> = ({
       ]}
       style={{ top: 100 }}
       bodyStyle={{
-        maxHeight: '65vh',
+        maxHeight: '50vh',
         overflowY: 'auto',
       }}
     >
