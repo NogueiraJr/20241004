@@ -111,13 +111,13 @@ const Operation: React.FC<OperationProps> = ({ action }) => {
         {system === 'sysLocacaoRoupa' && action === 'reserva' && (
           <>
             <Etiquetas etiquetas={etiquetas} />
-            <ItensSelecionados total={total} setTotal={setTotal} />
             <InformeItens
               produtos={produtos}
               handleProductChange={handleProductChange}
               handleQuantityChange={handleQuantityChange}
               quantities={quantities}
             />
+            <ItensSelecionados total={total} setTotal={setTotal} />
           </>
         )}
 
@@ -131,13 +131,13 @@ const Operation: React.FC<OperationProps> = ({ action }) => {
         {system === 'sysOficinaCarro' && action === 'orcamento' && (
           <>
             <Etiquetas etiquetas={etiquetas} />
-            <ItensSelecionados total={total} setTotal={setTotal} />
             <InformeItens
               produtos={produtos}
               handleProductChange={handleProductChange}
               handleQuantityChange={handleQuantityChange}
               quantities={quantities}
             />
+            <ItensSelecionados total={total} setTotal={setTotal} />
             <DataExecucao />
           </>
         )}
