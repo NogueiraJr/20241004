@@ -4,6 +4,8 @@ import type { TableProps } from 'antd';
 import { CalculatorOutlined, CalendarOutlined, CarOutlined, CarryOutOutlined, CheckCircleOutlined, CloseCircleOutlined, DeleteOutlined, DeliveredProcedureOutlined, EditOutlined, ExportOutlined, FileAddOutlined, FileDoneOutlined, ImportOutlined, InboxOutlined, LoginOutlined, LogoutOutlined, ProfileOutlined, RollbackOutlined, SearchOutlined, ShoppingCartOutlined, ShoppingOutlined, SkinOutlined, SolutionOutlined, TagOutlined, ToolOutlined, UndoOutlined, UploadOutlined, UserSwitchOutlined } from '@ant-design/icons';
 import { useParameter } from '../../../../context/ParameterContext';
 import { userOperations } from '../../../fields/Operacional/userOperations-json';
+import MultiSelectList from '../../../../interfaces/ActionsFlowPoints'; // Substitua pelo caminho correto
+import { ActionsFlowPoints } from '../../../fields/Operacional/ActionsFlowPoints-json';
 
 interface OperationType {
   id: string;
@@ -32,11 +34,14 @@ const Actions: React.FC<ActionsProps> = ({ action }) => {
 
   const { system } = useParameter();
 
+  const [isModalVisible, setModalVisible] = React.useState(false);
+  const [filterMoment, setFilterMoment] = React.useState<string | null>(null);
+
   console.log(system);
   console.log(action);
 
-  const getActionDetails = (actions: string[], system: string) => {
-    const defaultActionMap: Record<string, { icon: React.ComponentType<any>; text: string; tooltip: string; color: string }> = {
+  const getActionDetails = (actions: string[], system: string, openModal: (moment: string) => void) => {
+    const defaultActionMap: Record<string, { icon: React.ComponentType<any>; text: string; tooltip: string; color: string; action?: () => void }> = {
       reservar: { icon: CalendarOutlined, text: 'Reservas', tooltip: 'Exibe as Reservas', color: 'blue' },
       provar: { icon: SkinOutlined, text: 'Provas', tooltip: 'Exibe as Provas', color: 'green' },
       retirar: { icon: UploadOutlined, text: 'Retiradas', tooltip: 'Exibe as Retiradas', color: 'orange' },
@@ -45,26 +50,58 @@ const Actions: React.FC<ActionsProps> = ({ action }) => {
       buscar: { icon: ImportOutlined, text: 'Buscar', tooltip: 'Buscar no Cliente', color: 'blue' },
       orcar: { icon: CalculatorOutlined, text: 'Orçamento', tooltip: 'Orçamento realizado', color: 'blue' },
       executar: { icon: FileDoneOutlined, text: 'Serviço', tooltip: 'Execução do Serviço', color: 'green' },
-      checkin: { icon: LoginOutlined, text: 'Check-in', tooltip: 'Verificação de Entrada', color: 'blue' },
-      checkout: { icon: LogoutOutlined, text: 'Check-out', tooltip: 'Verificação de Saída', color: 'green' },
+      checkin: {
+        icon: LoginOutlined,
+        text: 'Check-in',
+        tooltip: 'Verificação de Entrada',
+        color: 'blue',
+        action: () => openModal('in'),
+      },
+      checkout: {
+        icon: LogoutOutlined,
+        text: 'Check-out',
+        tooltip: 'Verificação de Saída',
+        color: 'green',
+        action: () => openModal('out'),
+      },
       diagnostico: { icon: SearchOutlined, text: 'Diagnóstico', tooltip: 'Análise e avaliação', color: 'green' },
     };
-  
+
     const systemOverrides: Record<string, Partial<typeof defaultActionMap>> = {
       sysOficinaCarro: {
         executar: { icon: CarOutlined, text: 'Serviços', tooltip: 'Execução de Serviços Automotivos', color: 'green' },
       },
       sysLocacaoRoupa: {
-        checkin: { icon: LoginOutlined, text: 'Check-in', tooltip: 'Verificação de Retorno do Cliente', color: 'blue' },
-        checkout: { icon: LogoutOutlined, text: 'Check-out', tooltip: 'Verificação de Entrega para o Cliente', color: 'purple' },
+        checkin: {
+          icon: LoginOutlined,
+          text: 'Check-in',
+          tooltip: 'Verificação de Retorno do Cliente',
+          color: 'blue',
+          action: () => openModal('in'),
+        },
+        checkout: {
+          icon: LogoutOutlined,
+          text: 'Check-out',
+          tooltip: 'Verificação de Entrega para o Cliente',
+          color: 'purple',
+          action: () => openModal('out'),
+        },
       },
     };
-  
+
     const actionMap = { ...defaultActionMap, ...systemOverrides[system] };
-  
-    return actions.map(action => actionMap[action]).filter(Boolean); // Filtra ações inválidas
+
+    return actions.map((action) => actionMap[action]).filter(Boolean); // Filtra ações inválidas
   };
-  
+
+
+  const openModalWithMoment = (moment: string) => {
+    // Implementar a abertura do modal com o filtro 'moment'
+    console.log(`Modal aberto com filtro: ${moment}`);
+    setModalVisible(true); // Lógica para exibir o modal
+    setFilterMoment(moment); // Lógica para aplicar o filtro
+  };
+
   const [expandedRowKeys, setExpandedRowKeys] = useState<string[]>([]);
   const [searchText, setSearchText] = useState('');
   const [statusFilter, setStatusFilter] = useState<string>('all');
@@ -194,7 +231,8 @@ const Actions: React.FC<ActionsProps> = ({ action }) => {
             <div style={{ display: 'flex', gap: '16px', marginLeft: 'auto', marginTop: '8px' }}>
               {action && (() => {
                 const actions = action.split('|'); // Supondo que as ações estejam separadas por '|'
-                const actionDetails = getActionDetails(actions, system);
+                const actionDetails = getActionDetails(actions, system, openModalWithMoment);
+
                 return actionDetails.map((details, index) => (
                   <IconText
                     key={index}
@@ -202,9 +240,23 @@ const Actions: React.FC<ActionsProps> = ({ action }) => {
                     text={details.text}
                     tooltip={details.tooltip}
                     color={details.color}
+                    onClick={details.action} // Ação específica para cada item
                   />
                 ));
               })()}
+
+
+
+              {isModalVisible && (
+                <MultiSelectList
+                  visible={isModalVisible}
+                  onCancel={() => setModalVisible(false)}
+                  data={{ ActionsFlowPoints }}
+                  systemId={system}
+                  moment={filterMoment}
+                  title={filterMoment === 'in' ? 'Check-list de Entrada' : 'Check-list de Saída'} // Define o título dinamicamente
+                />
+              )}
             </div>
           </div>
         )}
