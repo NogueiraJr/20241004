@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Space, Table, Tag, Tooltip, Input, Select } from 'antd';
+import { Space, Table, Tag, Tooltip, Input, Select, Button } from 'antd';
 import type { TableProps } from 'antd';
-import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
+import { DeleteOutlined, EditOutlined, ArrowLeftOutlined } from '@ant-design/icons';
 import { produtosLocacaoRoupa } from '../../fields/Dados/sysLocacaoRoupa/produtosLocacaoRoupa-json';
 import { useParameter } from '../../../context/ParameterContext';
 import { produtosOficinaCarro } from '../../fields/Dados/sysOficinaCarro/produtosOficinaCarro-json';
+import { useNavigate } from 'react-router-dom'; // Importando o hook
 
 export interface ProductType {
   id: string;
@@ -33,6 +34,7 @@ const IconText = ({ icon, text, tooltip, color, onClick }: { icon: React.Compone
 const Produto: React.FC = () => {
   let produtos = [];
   const { system } = useParameter();
+  const navigate = useNavigate(); // Inicializando o hook de navegação
 
   const [expandedRowKeys, setExpandedRowKeys] = useState<string[]>([]);
   const [searchText, setSearchText] = useState('');
@@ -117,6 +119,12 @@ const Produto: React.FC = () => {
   return (
     <>
       <div style={{ marginBottom: 16 }}>
+      <Button 
+          type="primary" 
+          onClick={() => navigate(-1)} // Função para voltar à página anterior
+          icon={<ArrowLeftOutlined />} // Usando o ícone de "voltar"
+          style={{ marginRight: 16 }}
+        />
         <Select
           placeholder="Filtrar por status"
           onChange={handleStatusFilter}

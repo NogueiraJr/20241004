@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { Space, Table, Tag, Tooltip, Input, Select } from 'antd';
+import { Space, Table, Tag, Tooltip, Input, Select, Button } from 'antd';
 import type { TableProps } from 'antd';
-import { CalculatorOutlined, CalendarOutlined, CarOutlined, CarryOutOutlined, CheckCircleOutlined, CloseCircleOutlined, DeleteOutlined, DeliveredProcedureOutlined, EditOutlined, ExportOutlined, FileAddOutlined, FileDoneOutlined, ImportOutlined, InboxOutlined, LoginOutlined, LogoutOutlined, ProfileOutlined, RollbackOutlined, SearchOutlined, ShoppingCartOutlined, ShoppingOutlined, SkinOutlined, SolutionOutlined, TagOutlined, ToolOutlined, UndoOutlined, UploadOutlined, UserSwitchOutlined } from '@ant-design/icons';
+import { CalculatorOutlined, CalendarOutlined, CarOutlined, CarryOutOutlined, CheckCircleOutlined, CloseCircleOutlined, DeleteOutlined, DeliveredProcedureOutlined, EditOutlined, ArrowLeftOutlined, ExportOutlined, FileAddOutlined, FileDoneOutlined, ImportOutlined, InboxOutlined, LoginOutlined, LogoutOutlined, ProfileOutlined, RollbackOutlined, SearchOutlined, ShoppingCartOutlined, ShoppingOutlined, SkinOutlined, SolutionOutlined, TagOutlined, ToolOutlined, UndoOutlined, UploadOutlined, UserSwitchOutlined } from '@ant-design/icons';
 import { useParameter } from '../../../../context/ParameterContext';
 import { userOperations } from '../../../fields/Operacional/userOperations-json';
 import MultiSelectList from '../../../../interfaces/ActionsFlowPoints'; // Substitua pelo caminho correto
 import { ActionsFlowPoints } from '../../../fields/Operacional/ActionsFlowPoints-json';
+import { useNavigate } from 'react-router-dom'; // Importando o hook
 
 interface OperationType {
   id: string;
@@ -33,6 +34,7 @@ interface ActionsProps {
 const Actions: React.FC<ActionsProps> = ({ action }) => {
 
   const { system } = useParameter();
+  const navigate = useNavigate(); // Inicializando o hook de navegação
 
   const [isModalVisible, setModalVisible] = React.useState(false);
   const [filterMoment, setFilterMoment] = React.useState<string | null>(null);
@@ -173,6 +175,12 @@ const Actions: React.FC<ActionsProps> = ({ action }) => {
   return (
     <>
       <div style={{ marginBottom: 16 }}>
+      <Button 
+          type="primary" 
+          onClick={() => navigate(-1)} // Função para voltar à página anterior
+          icon={<ArrowLeftOutlined />} // Usando o ícone de "voltar"
+          style={{ marginRight: 16 }}
+        />
         <Select
           placeholder="Filtrar por status"
           onChange={(value) => setStatusFilter(value)}
