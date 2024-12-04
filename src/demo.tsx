@@ -74,13 +74,15 @@ const App: React.FC = () => {
       case '/devolucao':
         return 'Devolução';
 
-        case '/orcamento':
-          return 'Orçamento';
-        case '/execucao':
-          return 'Execução';
-  
-        default:
-          return '';
+      case '/diagnostico':
+        return 'Diagnóstico';
+      case '/orcamento':
+        return 'Orçamento';
+      case '/execucao':
+        return 'Execução';
+
+      default:
+        return '';
     }
   };
 
@@ -150,11 +152,11 @@ const App: React.FC = () => {
           <Route path="/prova" element={<Actions action="provar" />} />
           <Route path="/retirada" element={<Actions action="checkout|retirar|levar" />} />
           <Route path="/devolucao" element={<Actions action="devolver|buscar|checkin" />} />
-          
+
           <Route path="/diagnostico" element={<Actions action="diagnostico" />} />
           <Route path="/orcamento" element={<Actions action="diagnostico|orcar" />} />
           <Route path="/execucao" element={<Actions action="buscar|checkin|executar|checkout|levar" />} />
-          
+
         </Routes>
       </div>
     </div>
