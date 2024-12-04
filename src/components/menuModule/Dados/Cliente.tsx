@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Space, Table, Tag, Tooltip, Input, Select } from 'antd';
+import { Space, Table, Tag, Tooltip, Input, Select, Button } from 'antd';
 import type { TableProps } from 'antd';
-import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
+import { DeleteOutlined, EditOutlined, ArrowLeftOutlined } from '@ant-design/icons'; // Importando o ícone
 import { useParameter } from '../../../context/ParameterContext';
 import { clientesLocacaoRoupa } from '../../fields/Dados/sysLocacaoRoupa/clientesLocacaoRoupa-json';
 import { clientesOficinaCarro } from '../../fields/Dados/sysOficinaCarro/clientesOficinaCarro-json';
+import { useNavigate } from 'react-router-dom'; // Importando o hook
 
 interface ClientType {
   id: string;
@@ -26,6 +27,7 @@ const IconText = ({ icon, text, tooltip, color, onClick }: { icon: React.Compone
 const Cliente: React.FC = () => {
   let clientes = [];
   const { system } = useParameter();
+  const navigate = useNavigate(); // Inicializando o hook de navegação
 
   const [expandedRowKeys, setExpandedRowKeys] = useState<string[]>([]);
   const [searchText, setSearchText] = useState('');
@@ -70,7 +72,6 @@ const Cliente: React.FC = () => {
       const matchesStatus = statusFilter === 'all' || cliente.active === (statusFilter === 'active');
       const matchesTag = tagFilter === 'all' || (cliente.tags && cliente.tags.includes(tagFilter));
 
-      // Apenas exibe os itens que correspondem a todos os filtros aplicados
       return matchesName && matchesStatus && matchesTag;
     });
     setFilteredData(filtered);
@@ -111,6 +112,13 @@ const Cliente: React.FC = () => {
   return (
     <>
       <div style={{ marginBottom: 16 }}>
+        <Button 
+          type="primary" 
+          onClick={() => navigate(-1)} // Função para voltar à página anterior
+          icon={<ArrowLeftOutlined />} // Usando o ícone de "voltar"
+          style={{ marginRight: 16 }}
+        />
+
         <Select
           placeholder="Filtrar por status"
           onChange={handleStatusFilter}
@@ -167,9 +175,7 @@ const Cliente: React.FC = () => {
                 </span>
               </Tooltip>
               {tagsDisplay && tagsDisplay.length > 0 && (
-                <span style={{ cursor: 'pointer', marginLeft: '8px' }}>
-                  | {tagsDisplay}
-                </span>
+                <span style={{ cursor: 'pointer', marginLeft: '8px' }}>| {tagsDisplay}</span>
               )}
             </div>
           );
