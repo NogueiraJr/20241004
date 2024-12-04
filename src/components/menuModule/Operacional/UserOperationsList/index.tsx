@@ -36,8 +36,20 @@ const Actions: React.FC<ActionsProps> = ({ action }) => {
       provar: { icon: SkinOutlined, text: 'Provas', tooltip: 'Exibe as Provas', color: 'green' },
       retirar: { icon: UploadOutlined, text: 'Retiradas', tooltip: 'Exibe as Retiradas', color: 'orange' },
       devolver: { icon: RollbackOutlined, text: 'Devoluções', tooltip: 'Exibe as Devoluções', color: 'red' },
-      levar: { icon: ExportOutlined, text: 'Levar', tooltip: 'Levar no Cliente', color: 'purple' },
-      buscar: { icon: ImportOutlined, text: 'Buscar', tooltip: 'Buscar no Cliente', color: 'blue' },
+      levar: {
+        icon: ExportOutlined, 
+        text: 'Levar', 
+        tooltip: 'Levar no Cliente', 
+        color: 'purple',
+        action: () => openGoogleMaps() // Abre o Google Maps ao clicar
+      },
+      buscar: {
+        icon: ImportOutlined, 
+        text: 'Buscar', 
+        tooltip: 'Buscar no Cliente', 
+        color: 'blue', 
+        action: () => openGoogleMaps() // Abre o Google Maps ao clicar
+      },
       orcar: { icon: CalculatorOutlined, text: 'Orçamento', tooltip: 'Orçamento realizado', color: 'blue' },
       executar: { icon: FileDoneOutlined, text: 'Serviço', tooltip: 'Execução do Serviço', color: 'green' },
       checkin: {
@@ -57,6 +69,16 @@ const Actions: React.FC<ActionsProps> = ({ action }) => {
       diagnostico: { icon: SearchOutlined, text: 'Diagnóstico', tooltip: 'Análise e avaliação', color: 'green' },
     };
 
+    const openGoogleMaps = () => {
+      // Defina as coordenadas de latitude e longitude ou o endereço
+      const latitude = -23.1794; // Exemplo de latitude
+      const longitude = -45.8869; // Exemplo de longitude
+      const url = `https://www.google.com/maps?q=${latitude},${longitude}`;
+    
+      // Abre o Google Maps
+      window.open(url, '_blank');
+    };
+    
     const systemOverrides: Record<string, Partial<typeof defaultActionMap>> = {
       sysOficinaCarro: {
         executar: { icon: CarOutlined, text: 'Serviços', tooltip: 'Execução de Serviços Automotivos', color: 'green' },
