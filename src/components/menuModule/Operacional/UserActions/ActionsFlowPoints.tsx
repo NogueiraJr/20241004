@@ -1,7 +1,7 @@
 import React from 'react';
 import { Modal, List, Checkbox, Button } from 'antd';
-import { MultiSelectListProps } from '../components/menuModule/Operacional/UserOperationsList/MultiSelectListProps';
-import { ActionFlowPoint } from './ActionFlowPoint';
+import { MultiSelectListProps } from '../UserOperationsList/MultiSelectListProps';
+import { ActionFlowPoint } from '../../../../interfaces/ActionFlowPoint';
 
 const MultiSelectList: React.FC<MultiSelectListProps> = ({
   visible,
