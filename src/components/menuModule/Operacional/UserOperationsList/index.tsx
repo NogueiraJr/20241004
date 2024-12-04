@@ -7,16 +7,8 @@ import { userOperations } from '../../../fields/Operacional/userOperations-json'
 import MultiSelectList from '../UserActions/ActionsFlowPoints'; // Substitua pelo caminho correto
 import { ActionsFlowPoints } from '../../../fields/Operacional/ActionsFlowPoints-json';
 import { useNavigate } from 'react-router-dom'; // Importando o hook
-
-interface OperationType {
-  id: string;
-  description: string;
-  active: boolean;
-  notes: string;
-  priceActions: string;
-  priceCharged: string;
-  tags: string[] | null;
-}
+import { OperationType } from '../../../../interfaces/OperationType';
+import { ActionsProps } from '../../../../interfaces/ActionsProps';
 
 const IconText = ({ icon, text, tooltip, color, onClick }: { icon: React.ComponentType<any>; text: string; tooltip: string, color?: string, onClick?: () => void }) => (
   <Tooltip title={tooltip}>
@@ -26,10 +18,6 @@ const IconText = ({ icon, text, tooltip, color, onClick }: { icon: React.Compone
     </div>
   </Tooltip>
 );
-
-interface ActionsProps {
-  action: string;
-}
 
 const Actions: React.FC<ActionsProps> = ({ action }) => {
 
