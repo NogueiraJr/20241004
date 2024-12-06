@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { Form, Select, Button, Tooltip, Typography, Tag } from 'antd';
+import { Form, Select, Button, Tooltip, Typography, Tag, Modal, Input } from 'antd';
 import { MinusOutlined, PlusOutlined, DownOutlined, UpOutlined, PlusCircleOutlined } from '@ant-design/icons';
+import { useParameter } from '../../../../context/ParameterContext';
 
 const { Text } = Typography;
 
@@ -10,11 +11,59 @@ const InformeItens: React.FC<{
   handleQuantityChange: (id: string, newQuantity: number) => void;
   quantities: Record<string, number>;
 }> = ({ produtos, handleProductChange, handleQuantityChange, quantities }) => {
+  const { system } = useParameter(); // Obtendo o valor de system a partir do hook useParameter
   const [expandedItemId, setExpandedItemId] = useState<string | null>(null);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [newItem, setNewItem] = useState({
+    name: '',
+    description: '',
+    productTypeId: 'product',
+    quantity: 1,
+    price: 0,
+    tags: [],
+  });
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>, field: string) => {
+    setNewItem((prevState) => ({
+      ...prevState,
+      [field]: e.target.value,
+    }));
+  };
+
+  const handleSelectChange = (value: any, field: string) => {
+    setNewItem((prevState) => ({
+      ...prevState,
+      [field]: value,
+    }));
+  };
+
+  const handleModalClose = () => {
+    setModalVisible(false);
+  };
+
+  const handleSaveNewItem = () => {
+    // Salve o novo item conforme necessário, por exemplo, enviar para o backend.
+    console.log('Novo item:', newItem);
+    setModalVisible(false); // Fechar o modal
+  };
+
+  // Definindo as opções de etiquetas com base no valor de system
+  const getTagOptions = () => {
+    if (system === 'sysLocacaoRoupa') {
+      return ['Casamento', 'Batizado'];
+    } else if (system === 'sysOficinaCarro') {
+      return ['Revisão', 'Reparo'];
+    }
+    return []; // Caso contrário, retorna um array vazio ou outro valor padrão
+  };
 
   return (
     <>
-      <Form.Item name="itens" label={<span className="custom-label" style={{ whiteSpace: 'nowrap' }}>Informe os Itens</span>} rules={[{ required: true, message: 'Por favor, informe ao menos um item!' }]}>
+      <Form.Item
+        name="itens"
+        label={<span className="custom-label" style={{ whiteSpace: 'nowrap' }}>Informe os Itens</span>}
+        rules={[{ required: true, message: 'Por favor, informe ao menos um item!' }]}
+      >
         <Select
           mode="multiple"
           showSearch
@@ -119,10 +168,81 @@ const InformeItens: React.FC<{
           type="link"
           icon={<PlusCircleOutlined />}
           style={{ float: 'right', padding: 0 }}
+          onClick={() => setModalVisible(true)}
         >
           Cadastrar Novo Item
         </Button>
       </Form.Item>
+
+      {/* Modal para Cadastro de Novo Item */}
+      <Modal
+        title="Cadastrar Novo Item"
+        visible={modalVisible}
+        onCancel={handleModalClose}
+        footer={[
+          <Button key="cancel" onClick={handleModalClose}>
+            Cancelar
+          </Button>,
+          <Button key="save" type="primary" onClick={handleSaveNewItem}>
+            Gravar
+          </Button>,
+        ]}
+      >
+        <Form layout="vertical">
+          <Form.Item label="Nome">
+            <Input
+              value={newItem.name}
+              onChange={(e) => handleInputChange(e, 'name')}
+              placeholder="Nome do item"
+            />
+          </Form.Item>
+          <Form.Item label="Descrição">
+            <Input
+              value={newItem.description}
+              onChange={(e) => handleInputChange(e, 'description')}
+              placeholder="Descrição do item"
+            />
+          </Form.Item>
+          <Form.Item label="Tipo">
+            <Select
+              value={newItem.productTypeId}
+              onChange={(value) => handleSelectChange(value, 'productTypeId')}
+            >
+              <Select.Option value="product">Produto</Select.Option>
+              <Select.Option value="service">Serviço</Select.Option>
+            </Select>
+          </Form.Item>
+          <Form.Item label="Quantidade">
+            <Input
+              type="number"
+              value={newItem.quantity}
+              onChange={(e) => handleInputChange(e, 'quantity')}
+              placeholder="Quantidade"
+            />
+          </Form.Item>
+          <Form.Item label="Preço">
+            <Input
+              type="number"
+              value={newItem.price}
+              onChange={(e) => handleInputChange(e, 'price')}
+              placeholder="Preço"
+            />
+          </Form.Item>
+          <Form.Item label="Etiquetas">
+            <Select
+              mode="multiple"
+              value={newItem.tags}
+              onChange={(value) => handleSelectChange(value, 'tags')}
+            >
+              {getTagOptions().map((tag) => (
+                <Select.Option key={tag} value={tag}>
+                  {tag}
+                </Select.Option>
+              ))}
+            </Select>
+          </Form.Item>
+        </Form>
+      </Modal>
     </>
   );
 };
