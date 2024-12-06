@@ -65,7 +65,16 @@ const NovoClienteModal: React.FC<NovoClienteModalProps> = ({ visible, onClose, o
           </InputMask>
         </Form.Item>
 
-        <Form.Item label="Email" name="email">
+        <Form.Item
+          label="Email"
+          name="email"
+          rules={[
+            {
+              type: 'email',
+              message: 'Por favor, insira um e-mail válido!',
+            },
+          ]}
+        >
           <Input placeholder="Digite o email" />
         </Form.Item>
       </Form>
