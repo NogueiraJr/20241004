@@ -39,14 +39,14 @@ const NovoClienteModal: React.FC<NovoClienteModalProps> = ({ visible, onClose, o
     >
       <Form form={form} layout="vertical">
         <Form.Item
-          label="Nome"
+          label={<span className="custom-label">Nome</span>}
           name="name"
           rules={[{ required: true, message: 'O nome é obrigatório!' }]}
         >
-          <Input placeholder="Digite o nome" />
+          <Input className="custom-field" placeholder="Digite o nome" />
         </Form.Item>
         <Form.Item
-          label="Celular"
+          label={<span className="custom-label">Celular</span>}
           name="phone"
           rules={[
             { required: true, message: 'O celular é obrigatório!' },
@@ -61,12 +61,12 @@ const NovoClienteModal: React.FC<NovoClienteModalProps> = ({ visible, onClose, o
             placeholder="(DD) 9XXXX-XXXX"
             maskChar={null} // Garante que caracteres extras não sejam enviados
           >
-            {(inputProps: any) => <Input {...inputProps} />}
+            {(inputProps: any) => <Input {...inputProps} className="custom-field" />}
           </InputMask>
         </Form.Item>
 
         <Form.Item
-          label="Email"
+          label={<span className="custom-label">Email</span>}
           name="email"
           rules={[
             {
@@ -75,7 +75,7 @@ const NovoClienteModal: React.FC<NovoClienteModalProps> = ({ visible, onClose, o
             },
           ]}
         >
-          <Input placeholder="Digite o email" />
+          <Input className="custom-field" placeholder="Digite o email" />
         </Form.Item>
       </Form>
     </Modal>
