@@ -86,12 +86,12 @@ const Operation: React.FC<OperationProps> = ({ action }) => {
     if (clienteSelecionado) {
       const descricaoPrefixMap = {
         sysLocacaoRoupa: {
-          reserva: `Reserva para ${clienteSelecionado.name}`,
+          reserva: `Reserva de ${clienteSelecionado.name}`,
           default: `${defaultValue} ${clienteSelecionado.name}`
         },
         sysOficinaCarro: {
-          diagnostico: `Diagnóstico para ${clienteSelecionado.name}`,
-          orcamento: `Orçamento para ${clienteSelecionado.name}`,
+          diagnostico: `Diagnóstico de ${clienteSelecionado.name}`,
+          orcamento: `Orçamento de ${clienteSelecionado.name}`,
           default: `${defaultValue} ${clienteSelecionado.name}`
         }
       };
