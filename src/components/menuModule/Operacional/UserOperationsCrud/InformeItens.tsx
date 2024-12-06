@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Form, Select, Button, Tooltip, Typography, Tag } from 'antd';
-import { MinusOutlined, PlusOutlined, DownOutlined, UpOutlined } from '@ant-design/icons';
+import { MinusOutlined, PlusOutlined, DownOutlined, UpOutlined, PlusCircleOutlined } from '@ant-design/icons';
 
 const { Text } = Typography;
 
@@ -114,11 +114,14 @@ const InformeItens: React.FC<{
             option?.name.toLowerCase().includes(input.toLowerCase())
           }
         />
-      </Form.Item>
-      <Form.Item>
-        <Tooltip title="Caso o Produto ainda não exista cadastrado">
-          <Button className="custom-button" type="primary">Novo Produto</Button>
-        </Tooltip>
+        {/* Novo Produto Button */}
+        <Button
+          type="link"
+          icon={<PlusCircleOutlined />}
+          style={{ float: 'right', padding: 0 }}
+        >
+          Cadastrar Novo Item
+        </Button>
       </Form.Item>
     </>
   );
