@@ -1,5 +1,6 @@
 import React from 'react';
 import { Modal, Form, Input, Button } from 'antd';
+import InputMask from 'react-input-mask';
 
 interface NovoClienteModalProps {
   visible: boolean;
@@ -47,10 +48,23 @@ const NovoClienteModal: React.FC<NovoClienteModalProps> = ({ visible, onClose, o
         <Form.Item
           label="Celular"
           name="phone"
-          rules={[{ required: true, message: 'O celular é obrigatório!' }]}
+          rules={[
+            { required: true, message: 'O celular é obrigatório!' },
+            {
+              pattern: /^\(\d{2}\)\s\d{5}-\d{4}$/,
+              message: 'Formato inválido! O formato correto é (DD) 9XXXX-XXXX.'
+            },
+          ]}
         >
-          <Input placeholder="Digite o celular" />
+          <InputMask
+            mask="(99) 99999-9999"
+            placeholder="(DD) 9XXXX-XXXX"
+            maskChar={null} // Garante que caracteres extras não sejam enviados
+          >
+            {(inputProps: any) => <Input {...inputProps} />}
+          </InputMask>
         </Form.Item>
+
         <Form.Item label="Email" name="email">
           <Input placeholder="Digite o email" />
         </Form.Item>
