@@ -48,10 +48,10 @@ const CadastrarNovoItemModal: React.FC<{
       visible={modalVisible}
       onCancel={handleModalClose}
       footer={[
-        <Button key="cancel" onClick={handleModalClose}>
+        <Button key="cancel" onClick={handleModalClose} >
           Cancelar
         </Button>,
-        <Button key="save" type="primary" onClick={handleGravarClick}>
+        <Button key="save" type="primary" onClick={handleGravarClick} >
           Gravar
         </Button>,
       ]}
@@ -60,7 +60,7 @@ const CadastrarNovoItemModal: React.FC<{
     >
       <Form form={form} layout="vertical">
         <Form.Item
-          label="Nome"
+          label={<span className="custom-label">Nome</span>}
           name="name"
           rules={[{ required: true, message: 'O nome do item é obrigatório!' }]} // Validação de campo obrigatório
         >
@@ -68,10 +68,11 @@ const CadastrarNovoItemModal: React.FC<{
             value={newItem.name}
             onChange={(e) => handleInputChange(e, 'name')}
             placeholder="Nome do item"
+            className="custom-field"
           />
         </Form.Item>
         <Form.Item
-          label="Descrição"
+          label={<span className="custom-label">Descrição</span>}
           name="description"
           rules={[{ required: true, message: 'A descrição do item é obrigatória!' }]} // Validação de campo obrigatório
         >
@@ -79,22 +80,25 @@ const CadastrarNovoItemModal: React.FC<{
             value={newItem.description}
             onChange={(e) => handleInputChange(e, 'description')}
             placeholder="Descrição do item"
+            className="custom-field"
           />
         </Form.Item>
-        <Form.Item label="Tipo">
+        <Form.Item label={<span className="custom-label">Tipo</span>}>
           <Select
             value={newItem.productTypeId}
             onChange={(value) => handleSelectChange(value, 'productTypeId')}
+            className="custom-field"
           >
             <Select.Option value="product">Produto</Select.Option>
             <Select.Option value="service">Serviço</Select.Option>
           </Select>
         </Form.Item>
-        <Form.Item label="Etiquetas">
+        <Form.Item label={<span className="custom-label">Etiquetas</span>}>
           <Select
             mode="multiple"
             value={newItem.tags}
             onChange={(value) => handleSelectChange(value, 'tags')}
+            className="custom-field"
           >
             {getTagOptions().map((tag) => (
               <Select.Option key={tag} value={tag}>
@@ -103,7 +107,7 @@ const CadastrarNovoItemModal: React.FC<{
             ))}
           </Select>
         </Form.Item>
-        <Form.Item label="Quantidade">
+        <Form.Item label={<span className="custom-label">Quantidade</span>}>
           <Input
             type="number"
             value={newItem.quantity}
@@ -111,9 +115,10 @@ const CadastrarNovoItemModal: React.FC<{
             placeholder="Quantidade"
             min={1}
             step={1}
+            className="custom-field"
           />
         </Form.Item>
-        <Form.Item label="Preço">
+        <Form.Item label={<span className="custom-label">Preço</span>}>
           <NumericFormat
             value={newItem.price !== undefined && newItem.price !== null ? newItem.price.toString() : '0'}
             prefix="R$ "
