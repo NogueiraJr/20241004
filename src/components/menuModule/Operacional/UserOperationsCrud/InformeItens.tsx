@@ -139,12 +139,19 @@ const InformeItens: React.FC<{
                     <>
                       <Text strong>
                         {p.productTypeId === 'product' ? 'Produto, ' : 'Serviço, '}
-                        <span style={{ color: 'gray', fontSize: 12 }}>{p.description}</span>
+                        R$ {p.price.toFixed(2).replace('.', ',')} -
+                      </Text>
+                      <Text type="secondary" style={{ fontSize: 12, whiteSpace: 'normal', marginLeft: 5 }}>
+                        {p.description}
                       </Text>
                       <br />
-                      {p.tags.map((tag, index) => (
-                        <Tag key={index}>{tag}</Tag>
-                      ))}
+                      <div style={{ marginTop: 5 }}>
+                        {(p.tags || []).map((tag, index) => (
+                          <Tag key={index} color="blue" style={{ margin: '2px' }}>
+                            {tag}
+                          </Tag>
+                        ))}
+                      </div>
                     </>
                   )}
                 </div>
