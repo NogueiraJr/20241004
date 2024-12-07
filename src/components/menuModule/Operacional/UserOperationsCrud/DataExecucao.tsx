@@ -1,29 +1,36 @@
-import React from 'react';
-import { Form, DatePicker } from 'antd';
+import React, { useState } from 'react';
+import { DatePicker, Form } from 'antd';
 import dayjs from 'dayjs';
-import 'dayjs/locale/pt-br'; // Importa o locale para português do Brasil
-dayjs.locale('pt-br'); // Configura o locale para pt-BR
+import 'dayjs/locale/pt-br';
+dayjs.locale('pt-br');
 
-const DataExecucao: React.FC = () => (
-  <Form
-    initialValues={{
-      dataExecucao: dayjs().add(1, 'day').set('hour', 14).set('minute', 0), // Define o valor padrão
-    }}
-  >
-    <Form.Item 
-      label={<span className="custom-label" style={{ whiteSpace: 'nowrap' }}>Executar em</span>} 
-      name="dataExecucao" 
-      rules={[{ required: true, message: 'Por favor, informe uma data!' }]}
-    >
-      <DatePicker 
-        className="custom-date-picker" 
-        placeholder="Informe a data da Execução" 
-        format="DD/MM/YYYY, HH:mm" 
-        showTime={{ format: 'HH:mm' }} 
-        style={{ width: '100%' }} 
-      />
-    </Form.Item>
-  </Form>
-);
+const DataExecucao: React.FC = () => {
+  const [defaultValue, setDefaultValue] = useState<dayjs.Dayjs | null>(null);
+
+  return (
+    <div>
+      <Form.Item 
+        label={<span className="custom-label" style={{ whiteSpace: 'nowrap' }}>Executar em</span>} 
+        name="DataExecucao" 
+        rules={[{ required: true, message: 'Por favor, informe uma data!' }]}
+      >
+        <DatePicker 
+          className="custom-date-picker" 
+          placeholder="Informe a data da Execução" 
+          format="DD/MM/YYYY HH:mm" 
+          showTime={{ 
+            format: 'HH:mm', 
+            defaultValue: dayjs().set('hour', 10).set('minute', 0), 
+            showSecond: false, 
+            hourStep: 1, 
+            minuteStep: 5, 
+          }} 
+          style={{ width: '100%' }} 
+          defaultValue={defaultValue}
+        />
+      </Form.Item>
+    </div>
+  );
+};
 
 export default DataExecucao;
