@@ -152,6 +152,9 @@ const InformeItens: React.FC<{
             ),
           }))}
           onChange={handleProductChange}
+          filterOption={(input, option) =>
+            option?.name.toLowerCase().includes(input.toLowerCase())
+          }
         />
       </Form.Item>
 
