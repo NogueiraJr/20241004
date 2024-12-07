@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Form, Select, Button, Tooltip } from 'antd';
-import { PlusOutlined } from '@ant-design/icons'; // Importa o ícone desejado
-import NovoClienteModal from './ClienteNovoModal'; // Importe o modal
+import { PlusOutlined } from '@ant-design/icons';
+import NovoClienteModal from './ClienteNovoModal';
 import '../../../../index.css';
 
 const Cliente: React.FC<{ handleClienteChange: (value: string) => void; clientes: any[] }> = ({ handleClienteChange, clientes }) => {
@@ -23,30 +23,36 @@ const Cliente: React.FC<{ handleClienteChange: (value: string) => void; clientes
         name="cliente"
         rules={[{ required: true, message: 'Por favor, selecione um cliente!' }]}
       >
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}> {/* Container flex para alinhamento */}
-          <Select
-            showSearch
-            className="custom-field"
-            placeholder="Selecione um cliente"
-            onChange={handleClienteChange}
-            options={clientes.map(c => ({ value: c.id, label: c.name }))}
-            filterOption={(input, option) =>
-              option?.label.toLowerCase().includes(input.toLowerCase())
-            }
-            style={{ flex: 1 }} // Faz o Select ocupar o máximo de espaço disponível
-          />
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <Form.Item
+            name="cliente"
+            noStyle
+          >
+            <Select
+              showSearch
+              className="custom-field"
+              placeholder="Selecione um cliente"
+              onChange={(value) => {
+                handleClienteChange(value);
+              }}
+              options={clientes.map(c => ({ value: c.id, label: c.name }))}
+              filterOption={(input, option) =>
+                option?.label.toLowerCase().includes(input.toLowerCase())
+              }
+              style={{ flex: 1 }}
+            />
+          </Form.Item>
           <Tooltip title="Cadastrar Cliente, caso ele ainda não exista">
             <Button
               type="primary"
               icon={<PlusOutlined />}
               className="custom-button"
-              onClick={handleOpenModal} // Abre o modal
+              onClick={handleOpenModal}
             />
           </Tooltip>
         </div>
       </Form.Item>
 
-      {/* Uso do modal separado */}
       <NovoClienteModal
         visible={isModalVisible}
         onClose={handleCloseModal}
