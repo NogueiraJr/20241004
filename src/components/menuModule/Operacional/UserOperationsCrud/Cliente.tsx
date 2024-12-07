@@ -6,6 +6,7 @@ import '../../../../index.css';
 
 const Cliente: React.FC<{ handleClienteChange: (value: string) => void; clientes: any[] }> = ({ handleClienteChange, clientes }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [selectedClient, setSelectedClient] = useState<string | undefined>(undefined); // Estado para armazenar o cliente selecionado
 
   const handleOpenModal = () => setIsModalVisible(true);
   const handleCloseModal = () => setIsModalVisible(false);
@@ -16,12 +17,20 @@ const Cliente: React.FC<{ handleClienteChange: (value: string) => void; clientes
     handleCloseModal();
   };
 
+  const handleClientSelect = (value: string) => {
+    setSelectedClient(value);  // Atualiza o estado quando um cliente é selecionado
+    handleClienteChange(value); // Chama a função de alteração do cliente
+  };
+
   return (
     <>
       <Form.Item
         label={<span style={{ whiteSpace: 'nowrap' }} className="custom-label">Cliente</span>}
         name="cliente"
-        rules={[{ required: true, message: 'Por favor, selecione um cliente!' }]}
+        rules={[
+          { required: true, message: 'Por favor, selecione um cliente!', validateTrigger: 'onBlur' },  // Garante que a validação só ocorra no onBlur ou quando for necessário
+        ]}
+        hasFeedback
       >
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
           <Form.Item
@@ -32,9 +41,8 @@ const Cliente: React.FC<{ handleClienteChange: (value: string) => void; clientes
               showSearch
               className="custom-field"
               placeholder="Selecione um cliente"
-              onChange={(value) => {
-                handleClienteChange(value);
-              }}
+              onChange={handleClientSelect}  // Atualiza o estado quando um cliente é selecionado
+              value={selectedClient}  // Vincula o valor selecionado ao estado
               options={clientes.map(c => ({ value: c.id, label: c.name }))}
               filterOption={(input, option) =>
                 option?.label.toLowerCase().includes(input.toLowerCase())
