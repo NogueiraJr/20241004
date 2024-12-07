@@ -2,6 +2,7 @@ import React from 'react';
 import { Modal, List, Checkbox, Button } from 'antd';
 import { MultiSelectListProps } from '../UserOperationsList/MultiSelectListProps';
 import { ActionFlowPoint } from '../../../../interfaces/ActionFlowPoint';
+import '../../../../index.css';
 
 const MultiSelectList: React.FC<MultiSelectListProps> = ({
   visible,
@@ -46,8 +47,8 @@ const MultiSelectList: React.FC<MultiSelectListProps> = ({
         renderItem={(item: ActionFlowPoint) => (
           <List.Item>
             <Checkbox value={item.id}>
-              <strong>{item.name}</strong> {/* Propriedade 'name' já é reconhecida */}
-              <div>{item.description}</div>
+              <strong className='custom-label-list'>{item.name}</strong> {/* Propriedade 'name' já é reconhecida */}
+              <div className='custom-label-list-detail'>{item.description}</div>
             </Checkbox>
           </List.Item>
         )}
