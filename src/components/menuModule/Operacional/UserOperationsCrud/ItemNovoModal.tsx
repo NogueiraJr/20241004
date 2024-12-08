@@ -115,6 +115,7 @@ const CadastrarNovoItemModal: React.FC<{
           <Form.Item
             label={<span className="custom-label">Quantidade</span>}
             name="quantity"
+            initialValue={1}
             rules={[
               { required: true, message: 'A quantidade é obrigatória!' }, // Validação obrigatória
               {
