@@ -1,5 +1,15 @@
 import React from 'react';
-import { AppstoreOutlined, ToolOutlined, QuestionCircleOutlined, UserOutlined, DatabaseOutlined, FileOutlined, SettingOutlined, HomeOutlined, LogoutOutlined } from '@ant-design/icons';
+import {
+  AppstoreOutlined,
+  ToolOutlined,
+  QuestionCircleOutlined,
+  UserOutlined,
+  DatabaseOutlined,
+  FileOutlined,
+  SettingOutlined,
+  HomeOutlined,
+  LogoutOutlined,
+} from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import { Menu } from 'antd';
 import { BrowserRouter as Router, Routes, Route, useNavigate, useLocation } from 'react-router-dom'; // Importa useLocation
@@ -99,9 +109,6 @@ const App: React.FC = () => {
       icon: <AppstoreOutlined />,
       children: [
         { key: '/ini', label: 'Inicial', icon: <HomeOutlined /> },
-        // { key: '/adm', label: 'Administrador', icon: <SettingOutlined /> },
-        // { key: '/spt', label: 'Suporte', icon: <ToolOutlined /> },
-        // { key: '/own', label: 'Proprietário', icon: <UserOutlined /> },
         { key: '/opr', label: 'Operacional', icon: <AppstoreOutlined /> },
         { key: '/dds', label: 'Dados', icon: <DatabaseOutlined /> },
         { key: '/rlt', label: 'Relatórios', icon: <FileOutlined /> },
@@ -156,7 +163,6 @@ const App: React.FC = () => {
           <Route path="/diagnostico" element={<Actions action="diagnostico" />} />
           <Route path="/orcamento" element={<Actions action="diagnostico|orcar" />} />
           <Route path="/execucao" element={<Actions action="buscar|checkin|executar|checkout|levar" />} />
-
         </Routes>
       </div>
     </div>
