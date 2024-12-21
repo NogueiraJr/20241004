@@ -1,23 +1,26 @@
 import React, { useState } from 'react';
 import { Button, Form, Input, Typography, message } from 'antd';
 import { useNavigate } from 'react-router-dom';
+import { useParameter } from '../context/ParameterContext';
 
 const { Title } = Typography;
 
 const Login: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const { setParameter } = useParameter(); // Obtém o método para definir o 'system'
 
   const handleLogin = (values: { username: string; password: string }) => {
     const { username, password } = values;
 
     setLoading(true);
 
-    // Validação dos usuários
     if (username === 'oficina' && password === 'oficina') {
-      navigate('/?system=sysOficinaCarro');
+      setParameter('sysOficinaCarro'); // Define 'system' no contexto
+      navigate('/ini'); // Redireciona para a página inicial
     } else if (username === 'locacaoroupa' && password === 'locacaoroupa') {
-      navigate('/?system=sysLocacaoRoupa');
+      setParameter('sysLocacaoRoupa'); // Define 'system' no contexto
+      navigate('/ini'); // Redireciona para a página inicial
     } else {
       message.error('Informe Usuário e Senha válidos.');
     }
