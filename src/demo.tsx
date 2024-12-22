@@ -57,6 +57,34 @@ const App: React.FC = () => {
         return 'Ajuda';
       case '/out':
         return 'Sair';
+
+      case '/cliente':
+        return 'Clientes';
+      case '/produto':
+        return 'Produtos';
+      case '/fornecedor':
+        return 'Fornecedores';
+      case '/parceiro':
+        return 'Parceiros';
+
+      case '/reserva':
+        return 'Reservas';
+      case '/reserva-novo':
+        return 'Nova Reserva';
+      case '/prova':
+        return 'Prova';
+      case '/retirada':
+        return 'Retirada';
+      case '/devolucao':
+        return 'Devolução';
+
+      case '/diagnostico':
+        return 'Diagnóstico';
+      case '/orcamento':
+        return 'Orçamento';
+      case '/execucao':
+        return 'Execução';
+
       default:
         return '';
     }
@@ -131,6 +159,15 @@ const App: React.FC = () => {
           <Route path="/produto" element={<Produto />} />
           <Route path="/fornecedor" element={<Fornecedor />} />
           <Route path="/parceiro" element={<Parceiro />} />
+
+          <Route path="/reserva" element={<Actions action="reservar" />} />
+          <Route path="/prova" element={<Actions action="provar" />} />
+          <Route path="/retirada" element={<Actions action="checkout|retirar|levar" />} />
+          <Route path="/devolucao" element={<Actions action="devolver|buscar|checkin" />} />
+
+          <Route path="/diagnostico" element={<Actions action="diagnostico" />} />
+          <Route path="/orcamento" element={<Actions action="diagnostico|orcar" />} />
+          <Route path="/execucao" element={<Actions action="buscar|checkin|executar|checkout|levar" />} />
         </Routes>
       </div>
     </div>
