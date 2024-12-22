@@ -148,7 +148,7 @@ const App: React.FC = () => {
         </>
       )}
       {/* Espaçamento dinâmico para o conteúdo renderizado */}
-      <div style={{ marginTop: location.pathname !== '/' ? '30px' : '0', flexGrow: 1 }}>
+      <div style={{ marginTop: location.pathname !== '/' ? '30px' : '0', marginRight: '-25px', marginLeft: '-25px', flexGrow: 1 }}>
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="/ini" element={<Inicial />} />
