@@ -103,26 +103,26 @@ const Login: React.FC = () => {
         bodyStyle={{ maxHeight: '300px', overflowY: 'auto' }}
       >
         <ul>
-          <li>
+          <li style={{marginBottom: '20px'}}>
             <strong>Versão 1.2.0 - 22/12/2024</strong>
-            <p>Descrição: Melhorias de desempenho e correção de bugs.</p>
+            <p><strong>Descrição:</strong> Melhorias de desempenho e correção de bugs.</p>
             <ul>
               <li>Correção de problemas no login.</li>
               <li>Otimização do carregamento inicial.</li>
               <li>Atualização de dependências.</li>
             </ul>
           </li>
-          <li>
+          <li style={{marginBottom: '20px'}}>
             <strong>Versão 1.1.0 - 15/12/2024</strong>
-            <p>Descrição: Novos recursos e melhorias.</p>
+            <p><strong>Descrição:</strong> Novos recursos e melhorias.</p>
             <ul>
               <li>Adicionado suporte ao tema escuro.</li>
               <li>Melhoria na usabilidade do formulário.</li>
             </ul>
           </li>
-          <li>
+          <li style={{marginBottom: '20px'}}>
             <strong>Versão 1.0.0 - 01/12/2024</strong>
-            <p>Descrição: Lançamento inicial do aplicativo.</p>
+            <p><strong>Descrição:</strong> Lançamento inicial do aplicativo.</p>
             <ul>
               <li>Funcionalidade básica de login.</li>
               <li>Configuração inicial do sistema.</li>
