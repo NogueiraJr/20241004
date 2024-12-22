@@ -29,18 +29,24 @@ import Produto from './components/menuModule/Dados/Produto';
 import Actions from './components/menuModule/Operacional/UserOperationsList';
 import Fornecedor from './components/menuModule/Dados/Fornecedor';
 import Parceiro from './components/menuModule/Dados/Parceiro';
-import { ParameterProvider } from './context/ParameterContext';
+import { ParameterProvider, useParameter } from './context/ParameterContext';
 
 type MenuItem = Required<MenuProps>['items'][number];
 
 const App: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation(); // Obtém a rota atual
+  const { setParameter } = useParameter(); // Obtém o método para definir o 'system'
 
   const handleMenuClick = (key: string) => {
-    navigate(key);
+    if (key === '/out') {
+      setParameter(null);
+      navigate('/'); // Redireciona para a página de login
+    } else {
+      navigate(key);
+    }
   };
-
+  
   const getPageTitle = (path: string) => {
     switch (path) {
       case '/ini':
