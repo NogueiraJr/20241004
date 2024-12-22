@@ -7,5 +7,6 @@
       "jsx": "react",
       "jsxFactory": "React.createElement",
       "jsxFragmentFactory": "React.Fragment"
-    }
+    },
+    "include": ["src"]
   }
