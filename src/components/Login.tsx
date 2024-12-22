@@ -17,10 +17,10 @@ const Login: React.FC = () => {
 
     setLoading(true);
 
-    if (username.toLowerCase() === 'oficina' && password === '123') {
+    if (username.toLowerCase().trim() === 'oficina' && password === '123') {
       setParameter('sysOficinaCarro'); // Define 'system' no contexto
       navigate('/ini'); // Redireciona para a página inicial
-    } else if (username.toLowerCase() === 'locacao' && password === '123') {
+    } else if (username.toLowerCase().trim() === 'locacao' && password === '123') {
       setParameter('sysLocacaoRoupa'); // Define 'system' no contexto
       navigate('/ini'); // Redireciona para a página inicial
     } else {
