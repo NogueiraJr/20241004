@@ -59,3 +59,7 @@
     font-size: 20px !important;
     /* Define o tamanho da fonte dos itens do Select */
 }
+
+.ant-table-tbody>tr>td {
+    border-top: 1px solid rgba(108, 105, 105, 0.276) !important;
+}
