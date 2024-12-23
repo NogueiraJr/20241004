@@ -1,18 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, Form, Input, Typography, message } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { useParameter } from '../context/ParameterContext';
 import '../index.css'; // Importa o arquivo de estilo
 import logo from '../assets/images/logo.png';
-import VersionHistoryModal from '../components/VersionHistoryModal';
+import versionHistoryData from './fields/Login/versionHistory.json'; // Importe os dados do JSON
 
 const { Title, Text } = Typography;
 
 const Login: React.FC = () => {
   const [loading, setLoading] = useState(false);
-  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [latestVersion, setLatestVersion] = useState<{ version: string; date: string } | null>(null);
   const navigate = useNavigate();
   const { setParameter } = useParameter(); // Obtém o método para definir o 'system'
+
+  useEffect(() => {
+    // Ordena as versões por data para obter a mais recente
+    const sortedVersions = versionHistoryData.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+    setLatestVersion({
+      version: sortedVersions[0].version,
+      date: sortedVersions[0].date,
+    });
+  }, []);
 
   const handleLogin = (values: { username: string; password: string }) => {
     const { username, password } = values;
@@ -30,14 +39,6 @@ const Login: React.FC = () => {
     }
 
     setLoading(false);
-  };
-
-  const showModal = () => {
-    setIsModalVisible(true);
-  };
-
-  const hideModal = () => {
-    setIsModalVisible(false);
   };
 
   return (
@@ -79,20 +80,23 @@ const Login: React.FC = () => {
             </Button>
           </Form.Item>
         </Form>
-        <Text
-          style={{
-            display: 'block',
-            textAlign: 'center',
-            marginTop: '10px',
-            cursor: 'pointer',
-            color: '#1890ff',
-          }}
-          onClick={showModal}
-        >
-          Versão 1.2.0 - Última publicação: 22/12/2024
-        </Text>
+
+        {latestVersion && (
+          <Text
+            style={{
+              display: 'block',
+              textAlign: 'center',
+              marginTop: '10px',
+              cursor: 'default',
+              color: '#1890ff',
+            }}
+          >
+            {`Versão ${latestVersion.version}`}
+            <br />
+            {`Última publicação: ${latestVersion.date}`}
+          </Text>
+        )}
       </div>
-      <VersionHistoryModal visible={isModalVisible} onClose={hideModal} />
     </div>
   );
 };
