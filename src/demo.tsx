@@ -1,18 +1,8 @@
-import React from 'react';
-import {
-  AppstoreOutlined,
-  ToolOutlined,
-  QuestionCircleOutlined,
-  UserOutlined,
-  DatabaseOutlined,
-  FileOutlined,
-  SettingOutlined,
-  HomeOutlined,
-  LogoutOutlined,
-} from '@ant-design/icons';
-import type { MenuProps } from 'antd';
-import { Menu } from 'antd';
+import React, { useState } from 'react';
+import { AppstoreOutlined, ToolOutlined, QuestionCircleOutlined, UserOutlined, DatabaseOutlined, FileOutlined, SettingOutlined, HomeOutlined, LogoutOutlined, HistoryOutlined } from '@ant-design/icons';
+import { Menu, MenuProps } from 'antd';
 import { BrowserRouter as Router, Routes, Route, useNavigate, useLocation } from 'react-router-dom';
+import VersionHistoryModal from './components/VersionHistoryModal';  // Importe o modal
 import Inicial from './components/menu/Inicial';
 import Administrador from './components/menu/Administrador';
 import Suporte from './components/menu/Suporte';
@@ -37,6 +27,7 @@ const App: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation(); // Obtém a rota atual
   const { setParameter } = useParameter(); // Obtém o método para definir o 'system'
+  const [isModalVisible, setIsModalVisible] = useState(false); // Estado para controlar a visibilidade do modal
 
   const handleMenuClick = (key: string) => {
     if (key === '/out') {
@@ -46,7 +37,15 @@ const App: React.FC = () => {
       navigate(key);
     }
   };
-  
+
+  const showVersionHistoryModal = () => {
+    setIsModalVisible(true);
+  };
+
+  const closeVersionHistoryModal = () => {
+    setIsModalVisible(false);
+  };
+
   const getPageTitle = (path: string) => {
     switch (path) {
       case '/ini':
@@ -141,6 +140,7 @@ const App: React.FC = () => {
               zIndex: 1000,
             }}
           >
+            <HistoryOutlined title="Histórico de Versões" style={{ color: 'white', fontSize: '20px', cursor: 'pointer' }} onClick={showVersionHistoryModal} />
             <ToolOutlined title="Utilidades" style={{ color: 'white', fontSize: '20px', cursor: 'pointer' }} />
             <QuestionCircleOutlined title="Ajuda" style={{ color: 'white', fontSize: '20px', cursor: 'pointer' }} />
             <UserOutlined title="Usuário" style={{ color: 'white', fontSize: '20px', cursor: 'pointer' }} />
@@ -176,6 +176,8 @@ const App: React.FC = () => {
           <Route path="/execucao" element={<Actions action="buscar|checkin|executar|checkout|levar" />} />
         </Routes>
       </div>
+      {/* Modal de Histórico de Versões */}
+      <VersionHistoryModal visible={isModalVisible} onClose={closeVersionHistoryModal} />
     </div>
   );
 };
