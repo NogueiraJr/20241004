@@ -1,0 +1,31 @@
+[
+  {
+    "version": "0.0.4 (beta)",
+    "system": "sysLocacaoRoupa,",
+    "date": "11/11/2024",
+    "description": "Locação de Roupas",
+    "details": [
+      "Tela de Cliente",
+      "Tela de Produtos"
+    ]
+  },
+  {
+    "version": "0.0.2 (beta)",
+    "system": "sysLocacaoRoupa,sysOficinaCarro",
+    "date": "16/10/2024",
+    "description": "Produtos",
+    "details": [
+      "Tela de Produtos"
+    ]
+  },
+  {
+    "version": "0.0.1 (beta)",
+    "system": "",
+    "date": "04/10/2024",
+    "description": "Versão inicial do aplicativo",
+    "details": [
+      "Tela Principal",
+      "Primeiros Menus Básicos"
+    ]
+  }
+]

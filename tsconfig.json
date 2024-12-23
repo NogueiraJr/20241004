@@ -6,7 +6,8 @@
       "moduleResolution": "node",
       "jsx": "react",
       "jsxFactory": "React.createElement",
-      "jsxFragmentFactory": "React.Fragment"
+      "jsxFragmentFactory": "React.Fragment",
+      "resolveJsonModule": true,
     },
     "include": ["src"]
   }
