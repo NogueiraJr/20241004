@@ -1,31 +1,143 @@
 [
   {
+    "version": "0.0.9 (beta)",
+    "date": "22/12/2024",
+    "history": [
+      {
+        "system": "all",
+        "description": "Login e Histórico",
+        "details": [
+          "Tela de Login",
+          "Tela de Histórico de Versões (esta tela)"
+        ]
+      }
+    ]
+  },
+  {
+    "version": "0.0.8 (beta)",
+    "date": "07/12/2024",
+    "history": [
+      {
+        "system": "sysOficinaCarro",
+        "description": "Novo Item",
+        "details": [
+          "Cadastro do Novo Produto / Serviço no momento do Diagnóstico ou Orçamento"
+        ]
+      },
+      {
+        "system": "sysLocacaoRoupa",
+        "description": "Novo Item",
+        "details": [
+          "Cadastro do Novo Produto / Serviço no momento da Reserva da Roupa"
+        ]
+      }
+    ]
+  },
+  {
+    "version": "0.0.7 (beta)",
+    "date": "06/12/2024",
+    "history": [
+      {
+        "system": "sysOficinaCarro",
+        "description": "Novo Cliente",
+        "details": [
+          "Cadastro do Novo Cliente no momento do Diagnóstico ou Orçamento"
+        ]
+      },
+      {
+        "system": "sysLocacaoRoupa",
+        "description": "Novo Cliente",
+        "details": [
+          "Cadastro do Novo Cliente no momento da Reserva da Roupa"
+        ]
+      }
+    ]
+  },
+  {
+    "version": "0.0.6 (beta)",
+    "date": "04/12/2024",
+    "history": [
+      {
+        "system": "sysOficinaCarro",
+        "description": "Google Maps",
+        "details": [
+          "Abertura do Google Maps para buscar e/ou levar o carro"
+        ]
+      },
+      {
+        "system": "sysLocacaoRoupa",
+        "description": "Google Maps",
+        "details": [
+          "Abertura do Google Maps para levar e/ou buscar a roupa"
+        ]
+      }
+    ]
+  },
+  {
+    "version": "0.0.5 (beta)",
+    "date": "17/11/2024",
+    "history": [
+      {
+        "system": "sysOficinaCarro",
+        "description": "Check-list",
+        "details": [
+          "Entrada do Veículo",
+          "Saída do Veículo"
+        ]
+      }
+    ]
+  },
+  {
     "version": "0.0.4 (beta)",
-    "system": "sysLocacaoRoupa,",
     "date": "11/11/2024",
-    "description": "Locação de Roupas",
-    "details": [
-      "Tela de Cliente",
-      "Tela de Produtos"
+    "history": [
+      {
+        "system": "sysLocacaoRoupa",
+        "description": "Locação de Roupas",
+        "details": [
+          "Reserva",
+          "Prova",
+          "Retirada",
+          "Devolução"
+        ]
+      },
+      {
+        "system": "sysLocacaoCarro",
+        "description": "Locação de Carros",
+        "details": [
+          "Reserva",
+          "Test-Drive",
+          "Retirada",
+          "Devolução"
+        ]
+      }
     ]
   },
   {
     "version": "0.0.2 (beta)",
-    "system": "sysLocacaoRoupa,sysOficinaCarro",
     "date": "16/10/2024",
-    "description": "Produtos",
-    "details": [
-      "Tela de Produtos"
+    "history": [
+      {
+        "system": "all",
+        "description": "Produtos",
+        "details": [
+          "Módulo de Produtos, com lista de Produtos"
+        ]
+      }
     ]
   },
   {
     "version": "0.0.1 (beta)",
-    "system": "",
     "date": "04/10/2024",
-    "description": "Versão inicial do aplicativo",
-    "details": [
-      "Tela Principal",
-      "Primeiros Menus Básicos"
+    "history": [
+      {
+        "system": "all",
+        "description": "Versão inicial do aplicativo",
+        "details": [
+          "Tela Principal",
+          "Primeiros Menus Básicos"
+        ]
+      }
     ]
   }
 ]

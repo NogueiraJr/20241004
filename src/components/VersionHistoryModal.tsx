@@ -3,12 +3,16 @@ import { Modal, Button } from 'antd';
 import versionHistoryData from './fields/Login/versionHistory.json';
 import { useParameter } from '../context/ParameterContext';
 
+interface HistoryItem {
+  system: string;
+  description: string;
+  details: string[];
+}
+
 interface VersionHistory {
   version: string;
   date: string;
-  description: string;
-  details: string[];
-  system: string;
+  history: HistoryItem[];
 }
 
 interface VersionHistoryModalProps {
@@ -24,7 +28,9 @@ const VersionHistoryModal: React.FC<VersionHistoryModalProps> = ({ visible, onCl
     // Filtra os dados de histórico de versões com base no sistema informado
     if (system) {
       const filteredData = versionHistoryData.filter((item) =>
-        item.system.split(',').includes(system)
+        item.history.some((historyItem) =>
+          historyItem.system.split(',').includes(system) || historyItem.system === 'all'
+        )
       );
       setVersionHistory(filteredData);
     } else {
@@ -48,12 +54,28 @@ const VersionHistoryModal: React.FC<VersionHistoryModalProps> = ({ visible, onCl
         {versionHistory.map((item, index) => (
           <li key={index} style={{ marginBottom: '20px' }}>
             <strong>Versão {item.version} - {item.date}</strong>
-            <p><strong>Descrição:</strong> {item.description}</p>
-            <ul>
-              {item.details.map((detail, i) => (
-                <li key={i}>{detail}</li>
+            {item.history
+              .filter((historyItem) =>
+                historyItem.system.split(',').includes(system) || system === undefined || historyItem.system === 'all'
+              )
+              .map((historyItem, historyIndex) => (
+                <div key={historyIndex}>
+                  <p><strong>Descrição:</strong> {historyItem.description}</p>
+                  <ul>
+                    {historyItem.details.map((detail, i) => (
+                      <li key={i}>{detail}</li>
+                    ))}
+                  </ul>
+                </div>
               ))}
-            </ul>
+            {/* Se não houver histórico para o sistema, mostra "Descrição: Produtos" */}
+            {item.history.filter((historyItem) =>
+              historyItem.system.split(',').includes(system) || system === undefined || historyItem.system === 'all'
+            ).length === 0 && (
+              <div>
+                <p><strong>Descrição:</strong> Melhorias e correções</p>
+              </div>
+            )}
           </li>
         ))}
       </ul>
