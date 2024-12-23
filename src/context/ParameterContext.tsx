@@ -1,4 +1,3 @@
-// src/context/ParameterContext.tsx
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { useLocation } from 'react-router-dom';
 
@@ -22,17 +21,31 @@ interface ParameterProviderProps {
 }
 
 export const ParameterProvider: React.FC<ParameterProviderProps> = ({ children }) => {
-  const [system, setParameter] = useState<string | null>(null);
+  const [system, setSystem] = useState<string | null>(() => {
+    // Carrega o valor inicial do localStorage, se existir
+    return localStorage.getItem('system');
+  });
   const location = useLocation();
 
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
-    const paramValue = queryParams.get('system'); 
+    const paramValue = queryParams.get('system');
 
-    if (system === null && paramValue) {
-      setParameter(paramValue);
+    // Atualiza o sistema apenas se ele estiver nulo e o parâmetro existir
+    if (!system && paramValue) {
+      setSystem(paramValue);
+      localStorage.setItem('system', paramValue);
     }
   }, [location.search, system]);
+
+  const setParameter = (param: string | null) => {
+    setSystem(param);
+    if (param) {
+      localStorage.setItem('system', param);
+    } else {
+      localStorage.removeItem('system');
+    }
+  };
 
   return (
     <ParameterContext.Provider value={{ system, setParameter }}>
