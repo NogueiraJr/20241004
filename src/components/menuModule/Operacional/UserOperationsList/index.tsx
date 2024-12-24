@@ -6,12 +6,12 @@ import React, { useState, useEffect, useMemo } from 'react';
 
 import IconText from './IconText';
 import ActionsTable from './UserOperationsTable';
-import { ActionsProps } from '../../../../interfaces/ActionsProps';
+import { UserOperationsProps } from '../../../../interfaces/UserOperationProps';
 import { useParameter } from '../../../../context/ParameterContext';
-import { OperationType } from '../../../../interfaces/OperationType';
+import { OperationType } from '../../../../interfaces/UserOperationsType';
 import { userOperations } from '../../../fields/Operacional/userOperations-json';
 
-const Actions: React.FC<ActionsProps> = ({ action }) => {
+const Actions: React.FC<UserOperationsProps> = ({ userOperation: action }) => {
 
   const { system } = useParameter();
 

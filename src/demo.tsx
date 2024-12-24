@@ -166,14 +166,14 @@ const App: React.FC = () => {
           <Route path="/fornecedor" element={<Fornecedor />} />
           <Route path="/parceiro" element={<Parceiro />} />
 
-          <Route path="/reserva" element={<Actions action="reservar" />} />
-          <Route path="/prova" element={<Actions action="provar" />} />
-          <Route path="/retirada" element={<Actions action="checkout|retirar|levar" />} />
-          <Route path="/devolucao" element={<Actions action="devolver|buscar|checkin" />} />
+          <Route path="/reserva" element={<Actions userOperation="reservar" />} />
+          <Route path="/prova" element={<Actions userOperation="provar" />} />
+          <Route path="/retirada" element={<Actions userOperation="checkout|retirar|levar" />} />
+          <Route path="/devolucao" element={<Actions userOperation="devolver|buscar|checkin" />} />
 
-          <Route path="/diagnostico" element={<Actions action="diagnostico" />} />
-          <Route path="/orcamento" element={<Actions action="diagnostico|orcar" />} />
-          <Route path="/execucao" element={<Actions action="buscar|checkin|executar|checkout|levar" />} />
+          <Route path="/diagnostico" element={<Actions userOperation="diagnostico" />} />
+          <Route path="/orcamento" element={<Actions userOperation="diagnostico|orcar" />} />
+          <Route path="/execucao" element={<Actions userOperation="buscar|checkin|executar|checkout|levar" />} />
         </Routes>
       </div>
       {/* Modal de Histórico de Versões */}

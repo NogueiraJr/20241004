@@ -1,5 +1,5 @@
 import { Button, Select, Table, TableProps, Tag, Tooltip } from "antd";
-import { OperationType } from "../../../../interfaces/OperationType";
+import { OperationType } from "../../../../interfaces/UserOperationsType";
 import { useNavigate } from "react-router-dom";
 import React from "react";
 import { ArrowLeftOutlined } from "@ant-design/icons";
