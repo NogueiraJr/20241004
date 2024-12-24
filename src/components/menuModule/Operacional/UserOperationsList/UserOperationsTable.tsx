@@ -3,7 +3,7 @@ import { OperationType } from "../../../../interfaces/OperationType";
 import { useNavigate } from "react-router-dom";
 import React from "react";
 import { ArrowLeftOutlined } from "@ant-design/icons";
-import ActionDetails from "./ActionDetails";
+import ActionDetails from "./UserOperationsDetails";
 import MultiSelectList from "../UserActions/ActionsFlowPoints";
 import { ActionsFlowPoints } from '../../../fields/Operacional/ActionsFlowPoints-json';
 

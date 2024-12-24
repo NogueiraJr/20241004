@@ -5,7 +5,7 @@ import { EditOutlined } from '@ant-design/icons';
 import React, { useState, useEffect, useMemo } from 'react';
 
 import IconText from './IconText';
-import ActionsTable from './ActionsTable';
+import ActionsTable from './UserOperationsTable';
 import { ActionsProps } from '../../../../interfaces/ActionsProps';
 import { useParameter } from '../../../../context/ParameterContext';
 import { OperationType } from '../../../../interfaces/OperationType';
