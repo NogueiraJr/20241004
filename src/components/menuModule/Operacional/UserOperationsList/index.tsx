@@ -9,15 +9,8 @@ import { ActionsFlowPoints } from '../../../fields/Operacional/ActionsFlowPoints
 import { useNavigate } from 'react-router-dom'; // Importando o hook
 import { OperationType } from '../../../../interfaces/OperationType';
 import { ActionsProps } from '../../../../interfaces/ActionsProps';
-
-const IconText = ({ icon, text, tooltip, color, onClick }: { icon: React.ComponentType<any>; text: string; tooltip: string, color?: string, onClick?: () => void }) => (
-  <Tooltip title={tooltip}>
-    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }} onClick={onClick}>
-      {React.createElement(icon, { style: { color: color || 'black', fontSize: '20px' } })}
-      <span style={{ color: color || 'black', fontSize: '12px' }}>{text}</span>
-    </div>
-  </Tooltip>
-);
+import ActionDetails from './ActionDetails';
+import IconText from './IconText';
 
 const Actions: React.FC<ActionsProps> = ({ action }) => {
 
@@ -29,83 +22,6 @@ const Actions: React.FC<ActionsProps> = ({ action }) => {
 
   console.log(system);
   console.log(action);
-
-  const getActionDetails = (actions: string[], system: string, openModal: (moment: string) => void) => {
-    const defaultActionMap: Record<string, { icon: React.ComponentType<any>; text: string; tooltip: string; color: string; action?: () => void }> = {
-      reservar: { icon: CalendarOutlined, text: 'Reservas', tooltip: 'Exibe as Reservas', color: 'blue' },
-      provar: { icon: SkinOutlined, text: 'Provas', tooltip: 'Exibe as Provas', color: 'green' },
-      retirar: { icon: UploadOutlined, text: 'Retiradas', tooltip: 'Exibe as Retiradas', color: 'orange' },
-      devolver: { icon: RollbackOutlined, text: 'Devoluções', tooltip: 'Exibe as Devoluções', color: 'red' },
-      levar: {
-        icon: ExportOutlined, 
-        text: 'Levar', 
-        tooltip: 'Levar no Cliente', 
-        color: 'purple',
-        action: () => openGoogleMaps() // Abre o Google Maps ao clicar
-      },
-      buscar: {
-        icon: ImportOutlined, 
-        text: 'Buscar', 
-        tooltip: 'Buscar no Cliente', 
-        color: 'blue', 
-        action: () => openGoogleMaps() // Abre o Google Maps ao clicar
-      },
-      orcar: { icon: CalculatorOutlined, text: 'Orçamento', tooltip: 'Orçamento realizado', color: 'blue' },
-      executar: { icon: FileDoneOutlined, text: 'Serviço', tooltip: 'Execução do Serviço', color: 'green' },
-      checkin: {
-        icon: LoginOutlined,
-        text: 'Check-in',
-        tooltip: 'Verificação de Entrada',
-        color: 'blue',
-        action: () => openModal('in'),
-      },
-      checkout: {
-        icon: LogoutOutlined,
-        text: 'Check-out',
-        tooltip: 'Verificação de Saída',
-        color: 'green',
-        action: () => openModal('out'),
-      },
-      diagnostico: { icon: SearchOutlined, text: 'Diagnóstico', tooltip: 'Análise e avaliação', color: 'green' },
-    };
-
-    const openGoogleMaps = () => {
-      // Defina as coordenadas de latitude e longitude ou o endereço
-      const latitude = -23.1794; // Exemplo de latitude
-      const longitude = -45.8869; // Exemplo de longitude
-      const url = `https://www.google.com/maps?q=${latitude},${longitude}`;
-    
-      // Abre o Google Maps
-      window.open(url, '_blank');
-    };
-    
-    const systemOverrides: Record<string, Partial<typeof defaultActionMap>> = {
-      sysOficinaCarro: {
-        executar: { icon: CarOutlined, text: 'Serviços', tooltip: 'Execução de Serviços Automotivos', color: 'green' },
-      },
-      sysLocacaoRoupa: {
-        checkin: {
-          icon: LoginOutlined,
-          text: 'Check-in',
-          tooltip: 'Verificação de Retorno do Cliente',
-          color: 'blue',
-          action: () => openModal('in'),
-        },
-        checkout: {
-          icon: LogoutOutlined,
-          text: 'Check-out',
-          tooltip: 'Verificação de Entrega para o Cliente',
-          color: 'purple',
-          action: () => openModal('out'),
-        },
-      },
-    };
-
-    const actionMap = { ...defaultActionMap, ...systemOverrides[system] };
-
-    return actions.map((action) => actionMap[action]).filter(Boolean); // Filtra ações inválidas
-  };
-
 
   const openModalWithMoment = (moment: string) => {
     // Implementar a abertura do modal com o filtro 'moment'
@@ -249,18 +165,7 @@ const Actions: React.FC<ActionsProps> = ({ action }) => {
             <div style={{ display: 'flex', gap: '16px', marginLeft: 'auto', marginTop: '8px' }}>
               {action && (() => {
                 const actions = action.split('|'); // Supondo que as ações estejam separadas por '|'
-                const actionDetails = getActionDetails(actions, system, openModalWithMoment);
-
-                return actionDetails.map((details, index) => (
-                  <IconText
-                    key={index}
-                    icon={details.icon}
-                    text={details.text}
-                    tooltip={details.tooltip}
-                    color={details.color}
-                    onClick={details.action} // Ação específica para cada item
-                  />
-                ));
+                return <ActionDetails actions={actions} system={system} openModal={openModalWithMoment} />;
               })()}
 
 
