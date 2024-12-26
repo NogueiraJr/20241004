@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Tooltip, Modal, Table, Button } from "antd";
-import { CalendarOutlined, SkinOutlined, UploadOutlined, RollbackOutlined, CalculatorOutlined, FileDoneOutlined, CarOutlined, ExportOutlined, ImportOutlined, LoginOutlined, LogoutOutlined, SearchOutlined } from "@ant-design/icons";
+import { CalendarOutlined, SkinOutlined, UploadOutlined, RollbackOutlined, CalculatorOutlined, FileDoneOutlined, CarOutlined, ExportOutlined, ImportOutlined, LoginOutlined, LogoutOutlined, SearchOutlined, ToolOutlined, CheckCircleOutlined } from "@ant-design/icons";
 import IconText from "./IconText";
 import { userActions } from "../../../fields/Operacional/userActions-json"; // Importe o JSON
 
@@ -69,6 +69,15 @@ const ActionDetails: React.FC<{
             </div>
           </Tooltip>
         );
+      case "sysLocacaoRoupa_devolver":
+        return (
+          <Tooltip title="Finalizar">
+            <div style={iconStyle} onClick={() => console.log("Fnalizar")}>
+              <CheckCircleOutlined style={{ color: 'green' }} />
+              <div style={{ color: 'green' }}>Finalizar</div>
+            </div>
+          </Tooltip>
+        );
       case "sysOficinaCarro_diagnosticar":
         return (
           <Tooltip title="Orçar">
@@ -87,6 +96,15 @@ const ActionDetails: React.FC<{
             </div>
           </Tooltip>
         );
+      case "sysOficinaCarro_executar":
+        return (
+          <Tooltip title="Finalizar">
+            <div style={iconStyle} onClick={() => console.log("Fnalizar")}>
+              <CheckCircleOutlined style={{ color: 'green' }} />
+              <div style={{ color: 'green' }}>Finalizar</div>
+            </div>
+          </Tooltip>
+        );
       default:
         return null;
     }
@@ -94,7 +112,7 @@ const ActionDetails: React.FC<{
 
   const columns = [
     { title: "Descrição", dataIndex: "description", key: "description" },
-    { title: "Agendado para", dataIndex: "scheduledAt", key: "scheduledAt" },
+    { title: "Quando", dataIndex: "scheduledAt", key: "scheduledAt" },
     {
       title: "Ação",
       dataIndex: "action",
@@ -150,7 +168,7 @@ const ActionDetails: React.FC<{
     },
     executar: {
       icon: FileDoneOutlined,
-      text: "Serviço",
+      text: "Serviços",
       tooltip: "Execução do Serviço",
       color: "green",
       action: () => handleActionClick("Execuções", "sysOficinaCarro_executar"),
@@ -178,6 +196,7 @@ const ActionDetails: React.FC<{
         text: "Serviços",
         tooltip: "Execução de Serviços Automotivos",
         color: "green",
+        action: () => handleActionClick("Execuções", "sysOficinaCarro_executar"),
       },
     },
     sysLocacaoRoupa: {
