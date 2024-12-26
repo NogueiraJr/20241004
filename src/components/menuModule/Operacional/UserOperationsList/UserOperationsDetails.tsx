@@ -21,17 +21,19 @@ const ActionDetails: React.FC<{
   system: string;
   openModal: (moment: string) => void;
 }> = ({ actions, system, openModal }) => {
-  const [isDevolverModalOpen, setDevolverModalOpen] = useState(false);
-  const [userOperationId, setUserOperationId] = useState<string | null>(null);
+  const [isModalOpen, setModalOpen] = useState(false);
+  const [modalTitle, setModalTitle] = useState("");
+  const [modalData, setModalData] = useState<any[]>([]);
 
-  const handleDevolverClick = (id: string) => {
-    setUserOperationId(id);
-    setDevolverModalOpen(true);
+  const handleActionClick = (action: string, data: any[]) => {
+    setModalTitle(action.charAt(0).toUpperCase() + action.slice(1));
+    setModalData(data);
+    setModalOpen(true);
   };
 
-  const closeDevolverModal = () => {
-    setDevolverModalOpen(false);
-    setUserOperationId(null);
+  const closeModal = () => {
+    setModalOpen(false);
+    setModalData([]);
   };
 
   const defaultActionMap: Record<
@@ -49,71 +51,70 @@ const ActionDetails: React.FC<{
       text: "Reservas",
       tooltip: "Exibe as Reservas",
       color: "blue",
+      action: () => handleActionClick("Reservar", [
+        { key: "1", name: "Cliente A", phone: "(11) 12345-6789" },
+        { key: "2", name: "Cliente B", phone: "(21) 98765-4321" },
+      ]),
     },
     provar: {
       icon: SkinOutlined,
       text: "Provas",
       tooltip: "Exibe as Provas",
       color: "green",
+      action: () => handleActionClick("Provar", [
+        { key: "1", name: "Cliente X", phone: "(31) 99887-7766" },
+        { key: "2", name: "Cliente Y", phone: "(41) 88776-6655" },
+      ]),
     },
     retirar: {
       icon: UploadOutlined,
       text: "Retiradas",
       tooltip: "Exibe as Retiradas",
       color: "orange",
+      action: () => handleActionClick("Retirar", [
+        { key: "1", name: "Cliente C", phone: "(51) 33445-6677" },
+        { key: "2", name: "Cliente D", phone: "(61) 22334-5566" },
+      ]),
     },
     devolver: {
       icon: RollbackOutlined,
       text: "Devoluções",
       tooltip: "Exibe as Devoluções",
       color: "red",
-      action: () => handleDevolverClick("12345"), // Exemplo de ID de operação
-    },
-    levar: {
-      icon: ExportOutlined,
-      text: "Levar",
-      tooltip: "Levar no Cliente",
-      color: "purple",
-      action: () => openGoogleMaps(),
-    },
-    buscar: {
-      icon: ImportOutlined,
-      text: "Buscar",
-      tooltip: "Buscar no Cliente",
-      color: "blue",
-      action: () => openGoogleMaps(),
+      action: () => handleActionClick("Devolver", [
+        { key: "1", name: "João Silva", phone: "(11) 99999-9999" },
+        { key: "2", name: "Maria Oliveira", phone: "(21) 98888-8888" },
+      ]),
     },
     orcar: {
       icon: CalculatorOutlined,
       text: "Orçamento",
       tooltip: "Orçamento realizado",
       color: "blue",
+      action: () => handleActionClick("Orçar", [
+        { key: "1", name: "Cliente E", phone: "(71) 55667-7788" },
+        { key: "2", name: "Cliente F", phone: "(81) 44556-6677" },
+      ]),
     },
     executar: {
       icon: FileDoneOutlined,
       text: "Serviço",
       tooltip: "Execução do Serviço",
       color: "green",
-    },
-    checkin: {
-      icon: LoginOutlined,
-      text: "Check-in",
-      tooltip: "Verificação de Entrada",
-      color: "blue",
-      action: () => openModal("in"),
-    },
-    checkout: {
-      icon: LogoutOutlined,
-      text: "Check-out",
-      tooltip: "Verificação de Saída",
-      color: "green",
-      action: () => openModal("out"),
+      action: () => handleActionClick("Executar", [
+        { key: "1", name: "Cliente G", phone: "(91) 33445-5566" },
+        { key: "2", name: "Cliente H", phone: "(31) 22334-4455" },
+      ]),
     },
     diagnostico: {
       icon: SearchOutlined,
       text: "Diagnóstico",
       tooltip: "Análise e avaliação",
       color: "green",
+      action: () => handleActionClick("Diagnóstico", [
+        { key: "1", name: "Cliente I", phone: "(51) 99887-7766" },
+        { key: "2", name: "Cliente J", phone: "(61) 88776-6655" },
+      ]),
     },
   };
 
@@ -153,12 +154,7 @@ const ActionDetails: React.FC<{
 
   const actionMap = { ...defaultActionMap, ...systemOverrides[system] };
 
-  const devolverTableData = [
-    { key: "1", name: "Devolução da Locação do Filho do João", phone: "(11) 99999-9999" },
-    { key: "2", name: "Devolução da Locação da Sobrinha do João", phone: "(21) 98888-8888" },
-  ];
-
-  const devolverTableColumns = [
+  const columns = [
     { title: "Nome", dataIndex: "name", key: "name" },
     { title: "Telefone", dataIndex: "phone", key: "phone" },
   ];
@@ -180,16 +176,12 @@ const ActionDetails: React.FC<{
       })}
 
       <Modal
-        title="Detalhes da Devolução"
-        visible={isDevolverModalOpen}
-        onCancel={closeDevolverModal}
+        title={modalTitle}
+        visible={isModalOpen}
+        onCancel={closeModal}
         footer={null}
       >
-        <Table
-          dataSource={devolverTableData}
-          columns={devolverTableColumns}
-          pagination={false}
-        />
+        <Table dataSource={modalData} columns={columns} pagination={false} />
       </Modal>
     </>
   );
