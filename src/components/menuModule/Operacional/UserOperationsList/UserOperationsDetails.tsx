@@ -34,8 +34,11 @@ const ActionDetails: React.FC<{
       (userAction) => userAction.userOperationId === userOperationId && userAction.actionId.toLocaleLowerCase().trim() === actionId.toLocaleLowerCase().trim()
     ).map((userAction) => ({
       key: userAction.id,
-      description: userAction.description,
-      notes: userAction.notes,
+      description: (
+        <Tooltip title={userAction.notes}>
+          <span>{userAction.description}</span>
+        </Tooltip>
+      ),
       scheduledAt: userAction.scheduledAt,
     }));
     setModalData(filteredData);
@@ -146,7 +149,6 @@ const ActionDetails: React.FC<{
 
   const columns = [
     { title: "Descrição", dataIndex: "description", key: "description" },
-    { title: "Notas", dataIndex: "notes", key: "notes" },
     { title: "Agendado para", dataIndex: "scheduledAt", key: "scheduledAt" },
   ];
 
