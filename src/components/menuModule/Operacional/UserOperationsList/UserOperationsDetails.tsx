@@ -27,10 +27,11 @@ const ActionDetails: React.FC<{
   const [modalTitle, setModalTitle] = useState("");
   const [modalData, setModalData] = useState<any[]>([]);
 
-  const handleActionClick = (action: string) => {
+  const handleActionClick = (action: string, actionId: string) => {
+    console.log(`Action: ${action} - ActionId: ${actionId} - UserOperationId: ${userOperationId}`);
     setModalTitle(action.charAt(0).toUpperCase() + action.slice(1));
     const filteredData = userActions.filter(
-      (userAction) => userAction.userOperationId === userOperationId
+      (userAction) => userAction.userOperationId === userOperationId && userAction.actionId.toLocaleLowerCase().trim() === actionId.toLocaleLowerCase().trim()
     ).map((userAction) => ({
       key: userAction.id,
       description: userAction.description,
@@ -61,49 +62,49 @@ const ActionDetails: React.FC<{
       text: "Reservas",
       tooltip: "Exibe as Reservas",
       color: "blue",
-      action: () => handleActionClick("Reservar"),
+      action: () => handleActionClick("Reservar", "sysLocacaoRoupa_reservar"),
     },
     provar: {
       icon: SkinOutlined,
       text: "Provas",
       tooltip: "Exibe as Provas",
       color: "green",
-      action: () => handleActionClick("Provar"),
+      action: () => handleActionClick("Provar", "sysLocacaoRoupa_provar"),
     },
     retirar: {
       icon: UploadOutlined,
       text: "Retiradas",
       tooltip: "Exibe as Retiradas",
       color: "orange",
-      action: () => handleActionClick("Retirar"),
+      action: () => handleActionClick("Retirar", "sysLocacaoRoupa_retirar"),
     },
     devolver: {
       icon: RollbackOutlined,
       text: "Devoluções",
       tooltip: "Exibe as Devoluções",
       color: "red",
-      action: () => handleActionClick("Devolver"),
+      action: () => handleActionClick("Devolver", "sysLocacaoRoupa_devolver"),
     },
     orcar: {
       icon: CalculatorOutlined,
       text: "Orçamento",
       tooltip: "Orçamento realizado",
       color: "blue",
-      action: () => handleActionClick("Orçar"),
+      action: () => handleActionClick("Orçar", "sysOficinaCarro_orcar"),
     },
     executar: {
       icon: FileDoneOutlined,
       text: "Serviço",
       tooltip: "Execução do Serviço",
       color: "green",
-      action: () => handleActionClick("Executar"),
+      action: () => handleActionClick("Executar", "sysOficinaCarro_executar"),
     },
     diagnostico: {
       icon: SearchOutlined,
       text: "Diagnóstico",
       tooltip: "Análise e avaliação",
       color: "green",
-      action: () => handleActionClick("Diagnóstico"),
+      action: () => handleActionClick("Diagnóstico", "sysOficinaCarro_diagnosticar"),
     },
   };
 
