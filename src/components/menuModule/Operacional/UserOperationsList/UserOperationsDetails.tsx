@@ -1,19 +1,6 @@
-import {
-  CalculatorOutlined,
-  CalendarOutlined,
-  CarOutlined,
-  ExportOutlined,
-  FileDoneOutlined,
-  ImportOutlined,
-  LoginOutlined,
-  LogoutOutlined,
-  RollbackOutlined,
-  SearchOutlined,
-  SkinOutlined,
-  UploadOutlined,
-} from "@ant-design/icons";
-import { Tooltip, Modal, Table } from "antd";
 import React, { useState } from "react";
+import { Tooltip, Modal, Table, Button } from "antd";
+import { CalendarOutlined, SkinOutlined, UploadOutlined, RollbackOutlined, CalculatorOutlined, FileDoneOutlined, CarOutlined, ExportOutlined, ImportOutlined, LoginOutlined, LogoutOutlined, SearchOutlined } from "@ant-design/icons";
 import IconText from "./IconText";
 import { userActions } from "../../../fields/Operacional/userActions-json"; // Importe o JSON
 
@@ -40,6 +27,7 @@ const ActionDetails: React.FC<{
         </Tooltip>
       ),
       scheduledAt: userAction.scheduledAt,
+      action: userAction.actionId,
     }));
     setModalData(filteredData);
     setModalOpen(true);
@@ -49,6 +37,70 @@ const ActionDetails: React.FC<{
     setModalOpen(false);
     setModalData([]);
   };
+
+  const getNextActionIcon = (actionId: string) => {
+    const iconStyle: React.CSSProperties = { display: 'flex', flexDirection: 'column' as 'column', alignItems: 'center', cursor: 'pointer' };
+    switch (actionId) {
+      case "sysLocacaoRoupa_reservar":
+        return (
+          <Tooltip title="Provar">
+            <div style={iconStyle} onClick={() => console.log("Provar")}>
+              <SkinOutlined style={{ color: 'green' }} />
+              <div style={{ color: 'green' }}>Provar</div>
+            </div>
+          </Tooltip>
+        );
+      case "sysLocacaoRoupa_provar":
+        return (
+          <Tooltip title="Retirar">
+            <div style={iconStyle} onClick={() => console.log("Retirar")}>
+              <UploadOutlined style={{ color: 'orange' }} />
+              <div style={{ color: 'orange' }}>Retirar</div>
+            </div>
+          </Tooltip>
+        );
+      case "sysLocacaoRoupa_retirar":
+        return (
+          <Tooltip title="Devolver">
+            <div style={iconStyle} onClick={() => console.log("Devolver")}>
+              <RollbackOutlined style={{ color: 'red' }} />
+              <div style={{ color: 'red' }}>Devolver</div>
+            </div>
+          </Tooltip>
+        );
+      case "sysOficinaCarro_diagnosticar":
+        return (
+          <Tooltip title="Orçar">
+            <div style={iconStyle} onClick={() => console.log("Orçar")}>
+              <CalculatorOutlined style={{ color: 'blue' }} />
+              <div style={{ color: 'blue' }}>Orçar</div>
+            </div>
+          </Tooltip>
+        );
+      case "sysOficinaCarro_orcar":
+        return (
+          <Tooltip title="Executar">
+            <div style={iconStyle} onClick={() => console.log("Executar")}>
+              <FileDoneOutlined style={{ color: 'green' }} />
+              <div style={{ color: 'green' }}>Executar</div>
+            </div>
+          </Tooltip>
+        );
+      default:
+        return null;
+    }
+  };
+
+  const columns = [
+    { title: "Descrição", dataIndex: "description", key: "description" },
+    { title: "Agendado para", dataIndex: "scheduledAt", key: "scheduledAt" },
+    {
+      title: "Ação",
+      dataIndex: "action",
+      key: "action",
+      render: (text: string, record: any) => getNextActionIcon(record.action),
+    },
+  ];
 
   const defaultActionMap: Record<
     string,
@@ -146,11 +198,6 @@ const ActionDetails: React.FC<{
   };
 
   const actionMap = { ...defaultActionMap, ...systemOverrides[system] };
-
-  const columns = [
-    { title: "Descrição", dataIndex: "description", key: "description" },
-    { title: "Agendado para", dataIndex: "scheduledAt", key: "scheduledAt" },
-  ];
 
   return (
     <>
