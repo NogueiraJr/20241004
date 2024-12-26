@@ -19,8 +19,9 @@ import IconText from "./IconText";
 const ActionDetails: React.FC<{
   actions: string[];
   system: string;
+  userOperationId: string;
   openModal: (moment: string) => void;
-}> = ({ actions, system, openModal }) => {
+}> = ({ actions, system, userOperationId, openModal }) => {
   const [isModalOpen, setModalOpen] = useState(false);
   const [modalTitle, setModalTitle] = useState("");
   const [modalData, setModalData] = useState<any[]>([]);
@@ -52,8 +53,8 @@ const ActionDetails: React.FC<{
       tooltip: "Exibe as Reservas",
       color: "blue",
       action: () => handleActionClick("Reservar", [
-        { key: "1", name: "Cliente A", phone: "(11) 12345-6789" },
-        { key: "2", name: "Cliente B", phone: "(21) 98765-4321" },
+        { key: "1", name: "Cliente A", phone: "(11) 12345-6789", userOperationId },
+        { key: "2", name: "Cliente B", phone: "(21) 98765-4321", userOperationId },
       ]),
     },
     provar: {
@@ -62,8 +63,8 @@ const ActionDetails: React.FC<{
       tooltip: "Exibe as Provas",
       color: "green",
       action: () => handleActionClick("Provar", [
-        { key: "1", name: "Cliente X", phone: "(31) 99887-7766" },
-        { key: "2", name: "Cliente Y", phone: "(41) 88776-6655" },
+        { key: "1", name: "Cliente X", phone: "(31) 99887-7766", userOperationId },
+        { key: "2", name: "Cliente Y", phone: "(41) 88776-6655", userOperationId },
       ]),
     },
     retirar: {
@@ -72,8 +73,8 @@ const ActionDetails: React.FC<{
       tooltip: "Exibe as Retiradas",
       color: "orange",
       action: () => handleActionClick("Retirar", [
-        { key: "1", name: "Cliente C", phone: "(51) 33445-6677" },
-        { key: "2", name: "Cliente D", phone: "(61) 22334-5566" },
+        { key: "1", name: "Cliente C", phone: "(51) 33445-6677", userOperationId },
+        { key: "2", name: "Cliente D", phone: "(61) 22334-5566", userOperationId },
       ]),
     },
     devolver: {
@@ -82,8 +83,8 @@ const ActionDetails: React.FC<{
       tooltip: "Exibe as Devoluções",
       color: "red",
       action: () => handleActionClick("Devolver", [
-        { key: "1", name: "João Silva", phone: "(11) 99999-9999" },
-        { key: "2", name: "Maria Oliveira", phone: "(21) 98888-8888" },
+        { key: "1", name: "João Silva", phone: "(11) 99999-9999", userOperationId },
+        { key: "2", name: "Maria Oliveira", phone: "(21) 98888-8888", userOperationId },
       ]),
     },
     orcar: {
@@ -92,8 +93,8 @@ const ActionDetails: React.FC<{
       tooltip: "Orçamento realizado",
       color: "blue",
       action: () => handleActionClick("Orçar", [
-        { key: "1", name: "Cliente E", phone: "(71) 55667-7788" },
-        { key: "2", name: "Cliente F", phone: "(81) 44556-6677" },
+        { key: "1", name: "Cliente E", phone: "(71) 55667-7788", userOperationId },
+        { key: "2", name: "Cliente F", phone: "(81) 44556-6677", userOperationId },
       ]),
     },
     executar: {
@@ -102,8 +103,8 @@ const ActionDetails: React.FC<{
       tooltip: "Execução do Serviço",
       color: "green",
       action: () => handleActionClick("Executar", [
-        { key: "1", name: "Cliente G", phone: "(91) 33445-5566" },
-        { key: "2", name: "Cliente H", phone: "(31) 22334-4455" },
+        { key: "1", name: "Cliente G", phone: "(91) 33445-5566", userOperationId },
+        { key: "2", name: "Cliente H", phone: "(31) 22334-4455", userOperationId },
       ]),
     },
     diagnostico: {
@@ -112,8 +113,8 @@ const ActionDetails: React.FC<{
       tooltip: "Análise e avaliação",
       color: "green",
       action: () => handleActionClick("Diagnóstico", [
-        { key: "1", name: "Cliente I", phone: "(51) 99887-7766" },
-        { key: "2", name: "Cliente J", phone: "(61) 88776-6655" },
+        { key: "1", name: "Cliente I", phone: "(51) 99887-7766", userOperationId },
+        { key: "2", name: "Cliente J", phone: "(61) 88776-6655", userOperationId },
       ]),
     },
   };
@@ -157,6 +158,7 @@ const ActionDetails: React.FC<{
   const columns = [
     { title: "Nome", dataIndex: "name", key: "name" },
     { title: "Telefone", dataIndex: "phone", key: "phone" },
+    { title: "Operação", dataIndex: "userOperationId", key: "userOperationId" },
   ];
 
   return (
