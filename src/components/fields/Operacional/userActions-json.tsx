@@ -36,6 +36,24 @@ export const userActions = [
     "deletedAt": null
   },
   {
+    "id": "ua002B",
+    "userOperationId": "cm2l2crxe000211dap3hmki8v",
+    "userClientId": "idProprietario01",
+    "actionId": "sysLocacaoRoupa_provar",
+    "userActionId": null,
+    "description": "Prova de Roupas de Ricardo (Filho de Ana)",
+    "notes": "Prova de Roupas para o casamento do Ricardo (Filho de Ana)",
+    "scheduledAt": "2024-12-10T14:00:00",
+    "executedAt": null,
+    "finishedAt": null,
+    "priceItems": null,
+    "tags": "provar|casamento|vestido|terno",
+    "active": true,
+    "createAt": "2024-12-08T00:00:00",
+    "updatedAt": "2024-12-08T00:00:00",
+    "deletedAt": null
+  },
+  {
     "id": "ua003",
     "userOperationId": "cm2l2crxe000211dap3hmki8v",
     "userClientId": "idProprietario01",
