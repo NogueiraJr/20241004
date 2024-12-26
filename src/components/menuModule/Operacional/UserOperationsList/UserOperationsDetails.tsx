@@ -3,6 +3,7 @@ import { Tooltip, Modal, Table, Button } from "antd";
 import { CalendarOutlined, SkinOutlined, UploadOutlined, RollbackOutlined, CalculatorOutlined, FileDoneOutlined, CarOutlined, ExportOutlined, ImportOutlined, LoginOutlined, LogoutOutlined, SearchOutlined, ToolOutlined, CheckCircleOutlined } from "@ant-design/icons";
 import IconText from "./IconText";
 import { userActions } from "../../../fields/Operacional/userActions-json"; // Importe o JSON
+import moment from "moment"; // Importe moment.js
 
 const ActionDetails: React.FC<{
   actions: string[];
@@ -26,7 +27,7 @@ const ActionDetails: React.FC<{
           <span>{userAction.description}</span>
         </Tooltip>
       ),
-      scheduledAt: userAction.scheduledAt,
+      scheduledAt: moment(userAction.scheduledAt).format("DD/MM/YYYY HH:mm"), // Formate scheduledAt
       action: userAction.actionId,
     }));
     setModalData(filteredData);
