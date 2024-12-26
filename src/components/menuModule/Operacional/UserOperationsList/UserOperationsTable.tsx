@@ -108,7 +108,7 @@ const ActionsTable: React.FC<{
               {action &&
                 (() => {
                   const actions = action.split('|'); // Supondo que as ações estejam separadas por '|'
-                  return <ActionDetails actions={actions} system={system} openModal={openModalWithMoment} />;
+                  return <ActionDetails actions={actions} system={system} userOperationId={record.id} openModal={openModalWithMoment} />;
                 })()}
 
               {isModalVisible && (
