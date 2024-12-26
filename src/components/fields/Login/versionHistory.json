@@ -1,5 +1,25 @@
 [
   {
+    "version": "0.0.10 (beta)",
+    "date": "26/12/2024",
+    "history": [
+      {
+        "system": "sysLocacaoRoupa",
+        "description": "Ações Operacionais",
+        "details": [
+          "Tela de Itens para Reservas, Provas, Retiradas e Devoluções"
+        ]
+      },
+      {
+        "system": "sysOficinaCarro",
+        "description": "Ações Operacionais",
+        "details": [
+          "Tela de Itens para Diagnósticos, Orçamentos e Execução dos Serviços"
+        ]
+      }
+    ]
+  },
+  {
     "version": "0.0.9 (beta)",
     "date": "22/12/2024",
     "history": [
