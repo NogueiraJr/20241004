@@ -38,8 +38,9 @@ const ActionDetails: React.FC<{
     setModalData([]);
   };
 
+  const iconStyle: React.CSSProperties = { display: 'flex', flexDirection: 'column', alignItems: 'center', cursor: 'pointer' };
+
   const getNextActionIcon = (actionId: string) => {
-    const iconStyle: React.CSSProperties = { display: 'flex', flexDirection: 'column' as 'column', alignItems: 'center', cursor: 'pointer' };
     switch (actionId) {
       case "sysLocacaoRoupa_reservar":
         return (
@@ -211,6 +212,7 @@ const ActionDetails: React.FC<{
             tooltip={details.tooltip}
             color={details.color}
             onClick={details.action}
+            style={{ cursor: 'pointer' }}
           />
         ) : null;
       })}
