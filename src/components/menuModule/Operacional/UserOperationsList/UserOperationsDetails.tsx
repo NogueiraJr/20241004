@@ -241,7 +241,12 @@ const ActionDetails: React.FC<{
         visible={isModalOpen}
         onCancel={closeModal}
         footer={null}
-      >
+        style={{ top: 100 }}
+        bodyStyle={{
+          maxHeight: '50vh',
+          overflowY: 'auto',
+        }}
+>
         <Table dataSource={modalData} columns={columns} pagination={false} />
       </Modal>
     </>
