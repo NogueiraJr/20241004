@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { Tooltip, Modal, Table, Button } from "antd";
-import { CalendarOutlined, SkinOutlined, UploadOutlined, RollbackOutlined, CalculatorOutlined, FileDoneOutlined, CarOutlined, ExportOutlined, ImportOutlined, LoginOutlined, LogoutOutlined, SearchOutlined, ToolOutlined, CheckCircleOutlined } from "@ant-design/icons";
+import { Tooltip, Modal, Table, Button, Popover } from "antd";
+import { CalendarOutlined, SkinOutlined, UploadOutlined, RollbackOutlined, CalculatorOutlined, FileDoneOutlined, CarOutlined, ExportOutlined, ImportOutlined, LoginOutlined, LogoutOutlined, SearchOutlined, ToolOutlined, CheckCircleOutlined, UnorderedListOutlined, InfoCircleOutlined } from "@ant-design/icons";
 import IconText from "./IconText";
 import { userActions } from "../../../fields/Operacional/userActions-json"; // Importe o JSON
 import moment from "moment"; // Importe moment.js
@@ -14,6 +14,19 @@ const ActionDetails: React.FC<{
   const [isModalOpen, setModalOpen] = useState(false);
   const [modalTitle, setModalTitle] = useState("");
   const [modalData, setModalData] = useState<any[]>([]);
+
+  const showConfirm = (action: string) => {
+    Modal.confirm({
+      title: `Você deseja ${action}?`,
+      content: `Confirme se deseja ${action.toLowerCase()}.`,
+      onOk() {
+        console.log(`Confirmado: ${action}`);
+      },
+      onCancel() {
+        console.log(`Cancelado: ${action}`);
+      },
+    });
+  };
 
   const handleActionClick = (action: string, actionId: string) => {
     console.log(`Action: ${action} - ActionId: ${actionId} - UserOperationId: ${userOperationId}`);
@@ -44,78 +57,83 @@ const ActionDetails: React.FC<{
   const getNextActionIcon = (actionId: string) => {
     switch (actionId) {
       case "sysLocacaoRoupa_reservar":
-        return (
-          <Tooltip title="Provar">
-            <div style={iconStyle} onClick={() => console.log("Provar")}>
-              <SkinOutlined style={{ color: 'green' }} />
-              <div style={{ color: 'green' }}>Provar</div>
-            </div>
-          </Tooltip>
-        );
+        return actionMenuExecute([
+          { icon: SkinOutlined, color: 'green', text: 'Provar', action: () => showConfirm("Provar") },
+          { icon: UploadOutlined, color: 'orange', text: 'Retirar', action: () => showConfirm("Retirar") },
+          { icon: CheckCircleOutlined, color: 'green', text: 'Finalizar', action: () => showConfirm("Finalizar") },
+          { icon: InfoCircleOutlined, color: 'blue', text: 'Detalhes', action: () => console.log("Clicado em Detalhes") }
+        ]);
       case "sysLocacaoRoupa_provar":
-        return (
-          <Tooltip title="Retirar">
-            <div style={iconStyle} onClick={() => console.log("Retirar")}>
-              <UploadOutlined style={{ color: 'orange' }} />
-              <div style={{ color: 'orange' }}>Retirar</div>
-            </div>
-          </Tooltip>
-        );
+        return actionMenuExecute([
+          { icon: UploadOutlined, color: 'orange', text: 'Retirar', action: () => showConfirm("Retirar") },
+          { icon: CheckCircleOutlined, color: 'green', text: 'Finalizar', action: () => showConfirm("Finalizar") },
+          { icon: InfoCircleOutlined, color: 'blue', text: 'Detalhes', action: () => console.log("Clicado em Detalhes") }
+        ]);
       case "sysLocacaoRoupa_retirar":
-        return (
-          <Tooltip title="Devolver">
-            <div style={iconStyle} onClick={() => console.log("Devolver")}>
-              <RollbackOutlined style={{ color: 'red' }} />
-              <div style={{ color: 'red' }}>Devolver</div>
-            </div>
-          </Tooltip>
-        );
+        return actionMenuExecute([
+          { icon: RollbackOutlined, color: 'red', text: 'Devolver', action: () => showConfirm("Devolver") },
+          { icon: CheckCircleOutlined, color: 'green', text: 'Finalizar', action: () => showConfirm("Finalizar") },
+          { icon: InfoCircleOutlined, color: 'blue', text: 'Detalhes', action: () => console.log("Clicado em Detalhes") }
+        ]);
       case "sysLocacaoRoupa_devolver":
-        return (
-          <Tooltip title="Finalizar">
-            <div style={iconStyle} onClick={() => console.log("Fnalizar")}>
-              <CheckCircleOutlined style={{ color: 'green' }} />
-              <div style={{ color: 'green' }}>Finalizar</div>
-            </div>
-          </Tooltip>
-        );
+        return actionMenuExecute([
+          { icon: CheckCircleOutlined, color: 'green', text: 'Finalizar', action: () => showConfirm("Finalizar") },
+          { icon: InfoCircleOutlined, color: 'blue', text: 'Detalhes', action: () => console.log("Clicado em Detalhes") }
+        ]);
       case "sysOficinaCarro_diagnosticar":
-        return (
-          <Tooltip title="Orçar">
-            <div style={iconStyle} onClick={() => console.log("Orçar")}>
-              <CalculatorOutlined style={{ color: 'blue' }} />
-              <div style={{ color: 'blue' }}>Orçar</div>
-            </div>
-          </Tooltip>
-        );
+        return actionMenuExecute([
+          { icon: CalculatorOutlined, color: 'blue', text: 'Orçar', action: () => showConfirm("Orçar") },
+          { icon: FileDoneOutlined, color: 'green', text: 'Executar', action: () => showConfirm("Executar") },
+          { icon: InfoCircleOutlined, color: 'blue', text: 'Detalhes', action: () => console.log("Clicado em Detalhes") }
+        ]);
       case "sysOficinaCarro_orcar":
-        return (
-          <Tooltip title="Executar">
-            <div style={iconStyle} onClick={() => console.log("Executar")}>
-              <FileDoneOutlined style={{ color: 'green' }} />
-              <div style={{ color: 'green' }}>Executar</div>
-            </div>
-          </Tooltip>
-        );
+        return actionMenuExecute([
+          { icon: FileDoneOutlined, color: 'green', text: 'Executar', action: () => showConfirm("Executar") },
+          { icon: CheckCircleOutlined, color: 'green', text: 'Finalizar', action: () => showConfirm("Finalizar") },
+          { icon: InfoCircleOutlined, color: 'blue', text: 'Detalhes', action: () => console.log("Clicado em Detalhes") }
+        ]);
       case "sysOficinaCarro_executar":
-        return (
-          <Tooltip title="Finalizar">
-            <div style={iconStyle} onClick={() => console.log("Fnalizar")}>
-              <CheckCircleOutlined style={{ color: 'green' }} />
-              <div style={{ color: 'green' }}>Finalizar</div>
-            </div>
-          </Tooltip>
-        );
+        return actionMenuExecute([
+          { icon: CheckCircleOutlined, color: 'green', text: 'Finalizar', action: () => showConfirm("Finalizar") },
+          { icon: InfoCircleOutlined, color: 'blue', text: 'Detalhes', action: () => console.log("Clicado em Detalhes") }
+        ]);
       default:
         return null;
     }
   };
 
+  function actionMenuExecute(actions: { icon: React.ComponentType<any>; color: string; text: string; action: () => void }[]) {
+    return (
+      <Popover
+        content={
+          <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', gap: '10px' }}>
+            {actions.map((action, index) => (
+              <div key={index} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', cursor: 'pointer' }} onClick={action.action}>
+                {React.createElement(action.icon, { style: { color: action.color } })}
+                <div style={{ color: action.color }}>{action.text}</div>
+              </div>
+            ))}
+          </div>
+        }
+        title="Ações"
+        trigger="click"
+        placement="bottomRight" // Preferencialmente abrir abaixo do ícone inicial, alinhado à direita
+      >
+        <Tooltip title="Ações Disponíveis">
+          <div style={iconStyle}>
+            <UnorderedListOutlined style={{ color: 'blue' }} />
+            <div style={{ color: 'blue' }}>Ações</div>
+          </div>
+        </Tooltip>
+      </Popover>
+    );
+  }
+
   const columns = [
     { title: "Descrição", dataIndex: "description", key: "description" },
     { title: "Quando", dataIndex: "scheduledAt", key: "scheduledAt" },
     {
-      title: "Ação",
+      title: "Ações",
       dataIndex: "action",
       key: "action",
       render: (text: string, record: any) => getNextActionIcon(record.action),
@@ -215,6 +233,20 @@ const ActionDetails: React.FC<{
         color: "purple",
         action: () => openModal("out"),
       },
+      levar: {
+        icon: ExportOutlined,
+        text: "Levar",
+        tooltip: "Levar no Cliente",
+        color: "purple",
+        action: () => openGoogleMaps(),
+      },
+      buscar: {
+        icon: ImportOutlined,
+        text: "Buscar",
+        tooltip: "Buscar no Cliente",
+        color: "blue",
+        action: () => openGoogleMaps(),
+      }
     },
   };
 
@@ -247,7 +279,7 @@ const ActionDetails: React.FC<{
           maxHeight: '50vh',
           overflowY: 'auto',
         }}
->
+      >
         <Table dataSource={modalData} columns={columns} pagination={false} />
       </Modal>
     </>
