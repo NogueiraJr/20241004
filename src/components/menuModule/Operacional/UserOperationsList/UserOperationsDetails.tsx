@@ -15,6 +15,19 @@ const ActionDetails: React.FC<{
   const [modalTitle, setModalTitle] = useState("");
   const [modalData, setModalData] = useState<any[]>([]);
 
+  const showConfirm = (action: string) => {
+    Modal.confirm({
+      title: `Você deseja ${action}?`,
+      content: `Confirme se deseja ${action.toLowerCase()}.`,
+      onOk() {
+        console.log(`Confirmado: ${action}`);
+      },
+      onCancel() {
+        console.log(`Cancelado: ${action}`);
+      },
+    });
+  };
+  
   const handleActionClick = (action: string, actionId: string) => {
     console.log(`Action: ${action} - ActionId: ${actionId} - UserOperationId: ${userOperationId}`);
     setModalTitle(action.charAt(0).toUpperCase() + action.slice(1));
@@ -44,38 +57,37 @@ const ActionDetails: React.FC<{
   const getNextActionIcon = (actionId: string) => {
     switch (actionId) {
       case "sysLocacaoRoupa_reservar":
-                return (
-                  <Popover
-                    content={
-                      <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '10px' }}>
-                        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', cursor: 'pointer' }} onClick={() => console.log("Clicado em Provar")}>
-                          <SkinOutlined style={{ color: 'green' }} />
-                          <div style={{ color: 'green' }}>Provar</div>
-                        </div>
-                        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', cursor: 'pointer' }} onClick={() => console.log("Clicado em Retirar")}>
-                          <UploadOutlined style={{ color: 'orange' }} />
-                          <div style={{ color: 'orange' }}>Retirar</div>
-                        </div>
-                        <div style={{ borderLeft: '1px solid #ccc', height: '24px', margin: '0 10px' }}></div> {/* Linha vertical discreta */}
-                        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', cursor: 'pointer' }} onClick={() => console.log("Clicado em Detalhes")}>
-                          <InfoCircleOutlined style={{ color: 'blue' }} />
-                          <div style={{ color: 'blue' }}>Detalhes</div>
-                        </div>
-                      </div>
-                    }
-                    title="Ações"
-                    trigger="click"
-                    placement="bottomRight" // Preferencialmente abrir abaixo do ícone inicial, alinhado à direita
-                  >
-                    <Tooltip title="Ações Disponíveis">
-                      <div style={iconStyle}>
-                        <UnorderedListOutlined style={{ color: 'blue' }} />
-                        <div style={{ color: 'blue' }}>Ações</div>
-                      </div>
-                    </Tooltip>
-                  </Popover>
-                );
-      case "sysLocacaoRoupa_provar":
+        return (
+                    <Popover
+            content={
+              <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', gap: '10px' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', cursor: 'pointer' }} onClick={() => showConfirm("Provar")}>
+                  <SkinOutlined style={{ color: 'green' }} />
+                  <div style={{ color: 'green' }}>Provar</div>
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', cursor: 'pointer' }} onClick={() => showConfirm("Retirar")}>
+                  <UploadOutlined style={{ color: 'orange' }} />
+                  <div style={{ color: 'orange' }}>Retirar</div>
+                </div>
+                <div style={{ borderLeft: '1px solid #ccc', height: '24px', margin: '0 10px' }}></div> {/* Linha vertical discreta */}
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', cursor: 'pointer' }} onClick={() => console.log("Clicado em Detalhes")}>
+                  <InfoCircleOutlined style={{ color: 'blue' }} />
+                  <div style={{ color: 'blue' }}>Detalhes</div>
+                </div>
+              </div>
+            }
+            title="Ações"
+            trigger="click"
+            placement="bottomRight" // Preferencialmente abrir abaixo do ícone inicial, alinhado à direita
+          >
+            <Tooltip title="Ações Disponíveis">
+              <div style={iconStyle}>
+                <UnorderedListOutlined style={{ color: 'blue' }} />
+                <div style={{ color: 'blue' }}>Ações</div>
+              </div>
+            </Tooltip>
+          </Popover>
+        );      case "sysLocacaoRoupa_provar":
         return (
           <Tooltip title="Retirar as Roupas Provadas">
             <div style={iconStyle} onClick={() => console.log("Clicado em Retirar")}>
