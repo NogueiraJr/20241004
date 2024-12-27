@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { Tooltip, Modal, Table, Button } from "antd";
-import { CalendarOutlined, SkinOutlined, UploadOutlined, RollbackOutlined, CalculatorOutlined, FileDoneOutlined, CarOutlined, ExportOutlined, ImportOutlined, LoginOutlined, LogoutOutlined, SearchOutlined, ToolOutlined, CheckCircleOutlined } from "@ant-design/icons";
+import { Tooltip, Modal, Table, Button, Popover } from "antd";
+import { CalendarOutlined, SkinOutlined, UploadOutlined, RollbackOutlined, CalculatorOutlined, FileDoneOutlined, CarOutlined, ExportOutlined, ImportOutlined, LoginOutlined, LogoutOutlined, SearchOutlined, ToolOutlined, CheckCircleOutlined, UnorderedListOutlined, InfoCircleOutlined } from "@ant-design/icons";
 import IconText from "./IconText";
 import { userActions } from "../../../fields/Operacional/userActions-json"; // Importe o JSON
 import moment from "moment"; // Importe moment.js
@@ -44,18 +44,41 @@ const ActionDetails: React.FC<{
   const getNextActionIcon = (actionId: string) => {
     switch (actionId) {
       case "sysLocacaoRoupa_reservar":
-        return (
-          <Tooltip title="Provar">
-            <div style={iconStyle} onClick={() => console.log("Provar")}>
-              <SkinOutlined style={{ color: 'green' }} />
-              <div style={{ color: 'green' }}>Provar</div>
-            </div>
-          </Tooltip>
-        );
+                return (
+                  <Popover
+                    content={
+                      <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '10px' }}>
+                        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', cursor: 'pointer' }} onClick={() => console.log("Clicado em Provar")}>
+                          <SkinOutlined style={{ color: 'green' }} />
+                          <div style={{ color: 'green' }}>Provar</div>
+                        </div>
+                        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', cursor: 'pointer' }} onClick={() => console.log("Clicado em Retirar")}>
+                          <UploadOutlined style={{ color: 'orange' }} />
+                          <div style={{ color: 'orange' }}>Retirar</div>
+                        </div>
+                        <div style={{ borderLeft: '1px solid #ccc', height: '24px', margin: '0 10px' }}></div> {/* Linha vertical discreta */}
+                        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', cursor: 'pointer' }} onClick={() => console.log("Clicado em Detalhes")}>
+                          <InfoCircleOutlined style={{ color: 'blue' }} />
+                          <div style={{ color: 'blue' }}>Detalhes</div>
+                        </div>
+                      </div>
+                    }
+                    title="Ações"
+                    trigger="click"
+                    placement="bottomRight" // Preferencialmente abrir abaixo do ícone inicial, alinhado à direita
+                  >
+                    <Tooltip title="Ações Disponíveis">
+                      <div style={iconStyle}>
+                        <UnorderedListOutlined style={{ color: 'blue' }} />
+                        <div style={{ color: 'blue' }}>Ações</div>
+                      </div>
+                    </Tooltip>
+                  </Popover>
+                );
       case "sysLocacaoRoupa_provar":
         return (
-          <Tooltip title="Retirar">
-            <div style={iconStyle} onClick={() => console.log("Retirar")}>
+          <Tooltip title="Retirar as Roupas Provadas">
+            <div style={iconStyle} onClick={() => console.log("Clicado em Retirar")}>
               <UploadOutlined style={{ color: 'orange' }} />
               <div style={{ color: 'orange' }}>Retirar</div>
             </div>
@@ -63,8 +86,8 @@ const ActionDetails: React.FC<{
         );
       case "sysLocacaoRoupa_retirar":
         return (
-          <Tooltip title="Devolver">
-            <div style={iconStyle} onClick={() => console.log("Devolver")}>
+          <Tooltip title="Devolver as Roupas Retiradas">
+            <div style={iconStyle} onClick={() => console.log("Clicado em Devolver")}>
               <RollbackOutlined style={{ color: 'red' }} />
               <div style={{ color: 'red' }}>Devolver</div>
             </div>
@@ -72,8 +95,8 @@ const ActionDetails: React.FC<{
         );
       case "sysLocacaoRoupa_devolver":
         return (
-          <Tooltip title="Finalizar">
-            <div style={iconStyle} onClick={() => console.log("Fnalizar")}>
+          <Tooltip title="Finalizar a Locação">
+            <div style={iconStyle} onClick={() => console.log("Clicado em Finalizar")}>
               <CheckCircleOutlined style={{ color: 'green' }} />
               <div style={{ color: 'green' }}>Finalizar</div>
             </div>
@@ -81,8 +104,8 @@ const ActionDetails: React.FC<{
         );
       case "sysOficinaCarro_diagnosticar":
         return (
-          <Tooltip title="Orçar">
-            <div style={iconStyle} onClick={() => console.log("Orçar")}>
+          <Tooltip title="Orçar o Serviço">
+            <div style={iconStyle} onClick={() => console.log("Clicado em Orçar")}>
               <CalculatorOutlined style={{ color: 'blue' }} />
               <div style={{ color: 'blue' }}>Orçar</div>
             </div>
@@ -90,8 +113,8 @@ const ActionDetails: React.FC<{
         );
       case "sysOficinaCarro_orcar":
         return (
-          <Tooltip title="Executar">
-            <div style={iconStyle} onClick={() => console.log("Executar")}>
+          <Tooltip title="Executar o Serviço">
+            <div style={iconStyle} onClick={() => console.log("Clicado em Executar")}>
               <FileDoneOutlined style={{ color: 'green' }} />
               <div style={{ color: 'green' }}>Executar</div>
             </div>
@@ -99,8 +122,8 @@ const ActionDetails: React.FC<{
         );
       case "sysOficinaCarro_executar":
         return (
-          <Tooltip title="Finalizar">
-            <div style={iconStyle} onClick={() => console.log("Fnalizar")}>
+          <Tooltip title="Finalizar o Serviço">
+            <div style={iconStyle} onClick={() => console.log("Clicado em Finalizar")}>
               <CheckCircleOutlined style={{ color: 'green' }} />
               <div style={{ color: 'green' }}>Finalizar</div>
             </div>
