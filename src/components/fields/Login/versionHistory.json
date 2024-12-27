@@ -1,5 +1,18 @@
 [
   {
+    "version": "0.0.11 (beta)",
+    "date": "27/12/2024",
+    "history": [
+      {
+        "system": "all",
+        "description": "Execuções para cada ação",
+        "details": [
+          "Menu de Execuções dentro de cada contexto de cada ação"
+        ]
+      }
+    ]
+  },
+  {
     "version": "0.0.10 (beta)",
     "date": "26/12/2024",
     "history": [
