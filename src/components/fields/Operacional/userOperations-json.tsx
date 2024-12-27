@@ -8,7 +8,7 @@ export const userOperations = [
     "notes": "Roupas reservadas para o casamento da Ana, incluindo um vestido de gala e ternos para os padrinhos. O evento será realizado em um salão sofisticado, com buffet exclusivo e decoração temática.",
     "priceActions": "760.90",
     "priceCharged": "720.00",
-    "tags": "casamento|roupa|cerimônia|vestido|terno|evento|celebração"
+    "tags": "casamento|roupa|cerimônia|evento|celebração"
   },
   {
     "id": "cm2l2crxe000311dap3hmki8x",
