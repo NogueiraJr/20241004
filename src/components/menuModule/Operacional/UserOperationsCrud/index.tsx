@@ -20,6 +20,7 @@ import { produtosLocacaoRoupa } from '../../../fields/Dados/sysLocacaoRoupa/prod
 import { clientesLocacaoRoupa } from '../../../fields/Dados/sysLocacaoRoupa/clientesLocacaoRoupa-json';
 import { produtosOficinaCarro } from '../../../fields/Dados/sysOficinaCarro/produtosOficinaCarro-json';
 import { clientesOficinaCarro } from '../../../fields/Dados/sysOficinaCarro/clientesOficinaCarro-json';
+import { clientesOficinaCarroItem } from '../../../fields/Dados/sysOficinaCarro/clientesOficinaCarroItem-json'; // Importe os dados de clientesOficinaCarroItem
 import { userTagsLocacaoRoupa } from '../../../fields/Dados/sysLocacaoRoupa/userTagsLocacaoRoupa-json';
 import { userTagsOficinaCarro } from '../../../fields/Dados/sysOficinaCarro/userTagsOficinaCarro-json';
 
@@ -33,6 +34,7 @@ const Operation: React.FC<OperationProps> = ({ action }) => {
   const [total, setTotal] = useState('0,00');
   const [quantities, setQuantities] = useState<Record<string, number>>({});
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
+  const [filteredClientItems, setFilteredClientItems] = useState<any[]>([]); // Estado para armazenar os itens de cliente filtrados
 
   let produtos = [];
   let clientes = [];
@@ -100,6 +102,12 @@ const Operation: React.FC<OperationProps> = ({ action }) => {
         descricaoPrefixMap[system]?.[action] || descricaoPrefixMap[system]?.default || 'Cliente ';
 
       form.setFieldsValue({ descricao: descricaoPrefix });
+
+      // Filtra os itens de cliente com base no cliente selecionado
+      if (system === 'sysOficinaCarro') {
+        const filteredItems = clientesOficinaCarroItem.filter(item => item.userClientId === value);
+        setFilteredClientItems(filteredItems);
+      }
     }
   };
 
@@ -138,7 +146,7 @@ const Operation: React.FC<OperationProps> = ({ action }) => {
         {system === 'sysOficinaCarro' && (
           <ClienteItem
             handleClienteItemChange={handleClienteItemChange}
-            clientes={clientes}
+            clientes={filteredClientItems} // Passe os itens de cliente filtrados
             label={getClienteItemLabel()}
             placeholder={getClienteItemPlaceholder()}
           />
