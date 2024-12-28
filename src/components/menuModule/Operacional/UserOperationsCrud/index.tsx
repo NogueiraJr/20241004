@@ -107,12 +107,49 @@ const Operation: React.FC<OperationProps> = ({ action }) => {
     console.log('Cliente Item selecionado:', value);
   };
 
+  const getClienteItemLabel = () => {
+    switch (system) {
+      case 'sysOficinaCarro':
+        return 'Veículo';
+      case 'sysPetShop':
+      case 'sysClinicaVeterinaria':
+        return 'Animal';
+      default:
+        return 'Cliente Item';
+    }
+  };
+
+  const getClienteItemPlaceholder = () => {
+    switch (system) {
+      case 'sysOficinaCarro':
+        return 'Selecione um veículo';
+      case 'sysPetShop':
+      case 'sysClinicaVeterinaria':
+        return 'Selecione um animal';
+      default:
+        return 'Selecione um cliente item';
+    }
+  };
+
   return (
     <ConfigProvider locale={ptBR}>
       <Form layout="vertical" form={form}>
         <Cliente handleClienteChange={handleClienteChange} clientes={clientes} />
         {system === 'sysOficinaCarro' && (
-          <ClienteItem handleClienteItemChange={handleClienteItemChange} clientes={clientes} />
+          <ClienteItem
+            handleClienteItemChange={handleClienteItemChange}
+            clientes={clientes}
+            label={getClienteItemLabel()}
+            placeholder={getClienteItemPlaceholder()}
+          />
+        )}
+        {['sysPetShop', 'sysClinicaVeterinaria'].includes(system) && (
+          <ClienteItem
+            handleClienteItemChange={handleClienteItemChange}
+            clientes={clientes}
+            label={getClienteItemLabel()}
+            placeholder={getClienteItemPlaceholder()}
+          />
         )}
         <Descricao />
         {system === 'sysLocacaoRoupa' && action === 'reserva' && (

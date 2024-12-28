@@ -5,7 +5,14 @@ import NovoClienteItemModal from './ClienteItemNovoModal';
 import '../../../../index.css';
 import { useParameter } from '../../../../context/ParameterContext';
 
-const ClienteItem: React.FC<{ handleClienteItemChange: (value: string) => void; clientes: any[] }> = ({ handleClienteItemChange, clientes }) => {
+interface ClienteItemProps {
+  handleClienteItemChange: (value: string) => void;
+  clientes: any[];
+  label: string;
+  placeholder: string;
+}
+
+const ClienteItem: React.FC<ClienteItemProps> = ({ handleClienteItemChange, clientes, label, placeholder }) => {
   const { system } = useParameter();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedClientItem, setSelectedClientItem] = useState<string | undefined>(undefined); // Estado para armazenar o cliente item selecionado
@@ -27,10 +34,10 @@ const ClienteItem: React.FC<{ handleClienteItemChange: (value: string) => void; 
   return (
     <>
       <Form.Item
-        label={<span style={{ whiteSpace: 'nowrap' }} className="custom-label">ClienteItem</span>}
+        label={<span style={{ whiteSpace: 'nowrap' }} className="custom-label">{label}</span>}
         name="clienteItem"
         rules={[
-          { required: true, message: 'Por favor, selecione um cliente item!', validateTrigger: 'onBlur' },  // Garante que a validação só ocorra no onBlur ou quando for necessário
+          { required: true, message: `Por favor, selecione um ${label.toLowerCase()}!`, validateTrigger: 'onBlur' },  // Garante que a validação só ocorra no onBlur ou quando for necessário
         ]}
         hasFeedback
       >
@@ -42,7 +49,7 @@ const ClienteItem: React.FC<{ handleClienteItemChange: (value: string) => void; 
             <Select
               showSearch
               className="custom-field"
-              placeholder="Selecione um cliente item"
+              placeholder={placeholder}  // Atualiza o placeholder com base na prop
               onChange={handleClientItemSelect}  // Atualiza o estado quando um cliente item é selecionado
               value={selectedClientItem}  // Vincula o valor selecionado ao estado
               options={clientes.map(c => ({ value: c.id, label: c.name }))}
@@ -52,7 +59,7 @@ const ClienteItem: React.FC<{ handleClienteItemChange: (value: string) => void; 
               style={{ flex: 1 }}
             />
           </Form.Item>
-          <Tooltip title="Cadastrar Cliente Item, caso ele ainda não exista">
+          <Tooltip title={`Cadastrar ${label}, caso ele ainda não exista`}>
             <Button
               type="primary"
               icon={<PlusOutlined />}
