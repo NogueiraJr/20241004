@@ -20,7 +20,7 @@ const ClienteItem: React.FC<ClienteItemProps> = ({ handleClienteItemChange, clie
   const handleOpenModal = () => setIsModalVisible(true);
   const handleCloseModal = () => setIsModalVisible(false);
 
-  const handleSaveClientItem = (newClientItem: { name: string; phone: string; email?: string }) => {
+  const handleSaveClientItem = (newClientItem: { name: string; plate: string; chassis?: string }) => {
     console.log('Novo cliente item:', newClientItem);
     // Aqui você pode adicionar a lógica para salvar o cliente item
     handleCloseModal();

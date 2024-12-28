@@ -1,85 +1,62 @@
 import React from 'react';
 import { Modal, Form, Input, Button } from 'antd';
-import InputMask from 'react-input-mask';
 
-interface NovoClienteItemModalProps {
+interface ClienteItemNovoModalProps {
   visible: boolean;
   onClose: () => void;
-  onSave: (values: { name: string; phone: string; email?: string }) => void;
+  onSave: (newClientItem: { name: string; plate: string; chassis?: string }) => void;
 }
 
-const NovoClienteItemModal: React.FC<NovoClienteItemModalProps> = ({ visible, onClose, onSave }) => {
+const ClienteItemNovoModal: React.FC<ClienteItemNovoModalProps> = ({ visible, onClose, onSave }) => {
   const [form] = Form.useForm();
 
   const handleSave = () => {
-    form
-      .validateFields()
-      .then((values) => {
-        onSave(values);
-        form.resetFields(); // Reseta os campos após salvar
-      })
-      .catch((errorInfo) => {
-        console.log('Erro na validação:', errorInfo);
-      });
+    form.validateFields().then(values => {
+      onSave(values);
+      form.resetFields();
+    }).catch((errorInfo) => {
+      console.log('Erro na validação:', errorInfo);
+    });
   };
 
   return (
     <Modal
-      title="Cadastrar Novo ClienteItem"
       visible={visible}
+      title="Cadastrar Novo Veículo"
       onCancel={onClose}
       footer={[
         <Button key="cancel" onClick={onClose}>
           Cancelar
         </Button>,
         <Button key="save" type="primary" onClick={handleSave}>
-          Gravar
+          Salvar
         </Button>,
       ]}
     >
       <Form form={form} layout="vertical">
         <Form.Item
-          label={<span className="custom-label">Nome</span>}
           name="name"
-          rules={[{ required: true, message: 'O nome é obrigatório!' }]}
+          label="Nome do Veículo"
+          rules={[{ required: true, message: 'Por favor, insira o nome do veículo!' }]}
         >
-          <Input className="custom-field" placeholder="Digite o nome" />
+          <Input />
         </Form.Item>
         <Form.Item
-          label={<span className="custom-label">Celular</span>}
-          name="phone"
-          rules={[
-            { required: true, message: 'O celular é obrigatório!' },
-            {
-              pattern: /^\(\d{2}\)\s\d{5}-\d{4}$/,
-              message: 'Formato inválido! O formato correto é (DD) 9XXXX-XXXX.'
-            },
-          ]}
+          name="plate"
+          label="Placa"
+          rules={[{ required: true, message: 'Por favor, insira a placa do veículo!' }]}
         >
-          <InputMask
-            mask="(99) 99999-9999"
-            placeholder="(DD) 9XXXX-XXXX"
-            maskChar={null} // Garante que caracteres extras não sejam enviados
-          >
-            {(inputProps: any) => <Input {...inputProps} className="custom-field" />}
-          </InputMask>
+          <Input maxLength={7} placeholder="ABC1234" />
         </Form.Item>
-
         <Form.Item
-          label={<span className="custom-label">Email</span>}
-          name="email"
-          rules={[
-            {
-              type: 'email',
-              message: 'Por favor, insira um e-mail válido!',
-            },
-          ]}
+          name="chassis"
+          label="Chassi"
         >
-          <Input className="custom-field" placeholder="Digite o email" />
+          <Input maxLength={17} placeholder="17 caracteres" />
         </Form.Item>
       </Form>
     </Modal>
   );
 };
 
-export default NovoClienteItemModal;
+export default ClienteItemNovoModal;
