@@ -4,6 +4,7 @@ import ptBR from 'antd/es/locale/pt_BR';
 import { useParameter } from '../../../../context/ParameterContext';
 
 import Cliente from './Cliente';
+import ClienteItem from './ClienteItem'; // Importe o componente ClienteItem
 import Etiquetas from './Etiquetas';
 import ItensSelecionados from './ItensSelecionados';
 import InformeItens from './InformeItens';
@@ -27,7 +28,6 @@ interface OperationProps {
 }
 
 const Operation: React.FC<OperationProps> = ({ action }) => {
-  // console.log('action: ' + action);
   const { system } = useParameter();
   const [form] = Form.useForm();
   const [total, setTotal] = useState('0,00');
@@ -103,10 +103,17 @@ const Operation: React.FC<OperationProps> = ({ action }) => {
     }
   };
 
+  const handleClienteItemChange = (value: string) => {
+    console.log('Cliente Item selecionado:', value);
+  };
+
   return (
     <ConfigProvider locale={ptBR}>
       <Form layout="vertical" form={form}>
         <Cliente handleClienteChange={handleClienteChange} clientes={clientes} />
+        {system === 'sysOficinaCarro' && (
+          <ClienteItem handleClienteItemChange={handleClienteItemChange} clientes={clientes} />
+        )}
         <Descricao />
         {system === 'sysLocacaoRoupa' && action === 'reserva' && (
           <>
