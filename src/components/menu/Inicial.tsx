@@ -78,7 +78,7 @@ const Inicial: React.FC = () => {
         datasets: [
           {
             label: 'Reservas',
-            data: [100, 150, 80, 250, 70, 350, 50],
+            data: [3, 2, 11, 5, 9, 12, 0],
             borderColor: '#8884d8',
             backgroundColor: '#8884d8',
             fill: false,
