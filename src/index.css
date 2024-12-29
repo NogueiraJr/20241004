@@ -64,6 +64,18 @@
     border-top: 1px solid rgba(108, 105, 105, 0.276) !important;
 }
 
+.card-style {
+  flex: 1 1 calc(33.333% - 5px);
+  min-width: 350px;
+  border-color: rgb(161, 159, 159);
+  border-width: 1px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 0 0px #000000;
+  margin: 2px 2px 2px 2px;
+}
+
 .inicial-container {
   display: flex;
   flex-direction: column;
@@ -74,6 +86,7 @@
 
 .charts-container {
   display: flex;
+  padding-right: 5px;
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
@@ -82,17 +95,21 @@
 }
 
 .cardChart {
+  flex: 1 1 calc(33.333% - 5px);
+  min-width: 350px;
+  border-color: rgb(161, 159, 159);
+  border-width: 1px;
+  border-style: solid; /* Add this line to ensure the border is visible */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 0 0px #000000;
+  margin: 2px 2px 2px 2px;
   background: #fff;
   border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.865);
-  margin: 16px;
   padding: 16px;
   width: 100%;
   max-width: 600px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
   height: 400px; /* Altura padrão para os gráficos */
   overflow: hidden; /* Garante que o conteúdo não saia do card */
 }
