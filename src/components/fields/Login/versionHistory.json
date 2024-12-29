@@ -1,5 +1,18 @@
 [
   {
+    "version": "0.0.13 (beta)",
+    "date": "29/12/2024",
+    "history": [
+      {
+        "system": "all",
+        "description": "Gráficos Exemplos",
+        "details": [
+          "Gráficos Exemplos na Tela Inicial"
+        ]
+      }
+    ]
+  },
+  {
     "version": "0.0.12 (beta)",
     "date": "28/12/2024",
     "history": [
