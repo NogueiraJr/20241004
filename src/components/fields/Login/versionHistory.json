@@ -1,5 +1,35 @@
 [
   {
+    "version": "0.0.12 (beta)",
+    "date": "28/12/2024",
+    "history": [
+      {
+        "system": "sysOficinaCarro",
+        "description": "Veículo do Cliente",
+        "details": [
+          "Escolha do Veículo do Cliente no momento do Diagnóstico ou Orçamento",
+          "Cadastro de um novo Veículo do Cliente no momento do Diagnóstico ou Orçamento"
+        ]
+      },
+      {
+        "system": "sysPetShop",
+        "description": "Animal do Cliente",
+        "details": [
+          "Escolha do Animal do Cliente no momento do Diagnóstico ou Orçamento",
+          "Cadastro de um novo Animal do Cliente no momento do Diagnóstico ou Orçamento"
+        ]
+      },
+      {
+        "system": "sysClinicaVeterinaria",
+        "description": "Animal do Cliente",
+        "details": [
+          "Escolha do Animal do Cliente no momento do Diagnóstico ou Orçamento",
+          "Cadastro de um novo Animal do Cliente no momento do Diagnóstico ou Orçamento"
+        ]
+      }
+    ]
+  },
+  {
     "version": "0.0.11 (beta)",
     "date": "27/12/2024",
     "history": [

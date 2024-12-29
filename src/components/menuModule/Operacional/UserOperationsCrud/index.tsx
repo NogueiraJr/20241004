@@ -4,6 +4,7 @@ import ptBR from 'antd/es/locale/pt_BR';
 import { useParameter } from '../../../../context/ParameterContext';
 
 import Cliente from './Cliente';
+import ClienteItem from './ClienteItem'; // Importe o componente ClienteItem
 import Etiquetas from './Etiquetas';
 import ItensSelecionados from './ItensSelecionados';
 import InformeItens from './InformeItens';
@@ -19,6 +20,7 @@ import { produtosLocacaoRoupa } from '../../../fields/Dados/sysLocacaoRoupa/prod
 import { clientesLocacaoRoupa } from '../../../fields/Dados/sysLocacaoRoupa/clientesLocacaoRoupa-json';
 import { produtosOficinaCarro } from '../../../fields/Dados/sysOficinaCarro/produtosOficinaCarro-json';
 import { clientesOficinaCarro } from '../../../fields/Dados/sysOficinaCarro/clientesOficinaCarro-json';
+import { clientesOficinaCarroItem } from '../../../fields/Dados/sysOficinaCarro/clientesOficinaCarroItem-json'; // Importe os dados de clientesOficinaCarroItem
 import { userTagsLocacaoRoupa } from '../../../fields/Dados/sysLocacaoRoupa/userTagsLocacaoRoupa-json';
 import { userTagsOficinaCarro } from '../../../fields/Dados/sysOficinaCarro/userTagsOficinaCarro-json';
 
@@ -27,12 +29,14 @@ interface OperationProps {
 }
 
 const Operation: React.FC<OperationProps> = ({ action }) => {
-  // console.log('action: ' + action);
   const { system } = useParameter();
   const [form] = Form.useForm();
   const [total, setTotal] = useState('0,00');
   const [quantities, setQuantities] = useState<Record<string, number>>({});
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
+  const [filteredClientItems, setFilteredClientItems] = useState<any[]>([]); // Estado para armazenar os itens de cliente filtrados
+  const [selectedClient, setSelectedClient] = useState<any>(null); // Estado para armazenar o cliente selecionado
+  const [selectedClientItem, setSelectedClientItem] = useState<string | undefined>(undefined); // Estado para armazenar o item selecionado do cliente
 
   let produtos = [];
   let clientes = [];
@@ -83,6 +87,9 @@ const Operation: React.FC<OperationProps> = ({ action }) => {
   const handleClienteChange = (value: string) => {
     const defaultValue = 'Atendimento de';
     const clienteSelecionado = clientes.find((c) => c.id === value);
+    setSelectedClient(clienteSelecionado); // Armazena o cliente selecionado
+    setSelectedClientItem(undefined); // Limpa o item selecionado do cliente anterior
+    form.setFieldsValue({ clienteItem: undefined }); // Limpa o valor do combo de itens do cliente
     if (clienteSelecionado) {
       const descricaoPrefixMap = {
         sysLocacaoRoupa: {
@@ -100,6 +107,55 @@ const Operation: React.FC<OperationProps> = ({ action }) => {
         descricaoPrefixMap[system]?.[action] || descricaoPrefixMap[system]?.default || 'Cliente ';
 
       form.setFieldsValue({ descricao: descricaoPrefix });
+
+      // Filtra os itens de cliente com base no cliente selecionado
+      if (system === 'sysOficinaCarro') {
+        const filteredItems = clientesOficinaCarroItem.filter(item => item.userClientId === value);
+        setFilteredClientItems(filteredItems);
+      }
+    }
+  };
+
+  const handleClienteItemChange = (value: string) => {
+    const clienteItemSelecionado = filteredClientItems.find((item) => item.id === value);
+    setSelectedClientItem(value); // Atualiza o estado quando um cliente item é selecionado
+    if (clienteItemSelecionado && selectedClient) {
+      const actionPrefixMap = {
+        sysLocacaoRoupa: 'Reserva de',
+        sysOficinaCarro: {
+          diagnostico: 'Diagnóstico de',
+          orcamento: 'Orçamento de',
+        }
+      };
+
+      const actionPrefix = actionPrefixMap[system]?.[action] || actionPrefixMap[system] || 'Ação de';
+
+      form.setFieldsValue({ descricao: `${actionPrefix} ${clienteItemSelecionado.name} de ${selectedClient.name}` });
+    }
+    console.log('Cliente Item selecionado:', value);
+  };
+
+  const getClienteItemLabel = () => {
+    switch (system) {
+      case 'sysOficinaCarro':
+        return 'Veículo';
+      case 'sysPetShop':
+      case 'sysClinicaVeterinaria':
+        return 'Animal';
+      default:
+        return 'Cliente Item';
+    }
+  };
+
+  const getClienteItemPlaceholder = () => {
+    switch (system) {
+      case 'sysOficinaCarro':
+        return 'Selecione um veículo';
+      case 'sysPetShop':
+      case 'sysClinicaVeterinaria':
+        return 'Selecione um animal';
+      default:
+        return 'Selecione um cliente item';
     }
   };
 
@@ -107,6 +163,24 @@ const Operation: React.FC<OperationProps> = ({ action }) => {
     <ConfigProvider locale={ptBR}>
       <Form layout="vertical" form={form}>
         <Cliente handleClienteChange={handleClienteChange} clientes={clientes} />
+        {system === 'sysOficinaCarro' && (
+          <ClienteItem
+            handleClienteItemChange={handleClienteItemChange}
+            clientes={filteredClientItems} // Passe os itens de cliente filtrados
+            label={getClienteItemLabel()}
+            placeholder={getClienteItemPlaceholder()}
+            selectedClientItem={selectedClientItem} // Passe o item selecionado do cliente
+          />
+        )}
+        {['sysPetShop', 'sysClinicaVeterinaria'].includes(system) && (
+          <ClienteItem
+            handleClienteItemChange={handleClienteItemChange}
+            clientes={clientes}
+            label={getClienteItemLabel()}
+            placeholder={getClienteItemPlaceholder()}
+            selectedClientItem={selectedClientItem} // Passe o item selecionado do cliente
+          />
+        )}
         <Descricao />
         {system === 'sysLocacaoRoupa' && action === 'reserva' && (
           <>
