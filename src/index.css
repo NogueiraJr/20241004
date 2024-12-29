@@ -139,11 +139,19 @@
     align-items: center;
     max-width: 350px;
     margin-right: 28px;
-}
+  }
 
   .cardChart {
     width: 100%;
     margin: 8px 0;
+    min-height: 400px; /* Ensure minimum height for mobile screens */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .cardChart .chart-container {
+    flex-grow: 1; /* Ensure the chart container takes up full height */
   }
 }
 
