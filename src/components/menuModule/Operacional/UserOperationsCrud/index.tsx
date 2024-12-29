@@ -35,6 +35,7 @@ const Operation: React.FC<OperationProps> = ({ action }) => {
   const [quantities, setQuantities] = useState<Record<string, number>>({});
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
   const [filteredClientItems, setFilteredClientItems] = useState<any[]>([]); // Estado para armazenar os itens de cliente filtrados
+  const [selectedClient, setSelectedClient] = useState<any>(null); // Estado para armazenar o cliente selecionado
 
   let produtos = [];
   let clientes = [];
@@ -85,6 +86,7 @@ const Operation: React.FC<OperationProps> = ({ action }) => {
   const handleClienteChange = (value: string) => {
     const defaultValue = 'Atendimento de';
     const clienteSelecionado = clientes.find((c) => c.id === value);
+    setSelectedClient(clienteSelecionado); // Armazena o cliente selecionado
     if (clienteSelecionado) {
       const descricaoPrefixMap = {
         sysLocacaoRoupa: {
@@ -112,6 +114,20 @@ const Operation: React.FC<OperationProps> = ({ action }) => {
   };
 
   const handleClienteItemChange = (value: string) => {
+    const clienteItemSelecionado = filteredClientItems.find((item) => item.id === value);
+    if (clienteItemSelecionado && selectedClient) {
+      const actionPrefixMap = {
+        sysLocacaoRoupa: 'Reserva de',
+        sysOficinaCarro: {
+          diagnostico: 'Diagnóstico de',
+          orcamento: 'Orçamento de',
+        }
+      };
+
+      const actionPrefix = actionPrefixMap[system]?.[action] || actionPrefixMap[system] || 'Ação de';
+
+      form.setFieldsValue({ descricao: `${actionPrefix} ${clienteItemSelecionado.name} de ${selectedClient.name}` });
+    }
     console.log('Cliente Item selecionado:', value);
   };
 
