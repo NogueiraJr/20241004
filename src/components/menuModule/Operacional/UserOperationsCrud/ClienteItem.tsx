@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Form, Select, Button, Tooltip } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import NovoClienteItemModal from './ClienteItemNovoModal';
@@ -10,12 +10,12 @@ interface ClienteItemProps {
   clientes: any[];
   label: string;
   placeholder: string;
+  selectedClientItem?: string;
 }
 
-const ClienteItem: React.FC<ClienteItemProps> = ({ handleClienteItemChange, clientes, label, placeholder }) => {
+const ClienteItem: React.FC<ClienteItemProps> = ({ handleClienteItemChange, clientes, label, placeholder, selectedClientItem }) => {
   const { system } = useParameter();
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [selectedClientItem, setSelectedClientItem] = useState<string | undefined>(undefined); // Estado para armazenar o cliente item selecionado
 
   const handleOpenModal = () => setIsModalVisible(true);
   const handleCloseModal = () => setIsModalVisible(false);
@@ -27,9 +27,14 @@ const ClienteItem: React.FC<ClienteItemProps> = ({ handleClienteItemChange, clie
   };
 
   const handleClientItemSelect = (value: string) => {
-    setSelectedClientItem(value);  // Atualiza o estado quando um cliente item é selecionado
     handleClienteItemChange(value); // Chama a função de alteração do cliente item
   };
+
+  useEffect(() => {
+    if (selectedClientItem === undefined) {
+      handleClienteItemChange(''); // Limpa o item selecionado do cliente anterior
+    }
+  }, [selectedClientItem]);
 
   return (
     <>

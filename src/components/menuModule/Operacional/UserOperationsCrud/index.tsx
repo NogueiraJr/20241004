@@ -36,6 +36,7 @@ const Operation: React.FC<OperationProps> = ({ action }) => {
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
   const [filteredClientItems, setFilteredClientItems] = useState<any[]>([]); // Estado para armazenar os itens de cliente filtrados
   const [selectedClient, setSelectedClient] = useState<any>(null); // Estado para armazenar o cliente selecionado
+  const [selectedClientItem, setSelectedClientItem] = useState<string | undefined>(undefined); // Estado para armazenar o item selecionado do cliente
 
   let produtos = [];
   let clientes = [];
@@ -87,6 +88,8 @@ const Operation: React.FC<OperationProps> = ({ action }) => {
     const defaultValue = 'Atendimento de';
     const clienteSelecionado = clientes.find((c) => c.id === value);
     setSelectedClient(clienteSelecionado); // Armazena o cliente selecionado
+    setSelectedClientItem(undefined); // Limpa o item selecionado do cliente anterior
+    form.setFieldsValue({ clienteItem: undefined }); // Limpa o valor do combo de itens do cliente
     if (clienteSelecionado) {
       const descricaoPrefixMap = {
         sysLocacaoRoupa: {
@@ -115,6 +118,7 @@ const Operation: React.FC<OperationProps> = ({ action }) => {
 
   const handleClienteItemChange = (value: string) => {
     const clienteItemSelecionado = filteredClientItems.find((item) => item.id === value);
+    setSelectedClientItem(value); // Atualiza o estado quando um cliente item é selecionado
     if (clienteItemSelecionado && selectedClient) {
       const actionPrefixMap = {
         sysLocacaoRoupa: 'Reserva de',
@@ -165,6 +169,7 @@ const Operation: React.FC<OperationProps> = ({ action }) => {
             clientes={filteredClientItems} // Passe os itens de cliente filtrados
             label={getClienteItemLabel()}
             placeholder={getClienteItemPlaceholder()}
+            selectedClientItem={selectedClientItem} // Passe o item selecionado do cliente
           />
         )}
         {['sysPetShop', 'sysClinicaVeterinaria'].includes(system) && (
@@ -173,6 +178,7 @@ const Operation: React.FC<OperationProps> = ({ action }) => {
             clientes={clientes}
             label={getClienteItemLabel()}
             placeholder={getClienteItemPlaceholder()}
+            selectedClientItem={selectedClientItem} // Passe o item selecionado do cliente
           />
         )}
         <Descricao />
