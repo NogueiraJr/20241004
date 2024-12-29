@@ -156,15 +156,7 @@ const Dados: React.FC = () => {
     <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
       <Card 
         actions={actionsClientes} 
-        style={{ 
-          flex: '1 1 calc(33.333% - 5px)', 
-          minWidth: 350, 
-          borderColor: 'black', 
-          borderWidth: '2px', 
-          display: 'flex', 
-          flexDirection: 'column', 
-          justifyContent: 'space-between' 
-        }}
+        className="card-style"
       >
         <Card.Meta
           avatar={
@@ -182,15 +174,7 @@ const Dados: React.FC = () => {
       </Card>
       <Card 
         actions={actionsProdutos} 
-        style={{ 
-          flex: '1 1 calc(33.333% - 5px)', 
-          minWidth: 350, 
-          borderColor: 'black', 
-          borderWidth: '2px', 
-          display: 'flex', 
-          flexDirection: 'column', 
-          justifyContent: 'space-between' 
-        }}
+        className="card-style"
       >
         <Card.Meta
           avatar={
@@ -208,15 +192,7 @@ const Dados: React.FC = () => {
       </Card>
       <Card 
         actions={actionsFornecedores} 
-        style={{ 
-          flex: '1 1 calc(33.333% - 5px)', 
-          minWidth: 350, 
-          borderColor: 'black', 
-          borderWidth: '2px', 
-          display: 'flex', 
-          flexDirection: 'column', 
-          justifyContent: 'space-between' 
-        }}
+        className="card-style"
       >
         <Card.Meta
           avatar={
@@ -234,15 +210,7 @@ const Dados: React.FC = () => {
       </Card>
       <Card 
         actions={actionsParceiros} 
-        style={{ 
-          flex: '1 1 calc(33.333% - 5px)', 
-          minWidth: 350, 
-          borderColor: 'black', 
-          borderWidth: '2px', 
-          display: 'flex', 
-          flexDirection: 'column', 
-          justifyContent: 'space-between' 
-        }}
+        className="card-style"
       >
         <Card.Meta
           avatar={

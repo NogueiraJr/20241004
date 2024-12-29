@@ -280,15 +280,7 @@ const Operacional: React.FC = () => {
         <>
           <Card
             actions={actionsReserva}
-            style={{
-              flex: '1 1 calc(33.333% - 5px)',
-              minWidth: 350,
-              borderColor: 'black',
-              borderWidth: '2px',
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'space-between',
-            }}
+            className="card-style"
           >
             <Card.Meta
               avatar={
@@ -313,15 +305,7 @@ const Operacional: React.FC = () => {
 
           <Card
             actions={actionsProva}
-            style={{
-              flex: '1 1 calc(33.333% - 5px)',
-              minWidth: 350,
-              borderColor: 'black',
-              borderWidth: '2px',
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'space-between',
-            }}
+            className="card-style"
           >
             <Card.Meta
               avatar={
@@ -346,15 +330,7 @@ const Operacional: React.FC = () => {
 
           <Card
             actions={actionsRetirada}
-            style={{
-              flex: '1 1 calc(33.333% - 5px)',
-              minWidth: 350,
-              borderColor: 'black',
-              borderWidth: '2px',
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'space-between',
-            }}
+            className="card-style"
           >
             <Card.Meta
               avatar={
@@ -379,15 +355,7 @@ const Operacional: React.FC = () => {
 
           <Card
             actions={actionsDevolucao}
-            style={{
-              flex: '1 1 calc(33.333% - 5px)',
-              minWidth: 350,
-              borderColor: 'black',
-              borderWidth: '2px',
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'space-between',
-            }}
+            className="card-style"
           >
             <Card.Meta
               avatar={
@@ -426,15 +394,7 @@ const Operacional: React.FC = () => {
         <>
           <Card
             actions={actionsDiagnostico}
-            style={{
-              flex: '1 1 calc(33.333% - 5px)',
-              minWidth: 350,
-              borderColor: 'black',
-              borderWidth: '2px',
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'space-between',
-            }}
+            className="card-style"
           >
             <Card.Meta
               avatar={
@@ -459,15 +419,7 @@ const Operacional: React.FC = () => {
 
           <Card
             actions={actionsOrcamento}
-            style={{
-              flex: '1 1 calc(33.333% - 5px)',
-              minWidth: 350,
-              borderColor: 'black',
-              borderWidth: '2px',
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'space-between',
-            }}
+            className="card-style"
           >
             <Card.Meta
               avatar={
@@ -492,15 +444,7 @@ const Operacional: React.FC = () => {
 
           <Card
             actions={actionsServico}
-            style={{
-              flex: '1 1 calc(33.333% - 5px)',
-              minWidth: 350,
-              borderColor: 'black',
-              borderWidth: '2px',
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'space-between',
-            }}
+            className="card-style"
           >
             <Card.Meta
               avatar={

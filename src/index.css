@@ -64,6 +64,18 @@
     border-top: 1px solid rgba(108, 105, 105, 0.276) !important;
 }
 
+.card-style {
+  flex: 1 1 calc(33.333% - 5px);
+  min-width: 350px;
+  border-color: rgb(161, 159, 159);
+  border-width: 1px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 0 0px #000000;
+  margin: 2px 2px 2px 2px;
+}
+
 .inicial-container {
   display: flex;
   flex-direction: column;
