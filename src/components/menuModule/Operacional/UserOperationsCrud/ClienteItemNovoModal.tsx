@@ -10,7 +10,6 @@ interface ClienteItemNovoModalProps {
 
 const ClienteItemNovoModal: React.FC<ClienteItemNovoModalProps> = ({ visible, onClose, onSave }) => {
   const { system } = useParameter();
-  console.log('system:', system);
   const [form] = Form.useForm();
 
   const handleSave = () => {
@@ -56,32 +55,36 @@ const ClienteItemNovoModal: React.FC<ClienteItemNovoModalProps> = ({ visible, on
           Cancelar
         </Button>,
         <Button key="save" type="primary" onClick={handleSave}>
-          Salvar
+          Gravar
         </Button>,
       ]}
+      className="custom-modal"
     >
-      <Form form={form} layout="vertical">
+      <Form form={form} layout="vertical" className="custom-form">
         <Form.Item
           name="name"
-          label={getNameLabel()}
+          label={<span style={{ whiteSpace: 'nowrap' }} className="custom-label">{getNameLabel()}</span>}
           rules={[{ required: true, message: `Por favor, insira o ${getNameLabel().toLowerCase()}!` }]}
+          className="custom-form-item"
         >
-          <Input />
+          <Input className="custom-field" />
         </Form.Item>
         {system === 'sysOficinaCarro' && (
           <>
             <Form.Item
               name="plate"
-              label="Placa"
+              label={<span style={{ whiteSpace: 'nowrap' }} className="custom-label">Placa</span>}
               rules={[{ required: true, message: 'Por favor, insira a placa do veículo!' }]}
+              className="custom-form-item"
             >
-              <Input maxLength={7} placeholder="ABC1234" />
+              <Input maxLength={7} placeholder="ABC1234" className="custom-field" />
             </Form.Item>
             <Form.Item
               name="chassis"
-              label="Chassi"
+              label={<span style={{ whiteSpace: 'nowrap' }} className="custom-label">Chassi</span>}
+              className="custom-form-item"
             >
-              <Input maxLength={17} placeholder="17 caracteres" />
+              <Input maxLength={17} placeholder="17 caracteres" className="custom-field" />
             </Form.Item>
           </>
         )}
@@ -89,10 +92,11 @@ const ClienteItemNovoModal: React.FC<ClienteItemNovoModalProps> = ({ visible, on
           <>
             <Form.Item
               name="porte"
-              label="Porte"
+              label={<span style={{ whiteSpace: 'nowrap' }} className="custom-label">Porte</span>}
               rules={[{ required: true, message: 'Por favor, selecione o porte do animal!' }]}
+              className="custom-form-item"
             >
-              <Select placeholder="Selecione o porte">
+              <Select placeholder="Selecione o porte" className="custom-select">
                 <Select.Option value="Pequeno">Pequeno</Select.Option>
                 <Select.Option value="Médio">Médio</Select.Option>
                 <Select.Option value="Grande">Grande</Select.Option>
@@ -100,9 +104,10 @@ const ClienteItemNovoModal: React.FC<ClienteItemNovoModalProps> = ({ visible, on
             </Form.Item>
             <Form.Item
               name="especie"
-              label="Espécie"
+              label={<span style={{ whiteSpace: 'nowrap' }} className="custom-label">Espécie</span>}
+              className="custom-form-item"
             >
-              <Input placeholder="Espécie do animal" />
+              <Input placeholder="Espécie do animal" className="custom-field" />
             </Form.Item>
           </>
         )}
