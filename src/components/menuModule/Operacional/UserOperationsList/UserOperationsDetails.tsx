@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Tooltip, Modal, Table, Button, Popover, Collapse, List, Tabs } from "antd";
+import { Tooltip, Modal, Table, Button, Popover, Collapse, List, Tabs, Tag } from "antd";
 import { CalendarOutlined, SkinOutlined, UploadOutlined, RollbackOutlined, CalculatorOutlined, FileDoneOutlined, CarOutlined, ExportOutlined, ImportOutlined, LoginOutlined, LogoutOutlined, SearchOutlined, ToolOutlined, CheckCircleOutlined, UnorderedListOutlined, InfoCircleOutlined } from "@ant-design/icons";
 import IconText from "./IconText";
 import { userActions } from "../../../fields/Operacional/userActions-json"; // Importe o JSON
@@ -9,6 +9,10 @@ import moment from "moment"; // Importe moment.js
 
 const { Panel } = Collapse;
 const { TabPane } = Tabs;
+
+const formatCurrency = (value: number) => {
+  return value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+};
 
 const ActionDetails: React.FC<{
   actions: string[];
@@ -325,17 +329,20 @@ const ActionDetails: React.FC<{
                   itemLayout="horizontal"
                   dataSource={group.products}
                   renderItem={(product: any) => (
-                    <List.Item>
-                      <Collapse>
+                    <List.Item style={{ width: '100%' }}>
+                      <Collapse style={{ width: '100%' }}>
                         <Panel header={product.name} key={product.key}>
                           <Tabs defaultActiveKey="1">
                             <TabPane tab="Descrição" key="1">
                               {product.description}
                             </TabPane>
                             <TabPane tab="Detalhes" key="2">
-                              <p><strong>Quantidade:</strong> {product.quantity}</p>
-                              <p><strong>Preço:</strong> {product.price}</p>
-                              <p><strong>Tags:</strong> {product.tags.join(', ')}</p>
+                              <p>{product.quantity} x {formatCurrency(product.price)} = {formatCurrency(product.quantity * product.price)}</p>
+                              <div>
+                                {product.tags.map((tag: string, index: number) => (
+                                  <Tag key={index}>{tag}</Tag>
+                                ))}
+                              </div>
                             </TabPane>
                           </Tabs>
                         </Panel>
