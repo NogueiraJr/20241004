@@ -1,11 +1,13 @@
 import React, { useState } from "react";
-import { Tooltip, Modal, Table, Button, Popover } from "antd";
+import { Tooltip, Modal, Table, Button, Popover, Collapse } from "antd";
 import { CalendarOutlined, SkinOutlined, UploadOutlined, RollbackOutlined, CalculatorOutlined, FileDoneOutlined, CarOutlined, ExportOutlined, ImportOutlined, LoginOutlined, LogoutOutlined, SearchOutlined, ToolOutlined, CheckCircleOutlined, UnorderedListOutlined, InfoCircleOutlined } from "@ant-design/icons";
 import IconText from "./IconText";
 import { userActions } from "../../../fields/Operacional/userActions-json"; // Importe o JSON
 import { produtosOficinaCarro } from '../../../fields/Dados/sysOficinaCarro/produtosOficinaCarro-json';
 import { produtosLocacaoRoupa } from '../../../fields/Dados/sysLocacaoRoupa/produtosLocacaoRoupa-json';
 import moment from "moment"; // Importe moment.js
+
+const { Panel } = Collapse;
 
 const ActionDetails: React.FC<{
   actions: string[];
@@ -41,7 +43,7 @@ const ActionDetails: React.FC<{
         if (!acc[productTypeId]) {
           acc[productTypeId] = [];
         }
-        acc[productTypeId].push({ key: product.id, name, description, quantity, price, tags });
+        acc[productTypeId].push({ key: product.id, name, description, quantity, price, tags: tags || [] });
         return acc;
       }, {});
 
@@ -315,12 +317,13 @@ const ActionDetails: React.FC<{
         }}
       >
         {modalTitle === "Detalhes" ? (
-          modalData.map((group: any) => (
-            <div key={group.key}>
-              <h3>{group.productTypeId}</h3>
-              <Table dataSource={group.products} columns={productColumns} pagination={false} />
-            </div>
-          ))
+          <Collapse accordion>
+            {modalData.map((group: any) => (
+              <Panel header={group.productTypeId} key={group.key}>
+                <Table dataSource={group.products} columns={productColumns} pagination={false} />
+              </Panel>
+            ))}
+          </Collapse>
         ) : (
           <Table dataSource={modalData} columns={columns} pagination={false} />
         )}
