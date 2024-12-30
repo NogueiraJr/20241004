@@ -3,6 +3,8 @@ import { Tooltip, Modal, Table, Button, Popover } from "antd";
 import { CalendarOutlined, SkinOutlined, UploadOutlined, RollbackOutlined, CalculatorOutlined, FileDoneOutlined, CarOutlined, ExportOutlined, ImportOutlined, LoginOutlined, LogoutOutlined, SearchOutlined, ToolOutlined, CheckCircleOutlined, UnorderedListOutlined, InfoCircleOutlined } from "@ant-design/icons";
 import IconText from "./IconText";
 import { userActions } from "../../../fields/Operacional/userActions-json"; // Importe o JSON
+import { produtosOficinaCarro } from '../../../fields/Dados/sysOficinaCarro/produtosOficinaCarro-json';
+import { produtosLocacaoRoupa } from '../../../fields/Dados/sysLocacaoRoupa/produtosLocacaoRoupa-json';
 import moment from "moment"; // Importe moment.js
 
 const ActionDetails: React.FC<{
@@ -31,19 +33,40 @@ const ActionDetails: React.FC<{
   const handleActionClick = (action: string, actionId: string) => {
     console.log(`Action: ${action} - ActionId: ${actionId} - UserOperationId: ${userOperationId}`);
     setModalTitle(action.charAt(0).toUpperCase() + action.slice(1));
-    const filteredData = userActions.filter(
-      (userAction) => userAction.userOperationId === userOperationId && userAction.actionId.toLocaleLowerCase().trim() === actionId.toLocaleLowerCase().trim()
-    ).map((userAction) => ({
-      key: userAction.id,
-      description: (
-        <Tooltip title={userAction.notes}>
-          <span>{userAction.description}</span>
-        </Tooltip>
-      ),
-      scheduledAt: moment(userAction.scheduledAt).format("DD/MM/YYYY HH:mm"), // Formate scheduledAt
-      action: userAction.actionId,
-    }));
-    setModalData(filteredData);
+    
+    if (action === "Detalhes") {
+      const products = system === "sysOficinaCarro" ? produtosOficinaCarro : produtosLocacaoRoupa;
+      const groupedData = products.reduce((acc: any, product: any) => {
+        const { productTypeId, name, description, quantity, price, tags } = product;
+        if (!acc[productTypeId]) {
+          acc[productTypeId] = [];
+        }
+        acc[productTypeId].push({ key: product.id, name, description, quantity, price, tags });
+        return acc;
+      }, {});
+
+      const formattedData = Object.keys(groupedData).map((productTypeId) => ({
+        key: productTypeId,
+        productTypeId,
+        products: groupedData[productTypeId],
+      }));
+
+      setModalData(formattedData);
+    } else {
+      const filteredData = userActions.filter(
+        (userAction) => userAction.userOperationId === userOperationId && userAction.actionId.toLocaleLowerCase().trim() === actionId.toLocaleLowerCase().trim()
+      ).map((userAction) => ({
+        key: userAction.id,
+        description: (
+          <Tooltip title={userAction.notes}>
+            <span>{userAction.description}</span>
+          </Tooltip>
+        ),
+        scheduledAt: moment(userAction.scheduledAt).format("DD/MM/YYYY HH:mm"), // Formate scheduledAt
+        action: userAction.actionId,
+      }));
+      setModalData(filteredData);
+    }
     setModalOpen(true);
   };
 
@@ -61,41 +84,41 @@ const ActionDetails: React.FC<{
           { icon: SkinOutlined, color: 'green', text: 'Provar', action: () => showConfirm("Provar") },
           { icon: UploadOutlined, color: 'orange', text: 'Retirar', action: () => showConfirm("Retirar") },
           { icon: CheckCircleOutlined, color: 'green', text: 'Finalizar', action: () => showConfirm("Finalizar") },
-          { icon: InfoCircleOutlined, color: 'blue', text: 'Detalhes', action: () => console.log("Clicado em Detalhes") }
+          { icon: InfoCircleOutlined, color: 'blue', text: 'Detalhes', action: () => handleActionClick("Detalhes", actionId) }
         ]);
       case "sysLocacaoRoupa_provar":
         return actionMenuExecute([
           { icon: UploadOutlined, color: 'orange', text: 'Retirar', action: () => showConfirm("Retirar") },
           { icon: CheckCircleOutlined, color: 'green', text: 'Finalizar', action: () => showConfirm("Finalizar") },
-          { icon: InfoCircleOutlined, color: 'blue', text: 'Detalhes', action: () => console.log("Clicado em Detalhes") }
+          { icon: InfoCircleOutlined, color: 'blue', text: 'Detalhes', action: () => handleActionClick("Detalhes", actionId) }
         ]);
       case "sysLocacaoRoupa_retirar":
         return actionMenuExecute([
           { icon: RollbackOutlined, color: 'red', text: 'Devolver', action: () => showConfirm("Devolver") },
           { icon: CheckCircleOutlined, color: 'green', text: 'Finalizar', action: () => showConfirm("Finalizar") },
-          { icon: InfoCircleOutlined, color: 'blue', text: 'Detalhes', action: () => console.log("Clicado em Detalhes") }
+          { icon: InfoCircleOutlined, color: 'blue', text: 'Detalhes', action: () => handleActionClick("Detalhes", actionId) }
         ]);
       case "sysLocacaoRoupa_devolver":
         return actionMenuExecute([
           { icon: CheckCircleOutlined, color: 'green', text: 'Finalizar', action: () => showConfirm("Finalizar") },
-          { icon: InfoCircleOutlined, color: 'blue', text: 'Detalhes', action: () => console.log("Clicado em Detalhes") }
+          { icon: InfoCircleOutlined, color: 'blue', text: 'Detalhes', action: () => handleActionClick("Detalhes", actionId) }
         ]);
       case "sysOficinaCarro_diagnosticar":
         return actionMenuExecute([
           { icon: CalculatorOutlined, color: 'blue', text: 'Orçar', action: () => showConfirm("Orçar") },
           { icon: FileDoneOutlined, color: 'green', text: 'Executar', action: () => showConfirm("Executar") },
-          { icon: InfoCircleOutlined, color: 'blue', text: 'Detalhes', action: () => console.log("Clicado em Detalhes") }
+          { icon: InfoCircleOutlined, color: 'blue', text: 'Detalhes', action: () => handleActionClick("Detalhes", actionId) }
         ]);
       case "sysOficinaCarro_orcar":
         return actionMenuExecute([
           { icon: FileDoneOutlined, color: 'green', text: 'Executar', action: () => showConfirm("Executar") },
           { icon: CheckCircleOutlined, color: 'green', text: 'Finalizar', action: () => showConfirm("Finalizar") },
-          { icon: InfoCircleOutlined, color: 'blue', text: 'Detalhes', action: () => console.log("Clicado em Detalhes") }
+          { icon: InfoCircleOutlined, color: 'blue', text: 'Detalhes', action: () => handleActionClick("Detalhes", actionId) }
         ]);
       case "sysOficinaCarro_executar":
         return actionMenuExecute([
           { icon: CheckCircleOutlined, color: 'green', text: 'Finalizar', action: () => showConfirm("Finalizar") },
-          { icon: InfoCircleOutlined, color: 'blue', text: 'Detalhes', action: () => console.log("Clicado em Detalhes") }
+          { icon: InfoCircleOutlined, color: 'blue', text: 'Detalhes', action: () => handleActionClick("Detalhes", actionId) }
         ]);
       default:
         return null;
@@ -141,6 +164,14 @@ const ActionDetails: React.FC<{
       key: "action",
       render: (text: string, record: any) => getNextActionIcon(record.action),
     },
+  ];
+
+  const productColumns = [
+    { title: "Nome", dataIndex: "name", key: "name" },
+    { title: "Descrição", dataIndex: "description", key: "description" },
+    { title: "Quantidade", dataIndex: "quantity", key: "quantity" },
+    { title: "Preço", dataIndex: "price", key: "price" },
+    { title: "Tags", dataIndex: "tags", key: "tags" },
   ];
 
   const defaultActionMap: Record<
@@ -283,7 +314,16 @@ const ActionDetails: React.FC<{
           overflowY: 'auto',
         }}
       >
-        <Table dataSource={modalData} columns={columns} pagination={false} />
+        {modalTitle === "Detalhes" ? (
+          modalData.map((group: any) => (
+            <div key={group.key}>
+              <h3>{group.productTypeId}</h3>
+              <Table dataSource={group.products} columns={productColumns} pagination={false} />
+            </div>
+          ))
+        ) : (
+          <Table dataSource={modalData} columns={columns} pagination={false} />
+        )}
       </Modal>
     </>
   );
