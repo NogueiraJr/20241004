@@ -326,9 +326,8 @@ const ActionDetails: React.FC<{
                   dataSource={group.products}
                   renderItem={(product: any) => (
                     <List.Item>
-                      <List.Item.Meta
-                        title={product.name}
-                        description={
+                      <Collapse>
+                        <Panel header={product.name} key={product.key}>
                           <Tabs defaultActiveKey="1">
                             <TabPane tab="Descrição" key="1">
                               {product.description}
@@ -339,8 +338,8 @@ const ActionDetails: React.FC<{
                               <p><strong>Tags:</strong> {product.tags.join(', ')}</p>
                             </TabPane>
                           </Tabs>
-                        }
-                      />
+                        </Panel>
+                      </Collapse>
                     </List.Item>
                   )}
                 />
