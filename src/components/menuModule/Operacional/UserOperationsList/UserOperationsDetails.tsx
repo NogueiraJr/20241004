@@ -108,10 +108,13 @@ const ActionDetails: React.FC<{
         content={
           <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', gap: '10px' }}>
             {actions.map((action, index) => (
-              <div key={index} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', cursor: 'pointer' }} onClick={action.action}>
-                {React.createElement(action.icon, { style: { color: action.color } })}
-                <div style={{ color: action.color }}>{action.text}</div>
-              </div>
+              <React.Fragment key={index}>
+                {action.text === 'Detalhes' && <div style={{ borderLeft: '1px solid #ccc', height: '24px', margin: '0 10px' }} />}
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', cursor: 'pointer' }} onClick={action.action}>
+                  {React.createElement(action.icon, { style: { color: action.color } })}
+                  <div style={{ color: action.color }}>{action.text}</div>
+                </div>
+              </React.Fragment>
             ))}
           </div>
         }
