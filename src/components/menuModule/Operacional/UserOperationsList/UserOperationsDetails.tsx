@@ -44,11 +44,11 @@ const ActionDetails: React.FC<{
     if (action === "Detalhes") {
       const products = system === "sysOficinaCarro" ? produtosOficinaCarro : produtosLocacaoRoupa;
       const groupedData = products.reduce((acc: any, product: any) => {
-        const { productTypeId, name, description, quantity, price, tags } = product;
+        const { productTypeId, name, description, quantity, price, tags, type } = product;
         if (!acc[productTypeId]) {
           acc[productTypeId] = [];
         }
-        acc[productTypeId].push({ key: product.id, name, description, quantity, price, tags: tags || [] });
+        acc[productTypeId].push({ key: product.id, name, description, quantity, price, tags: tags || [], type });
         return acc;
       }, {});
 
@@ -324,7 +324,7 @@ const ActionDetails: React.FC<{
         {modalTitle === "Detalhes" ? (
           <Collapse accordion>
             {modalData.map((group: any) => (
-              <Panel header={group.productTypeId} key={group.key}>
+              <Panel header={group.productTypeId === 'service' ? 'Serviços' : 'Produtos'} key={group.key}>
                 <List
                   itemLayout="horizontal"
                   dataSource={group.products}
@@ -337,7 +337,7 @@ const ActionDetails: React.FC<{
                               {product.description}
                             </TabPane>
                             <TabPane tab="Detalhes" key="2">
-                              <p>{product.quantity} x {formatCurrency(product.price)} = {formatCurrency(product.quantity * product.price)}</p>
+                              {product.quantity} x {formatCurrency(product.price)} = {formatCurrency(product.quantity * product.price)}
                               <div>
                                 {product.tags.map((tag: string, index: number) => (
                                   <Tag key={index}>{tag}</Tag>
