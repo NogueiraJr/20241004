@@ -14,6 +14,12 @@ const formatCurrency = (value: number) => {
   return value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 };
 
+const getColorForTag = (tag: string) => {
+  const colors = ['magenta', 'red', 'volcano', 'orange', 'gold', 'lime', 'green', 'cyan', 'blue', 'geekblue', 'purple'];
+  const index = tag.length % colors.length;
+  return colors[index];
+};
+
 const ActionDetails: React.FC<{
   actions: string[];
   system: string;
@@ -340,7 +346,7 @@ const ActionDetails: React.FC<{
                               {product.quantity} x {formatCurrency(product.price)} = {formatCurrency(product.quantity * product.price)}
                               <div>
                                 {product.tags.map((tag: string, index: number) => (
-                                  <Tag key={index}>{tag}</Tag>
+                                  <Tag color={getColorForTag(tag)} key={index}>{tag}</Tag>
                                 ))}
                               </div>
                             </TabPane>
