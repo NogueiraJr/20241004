@@ -3,8 +3,8 @@ import { Tooltip, Modal, Table, Button, Popover, Collapse, List, Tabs, Tag } fro
 import { CalendarOutlined, SkinOutlined, UploadOutlined, RollbackOutlined, CalculatorOutlined, FileDoneOutlined, CarOutlined, ExportOutlined, ImportOutlined, LoginOutlined, LogoutOutlined, SearchOutlined, ToolOutlined, CheckCircleOutlined, UnorderedListOutlined, InfoCircleOutlined } from "@ant-design/icons";
 import IconText from "./IconText";
 import { userActions } from "../../../fields/Operacional/userActions-json"; // Importe o JSON
-import { produtosOficinaCarro } from '../../../fields/Dados/sysOficinaCarro/produtosOficinaCarro-json';
-import { produtosLocacaoRoupa } from '../../../fields/Dados/sysLocacaoRoupa/produtosLocacaoRoupa-json';
+import { itensOficinaCarro } from '../../../fields/Operacional/itensOficinaCarro-json'; // Update import
+import { itensLocacaoRoupa } from '../../../fields/Operacional/itensLocacaoRoupa-json'; // Update import
 import moment from "moment"; // Importe moment.js
 
 const { Panel } = Collapse;
@@ -48,7 +48,7 @@ const ActionDetails: React.FC<{
     setModalTitle(action === "Itens" ? "Itens" : action.charAt(0).toUpperCase() + action.slice(1));
     
     if (action === "Itens") {
-      const products = system === "sysOficinaCarro" ? produtosOficinaCarro : produtosLocacaoRoupa;
+      const products = system === "sysOficinaCarro" ? itensOficinaCarro : itensLocacaoRoupa; // Update variable
       const groupedData = products.reduce((acc: any, product: any) => {
         const { productTypeId, name, description, quantity, price, tags, type } = product;
         if (!acc[productTypeId]) {
