@@ -3,8 +3,7 @@ import { Tooltip, Modal, Table, Button, Popover, Collapse, List, Tabs, Tag } fro
 import { CalendarOutlined, SkinOutlined, UploadOutlined, RollbackOutlined, CalculatorOutlined, FileDoneOutlined, CarOutlined, ExportOutlined, ImportOutlined, LoginOutlined, LogoutOutlined, SearchOutlined, ToolOutlined, CheckCircleOutlined, UnorderedListOutlined, InfoCircleOutlined } from "@ant-design/icons";
 import IconText from "./IconText";
 import { userActions } from "../../../fields/Operacional/userActions-json"; // Importe o JSON
-import { itensOficinaCarro } from '../../../fields/Operacional/itensOficinaCarro-json'; // Update import
-import { itensLocacaoRoupa } from '../../../fields/Operacional/itensLocacaoRoupa-json'; // Update import
+import { userActionsItems } from '../../../fields/Operacional/userActionsItems-json'; // Update import
 import moment from "moment"; // Importe moment.js
 
 const { Panel } = Collapse;
@@ -48,13 +47,19 @@ const ActionDetails: React.FC<{
     setModalTitle(action === "Itens" ? "Itens" : action.charAt(0).toUpperCase() + action.slice(1));
     
     if (action === "Itens") {
-      const products = system === "sysOficinaCarro" ? itensOficinaCarro : itensLocacaoRoupa; // Update variable
+      const userAction = userActions.find(action => action.actionId === actionId && action.userOperationId === userOperationId);
+      const products = userActionsItems.filter(item => item.userActionId === userAction?.id);
+      
+      console.log("UserActionsItems:", userActionsItems);
+      console.log("userOperationId:", userOperationId);
+      console.log("Products:", products);
+
       const groupedData = products.reduce((acc: any, product: any) => {
-        const { productTypeId, name, description, quantity, price, tags, type } = product;
+        const { productTypeId, name, description, quantity, price, tags } = product;
         if (!acc[productTypeId]) {
           acc[productTypeId] = [];
         }
-        acc[productTypeId].push({ key: product.id, name, description, quantity, price, tags: tags || [], type });
+        acc[productTypeId].push({ key: product.id, name, description, quantity, price, tags: tags || [] });
         return acc;
       }, {});
 
@@ -348,7 +353,7 @@ const ActionDetails: React.FC<{
                             <>
                               <p style={{ margin: '0px 0' }}>{product.quantity} x {formatCurrency(product.price)} = {formatCurrency(product.quantity * product.price)}</p>
                               <div style={{ margin: '0px 0' }}>
-                                {product.tags.map((tag: string, index: number) => (
+                                {Array.isArray(product.tags) && product.tags.map((tag: string, index: number) => (
                                   <Tag color={getColorForTag(tag)} key={index}>{tag}</Tag>
                                 ))}
                               </div>
