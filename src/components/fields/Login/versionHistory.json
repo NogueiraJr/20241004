@@ -1,5 +1,31 @@
 [
   {
+    "version": "0.0.14 (beta)",
+    "date": "31/12/2024",
+    "history": [
+      {
+        "system": "sysLocacaoRoupa",
+        "description": "Lista de Produtos e Serviços",
+        "details": [
+          "Lista de Produtos e Serviços para Reservas, Provas, Retiradas e Devoluções"
+        ]
+      }
+    ]
+  },
+  {
+    "version": "0.0.14 (beta)",
+    "date": "31/12/2024",
+    "history": [
+      {
+        "system": "sysOficinaCarro",
+        "description": "Lista de Produtos e Serviços",
+        "details": [
+          "Lista de Produtos e Serviços para Diagnóstico, Orçamento e Execução dos Serviços"
+        ]
+      }
+    ]
+  },
+  {
     "version": "0.0.13 (beta)",
     "date": "29/12/2024",
     "history": [
