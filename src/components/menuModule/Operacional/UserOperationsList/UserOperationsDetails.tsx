@@ -3,8 +3,7 @@ import { Tooltip, Modal, Table, Button, Popover, Collapse, List, Tabs, Tag } fro
 import { CalendarOutlined, SkinOutlined, UploadOutlined, RollbackOutlined, CalculatorOutlined, FileDoneOutlined, CarOutlined, ExportOutlined, ImportOutlined, LoginOutlined, LogoutOutlined, SearchOutlined, ToolOutlined, CheckCircleOutlined, UnorderedListOutlined, InfoCircleOutlined } from "@ant-design/icons";
 import IconText from "./IconText";
 import { userActions } from "../../../fields/Operacional/userActions-json"; // Importe o JSON
-import { produtosOficinaCarro } from '../../../fields/Dados/sysOficinaCarro/produtosOficinaCarro-json';
-import { produtosLocacaoRoupa } from '../../../fields/Dados/sysLocacaoRoupa/produtosLocacaoRoupa-json';
+import { userActionsItems } from '../../../fields/Operacional/userActionsItems-json'; // Update import
 import moment from "moment"; // Importe moment.js
 
 const { Panel } = Collapse;
@@ -45,16 +44,22 @@ const ActionDetails: React.FC<{
 
   const handleActionClick = (action: string, actionId: string) => {
     console.log(`Action: ${action} - ActionId: ${actionId} - UserOperationId: ${userOperationId}`);
-    setModalTitle(action.charAt(0).toUpperCase() + action.slice(1));
+    setModalTitle(action === "Itens" ? "Itens" : action.charAt(0).toUpperCase() + action.slice(1));
     
-    if (action === "Detalhes") {
-      const products = system === "sysOficinaCarro" ? produtosOficinaCarro : produtosLocacaoRoupa;
+    if (action === "Itens") {
+      const userAction = userActions.find(action => action.actionId === actionId && action.userOperationId === userOperationId);
+      const products = userActionsItems.filter(item => item.userActionId === userAction?.id);
+      
+      console.log("UserActionsItems:", userActionsItems);
+      console.log("userOperationId:", userOperationId);
+      console.log("Products:", products);
+
       const groupedData = products.reduce((acc: any, product: any) => {
-        const { productTypeId, name, description, quantity, price, tags, type } = product;
+        const { productTypeId, name, description, quantity, price, tags } = product;
         if (!acc[productTypeId]) {
           acc[productTypeId] = [];
         }
-        acc[productTypeId].push({ key: product.id, name, description, quantity, price, tags: tags || [], type });
+        acc[productTypeId].push({ key: product.id, name, description, quantity, price, tags: tags || [] });
         return acc;
       }, {});
 
@@ -97,41 +102,41 @@ const ActionDetails: React.FC<{
           { icon: SkinOutlined, color: 'green', text: 'Provar', action: () => showConfirm("Provar") },
           { icon: UploadOutlined, color: 'orange', text: 'Retirar', action: () => showConfirm("Retirar") },
           { icon: CheckCircleOutlined, color: 'green', text: 'Finalizar', action: () => showConfirm("Finalizar") },
-          { icon: InfoCircleOutlined, color: 'blue', text: 'Detalhes', action: () => handleActionClick("Detalhes", actionId) }
+          { icon: UnorderedListOutlined, color: 'blue', text: 'Itens', action: () => handleActionClick("Itens", actionId) }
         ]);
       case "sysLocacaoRoupa_provar":
         return actionMenuExecute([
           { icon: UploadOutlined, color: 'orange', text: 'Retirar', action: () => showConfirm("Retirar") },
           { icon: CheckCircleOutlined, color: 'green', text: 'Finalizar', action: () => showConfirm("Finalizar") },
-          { icon: InfoCircleOutlined, color: 'blue', text: 'Detalhes', action: () => handleActionClick("Detalhes", actionId) }
+          { icon: UnorderedListOutlined, color: 'blue', text: 'Itens', action: () => handleActionClick("Itens", actionId) }
         ]);
       case "sysLocacaoRoupa_retirar":
         return actionMenuExecute([
           { icon: RollbackOutlined, color: 'red', text: 'Devolver', action: () => showConfirm("Devolver") },
           { icon: CheckCircleOutlined, color: 'green', text: 'Finalizar', action: () => showConfirm("Finalizar") },
-          { icon: InfoCircleOutlined, color: 'blue', text: 'Detalhes', action: () => handleActionClick("Detalhes", actionId) }
+          { icon: UnorderedListOutlined, color: 'blue', text: 'Itens', action: () => handleActionClick("Itens", actionId) }
         ]);
       case "sysLocacaoRoupa_devolver":
         return actionMenuExecute([
           { icon: CheckCircleOutlined, color: 'green', text: 'Finalizar', action: () => showConfirm("Finalizar") },
-          { icon: InfoCircleOutlined, color: 'blue', text: 'Detalhes', action: () => handleActionClick("Detalhes", actionId) }
+          { icon: UnorderedListOutlined, color: 'blue', text: 'Itens', action: () => handleActionClick("Itens", actionId) }
         ]);
       case "sysOficinaCarro_diagnosticar":
         return actionMenuExecute([
           { icon: CalculatorOutlined, color: 'blue', text: 'Orçar', action: () => showConfirm("Orçar") },
           { icon: FileDoneOutlined, color: 'green', text: 'Executar', action: () => showConfirm("Executar") },
-          { icon: InfoCircleOutlined, color: 'blue', text: 'Detalhes', action: () => handleActionClick("Detalhes", actionId) }
+          { icon: UnorderedListOutlined, color: 'blue', text: 'Itens', action: () => handleActionClick("Itens", actionId) }
         ]);
       case "sysOficinaCarro_orcar":
         return actionMenuExecute([
           { icon: FileDoneOutlined, color: 'green', text: 'Executar', action: () => showConfirm("Executar") },
           { icon: CheckCircleOutlined, color: 'green', text: 'Finalizar', action: () => showConfirm("Finalizar") },
-          { icon: InfoCircleOutlined, color: 'blue', text: 'Detalhes', action: () => handleActionClick("Detalhes", actionId) }
+          { icon: UnorderedListOutlined, color: 'blue', text: 'Itens', action: () => handleActionClick("Itens", actionId) }
         ]);
       case "sysOficinaCarro_executar":
         return actionMenuExecute([
           { icon: CheckCircleOutlined, color: 'green', text: 'Finalizar', action: () => showConfirm("Finalizar") },
-          { icon: InfoCircleOutlined, color: 'blue', text: 'Detalhes', action: () => handleActionClick("Detalhes", actionId) }
+          { icon: UnorderedListOutlined, color: 'blue', text: 'Itens', action: () => handleActionClick("Itens", actionId) }
         ]);
       default:
         return null;
@@ -145,7 +150,7 @@ const ActionDetails: React.FC<{
           <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', gap: '10px' }}>
             {actions.map((action, index) => (
               <React.Fragment key={index}>
-                {action.text === 'Detalhes' && <div style={{ borderLeft: '1px solid #ccc', height: '24px', margin: '0 10px' }} />}
+                {action.text === 'Itens' && <div style={{ borderLeft: '1px solid #ccc', height: '24px', margin: '0 10px' }} />}
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', cursor: 'pointer' }} onClick={action.action}>
                   {React.createElement(action.icon, { style: { color: action.color } })}
                   <div style={{ color: action.color }}>{action.text}</div>
@@ -327,37 +332,39 @@ const ActionDetails: React.FC<{
           overflowY: 'auto',
         }}
       >
-        {modalTitle === "Detalhes" ? (
+        {modalTitle === "Itens" ? (
           <Collapse accordion>
-            {modalData.map((group: any) => (
-              <Panel header={group.productTypeId === 'service' ? 'Serviços' : 'Produtos'} key={group.key}>
-                <List
-                  itemLayout="horizontal"
-                  dataSource={group.products}
-                  renderItem={(product: any) => (
-                    <List.Item style={{ width: '100%' }}>
-                      <Collapse style={{ width: '100%' }}>
-                        <Panel header={product.name} key={product.key}>
-                          <Tabs defaultActiveKey="1">
-                            <TabPane tab="Descrição" key="1">
-                              {product.description}
-                            </TabPane>
-                            <TabPane tab="Detalhes" key="2">
-                              {product.quantity} x {formatCurrency(product.price)} = {formatCurrency(product.quantity * product.price)}
-                              <div>
-                                {product.tags.map((tag: string, index: number) => (
+            {modalData
+              .sort((a, b) => (a.productTypeId === 'service' ? -1 : 1)) // Sort to ensure 'service' comes first
+              .map((group: any) => (
+                <Panel header={group.productTypeId === 'service' ? 'Serviços' : 'Produtos'} key={group.key}>
+                  <List
+                    itemLayout="horizontal"
+                    dataSource={group.products}
+                    renderItem={(product: any) => (
+                      <List.Item style={{ width: '100%', padding: '2px 0' }}>
+                        <List.Item.Meta
+                          title={
+                            <Tooltip title={product.description}>
+                              <span>{product.name}</span>
+                            </Tooltip>
+                          }
+                          description={
+                            <>
+                              <p style={{ margin: '0px 0' }}>{product.quantity} x {formatCurrency(product.price)} = <strong>{formatCurrency(product.quantity * product.price)}</strong></p>
+                              <div style={{ margin: '0px 0' }}>
+                                {Array.isArray(product.tags) && product.tags.map((tag: string, index: number) => (
                                   <Tag color={getColorForTag(tag)} key={index}>{tag}</Tag>
                                 ))}
                               </div>
-                            </TabPane>
-                          </Tabs>
-                        </Panel>
-                      </Collapse>
-                    </List.Item>
-                  )}
-                />
-              </Panel>
-            ))}
+                            </>
+                          }
+                        />
+                      </List.Item>
+                    )}
+                  />
+                </Panel>
+              ))}
           </Collapse>
         ) : (
           <Table dataSource={modalData} columns={columns} pagination={false} />
