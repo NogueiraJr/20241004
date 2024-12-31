@@ -351,7 +351,7 @@ const ActionDetails: React.FC<{
                           }
                           description={
                             <>
-                              <p style={{ margin: '0px 0' }}>{product.quantity} x {formatCurrency(product.price)} = {formatCurrency(product.quantity * product.price)}</p>
+                              <p style={{ margin: '0px 0' }}>{product.quantity} x {formatCurrency(product.price)} = <strong>{formatCurrency(product.quantity * product.price)}</strong></p>
                               <div style={{ margin: '0px 0' }}>
                                 {Array.isArray(product.tags) && product.tags.map((tag: string, index: number) => (
                                   <Tag color={getColorForTag(tag)} key={index}>{tag}</Tag>
