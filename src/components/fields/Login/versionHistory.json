@@ -1,5 +1,31 @@
 [
   {
+    "version": "0.0.15 (beta)",
+    "date": "01/01/2025",
+    "history": [
+      {
+        "system": "sysLocacaoRoupa",
+        "description": "Gestão dos Passos das Ações",
+        "details": [
+          "Gestão dos Passos e Datas de Reservas, Provas, Retiradas e Devoluções"
+        ]
+      }
+    ]
+  },
+  {
+    "version": "0.0.15 (beta)",
+    "date": "01/01/2025",
+    "history": [
+      {
+        "system": "sysOficinaCarro",
+        "description": "Gestão dos Passos das Ações",
+        "details": [
+          "Gestão dos Passos e Datas de Diagnósticos, Orçamentos e Execução dos Serviços"
+        ]
+      }
+    ]
+  },
+  {
     "version": "0.0.14 (beta)",
     "date": "31/12/2024",
     "history": [

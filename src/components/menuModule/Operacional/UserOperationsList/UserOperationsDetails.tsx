@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Tooltip, Modal, Table, Button, Popover, Collapse, List, Tabs, Tag } from "antd";
+import { Tooltip, Modal, Table, Button, Popover, Collapse, List, Tabs, Tag, Steps } from "antd";
 import { CalendarOutlined, SkinOutlined, UploadOutlined, RollbackOutlined, CalculatorOutlined, FileDoneOutlined, CarOutlined, ExportOutlined, ImportOutlined, LoginOutlined, LogoutOutlined, SearchOutlined, ToolOutlined, CheckCircleOutlined, UnorderedListOutlined, InfoCircleOutlined } from "@ant-design/icons";
 import IconText from "./IconText";
 import { userActions } from "../../../fields/Operacional/userActions-json"; // Importe o JSON
@@ -73,16 +73,70 @@ const ActionDetails: React.FC<{
     } else {
       const filteredData = userActions.filter(
         (userAction) => userAction.userOperationId === userOperationId && userAction.actionId.toLocaleLowerCase().trim() === actionId.toLocaleLowerCase().trim()
-      ).map((userAction) => ({
-        key: userAction.id,
-        description: (
-          <Tooltip title={userAction.notes}>
-            <span>{userAction.description}</span>
+      ).map((userAction) => {
+        const getStepStatus = (date: string | undefined) => date ? 'finish' : 'wait';
+        const getStepIconColor = (date: string | undefined, color: string) => date ? color : 'gray';
+
+        const lastDateColor = userAction.finishedAt
+          ? 'green'
+          : userAction.executedAt
+          ? 'red'
+          : userAction.scheduledAt
+          ? 'blue'
+          : 'gray';
+
+        return {
+          key: userAction.id,
+          description: (
+        <Tooltip title={userAction.notes}>
+          <span>{userAction.description}</span>
+        </Tooltip>
+          ),
+          scheduledAt: (
+        <Popover
+          content={
+            <Steps direction="vertical" size="small">
+          <Steps.Step 
+            title="Agendado" 
+            description={moment(userAction.scheduledAt).format("DD/MM/YYYY HH:mm")} 
+            status={getStepStatus(userAction.scheduledAt)} 
+            icon={<CalendarOutlined style={{ color: getStepIconColor(userAction.scheduledAt, 'blue') }} />} 
+          />
+          {userAction.executedAt && (
+            <Steps.Step 
+              title="Executando" 
+              description={moment(userAction.executedAt).format("DD/MM/YYYY HH:mm")} 
+              status={getStepStatus(userAction.executedAt)} 
+              icon={<CalendarOutlined style={{ color: getStepIconColor(userAction.executedAt, 'red') }} />} 
+            />
+          )}
+          {userAction.finishedAt && (
+            <Steps.Step 
+              title="Finalizado" 
+              description={moment(userAction.finishedAt).format("DD/MM/YYYY HH:mm")} 
+              status={getStepStatus(userAction.finishedAt)} 
+              icon={<CalendarOutlined style={{ color: getStepIconColor(userAction.finishedAt, 'green') }} />} 
+            />
+          )}
+            </Steps>
+          }
+          title="Quando"
+          trigger="click"
+          placement="bottom"
+        >
+          <Tooltip title="Passos da Ação">
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', cursor: 'pointer' }}>
+          <CalendarOutlined style={{ color: lastDateColor }} />
+          <div style={{ color: lastDateColor }}>Quando</div>
+            </div>
           </Tooltip>
-        ),
-        scheduledAt: moment(userAction.scheduledAt).format("DD/MM/YYYY HH:mm"), // Formate scheduledAt
-        action: userAction.actionId,
-      }));
+        </Popover>
+          ),
+          action: userAction.actionId,
+          executedAt: userAction.executedAt,
+          finishedAt: userAction.finishedAt,
+        };
+      });
       setModalData(filteredData);
     }
     setModalOpen(true);
@@ -95,47 +149,50 @@ const ActionDetails: React.FC<{
 
   const iconStyle: React.CSSProperties = { display: 'flex', flexDirection: 'column', alignItems: 'center', cursor: 'pointer' };
 
-  const getNextActionIcon = (actionId: string) => {
+  const getNextActionIcon = (actionId: string, executedAt: string | null, finishedAt: string | null) => {
+    const isExecuted = !!executedAt;
+    const isFinished = !!finishedAt;
+
     switch (actionId) {
       case "sysLocacaoRoupa_reservar":
         return actionMenuExecute([
           { icon: SkinOutlined, color: 'green', text: 'Provar', action: () => showConfirm("Provar") },
           { icon: UploadOutlined, color: 'orange', text: 'Retirar', action: () => showConfirm("Retirar") },
-          { icon: CheckCircleOutlined, color: 'green', text: 'Finalizar', action: () => showConfirm("Finalizar") },
+          { icon: CheckCircleOutlined, color: 'green', text: 'Finalizar', action: () => showConfirm("Finalizar"), disabled: isFinished },
           { icon: UnorderedListOutlined, color: 'blue', text: 'Itens', action: () => handleActionClick("Itens", actionId) }
         ]);
       case "sysLocacaoRoupa_provar":
         return actionMenuExecute([
           { icon: UploadOutlined, color: 'orange', text: 'Retirar', action: () => showConfirm("Retirar") },
-          { icon: CheckCircleOutlined, color: 'green', text: 'Finalizar', action: () => showConfirm("Finalizar") },
+          { icon: CheckCircleOutlined, color: 'green', text: 'Finalizar', action: () => showConfirm("Finalizar"), disabled: isFinished },
           { icon: UnorderedListOutlined, color: 'blue', text: 'Itens', action: () => handleActionClick("Itens", actionId) }
         ]);
       case "sysLocacaoRoupa_retirar":
         return actionMenuExecute([
           { icon: RollbackOutlined, color: 'red', text: 'Devolver', action: () => showConfirm("Devolver") },
-          { icon: CheckCircleOutlined, color: 'green', text: 'Finalizar', action: () => showConfirm("Finalizar") },
+          { icon: CheckCircleOutlined, color: 'green', text: 'Finalizar', action: () => showConfirm("Finalizar"), disabled: isFinished },
           { icon: UnorderedListOutlined, color: 'blue', text: 'Itens', action: () => handleActionClick("Itens", actionId) }
         ]);
       case "sysLocacaoRoupa_devolver":
         return actionMenuExecute([
-          { icon: CheckCircleOutlined, color: 'green', text: 'Finalizar', action: () => showConfirm("Finalizar") },
+          { icon: CheckCircleOutlined, color: 'green', text: 'Finalizar', action: () => showConfirm("Finalizar"), disabled: isFinished },
           { icon: UnorderedListOutlined, color: 'blue', text: 'Itens', action: () => handleActionClick("Itens", actionId) }
         ]);
       case "sysOficinaCarro_diagnosticar":
         return actionMenuExecute([
           { icon: CalculatorOutlined, color: 'blue', text: 'Orçar', action: () => showConfirm("Orçar") },
-          { icon: FileDoneOutlined, color: 'green', text: 'Executar', action: () => showConfirm("Executar") },
+          { icon: FileDoneOutlined, color: 'green', text: 'Executar', action: () => showConfirm("Executar"), disabled: isExecuted },
           { icon: UnorderedListOutlined, color: 'blue', text: 'Itens', action: () => handleActionClick("Itens", actionId) }
         ]);
       case "sysOficinaCarro_orcar":
         return actionMenuExecute([
-          { icon: FileDoneOutlined, color: 'green', text: 'Executar', action: () => showConfirm("Executar") },
-          { icon: CheckCircleOutlined, color: 'green', text: 'Finalizar', action: () => showConfirm("Finalizar") },
+          { icon: FileDoneOutlined, color: 'green', text: 'Executar', action: () => showConfirm("Executar"), disabled: isExecuted },
+          { icon: CheckCircleOutlined, color: 'green', text: 'Finalizar', action: () => showConfirm("Finalizar"), disabled: isFinished },
           { icon: UnorderedListOutlined, color: 'blue', text: 'Itens', action: () => handleActionClick("Itens", actionId) }
         ]);
       case "sysOficinaCarro_executar":
         return actionMenuExecute([
-          { icon: CheckCircleOutlined, color: 'green', text: 'Finalizar', action: () => showConfirm("Finalizar") },
+          { icon: CheckCircleOutlined, color: 'green', text: 'Finalizar', action: () => showConfirm("Finalizar"), disabled: isFinished },
           { icon: UnorderedListOutlined, color: 'blue', text: 'Itens', action: () => handleActionClick("Itens", actionId) }
         ]);
       default:
@@ -143,7 +200,7 @@ const ActionDetails: React.FC<{
     }
   };
 
-  function actionMenuExecute(actions: { icon: React.ComponentType<any>; color: string; text: string; action: () => void }[]) {
+  function actionMenuExecute(actions: { icon: React.ComponentType<any>; color: string; text: string; action: () => void; disabled?: boolean }[]) {
     return (
       <Popover
         content={
@@ -151,9 +208,9 @@ const ActionDetails: React.FC<{
             {actions.map((action, index) => (
               <React.Fragment key={index}>
                 {action.text === 'Itens' && <div style={{ borderLeft: '1px solid #ccc', height: '24px', margin: '0 10px' }} />}
-                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', cursor: 'pointer' }} onClick={action.action}>
-                  {React.createElement(action.icon, { style: { color: action.color } })}
-                  <div style={{ color: action.color }}>{action.text}</div>
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', cursor: action.disabled ? 'not-allowed' : 'pointer' }} onClick={!action.disabled ? action.action : undefined}>
+                  {React.createElement(action.icon, { style: { color: action.disabled ? 'gray' : action.color } })}
+                  <div style={{ color: action.disabled ? 'gray' : action.color }}>{action.text}</div>
                 </div>
               </React.Fragment>
             ))}
@@ -180,7 +237,7 @@ const ActionDetails: React.FC<{
       title: "Ações",
       dataIndex: "action",
       key: "action",
-      render: (text: string, record: any) => getNextActionIcon(record.action),
+      render: (text: string, record: any) => getNextActionIcon(record.action, record.executedAt, record.finishedAt),
     },
   ];
 
