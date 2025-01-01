@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Tooltip, Modal, Table, Button, Popover, Collapse, List, Tabs, Tag } from "antd";
+import { Tooltip, Modal, Table, Button, Popover, Collapse, List, Tabs, Tag, Steps } from "antd";
 import { CalendarOutlined, SkinOutlined, UploadOutlined, RollbackOutlined, CalculatorOutlined, FileDoneOutlined, CarOutlined, ExportOutlined, ImportOutlined, LoginOutlined, LogoutOutlined, SearchOutlined, ToolOutlined, CheckCircleOutlined, UnorderedListOutlined, InfoCircleOutlined } from "@ant-design/icons";
 import IconText from "./IconText";
 import { userActions } from "../../../fields/Operacional/userActions-json"; // Importe o JSON
@@ -73,16 +73,68 @@ const ActionDetails: React.FC<{
     } else {
       const filteredData = userActions.filter(
         (userAction) => userAction.userOperationId === userOperationId && userAction.actionId.toLocaleLowerCase().trim() === actionId.toLocaleLowerCase().trim()
-      ).map((userAction) => ({
-        key: userAction.id,
-        description: (
-          <Tooltip title={userAction.notes}>
-            <span>{userAction.description}</span>
+      ).map((userAction) => {
+        const getStepStatus = (date: string | undefined) => date ? 'finish' : 'wait';
+        const getStepIconColor = (date: string | undefined, color: string) => date ? color : 'gray';
+
+        const lastDateColor = userAction.finishedAt
+          ? 'green'
+          : userAction.executedAt
+          ? 'red'
+          : userAction.scheduledAt
+          ? 'blue'
+          : 'gray';
+
+        return {
+          key: userAction.id,
+          description: (
+        <Tooltip title={userAction.notes}>
+          <span>{userAction.description}</span>
+        </Tooltip>
+          ),
+          scheduledAt: (
+        <Popover
+          content={
+            <Steps direction="vertical" size="small">
+          <Steps.Step 
+            title="Agendado" 
+            description={moment(userAction.scheduledAt).format("DD/MM/YYYY HH:mm")} 
+            status={getStepStatus(userAction.scheduledAt)} 
+            icon={<CalendarOutlined style={{ color: getStepIconColor(userAction.scheduledAt, 'blue') }} />} 
+          />
+          {userAction.executedAt && (
+            <Steps.Step 
+              title="Executado" 
+              description={moment(userAction.executedAt).format("DD/MM/YYYY HH:mm")} 
+              status={getStepStatus(userAction.executedAt)} 
+              icon={<CalendarOutlined style={{ color: getStepIconColor(userAction.executedAt, 'red') }} />} 
+            />
+          )}
+          {userAction.finishedAt && (
+            <Steps.Step 
+              title="Finalizado" 
+              description={moment(userAction.finishedAt).format("DD/MM/YYYY HH:mm")} 
+              status={getStepStatus(userAction.finishedAt)} 
+              icon={<CalendarOutlined style={{ color: getStepIconColor(userAction.finishedAt, 'green') }} />} 
+            />
+          )}
+            </Steps>
+          }
+          title="Quando"
+          trigger="click"
+          placement="bottom"
+        >
+          <Tooltip title="Passos da Ação">
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', cursor: 'pointer' }}>
+          <CalendarOutlined style={{ color: lastDateColor }} />
+          <div style={{ color: lastDateColor }}>Quando</div>
+            </div>
           </Tooltip>
-        ),
-        scheduledAt: moment(userAction.scheduledAt).format("DD/MM/YYYY HH:mm"), // Formate scheduledAt
-        action: userAction.actionId,
-      }));
+        </Popover>
+          ),
+          action: userAction.actionId,
+        };
+      });
       setModalData(filteredData);
     }
     setModalOpen(true);
