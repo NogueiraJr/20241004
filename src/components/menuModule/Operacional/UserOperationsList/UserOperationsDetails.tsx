@@ -88,49 +88,56 @@ const ActionDetails: React.FC<{
         return {
           key: userAction.id,
           description: (
-        <Tooltip title={userAction.notes}>
-          <span>{userAction.description}</span>
-        </Tooltip>
+            <>
+              <Tooltip title={userAction.notes}>
+                <span>{userAction.description}</span>
+              </Tooltip>
+              <div style={{ margin: '0px 0' }}>
+                {userAction.tags.split('|').map((tag: string, index: number) => (
+                  <Tag color={getColorForTag(tag)} key={index}>{tag}</Tag>
+                ))}
+              </div>
+            </>
           ),
           scheduledAt: (
-        <Popover
-          content={
-            <Steps direction="vertical" size="small">
-          <Steps.Step 
-            title="Agendamento" 
-            description={moment(userAction.scheduledAt).format("DD/MM/YYYY HH:mm")} 
-            status={getStepStatus(userAction.scheduledAt)} 
-            icon={<CalendarOutlined style={{ color: getStepIconColor(userAction.scheduledAt, 'blue') }} />} 
-          />
-          {userAction.executedAt && (
-            <Steps.Step 
-              title="Execução" 
-              description={moment(userAction.executedAt).format("DD/MM/YYYY HH:mm")} 
-              status={getStepStatus(userAction.executedAt)} 
-              icon={<CalendarOutlined style={{ color: getStepIconColor(userAction.executedAt, 'red') }} />} 
-            />
-          )}
-          {userAction.finishedAt && (
-            <Steps.Step 
-              title="Finalização" 
-              description={moment(userAction.finishedAt).format("DD/MM/YYYY HH:mm")} 
-              status={getStepStatus(userAction.finishedAt)} 
-              icon={<CalendarOutlined style={{ color: getStepIconColor(userAction.finishedAt, 'green') }} />} 
-            />
-          )}
-            </Steps>
-          }
-          title="Quando"
-          trigger="click"
-          placement="bottom"
-        >
-          <Tooltip title="Passos da Ação">
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', cursor: 'pointer' }}>
-          <CalendarOutlined style={{ color: lastDateColor }} />
-          <div style={{ color: lastDateColor }}>Quando</div>
-            </div>
-          </Tooltip>
-        </Popover>
+            <Popover
+              content={
+                <Steps direction="vertical" size="small">
+                  <Steps.Step 
+                    title="Agendamento" 
+                    description={moment(userAction.scheduledAt).format("DD/MM/YYYY HH:mm")} 
+                    status={getStepStatus(userAction.scheduledAt)} 
+                    icon={<CalendarOutlined style={{ color: getStepIconColor(userAction.scheduledAt, 'blue') }} />} 
+                  />
+                  {userAction.executedAt && (
+                    <Steps.Step 
+                      title="Execução" 
+                      description={moment(userAction.executedAt).format("DD/MM/YYYY HH:mm")} 
+                      status={getStepStatus(userAction.executedAt)} 
+                      icon={<CalendarOutlined style={{ color: getStepIconColor(userAction.executedAt, 'red') }} />} 
+                    />
+                  )}
+                  {userAction.finishedAt && (
+                    <Steps.Step 
+                      title="Finalização" 
+                      description={moment(userAction.finishedAt).format("DD/MM/YYYY HH:mm")} 
+                      status={getStepStatus(userAction.finishedAt)} 
+                      icon={<CalendarOutlined style={{ color: getStepIconColor(userAction.finishedAt, 'green') }} />} 
+                    />
+                  )}
+                </Steps>
+              }
+              title="Quando"
+              trigger="click"
+              placement="bottom"
+            >
+              <Tooltip title="Passos da Ação">
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', cursor: 'pointer' }}>
+                  <CalendarOutlined style={{ color: lastDateColor }} />
+                  <div style={{ color: lastDateColor }}>Quando</div>
+                </div>
+              </Tooltip>
+            </Popover>
           ),
           action: userAction.actionId,
           executedAt: userAction.executedAt,
