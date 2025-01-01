@@ -326,12 +326,40 @@ const ActionDetails: React.FC<{
 
   const systemOverrides: Record<string, Partial<typeof defaultActionMap>> = {
     sysOficinaCarro: {
+      buscar: {
+        icon: ImportOutlined,
+        text: "Buscar",
+        tooltip: "Buscar no Cliente",
+        color: "blue",
+        action: () => openGoogleMaps(),
+      },
+      checkin: {
+        icon: LoginOutlined,
+        text: "Check-in",
+        tooltip: "Verificação no Início do Atendimento",
+        color: "blue",
+        action: () => openModal("in"),
+      },
       executar: {
         icon: CarOutlined,
         text: "Atendimentos",
         tooltip: "Execução de Serviços Automotivos",
         color: "green",
         action: () => handleActionClick("Atendimentos", "sysOficinaCarro_executar"),
+      },
+      checkout: {
+        icon: LogoutOutlined,
+        text: "Check-out",
+        tooltip: "Verificação no Fim do Atendimento",
+        color: "purple",
+        action: () => openModal("out"),
+      },
+      levar: {
+        icon: ExportOutlined,
+        text: "Levar",
+        tooltip: "Devolver para o Cliente",
+        color: "purple",
+        action: () => openGoogleMaps(),
       },
     },
     sysLocacaoRoupa: {
