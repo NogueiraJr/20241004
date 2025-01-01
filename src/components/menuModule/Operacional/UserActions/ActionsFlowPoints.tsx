@@ -75,15 +75,10 @@ const MultiSelectList: React.FC<MultiSelectListProps> = ({
                   <div className="custom-label-list-detail">{item.description}</div>
                 </Checkbox>
                 <Tooltip title="Informações relevantes">
-                  <EditOutlined
-                    style={{
-                      fontSize: '25px',
-                      color: '#1890ff',
-                      cursor: 'pointer',
-                      marginRight: '10px'
-                    }}
-                    onClick={() => handleOpenNoteModal(item)}
-                  />
+                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', cursor: 'pointer', marginRight: '10px' }} onClick={() => handleOpenNoteModal(item)}>
+                    <EditOutlined style={{ fontSize: '25px', color: '#1890ff' }} />
+                    <div style={{ color: '#1890ff' }}>Anotações</div>
+                  </div>
                 </Tooltip>
               </div>
             </List.Item>

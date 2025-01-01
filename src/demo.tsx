@@ -84,11 +84,11 @@ const App: React.FC = () => {
         return 'Devolução';
 
       case '/diagnostico':
-        return 'Diagnóstico';
+        return 'Diagnósticos';
       case '/orcamento':
         return 'Orçamento';
       case '/execucao':
-        return 'Serviços';
+        return 'Atendimentos';
 
       default:
         return '';
