@@ -303,10 +303,10 @@ const ActionDetails: React.FC<{
     },
     executar: {
       icon: FileDoneOutlined,
-      text: "Serviços",
+      text: "Atendimentos",
       tooltip: "Execução do Serviço",
       color: "green",
-      action: () => handleActionClick("Serviços", "sysOficinaCarro_executar"),
+      action: () => handleActionClick("Atendimentos", "sysOficinaCarro_executar"),
     },
     diagnostico: {
       icon: SearchOutlined,
@@ -328,10 +328,10 @@ const ActionDetails: React.FC<{
     sysOficinaCarro: {
       executar: {
         icon: CarOutlined,
-        text: "Serviços",
+        text: "Atendimentos",
         tooltip: "Execução de Serviços Automotivos",
         color: "green",
-        action: () => handleActionClick("Serviços", "sysOficinaCarro_executar"),
+        action: () => handleActionClick("Atendimentos", "sysOficinaCarro_executar"),
       },
     },
     sysLocacaoRoupa: {
