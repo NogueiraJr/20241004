@@ -55,11 +55,12 @@ const CadastrarNovoItemModal: React.FC<{
       Gravar
     </Button>,
   ]}
-  style={{ top: 100 }}
+  style={{ top: 100, maxWidth: '470px' }} // Ajusta a largura do modal
   bodyStyle={{
     maxHeight: '50vh',
     overflowY: 'auto',
     overflowX: 'hidden', // Evita o scroll horizontal
+    paddingRight: '10px', // Adiciona um espaço para o scroll horizontal
   }}
   width="100%" // Ajusta a largura do modal, se necessário
 >
