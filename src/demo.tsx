@@ -88,7 +88,7 @@ const App: React.FC = () => {
       case '/orcamento':
         return 'Orçamento';
       case '/execucao':
-        return 'Execução';
+        return 'Serviços';
 
       default:
         return '';

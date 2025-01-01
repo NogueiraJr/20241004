@@ -97,14 +97,14 @@ const ActionDetails: React.FC<{
           content={
             <Steps direction="vertical" size="small">
           <Steps.Step 
-            title="Agendado" 
+            title="Agendamento" 
             description={moment(userAction.scheduledAt).format("DD/MM/YYYY HH:mm")} 
             status={getStepStatus(userAction.scheduledAt)} 
             icon={<CalendarOutlined style={{ color: getStepIconColor(userAction.scheduledAt, 'blue') }} />} 
           />
           {userAction.executedAt && (
             <Steps.Step 
-              title="Executando" 
+              title="Execução" 
               description={moment(userAction.executedAt).format("DD/MM/YYYY HH:mm")} 
               status={getStepStatus(userAction.executedAt)} 
               icon={<CalendarOutlined style={{ color: getStepIconColor(userAction.executedAt, 'red') }} />} 
@@ -112,7 +112,7 @@ const ActionDetails: React.FC<{
           )}
           {userAction.finishedAt && (
             <Steps.Step 
-              title="Finalizado" 
+              title="Finalização" 
               description={moment(userAction.finishedAt).format("DD/MM/YYYY HH:mm")} 
               status={getStepStatus(userAction.finishedAt)} 
               icon={<CalendarOutlined style={{ color: getStepIconColor(userAction.finishedAt, 'green') }} />} 
@@ -299,7 +299,7 @@ const ActionDetails: React.FC<{
       text: "Serviços",
       tooltip: "Execução do Serviço",
       color: "green",
-      action: () => handleActionClick("Execuções", "sysOficinaCarro_executar"),
+      action: () => handleActionClick("Serviços", "sysOficinaCarro_executar"),
     },
     diagnostico: {
       icon: SearchOutlined,
@@ -324,7 +324,7 @@ const ActionDetails: React.FC<{
         text: "Serviços",
         tooltip: "Execução de Serviços Automotivos",
         color: "green",
-        action: () => handleActionClick("Execuções", "sysOficinaCarro_executar"),
+        action: () => handleActionClick("Serviços", "sysOficinaCarro_executar"),
       },
     },
     sysLocacaoRoupa: {

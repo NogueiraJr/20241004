@@ -448,14 +448,14 @@ const Operacional: React.FC = () => {
           >
             <Card.Meta
               avatar={
-                <Tooltip title="Execução">
+                <Tooltip title="Serviços">
                   <Avatar icon={<FileDoneOutlined style={{ color: 'black' }} />} />
                 </Tooltip>
               }
-              title="Execução"
+              title="Serviços"
               description={
                 <>
-                  <Text strong style={{ fontSize: '15px' }}>As Execuções da sua Oficina</Text>
+                  <Text strong style={{ fontSize: '15px' }}>Os Serviços da sua Oficina</Text>
                   <Link onClick={() => { console.log('Texto clicado!'); }}>
                     <div>09 serviços realizados nesta semana</div>
                   </Link>
