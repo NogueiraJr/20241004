@@ -90,13 +90,13 @@ const ActionDetails: React.FC<{
           description: (
             <>
               <Tooltip title={userAction.notes}>
-                <span>{userAction.description}</span>
+                <span>
+                  {userAction.description}{" "}
+                  {userAction.tags.split('|').map((tag: string, index: number) => (
+                    <Tag color={getColorForTag(tag)} key={index}>{tag}</Tag>
+                  ))}
+                </span>
               </Tooltip>
-              <div style={{ margin: '0px 0' }}>
-                {userAction.tags.split('|').map((tag: string, index: number) => (
-                  <Tag color={getColorForTag(tag)} key={index}>{tag}</Tag>
-                ))}
-              </div>
             </>
           ),
           scheduledAt: (
@@ -439,13 +439,13 @@ const ActionDetails: React.FC<{
                           title={
                             <>
                             <Tooltip title={product.description}>
-                              <span>{product.name}</span>
-                            </Tooltip>
-                              <div style={{ margin: '0px 0' }}>
+                              <span>
+                                {product.name}{" "}
                                 {product.tags.split('|').map((tag: string, index: number) => (
                                   <Tag color={getColorForTag(tag)} key={index}>{tag}</Tag>
                                 ))}
-                              </div>
+                            </span>
+                            </Tooltip>
                             </>
                             }
                           description={
