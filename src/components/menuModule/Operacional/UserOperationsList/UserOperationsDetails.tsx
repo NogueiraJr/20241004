@@ -42,12 +42,12 @@ const ActionDetails: React.FC<{
     });
   };
 
-  const handleActionClick = (action: string, actionId: string) => {
+  const handleActionClick = (action: string, actionId: string, userActionId?: string) => {
     console.log(`Action: ${action} - ActionId: ${actionId} - UserOperationId: ${userOperationId}`);
     setModalTitle(action === "Itens" ? "Itens" : action.charAt(0).toUpperCase() + action.slice(1));
     
     if (action === "Itens") {
-      const userAction = userActions.find(action => action.actionId === actionId && action.userOperationId === userOperationId);
+      const userAction = userActions.find(action => action.actionId === actionId && action.userOperationId === userOperationId && action.id === userActionId);
       const products = userActionsItems.filter(item => item.userActionId === userAction?.id);
       
       console.log("UserActionsItems:", userActionsItems);
@@ -156,7 +156,7 @@ const ActionDetails: React.FC<{
 
   const iconStyle: React.CSSProperties = { display: 'flex', flexDirection: 'column', alignItems: 'center', cursor: 'pointer' };
 
-  const getNextActionIcon = (actionId: string, executedAt: string | null, finishedAt: string | null) => {
+  const getNextActionIcon = (actionId: string, executedAt: string | null, finishedAt: string | null, userActionId?: string) => {
     const isExecuted = !!executedAt;
     const isFinished = !!finishedAt;
 
@@ -166,41 +166,41 @@ const ActionDetails: React.FC<{
           { icon: SkinOutlined, color: 'green', text: 'Provar', action: () => showConfirm("Provar") },
           { icon: UploadOutlined, color: 'orange', text: 'Retirar', action: () => showConfirm("Retirar") },
           { icon: CheckCircleOutlined, color: 'green', text: 'Finalizar', action: () => showConfirm("Finalizar"), disabled: isFinished },
-          { icon: UnorderedListOutlined, color: 'blue', text: 'Itens', action: () => handleActionClick("Itens", actionId) }
+          { icon: UnorderedListOutlined, color: 'blue', text: 'Itens', action: () => handleActionClick("Itens", actionId, userActionId) }
         ]);
       case "sysLocacaoRoupa_provar":
         return actionMenuExecute([
           { icon: UploadOutlined, color: 'orange', text: 'Retirar', action: () => showConfirm("Retirar") },
           { icon: CheckCircleOutlined, color: 'green', text: 'Finalizar', action: () => showConfirm("Finalizar"), disabled: isFinished },
-          { icon: UnorderedListOutlined, color: 'blue', text: 'Itens', action: () => handleActionClick("Itens", actionId) }
+          { icon: UnorderedListOutlined, color: 'blue', text: 'Itens', action: () => handleActionClick("Itens", actionId, userActionId) }
         ]);
       case "sysLocacaoRoupa_retirar":
         return actionMenuExecute([
           { icon: RollbackOutlined, color: 'red', text: 'Devolver', action: () => showConfirm("Devolver") },
           { icon: CheckCircleOutlined, color: 'green', text: 'Finalizar', action: () => showConfirm("Finalizar"), disabled: isFinished },
-          { icon: UnorderedListOutlined, color: 'blue', text: 'Itens', action: () => handleActionClick("Itens", actionId) }
+          { icon: UnorderedListOutlined, color: 'blue', text: 'Itens', action: () => handleActionClick("Itens", actionId, userActionId) }
         ]);
       case "sysLocacaoRoupa_devolver":
         return actionMenuExecute([
           { icon: CheckCircleOutlined, color: 'green', text: 'Finalizar', action: () => showConfirm("Finalizar"), disabled: isFinished },
-          { icon: UnorderedListOutlined, color: 'blue', text: 'Itens', action: () => handleActionClick("Itens", actionId) }
+          { icon: UnorderedListOutlined, color: 'blue', text: 'Itens', action: () => handleActionClick("Itens", actionId, userActionId) }
         ]);
       case "sysOficinaCarro_diagnosticar":
         return actionMenuExecute([
           { icon: CalculatorOutlined, color: 'blue', text: 'Orçar', action: () => showConfirm("Orçar") },
           { icon: FileDoneOutlined, color: 'green', text: 'Executar', action: () => showConfirm("Executar"), disabled: isExecuted },
-          { icon: UnorderedListOutlined, color: 'blue', text: 'Itens', action: () => handleActionClick("Itens", actionId) }
+          { icon: UnorderedListOutlined, color: 'blue', text: 'Itens', action: () => handleActionClick("Itens", actionId, userActionId) }
         ]);
       case "sysOficinaCarro_orcar":
         return actionMenuExecute([
           { icon: FileDoneOutlined, color: 'green', text: 'Executar', action: () => showConfirm("Executar"), disabled: isExecuted },
           { icon: CheckCircleOutlined, color: 'green', text: 'Finalizar', action: () => showConfirm("Finalizar"), disabled: isFinished },
-          { icon: UnorderedListOutlined, color: 'blue', text: 'Itens', action: () => handleActionClick("Itens", actionId) }
+          { icon: UnorderedListOutlined, color: 'blue', text: 'Itens', action: () => handleActionClick("Itens", actionId, userActionId) }
         ]);
       case "sysOficinaCarro_executar":
         return actionMenuExecute([
           { icon: CheckCircleOutlined, color: 'green', text: 'Finalizar', action: () => showConfirm("Finalizar"), disabled: isFinished },
-          { icon: UnorderedListOutlined, color: 'blue', text: 'Itens', action: () => handleActionClick("Itens", actionId) }
+          { icon: UnorderedListOutlined, color: 'blue', text: 'Itens', action: () => handleActionClick("Itens", actionId, userActionId) }
         ]);
       default:
         return null;
@@ -244,7 +244,7 @@ const ActionDetails: React.FC<{
       title: "Ações",
       dataIndex: "action",
       key: "action",
-      render: (text: string, record: any) => getNextActionIcon(record.action, record.executedAt, record.finishedAt),
+      render: (text: string, record: any) => getNextActionIcon(record.action, record.executedAt, record.finishedAt, record.key),
     },
   ];
 
