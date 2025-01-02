@@ -88,49 +88,56 @@ const ActionDetails: React.FC<{
         return {
           key: userAction.id,
           description: (
-        <Tooltip title={userAction.notes}>
-          <span>{userAction.description}</span>
-        </Tooltip>
+            <>
+              <Tooltip title={userAction.notes}>
+                <span>
+                  {userAction.description}{" "}
+                  {userAction.tags.split('|').map((tag: string, index: number) => (
+                    <Tag color={getColorForTag(tag)} key={index}>{tag}</Tag>
+                  ))}
+                </span>
+              </Tooltip>
+            </>
           ),
           scheduledAt: (
-        <Popover
-          content={
-            <Steps direction="vertical" size="small">
-          <Steps.Step 
-            title="Agendado" 
-            description={moment(userAction.scheduledAt).format("DD/MM/YYYY HH:mm")} 
-            status={getStepStatus(userAction.scheduledAt)} 
-            icon={<CalendarOutlined style={{ color: getStepIconColor(userAction.scheduledAt, 'blue') }} />} 
-          />
-          {userAction.executedAt && (
-            <Steps.Step 
-              title="Executando" 
-              description={moment(userAction.executedAt).format("DD/MM/YYYY HH:mm")} 
-              status={getStepStatus(userAction.executedAt)} 
-              icon={<CalendarOutlined style={{ color: getStepIconColor(userAction.executedAt, 'red') }} />} 
-            />
-          )}
-          {userAction.finishedAt && (
-            <Steps.Step 
-              title="Finalizado" 
-              description={moment(userAction.finishedAt).format("DD/MM/YYYY HH:mm")} 
-              status={getStepStatus(userAction.finishedAt)} 
-              icon={<CalendarOutlined style={{ color: getStepIconColor(userAction.finishedAt, 'green') }} />} 
-            />
-          )}
-            </Steps>
-          }
-          title="Quando"
-          trigger="click"
-          placement="bottom"
-        >
-          <Tooltip title="Passos da Ação">
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', cursor: 'pointer' }}>
-          <CalendarOutlined style={{ color: lastDateColor }} />
-          <div style={{ color: lastDateColor }}>Quando</div>
-            </div>
-          </Tooltip>
-        </Popover>
+            <Popover
+              content={
+                <Steps direction="vertical" size="small">
+                  <Steps.Step 
+                    title="Agendamento" 
+                    description={moment(userAction.scheduledAt).format("DD/MM/YYYY HH:mm")} 
+                    status={getStepStatus(userAction.scheduledAt)} 
+                    icon={<CalendarOutlined style={{ color: getStepIconColor(userAction.scheduledAt, 'blue') }} />} 
+                  />
+                  {userAction.executedAt && (
+                    <Steps.Step 
+                      title="Execução" 
+                      description={moment(userAction.executedAt).format("DD/MM/YYYY HH:mm")} 
+                      status={getStepStatus(userAction.executedAt)} 
+                      icon={<CalendarOutlined style={{ color: getStepIconColor(userAction.executedAt, 'red') }} />} 
+                    />
+                  )}
+                  {userAction.finishedAt && (
+                    <Steps.Step 
+                      title="Finalização" 
+                      description={moment(userAction.finishedAt).format("DD/MM/YYYY HH:mm")} 
+                      status={getStepStatus(userAction.finishedAt)} 
+                      icon={<CalendarOutlined style={{ color: getStepIconColor(userAction.finishedAt, 'green') }} />} 
+                    />
+                  )}
+                </Steps>
+              }
+              title="Quando"
+              trigger="click"
+              placement="bottom"
+            >
+              <Tooltip title="Passos da Ação">
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', cursor: 'pointer' }}>
+                  <CalendarOutlined style={{ color: lastDateColor }} />
+                  <div style={{ color: lastDateColor }}>Quando</div>
+                </div>
+              </Tooltip>
+            </Popover>
           ),
           action: userAction.actionId,
           executedAt: userAction.executedAt,
@@ -296,10 +303,10 @@ const ActionDetails: React.FC<{
     },
     executar: {
       icon: FileDoneOutlined,
-      text: "Serviços",
+      text: "Atendimentos",
       tooltip: "Execução do Serviço",
       color: "green",
-      action: () => handleActionClick("Execuções", "sysOficinaCarro_executar"),
+      action: () => handleActionClick("Atendimentos", "sysOficinaCarro_executar"),
     },
     diagnostico: {
       icon: SearchOutlined,
@@ -319,12 +326,40 @@ const ActionDetails: React.FC<{
 
   const systemOverrides: Record<string, Partial<typeof defaultActionMap>> = {
     sysOficinaCarro: {
+      buscar: {
+        icon: ImportOutlined,
+        text: "Buscar",
+        tooltip: "Buscar no Cliente",
+        color: "blue",
+        action: () => openGoogleMaps(),
+      },
+      checkin: {
+        icon: LoginOutlined,
+        text: "Check-in",
+        tooltip: "Verificação no Início do Atendimento",
+        color: "blue",
+        action: () => openModal("in"),
+      },
       executar: {
         icon: CarOutlined,
-        text: "Serviços",
+        text: "Atendimentos",
         tooltip: "Execução de Serviços Automotivos",
         color: "green",
-        action: () => handleActionClick("Execuções", "sysOficinaCarro_executar"),
+        action: () => handleActionClick("Atendimentos", "sysOficinaCarro_executar"),
+      },
+      checkout: {
+        icon: LogoutOutlined,
+        text: "Check-out",
+        tooltip: "Verificação no Fim do Atendimento",
+        color: "purple",
+        action: () => openModal("out"),
+      },
+      levar: {
+        icon: ExportOutlined,
+        text: "Levar",
+        tooltip: "Devolver para o Cliente",
+        color: "purple",
+        action: () => openGoogleMaps(),
       },
     },
     sysLocacaoRoupa: {
@@ -402,18 +437,20 @@ const ActionDetails: React.FC<{
                       <List.Item style={{ width: '100%', padding: '2px 0' }}>
                         <List.Item.Meta
                           title={
+                            <>
                             <Tooltip title={product.description}>
-                              <span>{product.name}</span>
+                              <span>
+                                {product.name}{" "}
+                                {product.tags.split('|').map((tag: string, index: number) => (
+                                  <Tag color={getColorForTag(tag)} key={index}>{tag}</Tag>
+                                ))}
+                            </span>
                             </Tooltip>
-                          }
+                            </>
+                            }
                           description={
                             <>
                               <p style={{ margin: '0px 0' }}>{product.quantity} x {formatCurrency(product.price)} = <strong>{formatCurrency(product.quantity * product.price)}</strong></p>
-                              <div style={{ margin: '0px 0' }}>
-                                {Array.isArray(product.tags) && product.tags.map((tag: string, index: number) => (
-                                  <Tag color={getColorForTag(tag)} key={index}>{tag}</Tag>
-                                ))}
-                              </div>
                             </>
                           }
                         />
