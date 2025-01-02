@@ -24,6 +24,7 @@ const Inicial: React.FC = () => {
             borderColor: '#ffc658',
             backgroundColor: '#ffc658',
             fill: false,
+            tension: 0.4, // Aplicar curvas suaves
           },
           {
             label: 'Orçamentos',
@@ -31,6 +32,7 @@ const Inicial: React.FC = () => {
             borderColor: '#82ca9d',
             backgroundColor: '#82ca9d',
             fill: false,
+            tension: 0.4, // Aplicar curvas suaves
           },
           {
             label: 'Atendimentos',
@@ -38,6 +40,7 @@ const Inicial: React.FC = () => {
             borderColor: '#8884d8',
             backgroundColor: '#8884d8',
             fill: false,
+            tension: 0.4, // Aplicar curvas suaves
           },
         ],
       };
@@ -96,6 +99,7 @@ const Inicial: React.FC = () => {
             borderColor: '#8884d8',
             backgroundColor: '#8884d8',
             fill: false,
+            tension: 0.4, // Aplicar curvas suaves
           },
           {
             label: 'Provas',
@@ -103,6 +107,7 @@ const Inicial: React.FC = () => {
             borderColor: '#82ca9d',
             backgroundColor: '#82ca9d',
             fill: false,
+            tension: 0.4, // Aplicar curvas suaves
           },
           {
             label: 'Retiradas',
@@ -110,6 +115,7 @@ const Inicial: React.FC = () => {
             borderColor: '#ffc658',
             backgroundColor: '#ffc658',
             fill: false,
+            tension: 0.4, // Aplicar curvas suaves
           },
           {
             label: 'Devoluções',
@@ -117,6 +123,7 @@ const Inicial: React.FC = () => {
             borderColor: '#ff8042',
             backgroundColor: '#ff8042',
             fill: false,
+            tension: 0.4, // Aplicar curvas suaves
           },
         ],
       };
