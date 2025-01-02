@@ -514,7 +514,23 @@ export const userActionsItems = [
   {
     "id": "xm2l2cr4e004242dap3hmki2l",
     "itemId": "cm2l2crxe000222dap3hmki8a",
-    "name": "Orçamento Marcos",
+    "name": "Orçamento do Motor",
+    "userActionId": "cm2l2crxe000222dap3hmki96",
+    "seq": "1",
+    "description": "Orçamento do Carro do Marcos",
+    "productTypeId": "service",
+    "quantity": 1,
+    "price": 150.00,
+    "tags": "orçamento|carro",
+    "active": true,
+    "createAt": "2024-12-08T00:00:00",
+    "updatedAt": "2024-12-08T00:00:00",
+    "deletedAt": null
+  },
+  {
+    "id": "xm2l2cr4e004242dap3hmki2w",
+    "itemId": "cm2l2crxe000222dap3hmki8a",
+    "name": "Orçamento dos Freios",
     "userActionId": "cm2l2crxe000222dap3hmki96",
     "seq": "1",
     "description": "Orçamento do Carro do Marcos",
@@ -594,10 +610,27 @@ export const userActionsItems = [
   {
     "id": "xm2l2cr4e004244dap3hmki2n",
     "itemId": "cm2l2crxe000224dap3hmki8a",
-    "name": "Orçamento Patrícia",
+    "name": "Orçamento da Porta do Motorista",
     "userActionId": "cm2l2crxe000224dap3hmki98",
     "seq": "1",
-    "description": "Orçamento do Carro da Patrícia",
+    "description": "Orçamento Finilaria do Carro",
+    "productTypeId": "service",
+    "quantity": 1,
+    "price": 150.00,
+    "tags": "orçamento|carro",
+    "active": true,
+    "createAt": "2024-12-08T00:00:00",
+    "updatedAt": "2024-12-08T00:00:00",
+    "deletedAt": null
+  },
+
+  {
+    "id": "xm2l2cr4e004244dap3hmki2r",
+    "itemId": "cm2l2crxe000224dap3hmki8a",
+    "name": "Orçamento do Teto",
+    "userActionId": "cm2l2crxe000224dap3hmki98",
+    "seq": "1",
+    "description": "Orçamento Finilaria do Carro",
     "productTypeId": "service",
     "quantity": 1,
     "price": 150.00,
@@ -608,21 +641,71 @@ export const userActionsItems = [
     "deletedAt": null
   },
   {
-    "id": "xm2l2cr4e004245dap3hmki2o",
-    "itemId": "cm2l2crxe000225dap3hmki8a",
-    "name": "Serviço Patrícia",
-    "userActionId": "cm2l2crxe000225dap3hmki99",
+    "id": "xm2l2cr4e004244dap3hmki2k",
+    "itemId": "cm2l2crxe000224dap3hmki8a",
+    "name": "Orçamento do Porta Malas",
+    "userActionId": "cm2l2crxe000224dap3hmki98",
     "seq": "1",
-    "description": "Execução do Serviço no Carro da Patrícia",
+    "description": "Orçamento Finilaria do Carro",
     "productTypeId": "service",
     "quantity": 1,
-    "price": 200.00,
+    "price": 150.00,
+    "tags": "orçamento|carro",
+    "active": true,
+    "createAt": "2024-12-08T00:00:00",
+    "updatedAt": "2024-12-08T00:00:00",
+    "deletedAt": null
+  },
+
+  {
+    "id": "xm2l2cr4e004245dap3hmki2o",
+    "itemId": "cm2l2crxe000225dap3hmki8a",
+    "name": "Mão de Obra da Funilaria",
+    "userActionId": "cm2l2crxe000225dap3hmki99",
+    "seq": "1",
+    "description": "Execução do Serviço no Carro",
+    "productTypeId": "service",
+    "quantity": 1,
+    "price": 375.00,
     "tags": "serviço|carro",
     "active": true,
     "createAt": "2024-12-08T00:00:00",
     "updatedAt": "2024-12-08T00:00:00",
     "deletedAt": null
   },
+  {
+    "id": "xm2l2cr4e004245dap3hmki2v",
+    "itemId": "cm2l2crxe000225dap3hmki8a",
+    "name": "Tampa traseira do porta-malas",
+    "userActionId": "cm2l2crxe000225dap3hmki99",
+    "seq": "1",
+    "description": "Tampa traseira do porta-malas a ser trocada no Carro",
+    "productTypeId": "product",
+    "quantity": 1,
+    "price": 780.00,
+    "tags": "produto|carro",
+    "active": true,
+    "createAt": "2024-12-08T00:00:00",
+    "updatedAt": "2024-12-08T00:00:00",
+    "deletedAt": null
+  },
+  {
+    "id": "xm2l2cr4e004245dap3hmki2s",
+    "itemId": "cm2l2crxe000225dap3hmki8a",
+    "name": "Porta dianteira do motorista",
+    "userActionId": "cm2l2crxe000225dap3hmki99",
+    "seq": "1",
+    "description": "Execução do Serviço no Carro",
+    "productTypeId": "product",
+    "quantity": 1,
+    "price": 970.00,
+    "tags": "produto|carro",
+    "active": true,
+    "createAt": "2024-12-08T00:00:00",
+    "updatedAt": "2024-12-08T00:00:00",
+    "deletedAt": null
+  },
+
   {
     "id": "xm2l2cr4e004246dap3hmki2p",
     "itemId": "cm2l2crxe000226dap3hmki8a",
@@ -658,7 +741,7 @@ export const userActionsItems = [
   {
     "id": "xm2l2cr4e004247dap3hmki2q",
     "itemId": "cm2l2crxe000227dap3hmki8a",
-    "name": "Serviço José",
+    "name": "Mão de Obra da coisa toda",
     "userActionId": "cm2l2crxe000227dap3hmki9b",
     "seq": "1",
     "description": "Execução do Serviço no Carro do José",
@@ -671,6 +754,40 @@ export const userActionsItems = [
     "updatedAt": "2024-12-08T00:00:00",
     "deletedAt": null
   },
+
+  {
+    "id": "xm2l2cr4e004247dap3hmki2x",
+    "itemId": "cm2l2crxe000227dap3hmki8a",
+    "name": "Óleo de Câmbio",
+    "userActionId": "cm2l2crxe000227dap3hmki9b",
+    "seq": "1",
+    "description": "Óleo a ser trocado no Carro do José",
+    "productTypeId": "product",
+    "quantity": 1,
+    "price": 560.00,
+    "tags": "produto|carro",
+    "active": true,
+    "createAt": "2024-12-08T00:00:00",
+    "updatedAt": "2024-12-08T00:00:00",
+    "deletedAt": null
+  },
+  {
+    "id": "xm2l2cr4e004247dap3hmki2t",
+    "itemId": "cm2l2crxe000227dap3hmki8a",
+    "name": "Correia do motor",
+    "userActionId": "cm2l2crxe000227dap3hmki9b",
+    "seq": "1",
+    "description": "Correia a ser trocada no Carro do José",
+    "productTypeId": "product",
+    "quantity": 1,
+    "price": 278.00,
+    "tags": "produto|carro",
+    "active": true,
+    "createAt": "2024-12-08T00:00:00",
+    "updatedAt": "2024-12-08T00:00:00",
+    "deletedAt": null
+  },
+
   {
     "id": "xm2l2cr4e004248dap3hmki2r",
     "itemId": "cm2l2crxe000228dap3hmki8a",
@@ -798,5 +915,62 @@ export const userActionsItems = [
     "createAt": "2024-12-08T00:00:00",
     "updatedAt": "2024-12-08T00:00:00",
     "deletedAt": null
-  }
+  },
+
+
+
+
+
+
+  {
+    "id": "xm2l2cr4e004232dap4hmki2b",
+    "itemId": "cm2l2crxe000228dap3hmki8a",
+    "name": "Terno Azul",
+    "userActionId": "cm2l2crxe000231dap3hmki9f",
+    "seq": "1",
+    "description": "Terno Azul de Gola Preta",
+    "productTypeId": "product",
+    "quantity": 1,
+    "price": 120.90,
+    "tags": "roupa|prova",
+    "active": true,
+    "createAt": "2024-12-08T00:00:00",
+    "updatedAt": "2024-12-08T00:00:00",
+    "deletedAt": null
+  },
+  {
+    "id": "xm2l2cr4e004233dap5hmki2c",
+    "itemId": "cm2l2crxe000238dap3hmki8b",
+    "name": "Calça Social Quadriculada",
+    "userActionId": "cm2l2crxe000231dap3hmki9f",
+    "seq": "2",
+    "description": "Calça Estilosa para a prova de roupas",
+    "productTypeId": "product",
+    "quantity": 1,
+    "price": 135.90,
+    "tags": "calça|prova",
+    "active": true,
+    "createAt": "2024-12-08T00:00:00",
+    "updatedAt": "2024-12-08T00:00:00",
+    "deletedAt": null
+  },
+  {
+    "id": "xm2l2cr4e004234dap6hmki2d",
+    "itemId": "cm2l2crxe000248dap3hmki8c",
+    "name": "Óculos Chinês",
+    "userActionId": "cm2l2crxe000231dap3hmki9f",
+    "seq": "3",
+    "description": "Acessório para o Rosto",
+    "productTypeId": "product",
+    "quantity": 1,
+    "price": 45.90,
+    "tags": "acessórios|prova",
+    "active": true,
+    "createAt": "2024-12-08T00:00:00",
+    "updatedAt": "2024-12-08T00:00:00",
+    "deletedAt": null
+  },
+
+
+
 ];

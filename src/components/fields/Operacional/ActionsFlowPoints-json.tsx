@@ -5,8 +5,21 @@ export const ActionsFlowPoints = [
 		"userId" : "idProprietario01",
 		"moment" : "out",
 		"seq" : "0010",
-		"name" : "Saída das Roupas",
-		"description" : "Ação de checar Saída das Roupas",
+		"name" : "Peças corretas",
+		"description" : "Ação de checar se as peças são as corretas",
+		"active" : true,
+		"createAt" : "2024-12-03 18:09:06.620",
+		"updatedAt" : "2024-12-03 18:09:06.620",
+		"deletedAt" : null
+	},
+	{
+		"id" : "cm48rwr3w0001ka0ynsblj0yf",
+		"systemId" : "sysLocacaoRoupa",
+		"userId" : "idProprietario01",
+		"moment" : "out",
+		"seq" : "0020",
+		"name" : "Checar as codições das peças",
+		"description" : "Ação de checar se as peças estão em boas condições",
 		"active" : true,
 		"createAt" : "2024-12-03 18:09:06.620",
 		"updatedAt" : "2024-12-03 18:09:06.620",
@@ -18,13 +31,43 @@ export const ActionsFlowPoints = [
 		"userId" : "idProprietario01",
 		"moment" : "in",
 		"seq" : "0020",
-		"name" : "Roupas Retornadas",
-		"description" : "Ação de checar Retorno das Roupas (sujeira, rasgos, etc.",
+		"name" : "Rasgos nas Roupas",
+		"description" : "Ação de checar se há rasgos nas roupas",
 		"active" : true,
 		"createAt" : "2024-12-03 18:09:06.626",
 		"updatedAt" : "2024-12-03 18:09:06.626",
 		"deletedAt" : null
 	},
+
+
+	{
+		"id" : "cm48rwr420003ka0yrantqrfw",
+		"systemId" : "sysLocacaoRoupa",
+		"userId" : "idProprietario01",
+		"moment" : "in",
+		"seq" : "0030",
+		"name" : "Sugeira nas Roupas",
+		"description" : "Ação de checar se há sujeira nas roupas",
+		"active" : true,
+		"createAt" : "2024-12-03 18:09:06.626",
+		"updatedAt" : "2024-12-03 18:09:06.626",
+		"deletedAt" : null
+	},
+	{
+		"id" : "cm48rwr420003ka0yrantqrfq",
+		"systemId" : "sysLocacaoRoupa",
+		"userId" : "idProprietario01",
+		"moment" : "in",
+		"seq" : "0040",
+		"name" : "Condições Gerais das Roupas",
+		"description" : "Ação de checar as condições gerais das roupas (falta de botões, zíperes, etc)",
+		"active" : true,
+		"createAt" : "2024-12-03 18:09:06.626",
+		"updatedAt" : "2024-12-03 18:09:06.626",
+		"deletedAt" : null
+	},
+
+
 	{
 		"id" : "cm48rwr450005ka0ylicrvv0r",
 		"systemId" : "sysOficinaCarro",
