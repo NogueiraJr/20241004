@@ -19,6 +19,20 @@ const Inicial: React.FC = () => {
         labels: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'],
         datasets: [
           {
+            label: 'Diagnósticos',
+            data: [1, 2, 1, 3, 2, 0, 0],
+            borderColor: '#ffc658',
+            backgroundColor: '#ffc658',
+            fill: false,
+          },
+          {
+            label: 'Orçamentos',
+            data: [2, 3, 4, 2, 1, 0, 0],
+            borderColor: '#82ca9d',
+            backgroundColor: '#82ca9d',
+            fill: false,
+          },
+          {
             label: 'Atendimentos',
             data: [4, 8, 5, 9, 3, 0, 0],
             borderColor: '#8884d8',
@@ -53,7 +67,7 @@ const Inicial: React.FC = () => {
       return (
         <div className="charts-container">
           <div className="cardChart large">
-            <h3>Atendimentos por Dia da Semana</h3>
+            <h3>Atendimentos, Orçamentos e Diagnósticos por Dia da Semana</h3>
             <div className="chart-container">
               <Line data={atendimentosPorDiaData} options={{ responsive: true, maintainAspectRatio: false }} />
             </div>
@@ -83,6 +97,27 @@ const Inicial: React.FC = () => {
             backgroundColor: '#8884d8',
             fill: false,
           },
+          {
+            label: 'Provas',
+            data: [2, 3, 10, 2, 1, 9, 0],
+            borderColor: '#82ca9d',
+            backgroundColor: '#82ca9d',
+            fill: false,
+          },
+          {
+            label: 'Retiradas',
+            data: [1, 12, 1, 13, 2, 4, 0],
+            borderColor: '#ffc658',
+            backgroundColor: '#ffc658',
+            fill: false,
+          },
+          {
+            label: 'Devoluções',
+            data: [2, 3, 14, 1, 8, 7, 0],
+            borderColor: '#ff8042',
+            backgroundColor: '#ff8042',
+            fill: false,
+          },
         ],
       };
 
@@ -110,8 +145,8 @@ const Inicial: React.FC = () => {
 
       return (
         <div className="charts-container">
-          <div className="cardChart">
-            <h3>Reservas por Dia da Semana</h3>
+          <div className="cardChart large">
+            <h3>Reservas, Provas, Retiradas e Devoluções por Dia da Semana</h3>
             <div className="chart-container">
               <Line data={reservasPorDiaData} options={{ responsive: true, maintainAspectRatio: false }} />
             </div>
