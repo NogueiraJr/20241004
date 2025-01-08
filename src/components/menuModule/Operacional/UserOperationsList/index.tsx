@@ -5,7 +5,7 @@ import { EditOutlined } from '@ant-design/icons';
 import React, { useState, useEffect, useMemo } from 'react';
 
 import IconText from './IconText';
-import ActionsTable from './UserOperationsTable';
+import OperationsTable from './UserOperationsTable';
 import { UserOperationsProps } from '../../../../interfaces/UserOperationProps';
 import { useParameter } from '../../../../context/ParameterContext';
 import { OperationType } from '../../../../interfaces/UserOperationsType';
@@ -97,7 +97,7 @@ const Actions: React.FC<UserOperationsProps> = ({ userOperation: action }) => {
   ];
 
   return (
-    <ActionsTable
+    <OperationsTable
       operations={operations}
       filteredData={filteredData}
       columns={columns}

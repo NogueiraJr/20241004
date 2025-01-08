@@ -7,7 +7,7 @@ import ActionDetails from "./UserOperationsDetails";
 import MultiSelectList from "../UserActions/ActionsFlowPoints";
 import { ActionsFlowPoints } from '../../../fields/Operacional/ActionsFlowPoints-json';
 
-const ActionsTable: React.FC<{
+const OperationsTable: React.FC<{
     operations: OperationType[];
     filteredData: OperationType[];
     columns: TableProps<OperationType>['columns'];
@@ -136,4 +136,4 @@ const ActionsTable: React.FC<{
     </>
   );
 
-  export default ActionsTable;
+  export default OperationsTable;
