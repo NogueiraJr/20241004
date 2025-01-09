@@ -1,7 +1,7 @@
-import { Space, Input } from 'antd';
+import { Space, Input, Tag, Popover } from 'antd';
 import type { TableProps } from 'antd';
 import { useNavigate } from 'react-router-dom';
-import { EditOutlined } from '@ant-design/icons';
+import { EditOutlined, UnorderedListOutlined } from '@ant-design/icons';
 import React, { useState, useEffect, useMemo } from 'react';
 
 import IconText from './IconText';
@@ -64,6 +64,13 @@ const Actions: React.FC<UserOperationsProps> = ({ userOperation: action }) => {
     );
   };
 
+  const renderActionsPopover = (record: OperationType) => (
+    <div>
+      <IconText icon={EditOutlined} text="Editar" tooltip="Editar estas informações" color="black" />
+      {/* <IconText icon={CarryOutOutlined} text="Retirar" tooltip="Retirar os produtos" color="black" /> */}
+    </div>
+  );
+
   const columns: TableProps<OperationType>['columns'] = [
     {
       title: 'Descrição',
@@ -82,16 +89,31 @@ const Actions: React.FC<UserOperationsProps> = ({ userOperation: action }) => {
       ),
       sorter: (a, b) => a.description.localeCompare(b.description),
       sortDirections: ['ascend', 'descend'],
+      render: (_, record) => (
+        <div>
+          <span>{record.description}</span>
+          {record.tags && record.tags.length > 0 && (
+            <div style={{ marginTop: 4 }}>
+              {record.tags.map((tag) => (
+                <Tag color={tag.length > 5 ? 'geekblue' : 'green'} key={tag}>
+                  {tag.toUpperCase()}
+                </Tag>
+              ))}
+            </div>
+          )}
+        </div>
+      ),
     },
     {
       title: 'Ações',
       key: 'action',
       width: '100px',
       render: (_, record) => (
-        <Space size="middle">
-          <IconText icon={EditOutlined} text="Editar" tooltip="Editar estas informações" color="black" />
-          {/* <IconText icon={CarryOutOutlined} text="Retirar" tooltip="Retirar os produtos" color="black" /> */}
-        </Space>
+        <Popover content={renderActionsPopover(record)} title="Ações" trigger="click" placement="bottom">
+          <Space size="middle">
+            <IconText icon={UnorderedListOutlined} text="Ações" tooltip="Ações que podem ser feitas" color="black" />
+          </Space>
+        </Popover>
       ),
     },
   ];

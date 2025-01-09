@@ -1,4 +1,4 @@
-import { Button, Select, Table, TableProps, Tag, Tooltip } from "antd";
+import { Button, Select, Table, TableProps, Tooltip } from "antd";
 import { OperationType } from "../../../../interfaces/UserOperationsType";
 import { useNavigate } from "react-router-dom";
 import React from "react";
@@ -80,20 +80,11 @@ const OperationsTable: React.FC<{
         pagination={{ position: ['topLeft'] }}
         expandedRowRender={(record) => (
           <div style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', color: 'gray' }}>
-            <Tooltip title="Situação do item">
+            {/* <Tooltip title="Situação do item">
               <span style={{ cursor: 'pointer', marginLeft: '0px', marginRight: '8px', color: record.active ? 'green' : 'red' }}>
                 {record.active ? 'ATIVO' : 'INATIVO'}
               </span>
-            </Tooltip>
-            {record.tags && record.tags.length > 0 && (
-              <span style={{ cursor: 'pointer' }}>
-                {record.tags.map((tag) => (
-                  <Tag color={tag.length > 5 ? 'geekblue' : 'green'} key={tag}>
-                    {tag.toUpperCase()}
-                  </Tag>
-                ))}
-              </span>
-            )}
+            </Tooltip> */}
             <span style={{ marginRight: '8px' }}>{record.notes}</span>
             <span style={{ marginRight: '8px', fontWeight: 'bold' }}>
               Custo: {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(Number(record.priceActions))}
