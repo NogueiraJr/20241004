@@ -1,4 +1,4 @@
-import { Button, Select, Table, TableProps, Tooltip } from "antd";
+import { Button, Select, Table, TableProps, Tooltip, Tabs } from "antd";
 import { OperationType } from "../../../../interfaces/UserOperationsType";
 import { useNavigate } from "react-router-dom";
 import React from "react";
@@ -79,14 +79,28 @@ const OperationsTable: React.FC<{
         dataSource={filteredData}
         pagination={{ position: ['topLeft'] }}
         expandedRowRender={(record) => (
-          <div style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', color: 'gray' }}>
-            <span style={{ marginRight: '8px', fontWeight: 'bold' }}>
-              Custo: {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(Number(record.priceActions))}
-            </span>{' '}
-            |
-            <span style={{ marginLeft: '8px', fontWeight: 'bold' }}>
-              Cobrado: {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(Number(record.priceCharged))}
-            </span>
+          <div style={{ display: 'flex', flexDirection: 'column', color: 'gray', width: '100%' }}>
+            <div style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap' }}>
+              <span style={{ marginRight: '8px', fontWeight: 'bold' }}>
+                Custo: {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(Number(record.priceActions))}
+              </span>{' '}
+              |
+              <span style={{ marginLeft: '8px', fontWeight: 'bold' }}>
+                Cobrado: {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(Number(record.priceCharged))}
+              </span>
+            </div>
+
+            <Tabs defaultActiveKey="1" style={{ marginTop: 8, width: '100%', height: '200px' }}>
+              <Tabs.TabPane tab="01" key="1">
+                Conteúdo da Tab 01
+              </Tabs.TabPane>
+              <Tabs.TabPane tab="02" key="2">
+                Conteúdo da Tab 02
+              </Tabs.TabPane>
+              <Tabs.TabPane tab="03" key="3">
+                Conteúdo da Tab 03
+              </Tabs.TabPane>
+            </Tabs>
 
             {/* Botões adicionais alinhados à direita */}
             <div style={{ display: 'flex', gap: '16px', marginLeft: 'auto', marginTop: '8px' }}>
