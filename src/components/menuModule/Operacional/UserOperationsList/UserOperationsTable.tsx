@@ -1,11 +1,12 @@
 import { Button, Select, Table, TableProps, Tooltip, Tabs } from "antd";
 import { OperationType } from "../../../../interfaces/UserOperationsType";
 import { useNavigate } from "react-router-dom";
-import React from "react";
+import React, { useState } from "react";
 import { ArrowLeftOutlined, CalendarOutlined, SkinOutlined, UploadOutlined, RollbackOutlined, CalculatorOutlined, FileDoneOutlined, SearchOutlined } from "@ant-design/icons";
 import ActionDetails from "./UserOperationsDetails";
 import MultiSelectList from "../UserActions/ActionsFlowPoints";
 import { ActionsFlowPoints } from '../../../fields/Operacional/ActionsFlowPoints-json';
+import { userActions } from '../../../fields/Operacional/userActions-json';
 
 const OperationsTable: React.FC<{
     operations: OperationType[];
@@ -47,7 +48,7 @@ const OperationsTable: React.FC<{
         text: string;
         tooltip: string;
         color: string;
-        action?: () => void;
+        actionId: string;
       }
     > = {
       reservar: {
@@ -55,60 +56,79 @@ const OperationsTable: React.FC<{
         text: "Reservas",
         tooltip: "Exibe as Reservas",
         color: "blue",
-        action: () => {},
+        actionId: "sysLocacaoRoupa_reservar",
       },
       provar: {
         icon: SkinOutlined,
         text: "Provas",
         tooltip: "Exibe as Provas",
         color: "green",
-        action: () => {},
+        actionId: "sysLocacaoRoupa_provar",
       },
       retirar: {
         icon: UploadOutlined,
         text: "Retiradas",
         tooltip: "Exibe as Retiradas",
         color: "orange",
-        action: () => {},
+        actionId: "sysLocacaoRoupa_retirar",
       },
       devolver: {
         icon: RollbackOutlined,
         text: "Devoluções",
         tooltip: "Exibe as Devoluções",
         color: "red",
-        action: () => {},
+        actionId: "sysLocacaoRoupa_devolver",
       },
       orcar: {
         icon: CalculatorOutlined,
         text: "Orçamento",
         tooltip: "Orçamento realizado",
         color: "blue",
-        action: () => {},
+        actionId: "sysOficinaCarro_orcar",
       },
       executar: {
         icon: FileDoneOutlined,
         text: "Atendimentos",
         tooltip: "Execução do Serviço",
         color: "green",
-        action: () => {},
+        actionId: "sysOficinaCarro_executar",
       },
       diagnostico: {
         icon: SearchOutlined,
         text: "Diagnósticos",
         tooltip: "Análise e avaliação",
         color: "green",
-        action: () => {},
+        actionId: "sysOficinaCarro_diagnosticar",
       },
     };
 
-    const renderTabs = (actions: string[]) => {
+    const renderTabs = (actions: string[], record: OperationType) => {
       return actions.map((action) => {
         const details = defaultActionMap[action];
-        return details ? (
-          <Tabs.TabPane tab={<span>{React.createElement(details.icon)} {details.text}</span>} key={details.text}>
-            <ActionDetails actions={[action]} system={system} userOperationId={''} openModal={openModalWithMoment} />
+        if (!details) return null;
+
+        const filteredData = userActions.filter(
+          (userAction) => userAction.userOperationId === record.id && userAction.actionId === details.actionId
+        );
+
+        const columnsForTab = [
+          { title: "Descrição", dataIndex: "description", key: "description" },
+          { title: "Quando", dataIndex: "scheduledAt", key: "scheduledAt" },
+          {
+            title: "Ações",
+            dataIndex: "action",
+            key: "action",
+            render: (text: string, record: any) => (
+              <ActionDetails actions={[record.action]} system={system} userOperationId={record.key} openModal={openModalWithMoment} />
+            ),
+          },
+        ];
+
+        return (
+          <Tabs.TabPane tab={<span>{details.text}</span>} key={details.text}>
+            <Table dataSource={filteredData} columns={columnsForTab} pagination={false} />
           </Tabs.TabPane>
-        ) : null;
+        );
       });
     };
 
@@ -164,7 +184,7 @@ const OperationsTable: React.FC<{
               </div>
 
               <Tabs defaultActiveKey="1" style={{ marginTop: 8, width: '100%', height: '200px' }}>
-                {renderTabs(action ? action.split('|') : [])}
+                {renderTabs(action ? action.split('|') : [], record)}
               </Tabs>
 
               {/* Botões adicionais alinhados à direita */}
