@@ -40,26 +40,76 @@ const OperationsTable: React.FC<{
     filterMoment,
     openModalWithMoment,
   }) => {
-    const renderIcons = (system: string) => {
-      const icons = {
-        sysLocacaoRoupa: [
-          { icon: CalendarOutlined, text: 'Reservas' },
-          { icon: SkinOutlined, text: 'Provas' },
-          { icon: UploadOutlined, text: 'Retiradas' },
-          { icon: RollbackOutlined, text: 'Devoluções' },
-        ],
-        sysOficinaCarro: [
-          { icon: SearchOutlined, text: 'Diagnósticos' },
-          { icon: CalculatorOutlined, text: 'Orçamento' },
-          { icon: FileDoneOutlined, text: 'Atendimentos' },
-        ],
-      };
+    const defaultActionMap: Record<
+      string,
+      {
+        icon: React.ComponentType<any>;
+        text: string;
+        tooltip: string;
+        color: string;
+        action?: () => void;
+      }
+    > = {
+      reservar: {
+        icon: CalendarOutlined,
+        text: "Reservas",
+        tooltip: "Exibe as Reservas",
+        color: "blue",
+        action: () => {},
+      },
+      provar: {
+        icon: SkinOutlined,
+        text: "Provas",
+        tooltip: "Exibe as Provas",
+        color: "green",
+        action: () => {},
+      },
+      retirar: {
+        icon: UploadOutlined,
+        text: "Retiradas",
+        tooltip: "Exibe as Retiradas",
+        color: "orange",
+        action: () => {},
+      },
+      devolver: {
+        icon: RollbackOutlined,
+        text: "Devoluções",
+        tooltip: "Exibe as Devoluções",
+        color: "red",
+        action: () => {},
+      },
+      orcar: {
+        icon: CalculatorOutlined,
+        text: "Orçamento",
+        tooltip: "Orçamento realizado",
+        color: "blue",
+        action: () => {},
+      },
+      executar: {
+        icon: FileDoneOutlined,
+        text: "Atendimentos",
+        tooltip: "Execução do Serviço",
+        color: "green",
+        action: () => {},
+      },
+      diagnostico: {
+        icon: SearchOutlined,
+        text: "Diagnósticos",
+        tooltip: "Análise e avaliação",
+        color: "green",
+        action: () => {},
+      },
+    };
 
-      return icons[system]?.map(({ icon, text }) => (
-        <Tabs.TabPane tab={<span>{React.createElement(icon)} {text}</span>} key={text}>
-          Conteúdo da Tab {text}
-        </Tabs.TabPane>
-      ));
+    const renderTabs = (actions: string[]) => {
+      return actions.map((action) => {
+        const details = defaultActionMap[action];
+        return details ? (
+          <Tabs.TabPane tab={<span>{React.createElement(details.icon)} {details.text}</span>} key={details.text}>
+            <ActionDetails actions={[action]} system={system} userOperationId={''} openModal={openModalWithMoment} />
+          </Tabs.TabPane>
+        ) : null;
+      });
     };
 
     return (
@@ -114,7 +164,7 @@ const OperationsTable: React.FC<{
               </div>
 
               <Tabs defaultActiveKey="1" style={{ marginTop: 8, width: '100%', height: '200px' }}>
-                {renderIcons(system)}
+                {renderTabs(action ? action.split('|') : [])}
               </Tabs>
 
               {/* Botões adicionais alinhados à direita */}
