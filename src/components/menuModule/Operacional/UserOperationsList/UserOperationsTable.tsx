@@ -80,12 +80,6 @@ const OperationsTable: React.FC<{
         pagination={{ position: ['topLeft'] }}
         expandedRowRender={(record) => (
           <div style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', color: 'gray' }}>
-            {/* <Tooltip title="Situação do item">
-              <span style={{ cursor: 'pointer', marginLeft: '0px', marginRight: '8px', color: record.active ? 'green' : 'red' }}>
-                {record.active ? 'ATIVO' : 'INATIVO'}
-              </span>
-            </Tooltip> */}
-            <span style={{ marginRight: '8px' }}>{record.notes}</span>
             <span style={{ marginRight: '8px', fontWeight: 'bold' }}>
               Custo: {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(Number(record.priceActions))}
             </span>{' '}

@@ -1,4 +1,4 @@
-import { Space, Input, Tag, Popover } from 'antd';
+import { Space, Input, Tag, Popover, Tooltip } from 'antd';
 import type { TableProps } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { EditOutlined, UnorderedListOutlined } from '@ant-design/icons';
@@ -91,7 +91,9 @@ const Actions: React.FC<UserOperationsProps> = ({ userOperation: action }) => {
       sortDirections: ['ascend', 'descend'],
       render: (_, record) => (
         <div>
-          <span>{record.description}</span>
+          <Tooltip title={record.notes}>
+            <span>{record.description}</span>
+          </Tooltip>
           {record.tags && record.tags.length > 0 && (
             <div style={{ marginTop: 4 }}>
               {record.tags.map((tag) => (
