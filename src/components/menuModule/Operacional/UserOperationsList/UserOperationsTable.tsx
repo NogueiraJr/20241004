@@ -183,10 +183,9 @@ const OperationsTable: React.FC<{
                   placement="bottom"
                 >
                   <Tooltip title="Passos da Ação">
-                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', cursor: 'pointer' }}>
+                    <div style={{ display: 'flex', flexDirection: 'column', textAlign: 'center', alignItems: 'center', cursor: 'pointer' }}>
                       <CalendarOutlined style={{ color: lastDateColor }} />
-                      <div style={{ color: lastDateColor }}>Quando</div>
-                    </div>
+                      <div style={{ color: lastDateColor }}>{record.finishedAt ? moment(record.finishedAt).format("DD/MM/YYYY HH:mm") : record.executedAt ? moment(record.executedAt).format("DD/MM/YYYY HH:mm") : moment(record.scheduledAt).format("DD/MM/YYYY HH:mm")}</div>                    </div>
                   </Tooltip>
                 </Popover>
               );
@@ -401,7 +400,7 @@ const OperationsTable: React.FC<{
           );
         }; return (
           <Tabs.TabPane tab={<span>{details.text}</span>} key={details.text}>
-            <Table dataSource={filteredData} columns={columnsForTab} pagination={false} />
+            <Table showHeader={false} dataSource={filteredData} columns={columnsForTab} pagination={false} />
           </Tabs.TabPane>
         );
       });
