@@ -219,7 +219,7 @@ const OperationsTable: React.FC<{
             render: (text: string, record: any) => (
               <Popover
                 content={getNextActionIcon(record.actionId, record.executedAt, record.finishedAt, record.id)}
-                title="Ações 2"
+                title="Ações"
                 trigger="click"
                 placement="bottomRight"
               >
@@ -495,7 +495,7 @@ const OperationsTable: React.FC<{
                 {renderTabs(action ? action.split('|') : [], record)}
               </Tabs>
 
-              <div className="action-buttons">
+              {/* <div className="action-buttons">
                 {action &&
                   (() => {
                     const actions = action.split('|'); // Supondo que as ações estejam separadas por '|'
@@ -512,7 +512,7 @@ const OperationsTable: React.FC<{
                     title={filterMoment === 'in' ? 'Check-list de Entrada' : 'Check-list de Saída'} // Define o título dinamicamente
                   />
                 )}
-              </div>
+              </div> */}
             </div>
           )}
           expandedRowKeys={expandedRowKeys}
