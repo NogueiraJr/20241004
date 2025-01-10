@@ -1,12 +1,14 @@
-import { Button, Select, Table, TableProps, Tooltip, Tabs } from "antd";
+import { Button, Select, Table, TableProps, Tooltip, Tabs, Popover, Steps } from "antd";
 import { OperationType } from "../../../../interfaces/UserOperationsType";
 import { useNavigate } from "react-router-dom";
 import React, { useState } from "react";
-import { ArrowLeftOutlined, CalendarOutlined, SkinOutlined, UploadOutlined, RollbackOutlined, CalculatorOutlined, FileDoneOutlined, SearchOutlined } from "@ant-design/icons";
+import { ArrowLeftOutlined, CalendarOutlined, SkinOutlined, UploadOutlined, RollbackOutlined, CalculatorOutlined, FileDoneOutlined, SearchOutlined, UnorderedListOutlined } from "@ant-design/icons";
 import ActionDetails from "./UserOperationsDetails";
 import MultiSelectList from "../UserActions/ActionsFlowPoints";
 import { ActionsFlowPoints } from '../../../fields/Operacional/ActionsFlowPoints-json';
 import { userActions } from '../../../fields/Operacional/userActions-json';
+import '../../../../index.css';
+import moment from "moment";
 
 const OperationsTable: React.FC<{
     operations: OperationType[];
@@ -102,6 +104,9 @@ const OperationsTable: React.FC<{
       },
     };
 
+    const getStepStatus = (date: string | undefined) => date ? 'finish' : 'wait';
+    const getStepIconColor = (date: string | undefined, color: string) => date ? color : 'gray';
+
     const renderTabs = (actions: string[], record: OperationType) => {
       return actions.map((action) => {
         const details = defaultActionMap[action];
@@ -113,13 +118,83 @@ const OperationsTable: React.FC<{
 
         const columnsForTab = [
           { title: "Descrição", dataIndex: "description", key: "description" },
-          { title: "Quando", dataIndex: "scheduledAt", key: "scheduledAt" },
+          { 
+            title: "Quando", 
+            dataIndex: "scheduledAt", 
+            key: "scheduledAt",
+            render: (text: string, record: any) => {
+              const lastDateColor = record.finishedAt
+                ? 'green'
+                : record.executedAt
+                ? 'red'
+                : record.scheduledAt
+                ? 'blue'
+                : 'gray';
+
+              return (
+                <Popover
+                  content={
+                    <Steps direction="vertical" size="small">
+                      <Steps.Step 
+                        title="Agendamento" 
+                        description={moment(record.scheduledAt).format("DD/MM/YYYY HH:mm")} 
+                        status={getStepStatus(record.scheduledAt)} 
+                        icon={<CalendarOutlined style={{ color: getStepIconColor(record.scheduledAt, 'blue') }} />} 
+                      />
+                      {record.executedAt && (
+                        <Steps.Step 
+                          title="Execução" 
+                          description={moment(record.executedAt).format("DD/MM/YYYY HH:mm")} 
+                          status={getStepStatus(record.executedAt)} 
+                          icon={<CalendarOutlined style={{ color: getStepIconColor(record.executedAt, 'red') }} />} 
+                        />
+                      )}
+                      {record.finishedAt && (
+                        <Steps.Step 
+                          title="Finalização" 
+                          description={moment(record.finishedAt).format("DD/MM/YYYY HH:mm")} 
+                          status={getStepStatus(record.finishedAt)} 
+                          icon={<CalendarOutlined style={{ color: getStepIconColor(record.finishedAt, 'green') }} />} 
+                        />
+                      )}
+                    </Steps>
+                  }
+                  title="Quando"
+                  trigger="click"
+                  placement="bottom"
+                >
+                  <Tooltip title="Passos da Ação">
+                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', cursor: 'pointer' }}>
+                      <CalendarOutlined style={{ color: lastDateColor }} />
+                      <div style={{ color: lastDateColor }}>Quando</div>
+                    </div>
+                  </Tooltip>
+                </Popover>
+              );
+            }
+          },
           {
             title: "Ações",
             dataIndex: "action",
             key: "action",
             render: (text: string, record: any) => (
-              <ActionDetails actions={[record.action]} system={system} userOperationId={record.key} openModal={openModalWithMoment} />
+              <Popover
+                content={
+                  <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', gap: '10px' }}>
+                    <ActionDetails actions={[record.action]} system={system} userOperationId={record.key} openModal={openModalWithMoment} />
+                  </div>
+                }
+                title="Ações"
+                trigger="click"
+                placement="bottomRight"
+              >
+                <Tooltip title="Ações Disponíveis">
+                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', cursor: 'pointer' }}>
+                    <UnorderedListOutlined style={{ color: 'blue' }} />
+                    <div style={{ color: 'blue' }}>Ações</div>
+                  </div>
+                </Tooltip>
+              </Popover>
             ),
           },
         ];
@@ -130,6 +205,29 @@ const OperationsTable: React.FC<{
           </Tabs.TabPane>
         );
       });
+    };
+
+    const renderActionsPopover = (record: OperationType) => {
+      const actions = action ? action.split('|') : [];
+      return (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+          {actions.map((action) => {
+            const details = defaultActionMap[action];
+            return details ? (
+              <Tooltip title={details.tooltip} key={details.text}>
+                <Button
+                  type="link"
+                  icon={React.createElement(details.icon)}
+                  onClick={() => openModalWithMoment(details.text)}
+                  style={{ color: details.color }}
+                >
+                  {details.text}
+                </Button>
+              </Tooltip>
+            ) : null;
+          })}
+        </div>
+      );
     };
 
     return (
@@ -172,23 +270,22 @@ const OperationsTable: React.FC<{
           dataSource={filteredData}
           pagination={{ position: ['topLeft'] }}
           expandedRowRender={(record) => (
-            <div style={{ display: 'flex', flexDirection: 'column', color: 'gray', width: '100%' }}>
-              <div style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap' }}>
-                <span style={{ marginRight: '8px', fontWeight: 'bold' }}>
+            <div className="expanded-row-content">
+              <div className="cost-charged">
+                <span>
                   Custo: {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(Number(record.priceActions))}
                 </span>{' '}
                 |
-                <span style={{ marginLeft: '8px', fontWeight: 'bold' }}>
+                <span>
                   Cobrado: {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(Number(record.priceCharged))}
                 </span>
               </div>
 
-              <Tabs defaultActiveKey="1" style={{ marginTop: 8, width: '100%', height: '200px' }}>
+              <Tabs defaultActiveKey="1">
                 {renderTabs(action ? action.split('|') : [], record)}
               </Tabs>
 
-              {/* Botões adicionais alinhados à direita */}
-              <div style={{ display: 'flex', gap: '16px', marginLeft: 'auto', marginTop: '8px' }}>
+              <div className="action-buttons">
                 {action &&
                   (() => {
                     const actions = action.split('|'); // Supondo que as ações estejam separadas por '|'
