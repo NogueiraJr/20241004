@@ -136,7 +136,24 @@ const OperationsTable: React.FC<{
         );
 
         const columnsForTab = [
-          { title: "Descrição", dataIndex: "description", key: "description" },
+          { 
+            title: "Descrição", 
+            dataIndex: "description", 
+            key: "description",
+            render: (text: string, record: any) => (
+              <>
+                <Tooltip title={record.notes}>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                    <span>{record.description}</span>
+                    <div>
+                      {record.tags?.split('|').map((tag: string, index: number) => (
+                        <Tag color={getColorForTag(tag)} key={index}>{tag}</Tag>
+                      ))}
+                    </div>
+                  </div>
+                </Tooltip>
+              </>
+            )          },
           {
             title: "Quando",
             dataIndex: "scheduledAt",
@@ -271,18 +288,9 @@ const OperationsTable: React.FC<{
 
               return {
                 key: userAction.id,
-                description: (
-                  <>
-                    <Tooltip title={userAction.notes}>
-                      <span>
-                        {userAction.description}{" "}
-                        {userAction.tags.split('|').map((tag: string, index: number) => (
-                          <Tag color={getColorForTag(tag)} key={index}>{tag}</Tag>
-                        ))}
-                      </span>
-                    </Tooltip>
-                  </>
-                ),
+                description: userAction.description,
+                tags: userAction.tags,
+                notes: userAction.notes,
                 scheduledAt: (
                   <Popover
                     content={
