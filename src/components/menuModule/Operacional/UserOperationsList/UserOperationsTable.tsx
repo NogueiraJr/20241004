@@ -184,14 +184,14 @@ const OperationsTable: React.FC<{
                     <ActionDetails actions={[record.action]} system={system} userOperationId={record.key} openModal={openModalWithMoment} />
                   </div>
                 }
-                title="Ações"
+                title="Ações2"
                 trigger="click"
                 placement="bottomRight"
               >
                 <Tooltip title="Ações Disponíveis">
                   <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', cursor: 'pointer' }}>
                     <UnorderedListOutlined style={{ color: 'blue' }} />
-                    <div style={{ color: 'blue' }}>Ações</div>
+                    <div style={{ color: 'blue' }}>Ações1</div>
                   </div>
                 </Tooltip>
               </Popover>
