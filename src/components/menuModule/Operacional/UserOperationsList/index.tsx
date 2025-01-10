@@ -133,7 +133,8 @@ const Actions: React.FC<UserOperationsProps> = ({ userOperation: action }) => {
       isModalVisible={isModalVisible}
       setModalVisible={setModalVisible}
       filterMoment={filterMoment}
-      openModalWithMoment={openModalWithMoment} navigate={useNavigate()} action={action} system={system}    />
+      openModalWithMoment={openModalWithMoment} navigate={useNavigate()} action={action} system={system}
+    />
   );
 
 };
