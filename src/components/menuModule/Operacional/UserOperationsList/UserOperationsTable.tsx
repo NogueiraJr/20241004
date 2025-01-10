@@ -136,15 +136,16 @@ const OperationsTable: React.FC<{
         );
 
         const columnsForTab = [
-          { 
-            title: "Descrição", 
-            dataIndex: "description", 
+          {
+            title: "Descrição",
+            dataIndex: "description",
             key: "description",
+            width: '100%',
             render: (text: string, record: any) => (
               <>
                 <Tooltip title={record.notes}>
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                    <span>{record.description}</span>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', width: '100%' }}>
+                    <span style={{ whiteSpace: 'normal', wordBreak: 'break-word' }}>{record.description}</span>
                     <div>
                       {record.tags?.split('|').map((tag: string, index: number) => (
                         <Tag color={getColorForTag(tag)} key={index}>{tag}</Tag>
@@ -153,11 +154,13 @@ const OperationsTable: React.FC<{
                   </div>
                 </Tooltip>
               </>
-            )          },
+            )
+          },
           {
             title: "Quando",
             dataIndex: "scheduledAt",
             key: "scheduledAt",
+            width: 120,
             render: (text: string, record: any) => {
               const lastDateColor = record.finishedAt
                 ? 'green'
@@ -212,6 +215,7 @@ const OperationsTable: React.FC<{
             title: "Ações",
             dataIndex: "action",
             key: "action",
+            width: 80,
             render: (text: string, record: any) => (
               <Popover
                 content={getNextActionIcon(record.actionId, record.executedAt, record.finishedAt, record.id)}
@@ -229,7 +233,6 @@ const OperationsTable: React.FC<{
             ),
           },
         ];
-
         const showConfirm = (action: string) => {
           Modal.confirm({
             title: `Você deseja ${action}?`,
