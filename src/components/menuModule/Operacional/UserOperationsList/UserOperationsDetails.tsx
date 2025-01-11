@@ -13,11 +13,17 @@ const UserOperationsDetails: React.FC<{
   system: string;
   userOperationId: string;
   openModal: (moment: string) => void;
-  openGoogleMaps: () => void;
-}> = ({ actions, system, userOperationId, openModal, openGoogleMaps }) => {
+}> = ({ actions, system, userOperationId, openModal }) => {
   const [isModalOpen, setModalOpen] = useState(false);
   const [modalTitle, setModalTitle] = useState("");
   const [modalData, setModalData] = useState<any[]>([]);
+
+  const openGoogleMaps = () => {
+    const latitude = -23.1794;
+    const longitude = -45.8869;
+    const url = `https://www.google.com/maps/search/?api=1&query=${latitude},${longitude}`;
+    window.open(url, '_blank', 'noopener,noreferrer');
+  };
 
   const showConfirm = (action: string) => {
     Modal.confirm({

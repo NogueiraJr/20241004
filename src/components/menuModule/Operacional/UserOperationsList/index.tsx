@@ -74,9 +74,9 @@ const Actions: React.FC<UserOperationsProps> = ({ userActionsMain: actionMain, u
         {actionMain &&
           (() => {
             const actions = actionMain.split('|'); // Supondo que as ações estejam separadas por '|'
-            return <ActionDetails actions={actions} system={system} userOperationId={record.id} openModal={openModalWithMoment} openGoogleMaps={() => {}} />;
-          })()}
-        {/* <MultiSelectList
+            return <ActionDetails actions={actions} system={system} userOperationId={record.id} openModal={openModalWithMoment} />;
+          })()}        
+          {/* <MultiSelectList
             visible={isModalVisible}
             onCancel={() => setModalVisible(false)}
             data={{ ActionsFlowPoints }}
@@ -102,11 +102,9 @@ const Actions: React.FC<UserOperationsProps> = ({ userActionsMain: actionMain, u
                 system={system}
                 userOperationId={record.id}
                 openModal={openModalWithMoment}
-                openGoogleMaps={() => {}}
               />
             );
           })()}
-
 
         {/* <MultiSelectList
             visible={isModalVisible}
