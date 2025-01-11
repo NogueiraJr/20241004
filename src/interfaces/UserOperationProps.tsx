@@ -1,3 +1,4 @@
 export interface UserOperationsProps {
-  userOperation: string;
+  userActionsMain: string;
+  userActionsAux: string;
 }

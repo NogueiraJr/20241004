@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Tooltip, Modal, Table, Button, Popover, Collapse, List, Tabs, Tag, Steps } from "antd";
-import { CalendarOutlined, SkinOutlined, UploadOutlined, RollbackOutlined, CalculatorOutlined, FileDoneOutlined, CarOutlined, ExportOutlined, ImportOutlined, LoginOutlined, LogoutOutlined, SearchOutlined, ToolOutlined, CheckCircleOutlined, UnorderedListOutlined, InfoCircleOutlined } from "@ant-design/icons";
+import { CalendarOutlined, SkinOutlined, UploadOutlined, RollbackOutlined, CalculatorOutlined, FileDoneOutlined, CarOutlined, ExportOutlined, ImportOutlined, LoginOutlined, LogoutOutlined, SearchOutlined, ToolOutlined, CheckCircleOutlined, UnorderedListOutlined, InfoCircleOutlined, EditOutlined, DeleteOutlined, PoweroffOutlined } from "@ant-design/icons";
 import IconText from "./IconText";
 import { userActions } from "../../../fields/Operacional/userActions-json"; // Importe o JSON
 import { userActionsItems } from '../../../fields/Operacional/userActionsItems-json'; // Update import
@@ -223,7 +223,7 @@ const ActionDetails: React.FC<{
             ))}
           </div>
         }
-        title="Ações"
+        title="Ações3"
         trigger="click"
         placement="bottomRight" // Preferencialmente abrir abaixo do ícone inicial, alinhado à direita
       >
@@ -266,55 +266,76 @@ const ActionDetails: React.FC<{
       action?: () => void;
     }
   > = {
-    reservar: {
-      icon: CalendarOutlined,
-      text: "Reservas",
-      tooltip: "Exibe as Reservas",
-      color: "blue",
-      action: () => handleActionClick("Reservas", "sysLocacaoRoupa_reservar"),
-    },
-    provar: {
-      icon: SkinOutlined,
-      text: "Provas",
-      tooltip: "Exibe as Provas",
+    editar: {
+      icon: EditOutlined,
+      text: "Editar",
+      tooltip: "Edita o Item",
       color: "green",
-      action: () => handleActionClick("Provas", "sysLocacaoRoupa_provar"),
+      //action: () => handleActionClick("", ""),
     },
-    retirar: {
-      icon: UploadOutlined,
-      text: "Retiradas",
-      tooltip: "Exibe as Retiradas",
-      color: "orange",
-      action: () => handleActionClick("Retiradas", "sysLocacaoRoupa_retirar"),
-    },
-    devolver: {
-      icon: RollbackOutlined,
-      text: "Devoluções",
-      tooltip: "Exibe as Devoluções",
+    apagar: {
+      icon: DeleteOutlined,
+      text: "Apagar",
+      tooltip: "Apaga o Item",
       color: "red",
-      action: () => handleActionClick("Devoluções", "sysLocacaoRoupa_devolver"),
+      //action: () => handleActionClick("", ""),
     },
-    orcar: {
-      icon: CalculatorOutlined,
-      text: "Orçamento",
-      tooltip: "Orçamento realizado",
-      color: "blue",
-      action: () => handleActionClick("Orçamentos", "sysOficinaCarro_orcar"),
+    ativo: {
+      icon: CheckCircleOutlined,
+      text: "Ativo",
+      tooltip: "Ativa / Desativa o Item",
+      color: "orange",
+      //action: () => handleActionClick("", ""),
     },
-    executar: {
-      icon: FileDoneOutlined,
-      text: "Atendimentos",
-      tooltip: "Execução do Serviço",
-      color: "green",
-      action: () => handleActionClick("Atendimentos", "sysOficinaCarro_executar"),
-    },
-    diagnostico: {
-      icon: SearchOutlined,
-      text: "Diagnósticos",
-      tooltip: "Análise e avaliação",
-      color: "green",
-      action: () => handleActionClick("Diagnósticos", "sysOficinaCarro_diagnosticar"),
-    },
+    // reservar: {
+    //   icon: CalendarOutlined,
+    //   text: "Reservas",
+    //   tooltip: "Exibe as Reservas",
+    //   color: "blue",
+    //   action: () => handleActionClick("Reservas", "sysLocacaoRoupa_reservar"),
+    // },
+    // provar: {
+    //   icon: SkinOutlined,
+    //   text: "Provas",
+    //   tooltip: "Exibe as Provas",
+    //   color: "green",
+    //   action: () => handleActionClick("Provas", "sysLocacaoRoupa_provar"),
+    // },
+    // retirar: {
+    //   icon: UploadOutlined,
+    //   text: "Retiradas",
+    //   tooltip: "Exibe as Retiradas",
+    //   color: "orange",
+    //   action: () => handleActionClick("Retiradas", "sysLocacaoRoupa_retirar"),
+    // },
+    // devolver: {
+    //   icon: RollbackOutlined,
+    //   text: "Devoluções",
+    //   tooltip: "Exibe as Devoluções",
+    //   color: "red",
+    //   action: () => handleActionClick("Devoluções", "sysLocacaoRoupa_devolver"),
+    // },
+    // orcar: {
+    //   icon: CalculatorOutlined,
+    //   text: "Orçamento",
+    //   tooltip: "Orçamento realizado",
+    //   color: "blue",
+    //   action: () => handleActionClick("Orçamentos", "sysOficinaCarro_orcar"),
+    // },
+    // executar: {
+    //   icon: FileDoneOutlined,
+    //   text: "Atendimentos",
+    //   tooltip: "Execução do Serviço",
+    //   color: "green",
+    //   action: () => handleActionClick("Atendimentos", "sysOficinaCarro_executar"),
+    // },
+    // diagnostico: {
+    //   icon: SearchOutlined,
+    //   text: "Diagnósticos",
+    //   tooltip: "Análise e avaliação",
+    //   color: "green",
+    //   action: () => handleActionClick("Diagnósticos", "sysOficinaCarro_diagnosticar"),
+    // },
   };
 
   const openGoogleMaps = () => {
@@ -340,13 +361,13 @@ const ActionDetails: React.FC<{
         color: "blue",
         action: () => openModal("in"),
       },
-      executar: {
-        icon: CarOutlined,
-        text: "Atendimentos",
-        tooltip: "Execução de Serviços Automotivos",
-        color: "green",
-        action: () => handleActionClick("Atendimentos", "sysOficinaCarro_executar"),
-      },
+      // executar: {
+      //   icon: CarOutlined,
+      //   text: "Atendimentos",
+      //   tooltip: "Execução de Serviços Automotivos",
+      //   color: "green",
+      //   action: () => handleActionClick("Atendimentos", "sysOficinaCarro_executar"),
+      // },
       checkout: {
         icon: LogoutOutlined,
         text: "Check-out",
@@ -408,7 +429,7 @@ const ActionDetails: React.FC<{
             tooltip={details.tooltip}
             color={details.color}
             onClick={details.action}
-            style={{ cursor: 'pointer' }}
+            style={{ cursor: 'pointer', width: '55px' }}
           />
         ) : null;
       })}

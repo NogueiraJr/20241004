@@ -1,7 +1,7 @@
-import { Space, Input } from 'antd';
+import { Space, Input, Tag, Popover, Tooltip } from 'antd';
 import type { TableProps } from 'antd';
 import { useNavigate } from 'react-router-dom';
-import { EditOutlined } from '@ant-design/icons';
+import { CarryOutOutlined, DeleteFilled, DeleteOutlined, DeleteTwoTone, EditOutlined, UnorderedListOutlined } from '@ant-design/icons';
 import React, { useState, useEffect, useMemo } from 'react';
 
 import IconText from './IconText';
@@ -10,8 +10,11 @@ import { UserOperationsProps } from '../../../../interfaces/UserOperationProps';
 import { useParameter } from '../../../../context/ParameterContext';
 import { OperationType } from '../../../../interfaces/UserOperationsType';
 import { userOperations } from '../../../fields/Operacional/userOperations-json';
+import ActionDetails from './UserOperationsDetails';
+import MultiSelectList from '../UserActions/ActionsFlowPoints';
+import { ActionsFlowPoints } from '../../../fields/Operacional/ActionsFlowPoints-json';
 
-const Actions: React.FC<UserOperationsProps> = ({ userOperation: action }) => {
+const Actions: React.FC<UserOperationsProps> = ({ userActionsMain: actionMain, userActionsAux: actionAux }) => {
 
   const { system } = useParameter();
 
@@ -64,6 +67,58 @@ const Actions: React.FC<UserOperationsProps> = ({ userOperation: action }) => {
     );
   };
 
+  const renderActionsPopover = (record: OperationType) => (
+    <div>
+      <Space direction="horizontal">
+        <strong>Principais</strong>
+      </Space>
+      <div className="action-buttons">
+        {actionMain &&
+          (() => {
+            const actions = actionMain.split('|'); // Supondo que as ações estejam separadas por '|'
+            return <ActionDetails actions={actions} system={system} userOperationId={record.id} openModal={openModalWithMoment} />;
+          })()}
+
+        {isModalVisible && (
+          <MultiSelectList
+            visible={isModalVisible}
+            onCancel={() => setModalVisible(false)}
+            data={{ ActionsFlowPoints }}
+            systemId={system}
+            moment={filterMoment}
+            title={filterMoment === 'in' ? 'Check-list de Entrada' : 'Check-list de Saída'} // Define o título dinamicamente
+          />
+        )}
+      </div>
+
+      {actionAux &&
+        (<Space direction="horizontal">
+          <strong>Auxiliares</strong>
+        </Space>)
+      }
+
+      <div className="action-buttons">
+        {actionAux &&
+          (() => {
+            const actions = actionAux.split('|'); // Supondo que as ações estejam separadas por '|'
+            return (
+              <ActionDetails actions={actions} system={system} userOperationId={record.id} openModal={openModalWithMoment} />
+            );
+          })()}
+
+        {isModalVisible && (
+          <MultiSelectList
+            visible={isModalVisible}
+            onCancel={() => setModalVisible(false)}
+            data={{ ActionsFlowPoints }}
+            systemId={system}
+            moment={filterMoment}
+            title={filterMoment === 'in' ? 'Check-list de Entrada' : 'Check-list de Saída'} // Define o título dinamicamente
+          />
+        )}
+      </div>
+    </div>
+  );
   const columns: TableProps<OperationType>['columns'] = [
     {
       title: 'Descrição',
@@ -82,16 +137,33 @@ const Actions: React.FC<UserOperationsProps> = ({ userOperation: action }) => {
       ),
       sorter: (a, b) => a.description.localeCompare(b.description),
       sortDirections: ['ascend', 'descend'],
+      render: (_, record) => (
+        <div>
+          <Tooltip title={record.notes}>
+            <span>{record.description}</span>
+          </Tooltip>
+          {record.tags && record.tags.length > 0 && (
+            <div style={{ marginTop: 4 }}>
+              {record.tags.map((tag) => (
+                <Tag color={tag.length > 5 ? 'geekblue' : 'green'} key={tag}>
+                  {tag.toUpperCase()}
+                </Tag>
+              ))}
+            </div>
+          )}
+        </div>
+      ),
     },
     {
       title: 'Ações',
       key: 'action',
       width: '100px',
       render: (_, record) => (
-        <Space size="middle">
-          <IconText icon={EditOutlined} text="Editar" tooltip="Editar estas informações" color="black" />
-          {/* <IconText icon={CarryOutOutlined} text="Retirar" tooltip="Retirar os produtos" color="black" /> */}
-        </Space>
+        <Popover content={renderActionsPopover(record)} title="Ações" trigger="click" placement="bottom">
+          <Space size="middle">
+            <IconText icon={UnorderedListOutlined} text="Ações" tooltip="Ações que podem ser feitas" color="black" />
+          </Space>
+        </Popover>
       ),
     },
   ];
@@ -109,7 +181,8 @@ const Actions: React.FC<UserOperationsProps> = ({ userOperation: action }) => {
       isModalVisible={isModalVisible}
       setModalVisible={setModalVisible}
       filterMoment={filterMoment}
-      openModalWithMoment={openModalWithMoment} navigate={useNavigate()} action={action} system={system}    />
+      openModalWithMoment={openModalWithMoment} navigate={useNavigate()} action={actionMain} system={system}
+    />
   );
 
 };

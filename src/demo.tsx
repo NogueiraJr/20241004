@@ -86,7 +86,7 @@ const App: React.FC = () => {
       case '/diagnostico':
         return 'Diagnósticos';
       case '/orcamento':
-        return 'Orçamento';
+        return 'Orçamentos';
       case '/execucao':
         return 'Atendimentos';
 
@@ -166,14 +166,14 @@ const App: React.FC = () => {
           <Route path="/fornecedor" element={<Fornecedor />} />
           <Route path="/parceiro" element={<Parceiro />} />
 
-          <Route path="/reserva" element={<Actions userOperation="reservar" />} />
-          <Route path="/prova" element={<Actions userOperation="provar" />} />
-          <Route path="/retirada" element={<Actions userOperation="checkout|retirar|levar" />} />
-          <Route path="/devolucao" element={<Actions userOperation="devolver|buscar|checkin" />} />
+          <Route path="/reserva" element={<Actions userActionsMain="editar|apagar|ativo|reservar" userActionsAux="" />} />
+          <Route path="/prova" element={<Actions userActionsMain="editar|apagar|ativo|provar" userActionsAux="" />} />
+          <Route path="/retirada" element={<Actions userActionsMain="editar|apagar|ativo|retirar" userActionsAux="checkout|levar" />} />
+          <Route path="/devolucao" element={<Actions userActionsMain="editar|apagar|ativo|devolver" userActionsAux="buscar|checkin" />} />
 
-          <Route path="/diagnostico" element={<Actions userOperation="diagnostico" />} />
-          <Route path="/orcamento" element={<Actions userOperation="diagnostico|orcar" />} />
-          <Route path="/execucao" element={<Actions userOperation="buscar|checkin|executar|checkout|levar" />} />
+          <Route path="/diagnostico" element={<Actions userActionsMain="editar|apagar|ativo|diagnostico" userActionsAux="" />} />
+          <Route path="/orcamento" element={<Actions userActionsMain="editar|apagar|ativo|diagnostico|orcar" userActionsAux="" />} />
+          <Route path="/execucao" element={<Actions userActionsMain="editar|apagar|ativo|executar" userActionsAux="buscar|checkout|levar" />} />
         </Routes>
       </div>
       {/* Modal de Histórico de Versões */}

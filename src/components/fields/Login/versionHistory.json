@@ -1,5 +1,18 @@
 [
   {
+    "version": "0.0.16 (beta)",
+    "date": "11/01/2025",
+    "history": [
+      {
+        "system": "all",
+        "description": "Modança no Layout das listas de Operações",
+        "details": [
+          "As listas operacionais foram melhoradas para serem mais intuitivas e fáceis de usar"
+        ]
+      }
+    ]
+  },
+  {
     "version": "0.0.15 (beta)",
     "date": "01/01/2025",
     "history": [
