@@ -102,7 +102,7 @@ const OperationsTable: React.FC<{
       },
       orcar: {
         icon: CalculatorOutlined,
-        text: "Orçamento",
+        text: "Orçamentos",
         tooltip: "Orçamento realizado",
         color: "blue",
         actionId: "sysOficinaCarro_orcar",
@@ -483,11 +483,9 @@ const OperationsTable: React.FC<{
             <div className="expanded-row-content">
               <div className="cost-charged">
                 <span>
-                  Custo: {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(Number(record.priceActions))}
-                </span>{' '}
-                |
-                <span>
-                  Cobrado: {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(Number(record.priceCharged))}
+                  <strong>Custo:</strong> {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(Number(record.priceActions))}
+                  {' | '}
+                  <strong>Cobrado:</ strong> {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(Number(record.priceCharged))}
                 </span>
               </div>
 
