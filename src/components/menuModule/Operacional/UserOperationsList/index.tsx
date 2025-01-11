@@ -14,7 +14,7 @@ import ActionDetails from './UserOperationsDetails';
 import MultiSelectList from '../UserActions/ActionsFlowPoints';
 import { ActionsFlowPoints } from '../../../fields/Operacional/ActionsFlowPoints-json';
 
-const Actions: React.FC<UserOperationsProps> = ({ userOperation: action }) => {
+const Actions: React.FC<UserOperationsProps> = ({ userActionsMain: actionMain, userActionsAux: actionAux }) => {
 
   const { system } = useParameter();
 
@@ -70,14 +70,40 @@ const Actions: React.FC<UserOperationsProps> = ({ userOperation: action }) => {
   const renderActionsPopover = (record: OperationType) => (
     <div>
       <Space direction="horizontal">
-        <IconText icon={EditOutlined} text="Editar" tooltip="Editar as informações" color="black" />
-        <IconText icon={DeleteOutlined} text="Apagar" tooltip="Apagar estas informações" color="black" />
+        <strong>Principais</strong>
       </Space>
       <div className="action-buttons">
-        {action &&
+        {actionMain &&
           (() => {
-            const actions = action.split('|'); // Supondo que as ações estejam separadas por '|'
+            const actions = actionMain.split('|'); // Supondo que as ações estejam separadas por '|'
             return <ActionDetails actions={actions} system={system} userOperationId={record.id} openModal={openModalWithMoment} />;
+          })()}
+
+        {isModalVisible && (
+          <MultiSelectList
+            visible={isModalVisible}
+            onCancel={() => setModalVisible(false)}
+            data={{ ActionsFlowPoints }}
+            systemId={system}
+            moment={filterMoment}
+            title={filterMoment === 'in' ? 'Check-list de Entrada' : 'Check-list de Saída'} // Define o título dinamicamente
+          />
+        )}
+      </div>
+
+      {actionAux &&
+        (<Space direction="horizontal">
+          <strong>Auxiliares</strong>
+        </Space>)
+      }
+
+      <div className="action-buttons">
+        {actionAux &&
+          (() => {
+            const actions = actionAux.split('|'); // Supondo que as ações estejam separadas por '|'
+            return (
+              <ActionDetails actions={actions} system={system} userOperationId={record.id} openModal={openModalWithMoment} />
+            );
           })()}
 
         {isModalVisible && (
@@ -155,7 +181,7 @@ const Actions: React.FC<UserOperationsProps> = ({ userOperation: action }) => {
       isModalVisible={isModalVisible}
       setModalVisible={setModalVisible}
       filterMoment={filterMoment}
-      openModalWithMoment={openModalWithMoment} navigate={useNavigate()} action={action} system={system}
+      openModalWithMoment={openModalWithMoment} navigate={useNavigate()} action={actionMain} system={system}
     />
   );
 
