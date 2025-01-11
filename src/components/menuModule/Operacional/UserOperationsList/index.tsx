@@ -79,16 +79,14 @@ const Actions: React.FC<UserOperationsProps> = ({ userActionsMain: actionMain, u
             return <ActionDetails actions={actions} system={system} userOperationId={record.id} openModal={openModalWithMoment} />;
           })()}
 
-        {isModalVisible && (
-          <MultiSelectList
+        {/* <MultiSelectList
             visible={isModalVisible}
             onCancel={() => setModalVisible(false)}
             data={{ ActionsFlowPoints }}
             systemId={system}
             moment={filterMoment}
             title={filterMoment === 'in' ? 'Check-list de Entrada' : 'Check-list de Saída'} // Define o título dinamicamente
-          />
-        )}
+          /> */}
       </div>
 
       {actionAux &&
@@ -106,18 +104,18 @@ const Actions: React.FC<UserOperationsProps> = ({ userActionsMain: actionMain, u
             );
           })()}
 
-        {isModalVisible && (
-          <MultiSelectList
+
+        {/* <MultiSelectList
             visible={isModalVisible}
             onCancel={() => setModalVisible(false)}
             data={{ ActionsFlowPoints }}
             systemId={system}
             moment={filterMoment}
             title={filterMoment === 'in' ? 'Check-list de Entrada' : 'Check-list de Saída'} // Define o título dinamicamente
-          />
-        )}
+          /> */}
       </div>
     </div>
+
   );
   const columns: TableProps<OperationType>['columns'] = [
     {
@@ -169,20 +167,32 @@ const Actions: React.FC<UserOperationsProps> = ({ userActionsMain: actionMain, u
   ];
 
   return (
-    <OperationsTable
-      operations={operations}
-      filteredData={filteredData}
-      columns={columns}
-      setStatusFilter={setStatusFilter}
-      setTagFilter={setTagFilter}
-      setSearchText={setSearchText}
-      expandedRowKeys={expandedRowKeys}
-      handleExpand={handleExpand}
-      isModalVisible={isModalVisible}
-      setModalVisible={setModalVisible}
-      filterMoment={filterMoment}
-      openModalWithMoment={openModalWithMoment} navigate={useNavigate()} action={actionMain} system={system}
-    />
+    <>
+      <MultiSelectList
+        visible={isModalVisible}
+        onCancel={() => setModalVisible(false)}
+        data={{ ActionsFlowPoints }}
+        systemId={system}
+        moment={filterMoment}
+        title={filterMoment === 'in' ? 'Check-list de Entrada' : 'Check-list de Saída'} // Define o título dinamicamente
+      />
+
+      <OperationsTable
+        operations={operations}
+        filteredData={filteredData}
+        columns={columns}
+        setStatusFilter={setStatusFilter}
+        setTagFilter={setTagFilter}
+        setSearchText={setSearchText}
+        expandedRowKeys={expandedRowKeys}
+        handleExpand={handleExpand}
+        isModalVisible={isModalVisible}
+        setModalVisible={setModalVisible}
+        filterMoment={filterMoment}
+        openModalWithMoment={openModalWithMoment} navigate={useNavigate()} action={actionMain} system={system}
+      />
+    </>
+
   );
 
 };
