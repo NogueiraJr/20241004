@@ -7,13 +7,14 @@ import moment from "moment";
 import ActionMenu from './components/ActionMenu';
 import ItemsModal from './components/ItemsModal';
 import ActionIcons from './components/ActionIcons';
-import { defaultActionMap, systemOverrides } from './constants';
+import { createSystemOverrides, defaultActionMap } from './constants';
 const UserOperationsDetails: React.FC<{
   actions: string[];
   system: string;
   userOperationId: string;
   openModal: (moment: string) => void;
-}> = ({ actions, system, userOperationId, openModal }) => {
+  openGoogleMaps: () => void;
+}> = ({ actions, system, userOperationId, openModal, openGoogleMaps }) => {
   const [isModalOpen, setModalOpen] = useState(false);
   const [modalTitle, setModalTitle] = useState("");
   const [modalData, setModalData] = useState<any[]>([]);
@@ -87,7 +88,10 @@ const UserOperationsDetails: React.FC<{
     setModalData([]);
   };
 
-  const actionMap = { ...defaultActionMap, ...systemOverrides[system] };
+  const actionMap = { 
+    ...defaultActionMap, 
+    ...createSystemOverrides(openModal, openGoogleMaps)[system] 
+  };
 
   const columns = [
     { title: "Descrição", dataIndex: "description", key: "description" },

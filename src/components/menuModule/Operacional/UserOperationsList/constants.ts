@@ -21,7 +21,7 @@ export const defaultActionMap = {
   },
 };
 
-export const systemOverrides = {
+export const createSystemOverrides = (openModal: (moment: string) => void, openGoogleMaps: () => void) => ({
   sysOficinaCarro: {
     buscar: {
       icon: ImportOutlined,
@@ -82,16 +82,4 @@ export const systemOverrides = {
       action: () => openGoogleMaps(),
     }
   },
-};
-
-const openGoogleMaps = () => {
-  const latitude = -23.1794;
-  const longitude = -45.8869;
-  const url = `https://www.google.com/maps?q=${latitude},${longitude}`;
-  window.open(url, "_blank");
-};
-
-const openModal = (type: string) => {
-  // This function needs to be implemented or passed as a prop
-  console.log(`Opening modal for ${type}`);
-};
+});

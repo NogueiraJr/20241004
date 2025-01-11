@@ -25,10 +25,8 @@ const Actions: React.FC<UserOperationsProps> = ({ userActionsMain: actionMain, u
   // console.log(action);
 
   const openModalWithMoment = (moment: string) => {
-    // Implementar a abertura do modal com o filtro 'moment'
-    // console.log(`Modal aberto com filtro: ${moment}`);
-    setModalVisible(true); // Lógica para exibir o modal
-    setFilterMoment(moment); // Lógica para aplicar o filtro
+    setModalVisible(true);
+    setFilterMoment(moment);
   };
 
   const [expandedRowKeys, setExpandedRowKeys] = useState<string[]>([]);
@@ -76,9 +74,8 @@ const Actions: React.FC<UserOperationsProps> = ({ userActionsMain: actionMain, u
         {actionMain &&
           (() => {
             const actions = actionMain.split('|'); // Supondo que as ações estejam separadas por '|'
-            return <ActionDetails actions={actions} system={system} userOperationId={record.id} openModal={openModalWithMoment} />;
+            return <ActionDetails actions={actions} system={system} userOperationId={record.id} openModal={openModalWithMoment} openGoogleMaps={() => {}} />;
           })()}
-
         {/* <MultiSelectList
             visible={isModalVisible}
             onCancel={() => setModalVisible(false)}
@@ -100,7 +97,13 @@ const Actions: React.FC<UserOperationsProps> = ({ userActionsMain: actionMain, u
           (() => {
             const actions = actionAux.split('|'); // Supondo que as ações estejam separadas por '|'
             return (
-              <ActionDetails actions={actions} system={system} userOperationId={record.id} openModal={openModalWithMoment} />
+              <ActionDetails
+                actions={actions}
+                system={system}
+                userOperationId={record.id}
+                openModal={openModalWithMoment}
+                openGoogleMaps={() => {}}
+              />
             );
           })()}
 
