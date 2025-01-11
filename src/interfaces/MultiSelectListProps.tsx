@@ -1,4 +1,4 @@
-import { ActionFlowPoint } from "../../../../interfaces/ActionFlowPoint";
+import { ActionFlowPoint } from "./ActionFlowPoint";
 
 export interface MultiSelectListProps {
     visible: boolean;

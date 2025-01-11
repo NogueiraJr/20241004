@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { CarryOutOutlined, DeleteFilled, DeleteOutlined, DeleteTwoTone, EditOutlined, UnorderedListOutlined } from '@ant-design/icons';
 import React, { useState, useEffect, useMemo } from 'react';
 
-import IconText from './IconText';
+import IconText from './components/IconText';
 import OperationsTable from './UserOperationsTable';
 import { UserOperationsProps } from '../../../../interfaces/UserOperationProps';
 import { useParameter } from '../../../../context/ParameterContext';

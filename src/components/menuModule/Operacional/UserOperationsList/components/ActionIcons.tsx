@@ -1,5 +1,5 @@
 import React from 'react';
-import IconText from '../IconText';
+import IconText from './IconText';
 
 interface ActionIconsProps {
   actions: string[];
