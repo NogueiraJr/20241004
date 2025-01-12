@@ -16,6 +16,9 @@ import tableOperations from "./functions/tableOperations";
 import getWhenOperation from "./functions/getWhenOperation";
 import getActionMenuExecute from "./functions/getActionMenuExecute";
 
+import handleActionClick from "./functions/handleActionClick";
+import getNextActionIcon from "./functions/getNextActionIcon";
+
 const { Panel } = Collapse;
 
 const OperationsTable: React.FC<{
@@ -82,127 +85,32 @@ const OperationsTable: React.FC<{
       return actions.map((action) => {
         const details = defaultActionMap[action];
         if (!details) return null;
-
+    
         const filteredData = userActions.filter(
           (userAction) => userAction.userOperationId === record.id && userAction.actionId === details.actionId
         );
-
-        const columnsForTab = getColumnsForTab(getColorForTag, getStepStatus, getStepIconColor, getNextActionIcon);
-        
-
-        const handleActionClick = (action: string, actionId: string, userActionId?: string) => {
-          console.log(`Action: ${action} - ActionId: ${actionId} - UserOperationId: ${record.id}`);
-          setModalTitle(action === "Itens" ? "Itens" : action.charAt(0).toUpperCase() + action.slice(1));
-
-          if (action === "Itens") {
-            const userAction = userActions.find(action => action.actionId === actionId && action.userOperationId === record.id && action.id === userActionId);
-            const products = userActionsItems.filter(item => item.userActionId === userAction?.id);
-
-            console.log("UserActionsItems:", userActionsItems);
-            console.log("userOperationId:", record.id);
-            console.log("Products:", products);
-
-            const groupedData = products.reduce((acc: any, product: any) => {
-              const { productTypeId, name, description, quantity, price, tags } = product;
-              if (!acc[productTypeId]) {
-                acc[productTypeId] = [];
-              }
-              acc[productTypeId].push({ key: product.id, name, description, quantity, price, tags: tags || [] });
-              return acc;
-            }, {});
-
-            const formattedData = Object.keys(groupedData).map((productTypeId) => ({
-              key: productTypeId,
-              productTypeId,
-              products: groupedData[productTypeId],
-            }));
-
-            setModalData(formattedData);
-          } else {
-            const filteredData = userActions.filter(
-              (userAction) => userAction.userOperationId === record.id && userAction.actionId.toLocaleLowerCase().trim() === actionId.toLocaleLowerCase().trim()
-            ).map((userAction) => {
-              const getStepIconColor = (date: string | undefined, color: string) => date ? color : 'gray';
-
-
-              return {
-                key: userAction.id,
-                description: userAction.description,
-                tags: userAction.tags,
-                notes: userAction.notes,
-                scheduledAt: (
-                  getWhenOperation(userAction, getStepStatus, getStepIconColor)
-                ),
-                action: userAction.actionId,
-                executedAt: userAction.executedAt,
-                finishedAt: userAction.finishedAt,
-              };
-            });
-            setModalData(filteredData);
-          }
-          setModalOpen(true);
-        };
-
-        function getNextActionIcon(actionId: string, executedAt: string | null, finishedAt: string | null, userActionId?: string) {
-          const isExecuted = !!executedAt;
-          const isFinished = !!finishedAt;
-
-          switch (actionId) {
-            case "sysLocacaoRoupa_reservar":
-              return getActionMenuExecute([
-                { icon: SkinOutlined, color: 'green', text: 'Provar', action: () => showConfirm("Provar") },
-                { icon: UploadOutlined, color: 'orange', text: 'Retirar', action: () => showConfirm("Retirar") },
-                { icon: CheckCircleOutlined, color: 'green', text: 'Finalizar', action: () => showConfirm("Finalizar"), disabled: isFinished },
-                { icon: UnorderedListOutlined, color: 'blue', text: 'Itens', action: () => handleActionClick("Itens", actionId, userActionId) }
-              ]);
-            case "sysLocacaoRoupa_provar":
-              return getActionMenuExecute([
-                { icon: UploadOutlined, color: 'orange', text: 'Retirar', action: () => showConfirm("Retirar") },
-                { icon: CheckCircleOutlined, color: 'green', text: 'Finalizar', action: () => showConfirm("Finalizar"), disabled: isFinished },
-                { icon: UnorderedListOutlined, color: 'blue', text: 'Itens', action: () => handleActionClick("Itens", actionId, userActionId) }
-              ]);
-            case "sysLocacaoRoupa_retirar":
-              return getActionMenuExecute([
-                { icon: RollbackOutlined, color: 'red', text: 'Devolver', action: () => showConfirm("Devolver") },
-                { icon: CheckCircleOutlined, color: 'green', text: 'Finalizar', action: () => showConfirm("Finalizar"), disabled: isFinished },
-                { icon: UnorderedListOutlined, color: 'blue', text: 'Itens', action: () => handleActionClick("Itens", actionId, userActionId) }
-              ]);
-            case "sysLocacaoRoupa_devolver":
-              return getActionMenuExecute([
-                { icon: CheckCircleOutlined, color: 'green', text: 'Finalizar', action: () => showConfirm("Finalizar"), disabled: isFinished },
-                { icon: UnorderedListOutlined, color: 'blue', text: 'Itens', action: () => handleActionClick("Itens", actionId, userActionId) }
-              ]);
-            case "sysOficinaCarro_diagnosticar":
-              return getActionMenuExecute([
-                { icon: CalculatorOutlined, color: 'blue', text: 'Orçar', action: () => showConfirm("Orçar") },
-                { icon: FileDoneOutlined, color: 'green', text: 'Executar', action: () => showConfirm("Executar"), disabled: isExecuted },
-                { icon: UnorderedListOutlined, color: 'blue', text: 'Itens', action: () => handleActionClick("Itens", actionId, userActionId) }
-              ]);
-            case "sysOficinaCarro_orcar":
-              return getActionMenuExecute([
-                { icon: FileDoneOutlined, color: 'green', text: 'Executar', action: () => showConfirm("Executar"), disabled: isExecuted },
-                { icon: CheckCircleOutlined, color: 'green', text: 'Finalizar', action: () => showConfirm("Finalizar"), disabled: isFinished },
-                { icon: UnorderedListOutlined, color: 'blue', text: 'Itens', action: () => handleActionClick("Itens", actionId, userActionId) }
-              ]);
-            case "sysOficinaCarro_executar":
-              return getActionMenuExecute([
-                { icon: CheckCircleOutlined, color: 'green', text: 'Finalizar', action: () => showConfirm("Finalizar"), disabled: isFinished },
-                { icon: UnorderedListOutlined, color: 'blue', text: 'Itens', action: () => handleActionClick("Itens", actionId, userActionId) }
-              ]);
-            default:
-              return null;
-          };
-        }
-
-         return (
+    
+        const columnsForTab = getColumnsForTab(getColorForTag, getStepStatus, getStepIconColor, (actionId, executedAt, finishedAt, userActionId) =>
+          getNextActionIcon(
+            actionId,
+            executedAt,
+            finishedAt,
+            getActionMenuExecute,
+            showConfirm,
+            (action, actionId, userActionId) =>
+              handleActionClick(action, actionId, record, setModalTitle, setModalData, setModalOpen, userActions, userActionsItems, getColorForTag, userActionId),
+            userActionId
+          )
+        );
+    
+        return (
           <Tabs.TabPane tab={<span>{details.text}</span>} key={details.text}>
             <Table showHeader={false} dataSource={filteredData} columns={columnsForTab} pagination={false} />
           </Tabs.TabPane>
         );
-
-        
       });
     };
+    
 
     return (
       <>
