@@ -14,6 +14,7 @@ import getColumnsForTab from "./functions/getColumnsForTab";
 import showConfirm from "./functions/showConfirm";
 import tableOperations from "./functions/tableOperations";
 import getWhenOperation from "./functions/getWhenOperation";
+import getActionMenuExecute from "./functions/getActionMenuExecute";
 
 const { Panel } = Collapse;
 
@@ -148,43 +149,43 @@ const OperationsTable: React.FC<{
 
           switch (actionId) {
             case "sysLocacaoRoupa_reservar":
-              return actionMenuExecute([
+              return getActionMenuExecute([
                 { icon: SkinOutlined, color: 'green', text: 'Provar', action: () => showConfirm("Provar") },
                 { icon: UploadOutlined, color: 'orange', text: 'Retirar', action: () => showConfirm("Retirar") },
                 { icon: CheckCircleOutlined, color: 'green', text: 'Finalizar', action: () => showConfirm("Finalizar"), disabled: isFinished },
                 { icon: UnorderedListOutlined, color: 'blue', text: 'Itens', action: () => handleActionClick("Itens", actionId, userActionId) }
               ]);
             case "sysLocacaoRoupa_provar":
-              return actionMenuExecute([
+              return getActionMenuExecute([
                 { icon: UploadOutlined, color: 'orange', text: 'Retirar', action: () => showConfirm("Retirar") },
                 { icon: CheckCircleOutlined, color: 'green', text: 'Finalizar', action: () => showConfirm("Finalizar"), disabled: isFinished },
                 { icon: UnorderedListOutlined, color: 'blue', text: 'Itens', action: () => handleActionClick("Itens", actionId, userActionId) }
               ]);
             case "sysLocacaoRoupa_retirar":
-              return actionMenuExecute([
+              return getActionMenuExecute([
                 { icon: RollbackOutlined, color: 'red', text: 'Devolver', action: () => showConfirm("Devolver") },
                 { icon: CheckCircleOutlined, color: 'green', text: 'Finalizar', action: () => showConfirm("Finalizar"), disabled: isFinished },
                 { icon: UnorderedListOutlined, color: 'blue', text: 'Itens', action: () => handleActionClick("Itens", actionId, userActionId) }
               ]);
             case "sysLocacaoRoupa_devolver":
-              return actionMenuExecute([
+              return getActionMenuExecute([
                 { icon: CheckCircleOutlined, color: 'green', text: 'Finalizar', action: () => showConfirm("Finalizar"), disabled: isFinished },
                 { icon: UnorderedListOutlined, color: 'blue', text: 'Itens', action: () => handleActionClick("Itens", actionId, userActionId) }
               ]);
             case "sysOficinaCarro_diagnosticar":
-              return actionMenuExecute([
+              return getActionMenuExecute([
                 { icon: CalculatorOutlined, color: 'blue', text: 'Orçar', action: () => showConfirm("Orçar") },
                 { icon: FileDoneOutlined, color: 'green', text: 'Executar', action: () => showConfirm("Executar"), disabled: isExecuted },
                 { icon: UnorderedListOutlined, color: 'blue', text: 'Itens', action: () => handleActionClick("Itens", actionId, userActionId) }
               ]);
             case "sysOficinaCarro_orcar":
-              return actionMenuExecute([
+              return getActionMenuExecute([
                 { icon: FileDoneOutlined, color: 'green', text: 'Executar', action: () => showConfirm("Executar"), disabled: isExecuted },
                 { icon: CheckCircleOutlined, color: 'green', text: 'Finalizar', action: () => showConfirm("Finalizar"), disabled: isFinished },
                 { icon: UnorderedListOutlined, color: 'blue', text: 'Itens', action: () => handleActionClick("Itens", actionId, userActionId) }
               ]);
             case "sysOficinaCarro_executar":
-              return actionMenuExecute([
+              return getActionMenuExecute([
                 { icon: CheckCircleOutlined, color: 'green', text: 'Finalizar', action: () => showConfirm("Finalizar"), disabled: isFinished },
                 { icon: UnorderedListOutlined, color: 'blue', text: 'Itens', action: () => handleActionClick("Itens", actionId, userActionId) }
               ]);
@@ -193,21 +194,7 @@ const OperationsTable: React.FC<{
           };
         }
 
-        const actionMenuExecute = (actions: { icon: React.ComponentType<any>; color: string; text: string; action: () => void; disabled?: boolean }[]) => {
-          return (
-            <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', gap: '10px' }}>
-              {actions.map((action, index) => (
-                <React.Fragment key={index}>
-                  {action.text === 'Itens' && <div style={{ borderLeft: '1px solid #ccc', height: '24px', margin: '0 10px' }} />}
-                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', cursor: action.disabled ? 'not-allowed' : 'pointer' }} onClick={!action.disabled ? action.action : undefined}>
-                    {React.createElement(action.icon, { style: { color: action.disabled ? 'gray' : action.color } })}
-                    <div style={{ color: action.disabled ? 'gray' : action.color }}>{action.text}</div>
-                  </div>
-                </React.Fragment>
-              ))}
-            </div>
-          );
-        }; return (
+         return (
           <Tabs.TabPane tab={<span>{details.text}</span>} key={details.text}>
             <Table showHeader={false} dataSource={filteredData} columns={columnsForTab} pagination={false} />
           </Tabs.TabPane>
