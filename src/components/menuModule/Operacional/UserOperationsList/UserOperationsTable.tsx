@@ -10,6 +10,7 @@ import { userActionsItems } from "../../../fields/Operacional/userActionsItems-j
 import FilterTop from "./components/FilterTop";
 import ModalItens from "./components/ModalItens";
 import DefaultActionMap from "./functions/defaultActionMap";
+import getColumnsForTab from "./functions/getColumnsForTab";
 
 const { Panel } = Collapse;
 
@@ -82,104 +83,7 @@ const OperationsTable: React.FC<{
           (userAction) => userAction.userOperationId === record.id && userAction.actionId === details.actionId
         );
 
-        const columnsForTab = [
-          {
-            title: "Descrição",
-            dataIndex: "description",
-            key: "description",
-            width: '100%',
-            render: (text: string, record: any) => (
-              <>
-                <Tooltip title={record.notes}>
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', width: '100%' }}>
-                    <span style={{ whiteSpace: 'normal', wordBreak: 'break-word' }}>{record.description}</span>
-                    <div>
-                      {record.tags?.split('|').map((tag: string, index: number) => (
-                        <Tag color={getColorForTag(tag)} key={index}>{tag}</Tag>
-                      ))}
-                    </div>
-                  </div>
-                </Tooltip>
-              </>
-            )
-          },
-          {
-            title: "Quando",
-            dataIndex: "scheduledAt",
-            key: "scheduledAt",
-            width: 120,
-            render: (text: string, record: any) => {
-              const lastDateColor = record.finishedAt
-                ? 'green'
-                : record.executedAt
-                  ? 'red'
-                  : record.scheduledAt
-                    ? 'blue'
-                    : 'gray';
-
-              return (
-                <Popover
-                  content={
-                    <Steps direction="vertical" size="small">
-                      <Steps.Step
-                        title="Agendamento"
-                        description={moment(record.scheduledAt).format("DD/MM/YYYY HH:mm")}
-                        status={getStepStatus(record.scheduledAt)}
-                        icon={<CalendarOutlined style={{ color: getStepIconColor(record.scheduledAt, 'blue') }} />}
-                      />
-                      {record.executedAt && (
-                        <Steps.Step
-                          title="Execução"
-                          description={moment(record.executedAt).format("DD/MM/YYYY HH:mm")}
-                          status={getStepStatus(record.executedAt)}
-                          icon={<CalendarOutlined style={{ color: getStepIconColor(record.executedAt, 'red') }} />}
-                        />
-                      )}
-                      {record.finishedAt && (
-                        <Steps.Step
-                          title="Finalização"
-                          description={moment(record.finishedAt).format("DD/MM/YYYY HH:mm")}
-                          status={getStepStatus(record.finishedAt)}
-                          icon={<CalendarOutlined style={{ color: getStepIconColor(record.finishedAt, 'green') }} />}
-                        />
-                      )}
-                    </Steps>
-                  }
-                  title="Quando"
-                  trigger="click"
-                  placement="bottom"
-                >
-                  <Tooltip title="Passos da Ação">
-                    <div style={{ display: 'flex', flexDirection: 'column', textAlign: 'center', alignItems: 'center', cursor: 'pointer' }}>
-                      <CalendarOutlined style={{ color: lastDateColor }} />
-                      <div style={{ color: lastDateColor }}>{record.finishedAt ? moment(record.finishedAt).format("DD/MM/YYYY HH:mm") : record.executedAt ? moment(record.executedAt).format("DD/MM/YYYY HH:mm") : moment(record.scheduledAt).format("DD/MM/YYYY HH:mm")}</div>                    </div>
-                  </Tooltip>
-                </Popover>
-              );
-            }
-          },
-          {
-            title: "Ações",
-            dataIndex: "action",
-            key: "action",
-            width: 80,
-            render: (text: string, record: any) => (
-              <Popover
-                content={getNextActionIcon(record.actionId, record.executedAt, record.finishedAt, record.id)}
-                title="Ações"
-                trigger="click"
-                placement="bottomRight"
-              >
-                <Tooltip title="Ações Disponíveis">
-                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', cursor: 'pointer' }}>
-                    <UnorderedListOutlined style={{ color: 'blue' }} />
-                    <div style={{ color: 'blue' }}>Ações</div>
-                  </div>
-                </Tooltip>
-              </Popover>
-            ),
-          },
-        ];
+        const columnsForTab = getColumnsForTab(getColorForTag, getStepStatus, getStepIconColor, getNextActionIcon);
         const showConfirm = (action: string) => {
           Modal.confirm({
             title: `Você deseja ${action}?`,
@@ -291,7 +195,7 @@ const OperationsTable: React.FC<{
           setModalOpen(true);
         };
 
-        const getNextActionIcon = (actionId: string, executedAt: string | null, finishedAt: string | null, userActionId?: string) => {
+        function getNextActionIcon(actionId: string, executedAt: string | null, finishedAt: string | null, userActionId?: string) {
           const isExecuted = !!executedAt;
           const isFinished = !!finishedAt;
 
@@ -340,7 +244,7 @@ const OperationsTable: React.FC<{
             default:
               return null;
           };
-        };
+        }
 
         const actionMenuExecute = (actions: { icon: React.ComponentType<any>; color: string; text: string; action: () => void; disabled?: boolean }[]) => {
           return (
@@ -361,6 +265,8 @@ const OperationsTable: React.FC<{
             <Table showHeader={false} dataSource={filteredData} columns={columnsForTab} pagination={false} />
           </Tabs.TabPane>
         );
+
+        
       });
     };
 
