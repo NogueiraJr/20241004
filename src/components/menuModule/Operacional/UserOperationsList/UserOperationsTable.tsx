@@ -12,6 +12,7 @@ import ModalItens from "./components/ModalItens";
 import DefaultActionMap from "./functions/defaultActionMap";
 import getColumnsForTab from "./functions/getColumnsForTab";
 import showConfirm from "./functions/showConfirm";
+import tableOperations from "./functions/tableOperations";
 
 const { Panel } = Collapse;
 
@@ -264,34 +265,7 @@ const OperationsTable: React.FC<{
       <>
         {FilterTop({ navigate, setStatusFilter, setTagFilter, operations })}
 
-        <Table<OperationType>
-          columns={columns}
-          dataSource={filteredData}
-          pagination={{ position: ['topLeft'] }}
-          expandedRowRender={(record) => (
-            <div className="expanded-row-content">
-              <div className="cost-charged">
-                <span>
-                  <strong>Custo:</strong> {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(Number(record.priceActions))}
-                  {' | '}
-                  <strong>Cobrado:</ strong> {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(Number(record.priceCharged))}
-                </span>
-              </div>
-
-              <Tabs defaultActiveKey="1">
-                {renderTabs(action ? action.split('|') : [], record)}
-              </Tabs>
-            </div>
-          )}
-          expandedRowKeys={expandedRowKeys}
-          onExpand={handleExpand}
-          rowKey="id"
-          locale={{
-            triggerDesc: 'Clique para ordenar decrescente',
-            triggerAsc: 'Clique para ordenar crescente',
-            cancelSort: 'Clique para cancelar a ordenação',
-          }}
-        />
+        {tableOperations(columns, filteredData, renderTabs, action, expandedRowKeys, handleExpand)}
 
         {ModalItens(modalTitle, isModalOpen, closeModal, modalData, getColorForTag, columns)}
       </>
@@ -299,6 +273,8 @@ const OperationsTable: React.FC<{
   };
 
 export default OperationsTable;
+
+
 
 
 
