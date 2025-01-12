@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Modal, List, Checkbox, Button, Tooltip } from 'antd';
 import { EditOutlined } from '@ant-design/icons';
 import NoteModal from './ActionsFlowPointsNoteModal';
-import { MultiSelectListProps } from '../UserOperationsList/MultiSelectListProps';
+import { MultiSelectListProps } from '../../../../interfaces/MultiSelectListProps';
 import { ActionFlowPoint } from '../../../../interfaces/ActionFlowPoint';
 import '../../../../index.css';
 

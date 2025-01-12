@@ -3,7 +3,7 @@ import { AppstoreOutlined, ToolOutlined, QuestionCircleOutlined, UserOutlined, D
 import { Menu, MenuProps } from 'antd';
 import { BrowserRouter as Router, Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import VersionHistoryModal from './components/VersionHistoryModal';  // Importe o modal
-import Inicial from './components/menu/Inicial';
+import Inicial from './components/menu/inicial/Inicial';
 import Administrador from './components/menu/Administrador';
 import Suporte from './components/menu/Suporte';
 import Proprietario from './components/menu/Proprietario';
