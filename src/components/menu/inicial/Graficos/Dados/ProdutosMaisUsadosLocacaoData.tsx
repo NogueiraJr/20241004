@@ -1,4 +1,4 @@
-import { produtosLocacaoRoupa } from "../../fields/Dados/sysLocacaoRoupa/produtosLocacaoRoupa-json";
+import { produtosLocacaoRoupa } from "../../../../fields/Dados/sysLocacaoRoupa/produtosLocacaoRoupa-json";
 
 export function ProdutosMaisUsadosLocacaoData() {
   return {
