@@ -113,14 +113,14 @@ const UserOperationsDetails: React.FC<{
     <>
       <ActionIcons actions={actions} actionMap={actionMap} />
       
-      <ItemsModal 
+      {/* <ItemsModal 
         isVisible={isModalOpen && modalTitle === "Itens"}
         onClose={closeModal}
         modalData={modalData}
         title={modalTitle}
-      />
+      /> */}
 
-      <Modal
+      {/* <Modal
         title={modalTitle}
         visible={isModalOpen && modalTitle !== "Itens"}
         onCancel={closeModal}
@@ -129,7 +129,7 @@ const UserOperationsDetails: React.FC<{
         bodyStyle={{ maxHeight: '50vh', overflowY: 'auto' }}
       >
         <Table dataSource={modalData} columns={columns} pagination={false} />
-      </Modal>
+      </Modal> */}
     </>
   );
 };

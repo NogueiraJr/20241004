@@ -3,13 +3,11 @@ import { OperationType } from "../../../../interfaces/UserOperationsType";
 import { useNavigate } from "react-router-dom";
 import React, { useState } from "react";
 import { ArrowLeftOutlined, CalendarOutlined, SkinOutlined, UploadOutlined, RollbackOutlined, CalculatorOutlined, FileDoneOutlined, SearchOutlined, UnorderedListOutlined, CheckCircleOutlined } from "@ant-design/icons";
-import ActionDetails from "./UserOperationsDetails";
-import MultiSelectList from "../UserActions/ActionsFlowPoints";
-import { ActionsFlowPoints } from '../../../fields/Operacional/ActionsFlowPoints-json';
 import { userActions } from '../../../fields/Operacional/userActions-json';
 import '../../../../index.css';
 import moment from "moment";
 import { userActionsItems } from "../../../fields/Operacional/userActionsItems-json";
+import FilterTop from "./components/FilterTop";
 
 const { Panel } = Collapse;
 const formatCurrency = (value: number) => {
@@ -417,63 +415,32 @@ const OperationsTable: React.FC<{
       });
     };
 
-    const renderActionsPopover = (record: OperationType) => {
-      const actions = action ? action.split('|') : [];
-      return (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-          {actions.map((action) => {
-            const details = defaultActionMap[action];
-            return details ? (
-              <Tooltip title={details.tooltip} key={details.text}>
-                <Button
-                  type="link"
-                  icon={React.createElement(details.icon)}
-                  onClick={() => openModalWithMoment(details.text)}
-                  style={{ color: details.color }}
-                >
-                  {details.text}
-                </Button>
-              </Tooltip>
-            ) : null;
-          })}
-        </div>
-      );
-    };
+    // const renderActionsPopover = (record: OperationType) => {
+    //   const actions = action ? action.split('|') : [];
+    //   return (
+    //     <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+    //       {actions.map((action) => {
+    //         const details = defaultActionMap[action];
+    //         return details ? (
+    //           <Tooltip title={details.tooltip} key={details.text}>
+    //             <Button
+    //               type="link"
+    //               icon={React.createElement(details.icon)}
+    //               onClick={() => openModalWithMoment(details.text)}
+    //               style={{ color: details.color }}
+    //             >
+    //               {details.text}
+    //             </Button>
+    //           </Tooltip>
+    //         ) : null;
+    //       })}
+    //     </div>
+    //   );
+    // };
 
     return (
       <>
-        <div style={{ marginBottom: 16 }}>
-          <Button
-            type="primary"
-            onClick={() => navigate(-1)} // Função para voltar à página anterior
-            icon={<ArrowLeftOutlined />} // Usando o ícone de "voltar"
-            style={{ marginRight: 16 }}
-          />
-          <Select
-            placeholder="Filtrar por status"
-            onChange={(value) => setStatusFilter(value)}
-            style={{ width: 150, marginRight: 8 }}
-            defaultValue="all"
-          >
-            <Select.Option value="all">Todos</Select.Option>
-            <Select.Option value="active">Ativo</Select.Option>
-            <Select.Option value="inactive">Inativo</Select.Option>
-          </Select>
-
-          <Select
-            placeholder="Filtrar por tag"
-            onChange={(value) => setTagFilter(value)}
-            style={{ width: 150 }}
-            defaultValue="all"
-          >
-            <Select.Option value="all">Todos</Select.Option>
-            {Array.from(new Set(operations.flatMap((locacao) => locacao.tags || []))).map((tag) => (
-              <Select.Option key={tag} value={tag}>
-                {tag.toUpperCase()}
-              </Select.Option>
-            ))}
-          </Select>
-        </div>
+        {FilterTop({ navigate, setStatusFilter, setTagFilter, operations })}
 
         <Table<OperationType>
           columns={columns}
@@ -560,3 +527,5 @@ const OperationsTable: React.FC<{
   };
 
 export default OperationsTable;
+
+
