@@ -121,7 +121,6 @@ const OperationsTable: React.FC<{
             const filteredData = userActions.filter(
               (userAction) => userAction.userOperationId === record.id && userAction.actionId.toLocaleLowerCase().trim() === actionId.toLocaleLowerCase().trim()
             ).map((userAction) => {
-              const getStepStatus = (date: string | undefined) => date ? 'finish' : 'wait';
               const getStepIconColor = (date: string | undefined, color: string) => date ? color : 'gray';
 
 
