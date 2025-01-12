@@ -492,25 +492,6 @@ const OperationsTable: React.FC<{
               <Tabs defaultActiveKey="1">
                 {renderTabs(action ? action.split('|') : [], record)}
               </Tabs>
-
-              {/* <div className="action-buttons">
-                {action &&
-                  (() => {
-                    const actions = action.split('|'); // Supondo que as ações estejam separadas por '|'
-                    return <ActionDetails actions={actions} system={system} userOperationId={record.id} openModal={openModalWithMoment} />;
-                  })()}
-
-                {isModalVisible && (
-                  <MultiSelectList
-                    visible={isModalVisible}
-                    onCancel={() => setModalVisible(false)}
-                    data={{ ActionsFlowPoints }}
-                    systemId={system}
-                    moment={filterMoment}
-                    title={filterMoment === 'in' ? 'Check-list de Entrada' : 'Check-list de Saída'} // Define o título dinamicamente
-                  />
-                )}
-              </div> */}
             </div>
           )}
           expandedRowKeys={expandedRowKeys}
