@@ -8,11 +8,9 @@ import '../../../../index.css';
 import moment from "moment";
 import { userActionsItems } from "../../../fields/Operacional/userActionsItems-json";
 import FilterTop from "./components/FilterTop";
+import ModalItens from "./components/ModalItens";
 
 const { Panel } = Collapse;
-const formatCurrency = (value: number) => {
-  return value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-};
 
 const OperationsTable: React.FC<{
   operations: OperationType[];
@@ -415,29 +413,6 @@ const OperationsTable: React.FC<{
       });
     };
 
-    // const renderActionsPopover = (record: OperationType) => {
-    //   const actions = action ? action.split('|') : [];
-    //   return (
-    //     <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-    //       {actions.map((action) => {
-    //         const details = defaultActionMap[action];
-    //         return details ? (
-    //           <Tooltip title={details.tooltip} key={details.text}>
-    //             <Button
-    //               type="link"
-    //               icon={React.createElement(details.icon)}
-    //               onClick={() => openModalWithMoment(details.text)}
-    //               style={{ color: details.color }}
-    //             >
-    //               {details.text}
-    //             </Button>
-    //           </Tooltip>
-    //         ) : null;
-    //       })}
-    //     </div>
-    //   );
-    // };
-
     return (
       <>
         {FilterTop({ navigate, setStatusFilter, setTagFilter, operations })}
@@ -471,61 +446,13 @@ const OperationsTable: React.FC<{
           }}
         />
 
-        <Modal
-          title={modalTitle}
-          visible={isModalOpen}
-          onCancel={closeModal}
-          footer={null}
-          style={{ top: 100 }}
-          bodyStyle={{
-            maxHeight: '50vh',
-            overflowY: 'auto',
-          }}
-        >
-          {modalTitle === "Itens" ? (
-            <Collapse accordion>
-              {modalData
-                .sort((a, b) => (a.productTypeId === 'service' ? -1 : 1)) // Sort to ensure 'service' comes first
-                .map((group: any) => (
-                  <Panel header={group.productTypeId === 'service' ? 'Serviços' : 'Produtos'} key={group.key}>
-                    <List
-                      itemLayout="horizontal"
-                      dataSource={group.products}
-                      renderItem={(product: any) => (
-                        <List.Item style={{ width: '100%', padding: '2px 0' }}>
-                          <List.Item.Meta
-                            title={
-                              <>
-                                <Tooltip title={product.description}>
-                                  <span>
-                                    {product.name}{" "}
-                                    {product.tags.split('|').map((tag: string, index: number) => (
-                                      <Tag color={getColorForTag(tag)} key={index}>{tag}</Tag>
-                                    ))}
-                                  </span>
-                                </Tooltip>
-                              </>
-                            }
-                            description={
-                              <>
-                                <p style={{ margin: '0px 0' }}>{product.quantity} x {formatCurrency(product.price)} = <strong>{formatCurrency(product.quantity * product.price)}</strong></p>
-                              </>
-                            }
-                          />
-                        </List.Item>
-                      )}
-                    />
-                  </Panel>
-                ))}
-            </Collapse>
-          ) : (
-            <Table dataSource={modalData} columns={columns} pagination={false} />
-          )}
-        </Modal>
+        {ModalItens(modalTitle, isModalOpen, closeModal, modalData, getColorForTag, columns)}
       </>
     );
   };
 
 export default OperationsTable;
+
+
 
 
