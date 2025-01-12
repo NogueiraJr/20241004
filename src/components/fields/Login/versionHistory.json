@@ -1,5 +1,18 @@
 [
   {
+    "version": "0.0.17 (beta)",
+    "date": "12/01/2025",
+    "history": [
+      {
+        "system": "all",
+        "description": "Novas funcionalidades na lista de Operações",
+        "details": [
+          "As listas operacionais foram melhoradas para serem mais intuitivas e fáceis de usar"
+        ]
+      }
+    ]
+  },
+  {
     "version": "0.0.16 (beta)",
     "date": "11/01/2025",
     "history": [
