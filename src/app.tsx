@@ -167,7 +167,7 @@ const App: React.FC = () => {
           <Route path="/parceiro" element={<Parceiro />} />
 
           <Route path="/reserva" element={<Actions userActionsMain="editar|apagar|ativo|reservar" userActionsAux="" />} />
-          <Route path="/prova" element={<Actions userActionsMain="editar|apagar|ativo|provar" userActionsAux="" />} />
+          <Route path="/prova" element={<Actions userActionsMain="editar|apagar|ativo|reservar|provar" userActionsAux="" />} />
           <Route path="/retirada" element={<Actions userActionsMain="editar|apagar|ativo|retirar" userActionsAux="checkout|levar" />} />
           <Route path="/devolucao" element={<Actions userActionsMain="editar|apagar|ativo|devolver" userActionsAux="buscar|checkin" />} />
 
