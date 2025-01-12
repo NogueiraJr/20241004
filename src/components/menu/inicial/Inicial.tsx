@@ -1,12 +1,12 @@
 import React from 'react';
-import { useParameter } from '../../context/ParameterContext';
+import { useParameter } from '../../../context/ParameterContext';
 import { Line } from 'react-chartjs-2';
 import { Bar } from 'react-chartjs-2';
 import { Pie } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, BarElement, ArcElement, Title, Tooltip, Legend } from 'chart.js';
-import { produtosOficinaCarro } from '../fields/Dados/sysOficinaCarro/produtosOficinaCarro-json';
-import { produtosLocacaoRoupa } from '../fields/Dados/sysLocacaoRoupa/produtosLocacaoRoupa-json';
-import '../../index.css';
+import { produtosOficinaCarro } from '../../fields/Dados/sysOficinaCarro/produtosOficinaCarro-json';
+import { produtosLocacaoRoupa } from '../../fields/Dados/sysLocacaoRoupa/produtosLocacaoRoupa-json';
+import '../../../index.css';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, BarElement, ArcElement, Title, Tooltip, Legend);
 
