@@ -124,13 +124,6 @@ const OperationsTable: React.FC<{
               const getStepStatus = (date: string | undefined) => date ? 'finish' : 'wait';
               const getStepIconColor = (date: string | undefined, color: string) => date ? color : 'gray';
 
-              const lastDateColor = userAction.finishedAt
-                ? 'green'
-                : userAction.executedAt
-                  ? 'red'
-                  : userAction.scheduledAt
-                    ? 'blue'
-                    : 'gray';
 
               return {
                 key: userAction.id,
@@ -138,7 +131,7 @@ const OperationsTable: React.FC<{
                 tags: userAction.tags,
                 notes: userAction.notes,
                 scheduledAt: (
-                  getWhenOperation(userAction, getStepStatus, getStepIconColor, lastDateColor)
+                  getWhenOperation(userAction, getStepStatus, getStepIconColor)
                 ),
                 action: userAction.actionId,
                 executedAt: userAction.executedAt,
