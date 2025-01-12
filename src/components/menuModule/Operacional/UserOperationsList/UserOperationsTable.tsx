@@ -11,6 +11,7 @@ import FilterTop from "./components/FilterTop";
 import ModalItens from "./components/ModalItens";
 import DefaultActionMap from "./functions/defaultActionMap";
 import getColumnsForTab from "./functions/getColumnsForTab";
+import showConfirm from "./functions/showConfirm";
 
 const { Panel } = Collapse;
 
@@ -84,18 +85,7 @@ const OperationsTable: React.FC<{
         );
 
         const columnsForTab = getColumnsForTab(getColorForTag, getStepStatus, getStepIconColor, getNextActionIcon);
-        const showConfirm = (action: string) => {
-          Modal.confirm({
-            title: `Você deseja ${action}?`,
-            content: `Confirme se deseja ${action.toLowerCase()}.`,
-            onOk() {
-              console.log(`Confirmado: ${action}`);
-            },
-            onCancel() {
-              console.log(`Cancelado: ${action}`);
-            },
-          });
-        };
+        
 
         const handleActionClick = (action: string, actionId: string, userActionId?: string) => {
           console.log(`Action: ${action} - ActionId: ${actionId} - UserOperationId: ${record.id}`);
