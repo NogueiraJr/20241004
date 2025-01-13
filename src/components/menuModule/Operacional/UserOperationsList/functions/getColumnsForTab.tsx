@@ -1,6 +1,8 @@
 import { CalendarOutlined, UnorderedListOutlined } from "@ant-design/icons";
 import { Popover, Steps, Tag, Tooltip } from "antd";
 import moment from "moment";
+import "moment/locale/pt-br";
+moment.locale("pt-br");
 import React from "react";
 
 function getColumnsForTab(getColorForTag: (tag: string) => string, getStepStatus: (date: string | undefined) => "finish" | "wait", getStepIconColor: (date: string | undefined, color: string) => string, getNextActionIcon: (actionId: string, executedAt: string | null, finishedAt: string | null, userActionId?: string) => React.JSX.Element) {
@@ -44,20 +46,20 @@ function getColumnsForTab(getColorForTag: (tag: string) => string, getStepStatus
               content={<Steps direction="vertical" size="small">
                 <Steps.Step
                   title="Agendamento"
-                  description={moment(record.scheduledAt).format("DD/MM/YYYY HH:mm")}
+                  description={`${moment(record.scheduledAt).format("DD/MM/YYYY HH:mm")} ${moment(record.scheduledAt).locale("pt-br").format("ddd")}`}
                   status={getStepStatus(record.scheduledAt)}
                   icon={<CalendarOutlined style={{ color: getStepIconColor(record.scheduledAt, 'blue') }} />} />
                 {record.executedAt && (
                   <Steps.Step
                     title="Execução"
-                    description={moment(record.executedAt).format("DD/MM/YYYY HH:mm")}
+                    description={`${moment(record.executedAt).format("DD/MM/YYYY HH:mm")} ${moment(record.executedAt).locale("pt-br").format("ddd")}`}
                     status={getStepStatus(record.executedAt)}
                     icon={<CalendarOutlined style={{ color: getStepIconColor(record.executedAt, 'red') }} />} />
                 )}
                 {record.finishedAt && (
                   <Steps.Step
                     title="Finalização"
-                    description={moment(record.finishedAt).format("DD/MM/YYYY HH:mm")}
+                    description={`${moment(record.finishedAt).format("DD/MM/YYYY HH:mm")} ${moment(record.finishedAt).locale("pt-br").format("ddd")}`}
                     status={getStepStatus(record.finishedAt)}
                     icon={<CalendarOutlined style={{ color: getStepIconColor(record.finishedAt, 'green') }} />} />
                 )}
@@ -69,7 +71,15 @@ function getColumnsForTab(getColorForTag: (tag: string) => string, getStepStatus
               <Tooltip title="Passos da Ação">
                 <div style={{ display: 'flex', flexDirection: 'column', textAlign: 'center', alignItems: 'center', cursor: 'pointer' }}>
                   <CalendarOutlined style={{ color: lastDateColor }} />
-                  <div style={{ color: lastDateColor }}>{record.finishedAt ? moment(record.finishedAt).format("DD/MM/YYYY HH:mm") : record.executedAt ? moment(record.executedAt).format("DD/MM/YYYY HH:mm") : moment(record.scheduledAt).format("DD/MM/YYYY HH:mm")}</div>                    </div>
+                  <div style={{ color: lastDateColor }}>
+                    {record.finishedAt 
+                      ? moment(record.finishedAt).format("DD/MM/YYYY") 
+                      : record.executedAt 
+                        ? moment(record.executedAt).format("DD/MM/YYYY") 
+                        : moment(record.scheduledAt).format("DD/MM/YYYY")
+                    }
+                  </div>
+                </div>
               </Tooltip>
             </Popover>
           );
