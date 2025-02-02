@@ -16,7 +16,8 @@ import {
   SettingOutlined,
   FileDoneOutlined,
   FileAddOutlined,
-  SearchOutlined, // Novo ícone para Manutenção de Oficina
+  SearchOutlined,
+  GiftOutlined, 
 } from '@ant-design/icons';
 import { Avatar, Card, Dropdown, Menu, Tooltip, Typography, Drawer, Button } from 'antd';
 import { useNavigate } from 'react-router-dom';
@@ -94,6 +95,10 @@ const Operacional: React.FC = () => {
 
   const handleListaTodosServicos = () => {
     navigate('/execucao');
+  };
+
+  const handleListaTodasConveniencias = () => {
+    navigate('/conveniencia');
   };
 
   const actions = [
@@ -264,6 +269,28 @@ const Operacional: React.FC = () => {
           <Menu.Item key="1">revisão</Menu.Item>
           <Menu.Item key="2">troca de óleo</Menu.Item>
           <Menu.Item key="3">alinhamento</Menu.Item>
+        </Menu>
+      }
+      trigger={['click']}
+    >
+      <Tooltip title="Etiquetas">
+        <EllipsisOutlined key="ellipsis" style={{ color: 'black' }} />
+      </Tooltip>
+    </Dropdown>,
+  ];
+
+  const actionsConveniencia = [
+    <IconText icon={PlusSquareOutlined} text="NOVO" tooltip="Novo Serviço de Conveniência" key="icon-new" color="black" />,
+    <IconText icon={UnorderedListOutlined} text="0" tooltip="Todos os Serviços de Conveniência" key="icon-all-itens" color="blue" onClick={handleListaTodasConveniencias} />,
+    <IconText icon={CheckCircleOutlined} text="0" tooltip="Apenas Serviços de Conveniência Ativos" key="icon-actived-itens" color="green" />,
+    <IconText icon={CloseCircleOutlined} text="0" tooltip="Apenas Serviços de Conveniência Inativos" key="icon-desatived-itens" color="gray" />,
+    <IconText icon={DeleteOutlined} text="0" tooltip="Apenas Serviços de Conveniência Apagados" key="icon-deleted-itens" color="red" />,
+    <Dropdown
+      overlay={
+        <Menu>
+          <Menu.Item key="1">corte de cabelo</Menu.Item>
+          <Menu.Item key="2">manicure</Menu.Item>
+          <Menu.Item key="3">pedicure</Menu.Item>
         </Menu>
       }
       trigger={['click']}
@@ -461,6 +488,31 @@ const Operacional: React.FC = () => {
                   </Link>
                   <Link onClick={() => { console.log('Texto clicado!'); }}>
                     <div>02 serviços realizados nos últimos 3 dias</div>
+                  </Link>
+                </>
+              }
+            />
+          </Card>
+
+          <Card
+            actions={actionsConveniencia}
+            className="card-style"
+          >
+            <Card.Meta
+              avatar={
+                <Tooltip title="Conveniência">
+                  <Avatar icon={<GiftOutlined style={{ color: 'black' }} />} />
+                </Tooltip>
+              }
+              title="Conveniência"
+              description={
+                <>
+                  <Text strong style={{ fontSize: '15px' }}>Serviços de Conveniência</Text>
+                  <Link onClick={() => { console.log('Texto clicado!'); }}>
+                    <div>05 conveniências realizadas nesta semana</div>
+                  </Link>
+                  <Link onClick={() => { console.log('Texto clicado!'); }}>
+                    <div>02 conveniências realizadas nos últimos 3 dias</div>
                   </Link>
                 </>
               }
