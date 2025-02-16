@@ -276,7 +276,7 @@ export const userActions = [
     "actionId": "sysOficinaCarro_conveniencia",
     "userActionId": null,
     "description": "Manicure da Patricia",
-    "notes": "Cundando das mãos da Patricia enquanto seu carro está no reparo",
+    "notes": "Cuidando das mãos da Patricia enquanto seu carro está no reparo",
     "scheduledAt": "2024-12-11T13:00:00",
     "executedAt": "2024-12-14T13:00:00",
     "finishedAt": null,
