@@ -194,13 +194,12 @@
 .ant-tabs {
   margin-top: 8px;
   width: 100%;
-  height: 200px;
+  height: auto;
 }
 
 /* Style for the tab content with vertical scrolling */
 .ant-tabs-tabpane {
   overflow-y: auto;
-  max-height: 150px;
 }
 
 /* Style for the action buttons */
