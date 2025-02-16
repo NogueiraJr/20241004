@@ -270,6 +270,24 @@ export const userActions = [
     "deletedAt": null
   },
   {
+    "id": "cm2l2crxr000223dxp3hmki94",
+    "userOperationId": "cm2l2crxe000711dap3hmki8j",
+    "userClientId": "idProprietario02",
+    "actionId": "sysOficinaCarro_conveniencia",
+    "userActionId": null,
+    "description": "Manicure da Patricia",
+    "notes": "Cundando das mãos da Patricia enquanto seu carro está no reparo",
+    "scheduledAt": "2024-12-11T13:00:00",
+    "executedAt": "2024-12-14T13:00:00",
+    "finishedAt": null,
+    "priceItems": null,
+    "tags": "cortesia|serviço",
+    "active": true,
+    "createAt": "2024-12-08T00:00:00",
+    "updatedAt": "2024-12-08T00:00:00",
+    "deletedAt": null
+  },
+  {
     "id": "cm2l2crxe000224dap3hmki98",
     "userOperationId": "cm2l2crxe000511dap3hmki8t",
     "userClientId": "idProprietario02",
