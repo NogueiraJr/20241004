@@ -175,8 +175,7 @@ const App: React.FC = () => {
 
           <Route path="/diagnostico" element={<Actions userActionsMain="editar|apagar|ativo|diagnostico" userActionsAux="" />} />
           <Route path="/orcamento" element={<Actions userActionsMain="editar|apagar|ativo|diagnostico|orcar" userActionsAux="" />} />
-          <Route path="/execucao" element={<Actions userActionsMain="editar|apagar|ativo|executar" userActionsAux="buscar|checkin|checkout|levar" />} />
-          <Route path="/conveniencia" element={<Actions userActionsMain="editar|apagar|ativo|conveniencia" userActionsAux="buscar|levar" />} />
+          <Route path="/execucao" element={<Actions userActionsMain="editar|apagar|ativo|executar|conveniencia" userActionsAux="buscar|checkin|checkout|levar" />} />
         </Routes>
       </div>
       {/* Modal de Histórico de Versões */}

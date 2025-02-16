@@ -44,17 +44,6 @@ export const userOperations = [
     "tags": "manutenção|carro|óleo|revisão|motor"
   },
   {
-    "id": "cm2l2crxe000511dap3hmki8q",
-    "userId": "idProprietario02",
-    "systemId": "sysOficinaCarro",
-    "active": true,
-    "description": "Conveniência / Cortesia do Marcos",
-    "notes": "Corterias oferecidas ao Marcos enquanto aguarda o serviço do veículo.",
-    "priceActions": "0.00",
-    "priceCharged": "0.00",
-    "tags": "serviço|conveniência"
-  },
-  {
     "id": "cm2l2crxe000611dap3hmki8q",
     "userId": "idProprietario02",
     "systemId": "sysOficinaCarro",
