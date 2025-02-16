@@ -1,4 +1,4 @@
-import { CalendarOutlined, SkinOutlined, UploadOutlined, RollbackOutlined, CalculatorOutlined, FileDoneOutlined, SearchOutlined } from "@ant-design/icons";
+import { CalendarOutlined, SkinOutlined, UploadOutlined, RollbackOutlined, CalculatorOutlined, FileDoneOutlined, SearchOutlined, GiftOutlined } from "@ant-design/icons";
 
 function DefaultActionMap(): Record<string, { icon: React.ComponentType<any>; text: string; tooltip: string; color: string; actionId: string; }> {
     return {
@@ -43,6 +43,13 @@ function DefaultActionMap(): Record<string, { icon: React.ComponentType<any>; te
         tooltip: "Execução do Serviço",
         color: "green",
         actionId: "sysOficinaCarro_executar",
+      },
+      conveniencia: {
+        icon: GiftOutlined,
+        text: "Cortesias",
+        tooltip: "Cortesias além do Serviço",
+        color: "green",
+        actionId: "sysOficinaCarro_conveniencia",
       },
       diagnostico: {
         icon: SearchOutlined,

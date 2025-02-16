@@ -139,7 +139,7 @@ const Actions: React.FC<UserOperationsProps> = ({ userActionsMain: actionMain, u
       render: (_, record) => (
         <div>
           <Tooltip title={record.notes}>
-            <span>{record.description}</span>
+            <span className='custom-description'>{record.description}</span>
           </Tooltip>
           {record.tags && record.tags.length > 0 && (
             <div style={{ marginTop: 4 }}>

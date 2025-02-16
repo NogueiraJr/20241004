@@ -16,7 +16,8 @@ import {
   SettingOutlined,
   FileDoneOutlined,
   FileAddOutlined,
-  SearchOutlined, // Novo ícone para Manutenção de Oficina
+  SearchOutlined,
+  GiftOutlined, 
 } from '@ant-design/icons';
 import { Avatar, Card, Dropdown, Menu, Tooltip, Typography, Drawer, Button } from 'antd';
 import { useNavigate } from 'react-router-dom';
@@ -94,6 +95,10 @@ const Operacional: React.FC = () => {
 
   const handleListaTodosServicos = () => {
     navigate('/execucao');
+  };
+
+  const handleListaTodasConveniencias = () => {
+    navigate('/conveniencia');
   };
 
   const actions = [
