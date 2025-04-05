@@ -16,6 +16,7 @@ import Sair from './components/menu/Sair';
 import Login from './components/Login';
 import Cliente from './components/menuModule/Dados/Cliente';
 import Produto from './components/menuModule/Dados/Produto';
+import Servico from './components/menuModule/Dados/Servico';
 import Actions from './components/menuModule/Operacional/UserOperationsList';
 import Fornecedor from './components/menuModule/Dados/Fornecedor';
 import Parceiro from './components/menuModule/Dados/Parceiro';
@@ -67,6 +68,8 @@ const App: React.FC = () => {
         return 'Clientes';
       case '/produto':
         return 'Produtos';
+      case '/servico':
+        return 'Serviços';
       case '/fornecedor':
         return 'Fornecedores';
       case '/parceiro':
@@ -165,6 +168,7 @@ const App: React.FC = () => {
           <Route path="/out" element={<Sair />} />
           <Route path="/cliente" element={<Cliente />} />
           <Route path="/produto" element={<Produto />} />
+          <Route path="/servico" element={<Servico />} />
           <Route path="/fornecedor" element={<Fornecedor />} />
           <Route path="/parceiro" element={<Parceiro />} />
 

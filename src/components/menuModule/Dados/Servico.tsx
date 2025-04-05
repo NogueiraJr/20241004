@@ -31,7 +31,7 @@ const IconText = ({ icon, text, tooltip, color, onClick }: { icon: React.Compone
   </Tooltip>
 );
 
-const Produto: React.FC = () => {
+const Servico: React.FC = () => {
   let produtos = [];
   const { system } = useParameter();
   const navigate = useNavigate(); // Inicializando o hook de navegação
@@ -63,10 +63,10 @@ const Produto: React.FC = () => {
   // Ajustar os dados de produtos conforme o sistema
   switch (system) {
     case 'sysLocacaoRoupa':
-      produtos = produtosLocacaoRoupa.filter((produto) => produto.productTypeId === 'product');
+      produtos = produtosLocacaoRoupa.filter((produto) => produto.productTypeId === 'service');
       break;
     case 'sysOficinaCarro':
-      produtos = produtosOficinaCarro.filter((produto) => produto.productTypeId === 'product');;
+      produtos = produtosOficinaCarro.filter((produto) => produto.productTypeId === 'service');
       break;
     default:
       break;
@@ -204,4 +204,4 @@ const Produto: React.FC = () => {
   );
 };
 
-export default Produto;
+export default Servico;
