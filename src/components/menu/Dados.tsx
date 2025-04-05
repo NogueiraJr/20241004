@@ -9,7 +9,8 @@ import {
   UserOutlined, 
   ShoppingCartOutlined, 
   TeamOutlined, 
-  AppstoreAddOutlined 
+  AppstoreAddOutlined, 
+  ToolOutlined
 } from '@ant-design/icons';
 import { Avatar, Card, Dropdown, Menu, Tooltip } from 'antd';
 import { Route, Routes, useNavigate } from 'react-router-dom';
@@ -32,6 +33,10 @@ const Dados: React.FC = () => {
 
   const handleListaTodosProdutos = () => {
     navigate('/produto');
+  };
+
+  const handleListaTodosServicos = () => {
+    navigate('/servico');
   };
 
   const handleListaTodosFornecedores = () => {
@@ -67,6 +72,28 @@ const Dados: React.FC = () => {
   const actionsProdutos = [
     <IconText icon={PlusSquareOutlined} text="NOVO" tooltip="Adicionar Novo" key="icon-new" color="black" />,
     <IconText icon={UnorderedListOutlined} text="12" tooltip="Lista com Todos" key="icon-all-itens" color="blue" onClick={handleListaTodosProdutos}/>,
+    <IconText icon={CheckCircleOutlined} text="7" tooltip="Apenas os Ativos" key="icon-actived-itens" color="green" />,
+    <IconText icon={CloseCircleOutlined} text="4" tooltip="Apenas os Inativos" key="icon-desatived-itens" color="gray" />,
+    <IconText icon={DeleteOutlined} text="0" tooltip="Apenas os Apagados" key="icon-deleted-itens" color="red" />,
+    <Dropdown
+      overlay={
+        <Menu>
+          <Menu.Item key="1">casamento</Menu.Item>
+          <Menu.Item key="2">batizado</Menu.Item>
+          <Menu.Item key="3">festa</Menu.Item>
+        </Menu>
+      }
+      trigger={['click']}
+    >
+      <Tooltip title="Etiquetas">
+        <EllipsisOutlined key="ellipsis" style={{ color: 'black' }} />
+      </Tooltip>
+    </Dropdown>,
+  ];
+
+  const actionsServicos = [
+    <IconText icon={PlusSquareOutlined} text="NOVO" tooltip="Adicionar Novo" key="icon-new" color="black" />,
+    <IconText icon={UnorderedListOutlined} text="12" tooltip="Lista com Todos" key="icon-all-itens" color="blue" onClick={handleListaTodosServicos}/>,
     <IconText icon={CheckCircleOutlined} text="7" tooltip="Apenas os Ativos" key="icon-actived-itens" color="green" />,
     <IconText icon={CloseCircleOutlined} text="4" tooltip="Apenas os Inativos" key="icon-desatived-itens" color="gray" />,
     <IconText icon={DeleteOutlined} text="0" tooltip="Apenas os Apagados" key="icon-deleted-itens" color="red" />,
@@ -186,6 +213,24 @@ const Dados: React.FC = () => {
           description={
             <>
               <p>Os Produtos da sua Empresa</p>
+            </>
+          }
+        />
+      </Card>
+      <Card 
+        actions={actionsServicos} 
+        className="card-style"
+      >
+        <Card.Meta
+          avatar={
+            <Tooltip title="Servicos">
+              <Avatar icon={<ToolOutlined style={{ color: 'black' }} />} />
+            </Tooltip>
+          }
+          title="Servicos"
+          description={
+            <>
+              <p>Os Serviços da sua Empresa</p>
             </>
           }
         />
