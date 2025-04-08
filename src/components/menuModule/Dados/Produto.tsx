@@ -2,10 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Space, Table, Tag, Tooltip, Input, Select, Button } from 'antd';
 import type { TableProps } from 'antd';
 import { DeleteOutlined, EditOutlined, ArrowLeftOutlined } from '@ant-design/icons';
-import { produtosLocacaoRoupa } from '../../fields/Dados/sysLocacaoRoupa/produtosLocacaoRoupa-json';
 import { useParameter } from '../../../context/ParameterContext';
-import { produtosOficinaCarro } from '../../fields/Dados/sysOficinaCarro/produtosOficinaCarro-json';
-import { useNavigate } from 'react-router-dom'; // Importando o hook
+import { useNavigate } from 'react-router-dom';
 
 export interface ProductType {
   id: string;
@@ -32,15 +30,46 @@ const IconText = ({ icon, text, tooltip, color, onClick }: { icon: React.Compone
 );
 
 const Produto: React.FC = () => {
-  let produtos = [];
   const { system } = useParameter();
-  const navigate = useNavigate(); // Inicializando o hook de navegação
+  const navigate = useNavigate();
 
+  const [produtos, setProdutos] = useState<ProductType[]>([]);
   const [expandedRowKeys, setExpandedRowKeys] = useState<string[]>([]);
   const [searchText, setSearchText] = useState('');
   const [statusFilter, setStatusFilter] = useState<string>('all');
   const [tagFilter, setTagFilter] = useState<string>('all');
   const [filteredData, setFilteredData] = useState<ProductType[]>([]);
+
+  useEffect(() => {
+    const fetchProdutos = async () => {
+      try {
+        const response = await fetch('http://127.0.0.1:8000/items/');
+        const data: ProductType[] = await response.json();
+        const filteredBySystem = data.filter((produto) => produto.systemId === system);
+
+        //DEBUG
+        console.log(system)
+        //
+
+        setProdutos(filteredBySystem);
+      } catch (error) {
+        console.error('Error fetching produtos:', error);
+      }
+    };
+
+    fetchProdutos();
+  }, [system]);
+
+  useEffect(() => {
+    const filtered = produtos.filter((produto) => {
+      const matchesName = produto.name.toLowerCase().includes(searchText.toLowerCase());
+      const matchesStatus = statusFilter === 'all' || produto.active === (statusFilter === 'active');
+      const matchesTag = tagFilter === 'all' || (produto.tags && produto.tags.includes(tagFilter));
+      return matchesName && matchesStatus && matchesTag;
+    });
+
+    setFilteredData(filtered);
+  }, [searchText, statusFilter, tagFilter, produtos]);
 
   const handleExpand = (expanded: boolean, record: ProductType) => {
     setExpandedRowKeys((prevExpandedRowKeys) => {
@@ -60,30 +89,6 @@ const Produto: React.FC = () => {
     setTagFilter(value);
   };
 
-  // Ajustar os dados de produtos conforme o sistema
-  switch (system) {
-    case 'sysLocacaoRoupa':
-      produtos = produtosLocacaoRoupa.filter((produto) => produto.productTypeId === 'product');
-      break;
-    case 'sysOficinaCarro':
-      produtos = produtosOficinaCarro.filter((produto) => produto.productTypeId === 'product');;
-      break;
-    default:
-      break;
-  }
-
-  // Atualizar filteredData sempre que searchText, statusFilter, tagFilter ou produtos mudarem
-  useEffect(() => {
-    const filtered = produtos.filter((produto) => {
-      const matchesName = produto.name.toLowerCase().includes(searchText.toLowerCase());
-      const matchesStatus = statusFilter === 'all' || produto.active === (statusFilter === 'active');
-      const matchesTag = tagFilter === 'all' || (produto.tags && produto.tags.includes(tagFilter));
-      return matchesName && matchesStatus && matchesTag;
-    });
-
-    setFilteredData(filtered);
-  }, [searchText, statusFilter, tagFilter, produtos]);
-
   const columns: TableProps<ProductType>['columns'] = [
     {
       title: 'Nome',
@@ -101,7 +106,7 @@ const Produto: React.FC = () => {
         </div>
       ),
       sorter: (a, b) => a.name.localeCompare(b.name),
-      sortDirections: ['ascend', 'descend'], 
+      sortDirections: ['ascend', 'descend'],
     },
     {
       title: 'Ações',
@@ -119,10 +124,10 @@ const Produto: React.FC = () => {
   return (
     <>
       <div style={{ marginBottom: 16 }}>
-      <Button 
-          type="primary" 
-          onClick={() => navigate(-1)} // Função para voltar à página anterior
-          icon={<ArrowLeftOutlined />} // Usando o ícone de "voltar"
+        <Button
+          type="primary"
+          onClick={() => navigate(-1)}
+          icon={<ArrowLeftOutlined />}
           style={{ marginRight: 16 }}
         />
         <Select
@@ -143,7 +148,7 @@ const Produto: React.FC = () => {
           defaultValue="all"
         >
           <Select.Option value="all">Todos</Select.Option>
-          {Array.from(new Set(produtos.flatMap(produto => produto.tags || []))).map(tag => (
+          {Array.from(new Set(produtos.flatMap((produto) => produto.tags || []))).map((tag) => (
             <Select.Option key={tag} value={tag}>
               {tag.toUpperCase()}
             </Select.Option>
