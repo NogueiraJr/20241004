@@ -46,14 +46,14 @@ const Produto: React.FC = () => {
   useEffect(() => {
     const fetchProdutos = async () => {
       try {
-        
         const baseUrl = process.env.REACT_APP_API_BASE_URL;
         const endpoint = process.env.REACT_APP_API_ITEMS_ENDPOINT;
         const response = await fetch(`${baseUrl}${endpoint}`);
 
         const data: ProductType[] = await response.json();
-        const filteredBySystem = data.filter((produto) => produto.systemId === system && produto.itemTypeId === 'product');
-
+        const filteredBySystem = data
+          .filter((produto) => produto.systemId === system && produto.itemTypeId === 'product')
+          .sort((a, b) => new Date(b.createAt).getTime() - new Date(a.createAt).getTime()); // Sort by creation date (descending)
 
         setProdutos(filteredBySystem);
       } catch (error) {
@@ -121,9 +121,9 @@ const Produto: React.FC = () => {
         const endpoint = process.env.REACT_APP_API_ITEMS_ENDPOINT;
         const response = await fetch(`${baseUrl}${endpoint}`);
         const data: ProductType[] = await response.json();
-        const filteredBySystem = data.filter(
-          (produto) => produto.systemId === system && produto.itemTypeId === 'product'
-        );
+        const filteredBySystem = data
+          .filter((produto) => produto.systemId === system && produto.itemTypeId === 'product')
+          .sort((a, b) => new Date(b.createAt).getTime() - new Date(a.createAt).getTime()); // Sort by creation date (descending)
         setProdutos(filteredBySystem);
       };
       fetchProdutos();
