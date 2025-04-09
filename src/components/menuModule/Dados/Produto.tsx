@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Space, Table, Tag, Tooltip, Input, Select, Button } from 'antd';
+import { Space, Table, Tag, Tooltip, Input, Select, Button, Drawer, Form, Switch, Input as AntInput, Button as AntButton } from 'antd';
 import type { TableProps } from 'antd';
 import { DeleteOutlined, EditOutlined, ArrowLeftOutlined, PlusOutlined } from '@ant-design/icons';
 import { useParameter } from '../../../context/ParameterContext';
@@ -39,6 +39,9 @@ const Produto: React.FC = () => {
   const [statusFilter, setStatusFilter] = useState<string>('all');
   const [tagFilter, setTagFilter] = useState<string>('all');
   const [filteredData, setFilteredData] = useState<ProductType[]>([]);
+  const [drawerVisible, setDrawerVisible] = useState(false);
+  const [drawerMode, setDrawerMode] = useState<'create' | 'edit'>('create');
+  const [currentProduct, setCurrentProduct] = useState<Partial<ProductType>>({});
 
   useEffect(() => {
     const fetchProdutos = async () => {
@@ -79,6 +82,54 @@ const Produto: React.FC = () => {
     setTagFilter(value);
   };
 
+  const handleOpenDrawer = (mode: 'create' | 'edit', product?: ProductType) => {
+    setDrawerMode(mode);
+    setCurrentProduct(
+      mode === 'edit' && product
+        ? { ...product }
+        : { id: '', name: '', description: '', itemTypeId: '', price: 0, active: true, tags: null }
+    );
+    setDrawerVisible(true);
+  };
+
+  const handleSave = async () => {
+    const endpoint = drawerMode === 'create'
+      ? `${process.env.REACT_APP_API_BASE_URL}/items/`
+      : `${process.env.REACT_APP_API_BASE_URL}/items/${currentProduct.id}/`;
+
+    const method = drawerMode === 'create' ? 'POST' : 'PUT';
+
+    try {
+      await fetch(endpoint, {
+        method,
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify(currentProduct),
+      });
+      setDrawerVisible(false);
+      // Refresh product list
+      const fetchProdutos = async () => {
+        const baseUrl = process.env.REACT_APP_API_BASE_URL;
+        const endpoint = process.env.REACT_APP_API_ITEMS_ENDPOINT;
+        const response = await fetch(`${baseUrl}${endpoint}`);
+        const data: ProductType[] = await response.json();
+        const filteredBySystem = data.filter(
+          (produto) => produto.systemId === system && produto.itemTypeId === 'product'
+        );
+        setProdutos(filteredBySystem);
+      };
+      fetchProdutos();
+    } catch (error) {
+      console.error('Error saving product:', error);
+    }
+  };
+
+  const handleInputChange = (field: keyof ProductType, value: any) => {
+    setCurrentProduct((prev) => ({ ...prev, [field]: value }));
+  };
+
   useEffect(() => {
     const filtered = produtos.filter((produto) => {
       const matchesName = produto.name.toLowerCase().includes(searchText.toLowerCase());
@@ -115,7 +166,14 @@ const Produto: React.FC = () => {
       width: '100px',
       render: (_, record) => (
         <Space size="middle">
-          <IconText icon={EditOutlined} text="EDITAR" tooltip="Editar o Item" key="icon-edit" color="black" />
+          <IconText
+            icon={EditOutlined}
+            text="EDITAR"
+            tooltip="Editar o Item"
+            key="icon-edit"
+            color="black"
+            onClick={() => handleOpenDrawer('edit', record)}
+          />
           <IconText icon={DeleteOutlined} text="APAGAR" tooltip="Apagar o Item" key="icon-delete" color="black" />
         </Space>
       ),
@@ -131,6 +189,14 @@ const Produto: React.FC = () => {
           icon={<ArrowLeftOutlined />}
           style={{ marginRight: 16 }}
         />
+        {/* <Tooltip title="Cadastrar Novo Produto">
+          <Button
+            type="primary"
+            icon={<PlusOutlined />}
+            style={{ marginRight: 16 }}
+            onClick={() => handleOpenDrawer('create')}
+          />
+        </Tooltip> */}
         <Select
           placeholder="Filtrar por status"
           onChange={handleStatusFilter}
@@ -169,7 +235,7 @@ const Produto: React.FC = () => {
                   type="primary"
                   icon={<PlusOutlined />}
                   style={{ marginRight: 16 }}
-                  onClick={() => console.log('Cadastrar Novo Produto')}
+                  onClick={() => handleOpenDrawer('create')}
                 />
               </Tooltip>
               <span>{total} iten(s)</span>
@@ -221,6 +287,51 @@ const Produto: React.FC = () => {
           cancelSort: 'Clique para cancelar a ordenação',
         }}
       />
+
+      <Drawer
+        title={drawerMode === 'create' ? 'Criar Produto' : 'Editar Produto'}
+        placement="right"
+        onClose={() => setDrawerVisible(false)}
+        visible={drawerVisible}
+        width={400}
+      >
+        <Form layout="vertical">
+          <Form.Item label="Nome">
+            <AntInput
+              value={currentProduct.name}
+              onChange={(e) => handleInputChange('name', e.target.value)}
+            />
+          </Form.Item>
+          <Form.Item label="Descrição">
+            <AntInput
+              value={currentProduct.description}
+              onChange={(e) => handleInputChange('description', e.target.value)}
+            />
+          </Form.Item>
+          <Form.Item label="Preço">
+            <AntInput
+              type="number"
+              value={currentProduct.price}
+              onChange={(e) => handleInputChange('price', parseFloat(e.target.value))}
+            />
+          </Form.Item>
+          <Form.Item label="Tags">
+            <AntInput
+              value={currentProduct.tags?.join('|')}
+              onChange={(e) => handleInputChange('tags', e.target.value.split('|'))}
+            />
+          </Form.Item>
+          <Form.Item label="Ativo">
+            <Switch
+              checked={currentProduct.active}
+              onChange={(checked) => handleInputChange('active', checked)}
+            />
+          </Form.Item>
+        </Form>
+        <AntButton type="primary" onClick={handleSave} style={{ marginTop: 16 }}>
+          Gravar
+        </AntButton>
+      </Drawer>
     </>
   );
 };
