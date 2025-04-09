@@ -108,6 +108,7 @@ const Produto: React.FC = () => {
         },
         body: JSON.stringify({
           ...currentProduct,
+          tags: Array.isArray(currentProduct.tags) ? currentProduct.tags.join('|') : null, // Ensure tags is an array before joining
           systemId: system, // Include system in the request body
           itemTypeId: 'product', // Include itemTypeId in the request body
           userId: userId, // Use userId from ParameterProvider
@@ -322,7 +323,7 @@ const Produto: React.FC = () => {
           </Form.Item>
           <Form.Item label="Tags">
             <AntInput
-              value={currentProduct.tags?.join('|')}
+              value={Array.isArray(currentProduct.tags) ? currentProduct.tags.join('|') : ''}
               onChange={(e) => handleInputChange('tags', e.target.value.split('|'))}
             />
           </Form.Item>
