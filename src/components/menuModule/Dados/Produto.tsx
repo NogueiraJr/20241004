@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Space, Table, Tag, Tooltip, Input, Select, Button } from 'antd';
 import type { TableProps } from 'antd';
-import { DeleteOutlined, EditOutlined, ArrowLeftOutlined } from '@ant-design/icons';
+import { DeleteOutlined, EditOutlined, ArrowLeftOutlined, PlusOutlined } from '@ant-design/icons';
 import { useParameter } from '../../../context/ParameterContext';
 import { useNavigate } from 'react-router-dom';
 
@@ -160,7 +160,22 @@ const Produto: React.FC = () => {
       <Table<ProductType>
         columns={columns}
         dataSource={filteredData}
-        pagination={{ position: ['topLeft'] }}
+        pagination={{
+          position: ['topLeft'],
+          showTotal: (total) => (
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+              <Tooltip title="Cadastrar Novo Produto">
+                <Button
+                  type="primary"
+                  icon={<PlusOutlined />}
+                  style={{ marginRight: 16 }}
+                  onClick={() => console.log('Cadastrar Novo Produto')}
+                />
+              </Tooltip>
+              <span>{total} iten(s)</span>
+            </div>
+          ),
+        }}
         expandedRowRender={(record) => {
           const formattedDate = new Date(record.createAt).toLocaleString('pt-BR', {
             day: '2-digit',
