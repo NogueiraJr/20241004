@@ -9,7 +9,7 @@ export interface ProductType {
   id: string;
   name: string;
   description: string;
-  productTypeId: string;
+  itemTypeId: string;
   price: number;
   active: boolean;
   createAt: string;
@@ -43,13 +43,14 @@ const Produto: React.FC = () => {
   useEffect(() => {
     const fetchProdutos = async () => {
       try {
-        const response = await fetch('http://127.0.0.1:8000/items/');
-        const data: ProductType[] = await response.json();
-        const filteredBySystem = data.filter((produto) => produto.systemId === system);
+        
+        const baseUrl = process.env.REACT_APP_API_BASE_URL;
+        const endpoint = process.env.REACT_APP_API_ITEMS_ENDPOINT;
+        const response = await fetch(`${baseUrl}${endpoint}`);
 
-        //DEBUG
-        console.log(system)
-        //
+        const data: ProductType[] = await response.json();
+        const filteredBySystem = data.filter((produto) => produto.systemId === system && produto.itemTypeId === 'product');
+
 
         setProdutos(filteredBySystem);
       } catch (error) {
@@ -59,17 +60,6 @@ const Produto: React.FC = () => {
 
     fetchProdutos();
   }, [system]);
-
-  useEffect(() => {
-    const filtered = produtos.filter((produto) => {
-      const matchesName = produto.name.toLowerCase().includes(searchText.toLowerCase());
-      const matchesStatus = statusFilter === 'all' || produto.active === (statusFilter === 'active');
-      const matchesTag = tagFilter === 'all' || (produto.tags && produto.tags.includes(tagFilter));
-      return matchesName && matchesStatus && matchesTag;
-    });
-
-    setFilteredData(filtered);
-  }, [searchText, statusFilter, tagFilter, produtos]);
 
   const handleExpand = (expanded: boolean, record: ProductType) => {
     setExpandedRowKeys((prevExpandedRowKeys) => {
@@ -88,6 +78,17 @@ const Produto: React.FC = () => {
   const handleTagFilter = (value: string) => {
     setTagFilter(value);
   };
+
+  useEffect(() => {
+    const filtered = produtos.filter((produto) => {
+      const matchesName = produto.name.toLowerCase().includes(searchText.toLowerCase());
+      const matchesStatus = statusFilter === 'all' || produto.active === (statusFilter === 'active');
+      const matchesTag = tagFilter === 'all' || (produto.tags && produto.tags.includes(tagFilter));
+      return matchesName && matchesStatus && matchesTag;
+    });
+
+    setFilteredData(filtered);
+  }, [searchText, statusFilter, tagFilter, produtos]);
 
   const columns: TableProps<ProductType>['columns'] = [
     {
@@ -148,7 +149,7 @@ const Produto: React.FC = () => {
           defaultValue="all"
         >
           <Select.Option value="all">Todos</Select.Option>
-          {Array.from(new Set(produtos.flatMap((produto) => produto.tags || []))).map((tag) => (
+          {Array.from(new Set(produtos.flatMap((produto) => produto.tags.toString().split('|') || []))).map((tag) => (
             <Select.Option key={tag} value={tag}>
               {tag.toUpperCase()}
             </Select.Option>
@@ -170,7 +171,7 @@ const Produto: React.FC = () => {
           });
 
           const tagsDisplay = record.tags && record.tags.length > 0
-            ? record.tags.map((tag) => (
+            ? record.tags.toString().split('|').map((tag) => (
               <Tag color={tag.length > 5 ? 'geekblue' : 'green'} key={tag}>
                 {tag.toUpperCase()}
               </Tag>
