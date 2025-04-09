@@ -106,7 +106,10 @@ const Produto: React.FC = () => {
           'Content-Type': 'application/json',
           Accept: 'application/json',
         },
-        body: JSON.stringify(currentProduct),
+        body: JSON.stringify({
+          ...currentProduct,
+          systemId: system, // Include system in the request body
+        }),
       });
       setDrawerVisible(false);
       // Refresh product list
