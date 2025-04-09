@@ -70,7 +70,8 @@ const Produto: React.FC = () => {
     const fetchTags = async () => {
       setTagsLoading(true);
       try {
-        const response = await fetch(`http://127.0.0.1:8000//user-tags/`);
+        const endpoint = process.env.REACT_APP_API_USER_TAGS_ENDPOINT;
+        const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}${endpoint}`);
         const data = await response.json();
         setAvailableTags(data.filter((tag: { userId: string }) => tag.userId === userId).map((tag: { tag: string }) => tag.tag));
       } catch (error) {
