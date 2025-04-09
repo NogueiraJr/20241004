@@ -30,7 +30,7 @@ const IconText = ({ icon, text, tooltip, color, onClick }: { icon: React.Compone
 );
 
 const Produto: React.FC = () => {
-  const { system } = useParameter();
+  const { system, userId } = useParameter();
   const navigate = useNavigate();
 
   const [produtos, setProdutos] = useState<ProductType[]>([]);
@@ -109,6 +109,8 @@ const Produto: React.FC = () => {
         body: JSON.stringify({
           ...currentProduct,
           systemId: system, // Include system in the request body
+          itemTypeId: 'product', // Include itemTypeId in the request body
+          userId: userId, // Use userId from ParameterProvider
         }),
       });
       setDrawerVisible(false);
@@ -218,7 +220,7 @@ const Produto: React.FC = () => {
           defaultValue="all"
         >
           <Select.Option value="all">Todos</Select.Option>
-          {Array.from(new Set(produtos.flatMap((produto) => produto.tags.toString().split('|') || []))).map((tag) => (
+          {Array.from(new Set(produtos.flatMap((produto) => produto.tags ? produto.tags.toString().split('|') || [] : ''))).map((tag) => (
             <Select.Option key={tag} value={tag}>
               {tag.toUpperCase()}
             </Select.Option>
