@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Space, Table, Tag, Tooltip, Input, Select, Button, Drawer, Form, Switch, Input as AntInput, Button as AntButton } from 'antd';
+import { Space, Table, Tag, Tooltip, Input, Select, Button, Drawer, Form, Switch, Input as AntInput, Button as AntButton, Spin } from 'antd';
 import type { TableProps } from 'antd';
 import { DeleteOutlined, EditOutlined, ArrowLeftOutlined, PlusOutlined } from '@ant-design/icons';
 import { useParameter } from '../../../context/ParameterContext';
@@ -42,6 +42,8 @@ const Produto: React.FC = () => {
   const [drawerVisible, setDrawerVisible] = useState(false);
   const [drawerMode, setDrawerMode] = useState<'create' | 'edit'>('create');
   const [currentProduct, setCurrentProduct] = useState<Partial<ProductType>>({});
+  const [availableTags, setAvailableTags] = useState<string[]>([]);
+  const [tagsLoading, setTagsLoading] = useState(false);
 
   useEffect(() => {
     const fetchProdutos = async () => {
@@ -63,6 +65,23 @@ const Produto: React.FC = () => {
 
     fetchProdutos();
   }, [system]);
+
+  useEffect(() => {
+    const fetchTags = async () => {
+      setTagsLoading(true);
+      try {
+        const response = await fetch(`http://127.0.0.1:8000//user-tags/`);
+        const data = await response.json();
+        setAvailableTags(data.filter((tag: { userId: string }) => tag.userId === userId).map((tag: { tag: string }) => tag.tag));
+      } catch (error) {
+        console.error('Error fetching tags:', error);
+      } finally {
+        setTagsLoading(false);
+      }
+    };
+
+    fetchTags();
+  }, [userId]);
 
   const handleExpand = (expanded: boolean, record: ProductType) => {
     setExpandedRowKeys((prevExpandedRowKeys) => {
@@ -86,8 +105,16 @@ const Produto: React.FC = () => {
     setDrawerMode(mode);
     setCurrentProduct(
       mode === 'edit' && product
-        ? { ...product }
-        : { id: '', name: '', description: '', itemTypeId: '', price: 0, active: true, tags: null }
+        ? {
+            ...product,
+            tags: product.tags
+              ? product.tags
+                  .toString()
+                  .split('|')
+                  .filter((tag) => availableTags.includes(tag)) // Align with existing tags
+              : [],
+          }
+        : { id: '', name: '', description: '', itemTypeId: '', price: 0, active: true, tags: [] }
     );
     setDrawerVisible(true);
   };
@@ -221,11 +248,13 @@ const Produto: React.FC = () => {
           defaultValue="all"
         >
           <Select.Option value="all">Todos</Select.Option>
-          {Array.from(new Set(produtos.flatMap((produto) => produto.tags ? produto.tags.toString().split('|') || [] : ''))).map((tag) => (
-            <Select.Option key={tag} value={tag}>
-              {tag.toUpperCase()}
-            </Select.Option>
-          ))}
+          {Array.from(new Set(produtos.flatMap((produto) => produto.tags ? produto.tags.toString().split('|') || [] : '')))
+            .filter((tag) => tag) // Ensure no empty tags
+            .map((tag, index) => (
+              <Select.Option key={`filter-tag-${index}`} value={tag}>
+                {tag.toUpperCase()}
+              </Select.Option>
+            ))}
         </Select>
       </div>
 
@@ -322,10 +351,23 @@ const Produto: React.FC = () => {
             />
           </Form.Item>
           <Form.Item label="Tags">
-            <AntInput
-              value={Array.isArray(currentProduct.tags) ? currentProduct.tags.join('|') : ''}
-              onChange={(e) => handleInputChange('tags', e.target.value.split('|'))}
-            />
+            {tagsLoading ? (
+              <Spin />
+            ) : (
+              <Select
+                mode="multiple"
+                placeholder="Selecione as tags"
+                value={currentProduct.tags || []}
+                onChange={(value) => handleInputChange('tags', value)}
+                style={{ width: '100%' }}
+              >
+                {availableTags.map((tag, index) => (
+                  <Select.Option key={`drawer-tag-${index}`} value={tag}>
+                    {tag}
+                  </Select.Option>
+                ))}
+              </Select>
+            )}
           </Form.Item>
           <Form.Item label="Ativo">
             <Switch
