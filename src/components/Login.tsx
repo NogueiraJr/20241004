@@ -29,10 +29,12 @@ const Login: React.FC = () => {
     setLoading(true);
 
     if (username.toLowerCase().trim() === 'oficina' && password === '123') {
-      setParameter('sysOficinaCarro'); // Define 'system' no contexto
+      setParameter('system', 'sysOficinaCarro'); // Define 'system' no contexto
+      setParameter('userId', 'idProprietario02'); // Define 'userId' no contexto
       navigate('/ini'); // Redireciona para a página inicial
     } else if (username.toLowerCase().trim() === 'locacao' && password === '123') {
-      setParameter('sysLocacaoRoupa'); // Define 'system' no contexto
+      setParameter('system', 'sysLocacaoRoupa'); // Define 'system' no contexto
+      setParameter('userId', 'idProprietario01'); // Define 'userId' no contexto
       navigate('/ini'); // Redireciona para a página inicial
     } else {
       message.error('Informe Usuário e Senha válidos.');

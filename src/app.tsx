@@ -32,7 +32,7 @@ const App: React.FC = () => {
 
   const handleMenuClick = (key: string) => {
     if (key === '/out') {
-      setParameter(null);
+      setParameter(null, null);
       navigate('/'); // Redireciona para a página de login
     } else {
       navigate(key);
