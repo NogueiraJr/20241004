@@ -10,6 +10,7 @@ export interface ProductType {
   name: string;
   description: string;
   itemTypeId: string;
+  quantity: number;
   price: number;
   active: boolean;
   createAt: string;
@@ -44,6 +45,7 @@ const Produto: React.FC = () => {
   const [currentProduct, setCurrentProduct] = useState<Partial<ProductType>>({});
   const [availableTags, setAvailableTags] = useState<string[]>([]);
   const [tagsLoading, setTagsLoading] = useState(false);
+  const [validationErrors, setValidationErrors] = useState<{ [key: string]: string }>({});
 
   useEffect(() => {
     const fetchProdutos = async () => {
@@ -115,12 +117,22 @@ const Produto: React.FC = () => {
                   .filter((tag) => availableTags.includes(tag)) // Align with existing tags
               : [],
           }
-        : { id: '', name: '', description: '', itemTypeId: '', price: 0, active: true, tags: [] }
+        : { id: '', name: '', description: '', itemTypeId: '', price: 0, quantity: 0, active: true, tags: [] }
     );
+    setValidationErrors({});
     setDrawerVisible(true);
   };
 
   const handleSave = async () => {
+    const errors: { [key: string]: string } = {};
+    if (!currentProduct.name) errors.name = 'O campo Nome é obrigatório.';
+    if (currentProduct.quantity === undefined || currentProduct.quantity <= 0) errors.quantity = 'O campo Quantidade é obrigatório e deve ser maior que 0.';
+    if (currentProduct.price === undefined || currentProduct.price <= 0) errors.price = 'O campo Preço é obrigatório e deve ser maior que 0.';
+
+    setValidationErrors(errors);
+
+    if (Object.keys(errors).length > 0) return;
+
     const endpoint = drawerMode === 'create'
       ? `${process.env.REACT_APP_API_BASE_URL}/items/`
       : `${process.env.REACT_APP_API_BASE_URL}/items/${currentProduct.id}/`;
@@ -136,10 +148,12 @@ const Produto: React.FC = () => {
         },
         body: JSON.stringify({
           ...currentProduct,
-          tags: Array.isArray(currentProduct.tags) ? currentProduct.tags.join('|') : null, // Ensure tags is an array before joining
-          systemId: system, // Include system in the request body
-          itemTypeId: 'product', // Include itemTypeId in the request body
-          userId: userId, // Use userId from ParameterProvider
+          price: parseFloat(Number(currentProduct.price).toFixed(2)), // Ensure price is a number before formatting
+          quantity: parseInt(currentProduct.quantity.toString(), 10), // Ensure quantity is an integer
+          tags: Array.isArray(currentProduct.tags) ? currentProduct.tags.join('|') : null,
+          systemId: system,
+          itemTypeId: 'product',
+          userId: userId,
         }),
       });
       setDrawerVisible(false);
@@ -151,7 +165,7 @@ const Produto: React.FC = () => {
         const data: ProductType[] = await response.json();
         const filteredBySystem = data
           .filter((produto) => produto.systemId === system && produto.itemTypeId === 'product')
-          .sort((a, b) => new Date(b.createAt).getTime() - new Date(a.createAt).getTime()); // Sort by creation date (descending)
+          .sort((a, b) => new Date(b.createAt).getTime() - new Date(a.createAt).getTime());
         setProdutos(filteredBySystem);
       };
       fetchProdutos();
@@ -332,7 +346,7 @@ const Produto: React.FC = () => {
         width={400}
       >
         <Form layout="vertical">
-          <Form.Item label="Nome">
+          <Form.Item label="Nome" required validateStatus={validationErrors.name ? 'error' : ''} help={validationErrors.name}>
             <AntInput
               value={currentProduct.name}
               onChange={(e) => handleInputChange('name', e.target.value)}
@@ -344,7 +358,14 @@ const Produto: React.FC = () => {
               onChange={(e) => handleInputChange('description', e.target.value)}
             />
           </Form.Item>
-          <Form.Item label="Preço">
+          <Form.Item label="Quantidade" required validateStatus={validationErrors.quantity ? 'error' : ''} help={validationErrors.quantity}>
+            <AntInput
+              type="number"
+              value={currentProduct.quantity}
+              onChange={(e) => handleInputChange('quantity', parseFloat(e.target.value))}
+            />
+          </Form.Item>
+          <Form.Item label="Preço" required validateStatus={validationErrors.price ? 'error' : ''} help={validationErrors.price}>
             <AntInput
               type="number"
               value={currentProduct.price}
