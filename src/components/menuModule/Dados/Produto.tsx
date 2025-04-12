@@ -52,11 +52,11 @@ const Produto: React.FC = () => {
       try {
         const baseUrl = process.env.REACT_APP_API_BASE_URL;
         const endpoint = process.env.REACT_APP_API_ITEMS_ENDPOINT;
-        const response = await fetch(`${baseUrl}${endpoint}`);
+        const queryParams = `?userId=${userId}&systemId=${system}&itemTypeId=product`;
+        const response = await fetch(`${baseUrl}${endpoint}${queryParams}`);
 
         const data: ProductType[] = await response.json();
         const filteredBySystem = data
-          .filter((produto) => produto.systemId === system && produto.itemTypeId === 'product')
           .sort((a, b) => new Date(b.createAt).getTime() - new Date(a.createAt).getTime()); // Sort by creation date (descending)
 
         setProdutos(filteredBySystem);
@@ -66,7 +66,7 @@ const Produto: React.FC = () => {
     };
 
     fetchProdutos();
-  }, [system]);
+  }, [system, userId]);
 
   useEffect(() => {
     const fetchTags = async () => {
@@ -161,10 +161,10 @@ const Produto: React.FC = () => {
       const fetchProdutos = async () => {
         const baseUrl = process.env.REACT_APP_API_BASE_URL;
         const endpoint = process.env.REACT_APP_API_ITEMS_ENDPOINT;
-        const response = await fetch(`${baseUrl}${endpoint}`);
+        const queryParams = `?userId=${userId}&systemId=${system}&itemTypeId=product`;
+        const response = await fetch(`${baseUrl}${endpoint}${queryParams}`);
         const data: ProductType[] = await response.json();
         const filteredBySystem = data
-          .filter((produto) => produto.systemId === system && produto.itemTypeId === 'product')
           .sort((a, b) => new Date(b.createAt).getTime() - new Date(a.createAt).getTime());
         setProdutos(filteredBySystem);
       };
