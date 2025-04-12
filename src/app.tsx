@@ -29,6 +29,7 @@ const App: React.FC = () => {
   const location = useLocation(); // Obtém a rota atual
   const { setParameter } = useParameter(); // Obtém o método para definir o 'system'
   const [isModalVisible, setIsModalVisible] = useState(false); // Estado para controlar a visibilidade do modal
+  const itemTypeId = location.state?.itemTypeId || 'product'; // Default to 'product' if not provided
 
   const handleMenuClick = (key: string) => {
     if (key === '/out') {
@@ -167,7 +168,7 @@ const App: React.FC = () => {
           <Route path="/ajd" element={<Ajuda />} />
           <Route path="/out" element={<Sair />} />
           <Route path="/cliente" element={<Cliente />} />
-          <Route path="/item" element={<Item />} />
+          <Route path="/item" element={<Item itemTypeId={itemTypeId} />} /> {/* Pass itemTypeId */}
           <Route path="/servico" element={<Servico />} />
           <Route path="/fornecedor" element={<Fornecedor />} />
           <Route path="/parceiro" element={<Parceiro />} />

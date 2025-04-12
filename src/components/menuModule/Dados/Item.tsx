@@ -21,6 +21,10 @@ export interface ItemType {
   tags: string[] | null;
 }
 
+interface ItemProps {
+  itemTypeId: string; // Add itemTypeId as a prop
+}
+
 const IconText = ({ icon, text, tooltip, color, onClick }: { icon: React.ComponentType<any>; text: string; tooltip: string, color?: string, onClick?: () => void }) => (
   <Tooltip title={tooltip}>
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', cursor: 'pointer' }} onClick={onClick}>
@@ -30,7 +34,7 @@ const IconText = ({ icon, text, tooltip, color, onClick }: { icon: React.Compone
   </Tooltip>
 );
 
-const Item: React.FC = () => {
+const Item: React.FC<ItemProps> = ({ itemTypeId }) => {
   const { system, userId } = useParameter();
   const navigate = useNavigate();
 
@@ -52,7 +56,7 @@ const Item: React.FC = () => {
       try {
         const baseUrl = process.env.REACT_APP_API_BASE_URL;
         const endpoint = process.env.REACT_APP_API_ITEMS_ENDPOINT;
-        const queryParams = `?userId=${userId}&systemId=${system}&itemTypeId=product`;
+        const queryParams = `?userId=${userId}&systemId=${system}&itemTypeId=${itemTypeId}`; // Use itemTypeId dynamically
         const response = await fetch(`${baseUrl}${endpoint}${queryParams}`);
 
         const data: ItemType[] = await response.json();
@@ -67,7 +71,7 @@ const Item: React.FC = () => {
     };
 
     fetchProdutos();
-  }, [system, userId]);
+  }, [system, userId, itemTypeId]); // Add itemTypeId as a dependency
 
   useEffect(() => {
     const fetchTags = async () => {
@@ -153,7 +157,7 @@ const Item: React.FC = () => {
           quantity: parseInt(currentItem.quantity.toString(), 10), // Ensure quantity is an integer
           tags: Array.isArray(currentItem.tags) ? currentItem.tags.join('|') : null,
           systemId: system,
-          itemTypeId: 'product',
+          itemTypeId, // Use itemTypeId dynamically
           userId: userId,
         }),
       });
@@ -162,7 +166,7 @@ const Item: React.FC = () => {
       const fetchProdutos = async () => {
         const baseUrl = process.env.REACT_APP_API_BASE_URL;
         const endpoint = process.env.REACT_APP_API_ITEMS_ENDPOINT;
-        const queryParams = `?userId=${userId}&systemId=${system}&itemTypeId=product`;
+        const queryParams = `?userId=${userId}&systemId=${system}&itemTypeId=${itemTypeId}`;
         const response = await fetch(`${baseUrl}${endpoint}${queryParams}`);
         const data: ItemType[] = await response.json();
         const filteredBySystem = data
@@ -199,7 +203,7 @@ const Item: React.FC = () => {
           const fetchProdutos = async () => {
             const baseUrl = process.env.REACT_APP_API_BASE_URL;
             const endpoint = process.env.REACT_APP_API_ITEMS_ENDPOINT;
-            const queryParams = `?userId=${userId}&systemId=${system}&itemTypeId=product`;
+            const queryParams = `?userId=${userId}&systemId=${system}&itemTypeId=${itemTypeId}`;
             const response = await fetch(`${baseUrl}${endpoint}${queryParams}`);
             const data: ItemType[] = await response.json();
             const filteredBySystem = data

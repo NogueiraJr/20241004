@@ -32,11 +32,11 @@ const Dados: React.FC = () => {
   };
 
   const handleListaTodosProdutos = () => {
-    navigate('/item');
+    navigate('/item', { state: { itemTypeId: 'product' } });
   };
 
   const handleListaTodosServicos = () => {
-    navigate('/servico');
+    navigate('/item', { state: { itemTypeId: 'service' } });
   };
 
   const handleListaTodosFornecedores = () => {
