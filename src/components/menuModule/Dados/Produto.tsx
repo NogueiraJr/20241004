@@ -23,7 +23,7 @@ export interface ProductType {
 
 const IconText = ({ icon, text, tooltip, color, onClick }: { icon: React.ComponentType<any>; text: string; tooltip: string, color?: string, onClick?: () => void }) => (
   <Tooltip title={tooltip}>
-    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }} onClick={onClick}>
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', cursor: 'pointer' }} onClick={onClick}>
       {React.createElement(icon, { style: { color: color || 'black', fontSize: '20px' } })}
       <span style={{ color: color || 'black', fontSize: '12px' }}>{text}</span>
     </div>
@@ -237,14 +237,6 @@ const Produto: React.FC = () => {
           icon={<ArrowLeftOutlined />}
           style={{ marginRight: 16 }}
         />
-        {/* <Tooltip title="Cadastrar Novo Produto">
-          <Button
-            type="primary"
-            icon={<PlusOutlined />}
-            style={{ marginRight: 16 }}
-            onClick={() => handleOpenDrawer('create')}
-          />
-        </Tooltip> */}
         <Select
           placeholder="Filtrar por status"
           onChange={handleStatusFilter}
