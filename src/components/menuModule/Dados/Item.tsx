@@ -5,7 +5,7 @@ import { DeleteOutlined, EditOutlined, ArrowLeftOutlined, PlusOutlined } from '@
 import { useParameter } from '../../../context/ParameterContext';
 import { useNavigate } from 'react-router-dom';
 
-export interface ProductType {
+export interface ItemType {
   id: string;
   name: string;
   description: string;
@@ -34,15 +34,15 @@ const Item: React.FC = () => {
   const { system, userId } = useParameter();
   const navigate = useNavigate();
 
-  const [produtos, setProdutos] = useState<ProductType[]>([]);
+  const [items, setItems] = useState<ItemType[]>([]);
   const [expandedRowKeys, setExpandedRowKeys] = useState<string[]>([]);
   const [searchText, setSearchText] = useState('');
   const [statusFilter, setStatusFilter] = useState<string>('all');
   const [tagFilter, setTagFilter] = useState<string>('all');
-  const [filteredData, setFilteredData] = useState<ProductType[]>([]);
+  const [filteredData, setFilteredData] = useState<ItemType[]>([]);
   const [drawerVisible, setDrawerVisible] = useState(false);
   const [drawerMode, setDrawerMode] = useState<'create' | 'edit'>('create');
-  const [currentProduct, setCurrentProduct] = useState<Partial<ProductType>>({});
+  const [currentItem, setCurrentItem] = useState<Partial<ItemType>>({});
   const [availableTags, setAvailableTags] = useState<string[]>([]);
   const [tagsLoading, setTagsLoading] = useState(false);
   const [validationErrors, setValidationErrors] = useState<{ [key: string]: string }>({});
@@ -55,12 +55,12 @@ const Item: React.FC = () => {
         const queryParams = `?userId=${userId}&systemId=${system}&itemTypeId=product`;
         const response = await fetch(`${baseUrl}${endpoint}${queryParams}`);
 
-        const data: ProductType[] = await response.json();
+        const data: ItemType[] = await response.json();
         const filteredBySystem = data
           .filter((produto) => !produto.deletedAt) // Exclude logically deleted records
           .sort((a, b) => new Date(b.createAt).getTime() - new Date(a.createAt).getTime()); // Sort by creation date (descending)
 
-        setProdutos(filteredBySystem);
+        setItems(filteredBySystem);
       } catch (error) {
         console.error('Error fetching produtos:', error);
       }
@@ -87,7 +87,7 @@ const Item: React.FC = () => {
     fetchTags();
   }, [userId]);
 
-  const handleExpand = (expanded: boolean, record: ProductType) => {
+  const handleExpand = (expanded: boolean, record: ItemType) => {
     setExpandedRowKeys((prevExpandedRowKeys) => {
       return expanded ? [...prevExpandedRowKeys, record.id] : prevExpandedRowKeys.filter((key) => key !== record.id);
     });
@@ -105,14 +105,14 @@ const Item: React.FC = () => {
     setTagFilter(value);
   };
 
-  const handleOpenDrawer = (mode: 'create' | 'edit', product?: ProductType) => {
+  const handleOpenDrawer = (mode: 'create' | 'edit', item?: ItemType) => {
     setDrawerMode(mode);
-    setCurrentProduct(
-      mode === 'edit' && product
+    setCurrentItem(
+      mode === 'edit' && item
         ? {
-            ...product,
-            tags: product.tags
-              ? product.tags
+            ...item,
+            tags: item.tags
+              ? item.tags
                   .toString()
                   .split('|')
                   .filter((tag) => availableTags.includes(tag)) // Align with existing tags
@@ -126,9 +126,9 @@ const Item: React.FC = () => {
 
   const handleSave = async () => {
     const errors: { [key: string]: string } = {};
-    if (!currentProduct.name) errors.name = 'O campo Nome é obrigatório.';
-    if (currentProduct.quantity === undefined || currentProduct.quantity <= -1) errors.quantity = 'O campo Quantidade é obrigatório e deve ser maior ou igual a 0.';
-    if (currentProduct.price === undefined || currentProduct.price <= -1) errors.price = 'O campo Preço é obrigatório e deve ser maior ou igual a 0.';
+    if (!currentItem.name) errors.name = 'O campo Nome é obrigatório.';
+    if (currentItem.quantity === undefined || currentItem.quantity <= -1) errors.quantity = 'O campo Quantidade é obrigatório e deve ser maior ou igual a 0.';
+    if (currentItem.price === undefined || currentItem.price <= -1) errors.price = 'O campo Preço é obrigatório e deve ser maior ou igual a 0.';
 
     setValidationErrors(errors);
 
@@ -136,7 +136,7 @@ const Item: React.FC = () => {
 
     const endpoint = drawerMode === 'create'
       ? `${process.env.REACT_APP_API_BASE_URL}/items/`
-      : `${process.env.REACT_APP_API_BASE_URL}/items/${currentProduct.id}/`;
+      : `${process.env.REACT_APP_API_BASE_URL}/items/${currentItem.id}/`;
 
     const method = drawerMode === 'create' ? 'POST' : 'PUT';
 
@@ -148,31 +148,31 @@ const Item: React.FC = () => {
           Accept: 'application/json',
         },
         body: JSON.stringify({
-          ...currentProduct,
-          price: parseFloat(Number(currentProduct.price).toFixed(2)), // Ensure price is a number before formatting
-          quantity: parseInt(currentProduct.quantity.toString(), 10), // Ensure quantity is an integer
-          tags: Array.isArray(currentProduct.tags) ? currentProduct.tags.join('|') : null,
+          ...currentItem,
+          price: parseFloat(Number(currentItem.price).toFixed(2)), // Ensure price is a number before formatting
+          quantity: parseInt(currentItem.quantity.toString(), 10), // Ensure quantity is an integer
+          tags: Array.isArray(currentItem.tags) ? currentItem.tags.join('|') : null,
           systemId: system,
           itemTypeId: 'product',
           userId: userId,
         }),
       });
       setDrawerVisible(false);
-      // Refresh product list
+      // Refresh item list
       const fetchProdutos = async () => {
         const baseUrl = process.env.REACT_APP_API_BASE_URL;
         const endpoint = process.env.REACT_APP_API_ITEMS_ENDPOINT;
         const queryParams = `?userId=${userId}&systemId=${system}&itemTypeId=product`;
         const response = await fetch(`${baseUrl}${endpoint}${queryParams}`);
-        const data: ProductType[] = await response.json();
+        const data: ItemType[] = await response.json();
         const filteredBySystem = data
           .filter((produto) => !produto.deletedAt) // Exclude logically deleted records
           .sort((a, b) => new Date(b.createAt).getTime() - new Date(a.createAt).getTime());
-        setProdutos(filteredBySystem);
+        setItems(filteredBySystem);
       };
       fetchProdutos();
     } catch (error) {
-      console.error('Error saving product:', error);
+      console.error('Error saving item:', error);
     }
   };
 
@@ -201,26 +201,26 @@ const Item: React.FC = () => {
             const endpoint = process.env.REACT_APP_API_ITEMS_ENDPOINT;
             const queryParams = `?userId=${userId}&systemId=${system}&itemTypeId=product`;
             const response = await fetch(`${baseUrl}${endpoint}${queryParams}`);
-            const data: ProductType[] = await response.json();
+            const data: ItemType[] = await response.json();
             const filteredBySystem = data
               .filter((produto) => !produto.deletedAt) // Exclude logically deleted records
               .sort((a, b) => new Date(b.createAt).getTime() - new Date(a.createAt).getTime());
-            setProdutos(filteredBySystem);
+            setItems(filteredBySystem);
           };
           fetchProdutos();
         } catch (error) {
-          console.error('Error deleting product:', error);
+          console.error('Error deleting item:', error);
         }
       },
     });
   };
 
-  const handleInputChange = (field: keyof ProductType, value: any) => {
-    setCurrentProduct((prev) => ({ ...prev, [field]: value }));
+  const handleInputChange = (field: keyof ItemType, value: any) => {
+    setCurrentItem((prev) => ({ ...prev, [field]: value }));
   };
 
   useEffect(() => {
-    const filtered = produtos.filter((produto) => {
+    const filtered = items.filter((produto) => {
       const matchesName = produto.name.toLowerCase().includes(searchText.toLowerCase());
       const matchesStatus = statusFilter === 'all' || produto.active === (statusFilter === 'active');
       const matchesTag = tagFilter === 'all' || (produto.tags && produto.tags.includes(tagFilter));
@@ -229,9 +229,9 @@ const Item: React.FC = () => {
     });
 
     setFilteredData(filtered);
-  }, [searchText, statusFilter, tagFilter, produtos]);
+  }, [searchText, statusFilter, tagFilter, items]);
 
-  const columns: TableProps<ProductType>['columns'] = [
+  const columns: TableProps<ItemType>['columns'] = [
     {
       title: 'Nome',
       dataIndex: 'name',
@@ -304,7 +304,7 @@ const Item: React.FC = () => {
           defaultValue="all"
         >
           <Select.Option value="all">Todos</Select.Option>
-          {Array.from(new Set(produtos.flatMap((produto) => produto.tags ? produto.tags.toString().split('|') || [] : '')))
+          {Array.from(new Set(items.flatMap((produto) => produto.tags ? produto.tags.toString().split('|') || [] : '')))
             .filter((tag) => tag) // Ensure no empty tags
             .map((tag, index) => (
               <Select.Option key={`filter-tag-${index}`} value={tag}>
@@ -314,7 +314,7 @@ const Item: React.FC = () => {
         </Select>
       </div>
 
-      <Table<ProductType>
+      <Table<ItemType>
         columns={columns}
         dataSource={filteredData}
         pagination={{
@@ -389,27 +389,27 @@ const Item: React.FC = () => {
         <Form layout="vertical">
           <Form.Item label="Nome" required validateStatus={validationErrors.name ? 'error' : ''} help={validationErrors.name}>
             <AntInput
-              value={currentProduct.name}
+              value={currentItem.name}
               onChange={(e) => handleInputChange('name', e.target.value)}
             />
           </Form.Item>
           <Form.Item label="Descrição">
             <AntInput
-              value={currentProduct.description}
+              value={currentItem.description}
               onChange={(e) => handleInputChange('description', e.target.value)}
             />
           </Form.Item>
           <Form.Item label="Quantidade" required validateStatus={validationErrors.quantity ? 'error' : ''} help={validationErrors.quantity}>
             <AntInput
               type="number"
-              value={currentProduct.quantity}
+              value={currentItem.quantity}
               onChange={(e) => handleInputChange('quantity', parseFloat(e.target.value))}
             />
           </Form.Item>
           <Form.Item label="Preço" required validateStatus={validationErrors.price ? 'error' : ''} help={validationErrors.price}>
             <AntInput
               type="number"
-              value={currentProduct.price}
+              value={currentItem.price}
               onChange={(e) => handleInputChange('price', parseFloat(e.target.value))}
             />
           </Form.Item>
@@ -420,7 +420,7 @@ const Item: React.FC = () => {
               <Select
                 mode="multiple"
                 placeholder="Selecione as tags"
-                value={currentProduct.tags || []}
+                value={currentItem.tags || []}
                 onChange={(value) => handleInputChange('tags', value)}
                 style={{ width: '100%' }}
               >
@@ -434,7 +434,7 @@ const Item: React.FC = () => {
           </Form.Item>
           <Form.Item label="Ativo">
             <Switch
-              checked={currentProduct.active}
+              checked={currentItem.active}
               onChange={(checked) => handleInputChange('active', checked)}
             />
           </Form.Item>
