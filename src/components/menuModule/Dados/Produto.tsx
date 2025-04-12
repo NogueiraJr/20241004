@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Space, Table, Tag, Tooltip, Input, Select, Button, Drawer, Form, Switch, Input as AntInput, Button as AntButton, Spin } from 'antd';
+import { Space, Table, Tag, Tooltip, Input, Select, Button, Drawer, Form, Switch, Input as AntInput, Button as AntButton, Spin, Modal } from 'antd';
 import type { TableProps } from 'antd';
 import { DeleteOutlined, EditOutlined, ArrowLeftOutlined, PlusOutlined } from '@ant-design/icons';
 import { useParameter } from '../../../context/ParameterContext';
@@ -174,6 +174,41 @@ const Produto: React.FC = () => {
     }
   };
 
+  const handleDelete = async (id: string) => {
+    Modal.confirm({
+      title: 'Confirmar Exclusão',
+      content: 'Tem certeza que deseja apagar este produto?',
+      okText: 'Sim',
+      cancelText: 'Não',
+      onOk: async () => {
+        try {
+          const endpoint = `${process.env.REACT_APP_API_BASE_URL}${process.env.REACT_APP_API_ITEMS_ENDPOINT}${id}/`;
+          await fetch(endpoint, {
+            method: 'DELETE',
+            headers: {
+              'Content-Type': 'application/json',
+              Accept: 'application/json',
+            },
+          });
+          // Atualizar a lista de produtos após a exclusão
+          const fetchProdutos = async () => {
+            const baseUrl = process.env.REACT_APP_API_BASE_URL;
+            const endpoint = process.env.REACT_APP_API_ITEMS_ENDPOINT;
+            const queryParams = `?userId=${userId}&systemId=${system}&itemTypeId=product`;
+            const response = await fetch(`${baseUrl}${endpoint}${queryParams}`);
+            const data: ProductType[] = await response.json();
+            const filteredBySystem = data
+              .sort((a, b) => new Date(b.createAt).getTime() - new Date(a.createAt).getTime());
+            setProdutos(filteredBySystem);
+          };
+          fetchProdutos();
+        } catch (error) {
+          console.error('Error deleting product:', error);
+        }
+      },
+    });
+  };
+
   const handleInputChange = (field: keyof ProductType, value: any) => {
     setCurrentProduct((prev) => ({ ...prev, [field]: value }));
   };
@@ -222,7 +257,14 @@ const Produto: React.FC = () => {
             color="black"
             onClick={() => handleOpenDrawer('edit', record)}
           />
-          <IconText icon={DeleteOutlined} text="APAGAR" tooltip="Apagar o Item" key="icon-delete" color="black" />
+          <IconText
+            icon={DeleteOutlined}
+            text="APAGAR"
+            tooltip="Apagar o Item"
+            key="icon-delete"
+            color="black"
+            onClick={() => handleDelete(record.id)}
+          />
         </Space>
       ),
     },
