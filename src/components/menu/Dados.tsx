@@ -32,7 +32,7 @@ const Dados: React.FC = () => {
   };
 
   const handleListaTodosProdutos = () => {
-    navigate('/produto');
+    navigate('/item');
   };
 
   const handleListaTodosServicos = () => {

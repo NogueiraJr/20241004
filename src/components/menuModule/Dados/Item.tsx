@@ -30,7 +30,7 @@ const IconText = ({ icon, text, tooltip, color, onClick }: { icon: React.Compone
   </Tooltip>
 );
 
-const Produto: React.FC = () => {
+const Item: React.FC = () => {
   const { system, userId } = useParameter();
   const navigate = useNavigate();
 
@@ -447,4 +447,4 @@ const Produto: React.FC = () => {
   );
 };
 
-export default Produto;
+export default Item;
