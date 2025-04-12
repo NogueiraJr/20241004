@@ -57,6 +57,7 @@ const Produto: React.FC = () => {
 
         const data: ProductType[] = await response.json();
         const filteredBySystem = data
+          .filter((produto) => !produto.deletedAt) // Exclude logically deleted records
           .sort((a, b) => new Date(b.createAt).getTime() - new Date(a.createAt).getTime()); // Sort by creation date (descending)
 
         setProdutos(filteredBySystem);
@@ -165,6 +166,7 @@ const Produto: React.FC = () => {
         const response = await fetch(`${baseUrl}${endpoint}${queryParams}`);
         const data: ProductType[] = await response.json();
         const filteredBySystem = data
+          .filter((produto) => !produto.deletedAt) // Exclude logically deleted records
           .sort((a, b) => new Date(b.createAt).getTime() - new Date(a.createAt).getTime());
         setProdutos(filteredBySystem);
       };
@@ -184,13 +186,16 @@ const Produto: React.FC = () => {
         try {
           const endpoint = `${process.env.REACT_APP_API_BASE_URL}${process.env.REACT_APP_API_ITEMS_ENDPOINT}${id}/`;
           await fetch(endpoint, {
-            method: 'DELETE',
+            method: 'PUT',
             headers: {
               'Content-Type': 'application/json',
               Accept: 'application/json',
             },
+            body: JSON.stringify({
+              deletedAt: new Date().toISOString(), // Set the current date and time
+            }),
           });
-          // Atualizar a lista de produtos após a exclusão
+          // Atualizar a lista de produtos após a exclusão lógica
           const fetchProdutos = async () => {
             const baseUrl = process.env.REACT_APP_API_BASE_URL;
             const endpoint = process.env.REACT_APP_API_ITEMS_ENDPOINT;
@@ -198,6 +203,7 @@ const Produto: React.FC = () => {
             const response = await fetch(`${baseUrl}${endpoint}${queryParams}`);
             const data: ProductType[] = await response.json();
             const filteredBySystem = data
+              .filter((produto) => !produto.deletedAt) // Exclude logically deleted records
               .sort((a, b) => new Date(b.createAt).getTime() - new Date(a.createAt).getTime());
             setProdutos(filteredBySystem);
           };
@@ -218,7 +224,8 @@ const Produto: React.FC = () => {
       const matchesName = produto.name.toLowerCase().includes(searchText.toLowerCase());
       const matchesStatus = statusFilter === 'all' || produto.active === (statusFilter === 'active');
       const matchesTag = tagFilter === 'all' || (produto.tags && produto.tags.includes(tagFilter));
-      return matchesName && matchesStatus && matchesTag;
+      const notDeleted = !produto.deletedAt; // Exclude logically deleted records
+      return matchesName && matchesStatus && matchesTag && notDeleted;
     });
 
     setFilteredData(filtered);
