@@ -290,6 +290,14 @@ const Item: React.FC<ItemProps> = ({ itemTypeId }) => {
           icon={<ArrowLeftOutlined />}
           style={{ marginRight: 16 }}
         />
+        <Tooltip title="Cadastrar Novo Produto">
+          <Button
+            type="primary"
+            icon={<PlusOutlined />}
+            style={{ marginRight: 16 }}
+            onClick={() => handleOpenDrawer('create')}
+          />
+        </Tooltip>
         <Select
           placeholder="Filtrar por status"
           onChange={handleStatusFilter}
@@ -325,15 +333,15 @@ const Item: React.FC<ItemProps> = ({ itemTypeId }) => {
           position: ['topLeft'],
           showTotal: (total) => (
             <div style={{ display: 'flex', alignItems: 'center' }}>
-              <Tooltip title="Cadastrar Novo Produto">
+              {/* <Tooltip title="Cadastrar Novo Produto">
                 <Button
                   type="primary"
                   icon={<PlusOutlined />}
                   style={{ marginRight: 16 }}
                   onClick={() => handleOpenDrawer('create')}
                 />
-              </Tooltip>
-              <span>{total} iten(s)</span>
+              </Tooltip> */}
+              <span>Quantidade: {total}</span>
             </div>
           ),
         }}
