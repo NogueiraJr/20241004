@@ -68,9 +68,7 @@ const App: React.FC = () => {
       case '/cliente':
         return 'Clientes';
       case '/item':
-        return 'Produtos';
-      case '/servico':
-        return 'Serviços';
+        return itemTypeId === 'service' ? 'Serviços' : 'Produtos'; // Dynamically return based on itemTypeId
       case '/fornecedor':
         return 'Fornecedores';
       case '/parceiro':
@@ -95,7 +93,7 @@ const App: React.FC = () => {
         return 'Atendimentos';
       case '/conveniencia':
         return 'Conveniência';
-  
+
       default:
         return '';
     }
