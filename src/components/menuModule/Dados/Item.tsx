@@ -237,6 +237,7 @@ const Item: React.FC<ItemProps> = ({ itemTypeId }) => {
 
   const columns: TableProps<ItemType>['columns'] = [
     {
+      className: 'custom-description',
       title: 'Nome',
       dataIndex: 'name',
       key: 'name',
@@ -391,33 +392,41 @@ const Item: React.FC<ItemProps> = ({ itemTypeId }) => {
         width={400}
       >
         <Form layout="vertical">
-          <Form.Item label="Nome" required validateStatus={validationErrors.name ? 'error' : ''} help={validationErrors.name}>
+          <Form.Item 
+            label={<span style={{ whiteSpace: 'nowrap' }} className="custom-label">Nome</span>}
+            required validateStatus={validationErrors.name ? 'error' : ''} help={validationErrors.name}>
             <AntInput
               value={currentItem.name}
               onChange={(e) => handleInputChange('name', e.target.value)}
             />
           </Form.Item>
-          <Form.Item label="Descrição">
+          <Form.Item 
+            label={<span style={{ whiteSpace: 'nowrap' }} className="custom-label">Descrição</span>}>
             <AntInput
               value={currentItem.description}
               onChange={(e) => handleInputChange('description', e.target.value)}
             />
           </Form.Item>
-          <Form.Item label="Quantidade" required validateStatus={validationErrors.quantity ? 'error' : ''} help={validationErrors.quantity}>
+          <Form.Item 
+              label={<span style={{ whiteSpace: 'nowrap' }} className="custom-label">Quantidade</span>}
+              required validateStatus={validationErrors.quantity ? 'error' : ''} help={validationErrors.quantity}>
             <AntInput
               type="number"
               value={currentItem.quantity}
               onChange={(e) => handleInputChange('quantity', parseFloat(e.target.value))}
             />
           </Form.Item>
-          <Form.Item label="Preço" required validateStatus={validationErrors.price ? 'error' : ''} help={validationErrors.price}>
+          <Form.Item 
+            label={<span style={{ whiteSpace: 'nowrap' }} className="custom-label">Preço</span>} 
+            required validateStatus={validationErrors.price ? 'error' : ''} help={validationErrors.price}>
             <AntInput
               type="number"
               value={currentItem.price}
               onChange={(e) => handleInputChange('price', parseFloat(e.target.value))}
             />
           </Form.Item>
-          <Form.Item label="Tags">
+          <Form.Item 
+            label={<span style={{ whiteSpace: 'nowrap' }} className="custom-label">Etiquetas</span>}>
             {tagsLoading ? (
               <Spin />
             ) : (
@@ -436,7 +445,8 @@ const Item: React.FC<ItemProps> = ({ itemTypeId }) => {
               </Select>
             )}
           </Form.Item>
-          <Form.Item label="Ativo">
+          <Form.Item 
+            label={<span style={{ whiteSpace: 'nowrap' }} className="custom-label">Ativo</span>}>
             <Switch
               checked={currentItem.active}
               onChange={(checked) => handleInputChange('active', checked)}
