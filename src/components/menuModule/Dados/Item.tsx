@@ -228,6 +228,11 @@ const Item: React.FC<ItemProps> = ({ itemTypeId }) => {
   };
 
   const handleInputChange = (field: keyof ItemType, value: any) => {
+    // Validate quantity if it's being updated
+    if (field === 'quantity' && typeof value === 'number' && value < 0) {
+      return;
+    }
+    
     setCurrentItem((prev) => ({ ...prev, [field]: value }));
   };
 
