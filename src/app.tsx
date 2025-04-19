@@ -15,7 +15,7 @@ import Ajuda from './components/menu/Ajuda';
 import Sair from './components/menu/Sair';
 import Login from './components/Login';
 import Cliente from './components/menuModule/Dados/Cliente';
-import Produto from './components/menuModule/Dados/Produto';
+import Item from './components/menuModule/Dados/Item';
 import Servico from './components/menuModule/Dados/Servico';
 import Actions from './components/menuModule/Operacional/UserOperationsList';
 import Fornecedor from './components/menuModule/Dados/Fornecedor';
@@ -29,10 +29,11 @@ const App: React.FC = () => {
   const location = useLocation(); // Obtém a rota atual
   const { setParameter } = useParameter(); // Obtém o método para definir o 'system'
   const [isModalVisible, setIsModalVisible] = useState(false); // Estado para controlar a visibilidade do modal
+  const itemTypeId = location.state?.itemTypeId || 'product'; // Default to 'product' if not provided
 
   const handleMenuClick = (key: string) => {
     if (key === '/out') {
-      setParameter(null);
+      setParameter(null, null);
       navigate('/'); // Redireciona para a página de login
     } else {
       navigate(key);
@@ -66,10 +67,8 @@ const App: React.FC = () => {
 
       case '/cliente':
         return 'Clientes';
-      case '/produto':
-        return 'Produtos';
-      case '/servico':
-        return 'Serviços';
+      case '/item':
+        return itemTypeId === 'service' ? 'Serviços' : 'Produtos'; // Dynamically return based on itemTypeId
       case '/fornecedor':
         return 'Fornecedores';
       case '/parceiro':
@@ -94,7 +93,7 @@ const App: React.FC = () => {
         return 'Atendimentos';
       case '/conveniencia':
         return 'Conveniência';
-  
+
       default:
         return '';
     }
@@ -167,7 +166,7 @@ const App: React.FC = () => {
           <Route path="/ajd" element={<Ajuda />} />
           <Route path="/out" element={<Sair />} />
           <Route path="/cliente" element={<Cliente />} />
-          <Route path="/produto" element={<Produto />} />
+          <Route path="/item" element={<Item itemTypeId={itemTypeId} />} /> {/* Pass itemTypeId */}
           <Route path="/servico" element={<Servico />} />
           <Route path="/fornecedor" element={<Fornecedor />} />
           <Route path="/parceiro" element={<Parceiro />} />

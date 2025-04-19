@@ -1,0 +1,3 @@
+export const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+export const API_ITEMS_ENDPOINT = process.env.REACT_APP_API_ITEMS_ENDPOINT;
+export const API_USER_TAGS_ENDPOINT = process.env.REACT_APP_API_USER_TAGS_ENDPOINT;

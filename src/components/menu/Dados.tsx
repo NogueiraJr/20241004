@@ -32,11 +32,11 @@ const Dados: React.FC = () => {
   };
 
   const handleListaTodosProdutos = () => {
-    navigate('/produto');
+    navigate('/item', { state: { itemTypeId: 'product' } });
   };
 
   const handleListaTodosServicos = () => {
-    navigate('/servico');
+    navigate('/item', { state: { itemTypeId: 'service' } });
   };
 
   const handleListaTodosFornecedores = () => {
@@ -56,9 +56,9 @@ const Dados: React.FC = () => {
     <Dropdown
       overlay={
         <Menu>
-          <Menu.Item key="1">casamento</Menu.Item>
-          <Menu.Item key="2">batizado</Menu.Item>
-          <Menu.Item key="3">festa</Menu.Item>
+          <Menu.Item key="1">Opção 01</Menu.Item>
+          <Menu.Item key="2">Opção 02</Menu.Item>
+          <Menu.Item key="3">Opção 03</Menu.Item>
         </Menu>
       }
       trigger={['click']}
@@ -78,9 +78,9 @@ const Dados: React.FC = () => {
     <Dropdown
       overlay={
         <Menu>
-          <Menu.Item key="1">casamento</Menu.Item>
-          <Menu.Item key="2">batizado</Menu.Item>
-          <Menu.Item key="3">festa</Menu.Item>
+          <Menu.Item key="1">Opção 01</Menu.Item>
+          <Menu.Item key="2">Opção 02</Menu.Item>
+          <Menu.Item key="3">Opção 03</Menu.Item>
         </Menu>
       }
       trigger={['click']}
@@ -100,9 +100,9 @@ const Dados: React.FC = () => {
     <Dropdown
       overlay={
         <Menu>
-          <Menu.Item key="1">casamento</Menu.Item>
-          <Menu.Item key="2">batizado</Menu.Item>
-          <Menu.Item key="3">festa</Menu.Item>
+          <Menu.Item key="1">Opção 01</Menu.Item>
+          <Menu.Item key="2">Opção 02</Menu.Item>
+          <Menu.Item key="3">Opção 03</Menu.Item>
         </Menu>
       }
       trigger={['click']}
@@ -122,9 +122,9 @@ const Dados: React.FC = () => {
     <Dropdown
       overlay={
         <Menu>
-          <Menu.Item key="1">casamento</Menu.Item>
-          <Menu.Item key="2">batizado</Menu.Item>
-          <Menu.Item key="3">festa</Menu.Item>
+          <Menu.Item key="1">Opção 01</Menu.Item>
+          <Menu.Item key="2">Opção 02</Menu.Item>
+          <Menu.Item key="3">Opção 03</Menu.Item>
         </Menu>
       }
       trigger={['click']}
@@ -144,9 +144,9 @@ const Dados: React.FC = () => {
     <Dropdown
       overlay={
         <Menu>
-          <Menu.Item key="1">casamento</Menu.Item>
-          <Menu.Item key="2">batizado</Menu.Item>
-          <Menu.Item key="3">festa</Menu.Item>
+          <Menu.Item key="1">Opção 01</Menu.Item>
+          <Menu.Item key="2">Opção 02</Menu.Item>
+          <Menu.Item key="3">Opção 03</Menu.Item>
         </Menu>
       }
       trigger={['click']}
@@ -166,9 +166,9 @@ const Dados: React.FC = () => {
     <Dropdown
       overlay={
         <Menu>
-          <Menu.Item key="1">casamento</Menu.Item>
-          <Menu.Item key="2">batizado</Menu.Item>
-          <Menu.Item key="3">festa</Menu.Item>
+          <Menu.Item key="1">Opção 01</Menu.Item>
+          <Menu.Item key="2">Opção 02</Menu.Item>
+          <Menu.Item key="3">Opção 03</Menu.Item>
         </Menu>
       }
       trigger={['click']}
