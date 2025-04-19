@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Space, Table, Tag, Tooltip, Input, Select, Button, Drawer, Form, Switch, Input as AntInput, Button as AntButton, Spin, Modal } from 'antd';
 import type { TableProps } from 'antd';
 import { DeleteOutlined, EditOutlined, ArrowLeftOutlined, PlusOutlined } from '@ant-design/icons';
 import { useParameter } from '../../../context/ParameterContext';
 import { useNavigate } from 'react-router-dom';
+import { NumericFormat } from 'react-number-format';
 
 export interface ItemType {
   id: string;
@@ -50,6 +51,13 @@ const Item: React.FC<ItemProps> = ({ itemTypeId }) => {
   const [availableTags, setAvailableTags] = useState<string[]>([]);
   const [tagsLoading, setTagsLoading] = useState(false);
   const [validationErrors, setValidationErrors] = useState<{ [key: string]: string }>({});
+
+  const currencyFormatter = useMemo(() => {
+    return new Intl.NumberFormat('pt-BR', {
+      style: 'currency',
+      currency: 'BRL',
+    });
+  }, []);
 
   useEffect(() => {
     const fetchProdutos = async () => {
@@ -396,6 +404,7 @@ const Item: React.FC<ItemProps> = ({ itemTypeId }) => {
             label={<span style={{ whiteSpace: 'nowrap' }} className="custom-label">Nome</span>}
             required validateStatus={validationErrors.name ? 'error' : ''} help={validationErrors.name}>
             <AntInput
+              className="custom-textarea"
               value={currentItem.name}
               onChange={(e) => handleInputChange('name', e.target.value)}
             />
@@ -403,6 +412,7 @@ const Item: React.FC<ItemProps> = ({ itemTypeId }) => {
           <Form.Item 
             label={<span style={{ whiteSpace: 'nowrap' }} className="custom-label">Descrição</span>}>
             <AntInput
+              className="custom-textarea"
               value={currentItem.description}
               onChange={(e) => handleInputChange('description', e.target.value)}
             />
@@ -412,6 +422,7 @@ const Item: React.FC<ItemProps> = ({ itemTypeId }) => {
               required validateStatus={validationErrors.quantity ? 'error' : ''} help={validationErrors.quantity}>
             <AntInput
               type="number"
+              className="custom-textarea"
               value={currentItem.quantity}
               onChange={(e) => handleInputChange('quantity', parseFloat(e.target.value))}
             />
@@ -419,10 +430,21 @@ const Item: React.FC<ItemProps> = ({ itemTypeId }) => {
           <Form.Item 
             label={<span style={{ whiteSpace: 'nowrap' }} className="custom-label">Preço</span>} 
             required validateStatus={validationErrors.price ? 'error' : ''} help={validationErrors.price}>
-            <AntInput
-              type="number"
+            <NumericFormat
+              className="custom-textarea"
               value={currentItem.price}
-              onChange={(e) => handleInputChange('price', parseFloat(e.target.value))}
+              thousandSeparator="."
+              decimalSeparator=","
+              prefix="R$ "
+              allowNegative={false}
+              decimalScale={2}
+              fixedDecimalScale
+              onValueChange={(values) => {
+                const { floatValue } = values;
+                handleInputChange('price', floatValue);
+              }}
+              customInput={AntInput}
+              allowClear
             />
           </Form.Item>
           <Form.Item 
@@ -453,7 +475,11 @@ const Item: React.FC<ItemProps> = ({ itemTypeId }) => {
             />
           </Form.Item>
         </Form>
-        <AntButton type="primary" onClick={handleSave} style={{ marginTop: 16 }}>
+        <AntButton 
+          type="primary" 
+          onClick={handleSave} 
+          style={{ marginTop: 16, width: '100%' }} // Set width to 100%
+        >
           Gravar
         </AntButton>
       </Drawer>
