@@ -139,8 +139,12 @@ const Item: React.FC<ItemProps> = ({ itemTypeId }) => {
   const handleSave = async () => {
     const errors: { [key: string]: string } = {};
     if (!currentItem.name) errors.name = 'O campo Nome é obrigatório.';
-    if (currentItem.quantity === undefined || currentItem.quantity <= -1) errors.quantity = 'O campo Quantidade é obrigatório.';
-    if (currentItem.price === undefined || currentItem.price <= -1) errors.price = 'O campo Preço é obrigatório.';
+    if (currentItem.quantity === null || currentItem.quantity === undefined || currentItem.quantity <= -1) {
+      errors.quantity = 'O campo Quantidade é obrigatório.';
+    }
+    if (currentItem.price === null || currentItem.price === undefined || currentItem.price <= -1) {
+      errors.price = 'O campo Preço é obrigatório.';
+    }
 
     setValidationErrors(errors);
 
@@ -425,11 +429,19 @@ const Item: React.FC<ItemProps> = ({ itemTypeId }) => {
           <Form.Item 
               label={<span style={{ whiteSpace: 'nowrap' }} className="custom-label">Quantidade</span>}
               required validateStatus={validationErrors.quantity ? 'error' : ''} help={validationErrors.quantity}>
-            <AntInput
-              type="number"
+            <NumericFormat
               className="custom-textarea"
               value={currentItem.quantity}
-              onChange={(e) => handleInputChange('quantity', parseFloat(e.target.value))}
+              thousandSeparator="."
+              decimalSeparator=","
+              allowNegative={false}
+              decimalScale={0}
+              onValueChange={(values) => {
+                const { floatValue } = values;
+                handleInputChange('quantity', floatValue !== undefined ? floatValue : null);
+              }}
+              customInput={AntInput}
+              allowClear
             />
           </Form.Item>
           <Form.Item 
