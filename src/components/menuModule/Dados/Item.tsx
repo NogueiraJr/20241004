@@ -139,8 +139,8 @@ const Item: React.FC<ItemProps> = ({ itemTypeId }) => {
   const handleSave = async () => {
     const errors: { [key: string]: string } = {};
     if (!currentItem.name) errors.name = 'O campo Nome é obrigatório.';
-    if (currentItem.quantity === undefined || currentItem.quantity <= -1) errors.quantity = 'O campo Quantidade é obrigatório e deve ser maior ou igual a 0.';
-    if (currentItem.price === undefined || currentItem.price <= -1) errors.price = 'O campo Preço é obrigatório e deve ser maior ou igual a 0.';
+    if (currentItem.quantity === undefined || currentItem.quantity <= -1) errors.quantity = 'O campo Quantidade é obrigatório.';
+    if (currentItem.price === undefined || currentItem.price <= -1) errors.price = 'O campo Preço é obrigatório.';
 
     setValidationErrors(errors);
 
